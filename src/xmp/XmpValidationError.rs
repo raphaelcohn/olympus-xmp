@@ -23,6 +23,14 @@ pub enum XmpValidationError<'name, 'namespace, 'local_name>
 	},
 	
 	#[allow(missing_docs)]
+	HasAttributeWhichShouldNotPresent
+	{
+		path: XmpElementPath<'name, 'namespace, 'local_name>,
+		
+		attribute_name: &'name XmlName<'namespace, 'local_name>,
+	},
+	
+	#[allow(missing_docs)]
 	CouldNotParseAttribute
 	{
 		path: XmpElementPath<'name, 'namespace, 'local_name>,
@@ -61,6 +69,18 @@ pub enum XmpValidationError<'name, 'namespace, 'local_name>
 		
 		aux_lens_model: String,
 	},
+	
+	#[allow(missing_docs)]
+	InvalidFocalLengthIn35mmFilmForCropFactor,
+	
+	#[allow(missing_docs)]
+	UnknownFocalLengthIn35mmFilm,
+	
+	#[allow(missing_docs)]
+	LensInformationDoesNotContainShotFocalLength,
+	
+	#[allow(missing_docs)]
+	LensInformationDoesNotContainShotFNumber,
 }
 
 impl<'name, 'namespace, 'local_name> Display for XmpValidationError<'name, 'namespace, 'local_name>
@@ -84,6 +104,8 @@ impl<'name, 'namespace, 'local_name> error::Error for XmpValidationError<'name, 
 			
 			MissingAttribute { .. } => None,
 			
+			HasAttributeWhichShouldNotPresent { .. } => None,
+			
 			CouldNotParseAttribute { cause, .. } => Some(cause),
 			
 			AttributeDoesNotHaveExpectedValue { .. } => None,
@@ -95,6 +117,14 @@ impl<'name, 'namespace, 'local_name> error::Error for XmpValidationError<'name, 
 			OriginalDocumentIdentifierDoesNotMatchDocumentIdentifier { .. } => None,
 			
 			MismatchedLensModels { .. } => None,
+			
+			InvalidFocalLengthIn35mmFilmForCropFactor => None,
+			
+			UnknownFocalLengthIn35mmFilm => None,
+			
+			LensInformationDoesNotContainShotFocalLength => None,
+			
+			LensInformationDoesNotContainShotFNumber => None,
 		}
 	}
 }

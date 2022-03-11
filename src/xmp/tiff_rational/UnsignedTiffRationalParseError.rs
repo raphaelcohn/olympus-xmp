@@ -4,7 +4,7 @@
 
 /// A TIFF RATIONAL parse error.
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub enum TiffRationalParseError
+pub enum UnsignedTiffRationalParseError
 {
 	#[allow(missing_docs)]
 	MissingDenominator,
@@ -16,7 +16,7 @@ pub enum TiffRationalParseError
 	InvalidNonZeroU32Denominator(ParseIntError),
 }
 
-impl Display for TiffRationalParseError
+impl Display for UnsignedTiffRationalParseError
 {
 	#[inline(always)]
 	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
@@ -25,12 +25,12 @@ impl Display for TiffRationalParseError
 	}
 }
 
-impl error::Error for TiffRationalParseError
+impl error::Error for UnsignedTiffRationalParseError
 {
 	#[inline(always)]
 	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		use TiffRationalParseError::*;
+		use UnsignedTiffRationalParseError::*;
 		match self
 		{
 			MissingDenominator => None,

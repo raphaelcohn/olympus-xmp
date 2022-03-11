@@ -109,9 +109,23 @@ impl<'a, 'name, 'namespace, 'local_name> XmpElement<'a, 'name, 'namespace, 'loca
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
+	pub fn does_not_have_attribute(&self, attribute_name: &'name XmlName<'namespace, 'local_name>) -> Result<(), XmpValidationError<'name, 'namespace, 'local_name>>
+	{
+		if self.get_raw_attribute(attribute_name).is_none()
+		{
+			Ok(())
+		}
+		else
+		{
+			Err(XmpValidationError::HasAttributeWhichShouldNotPresent { path: self.path(), attribute_name })
+		}
+	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
 	pub fn get_attribute<XAV: XmpAttributeValue<'a>>(&self, attribute_name: &'name XmlName<'namespace, 'local_name>) -> Result<Option<XAV>, XmpValidationError<'name, 'namespace, 'local_name>>
 	{
-		let raw_attribute_value = match self.xml_element.get_attribute(attribute_name)
+		let raw_attribute_value = match self.get_raw_attribute(attribute_name)
 		{
 			None => return Ok(None),
 			
@@ -124,5 +138,12 @@ impl<'a, 'name, 'namespace, 'local_name> XmpElement<'a, 'name, 'namespace, 'loca
 			
 			Err(cause) => Err(XmpValidationError::CouldNotParseAttribute { path: self.path(), attribute_name, cause: XAV::into_xmp_attribute_value_parse_error(cause) })
 		}
+	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub fn get_raw_attribute(&self, attribute_name: &'name XmlName<'namespace, 'local_name>) -> Option<&'a str>
+	{
+		self.xml_element.get_attribute(attribute_name)
 	}
 }

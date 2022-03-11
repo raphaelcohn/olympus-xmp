@@ -9,6 +9,7 @@ use crate::xml::XmlDocumentOrXmlElement;
 use crate::xml::XmlElement;
 use crate::xml::XmlName;
 use date_time::XmpDateTimeParseError;
+use lens_information::LensInformationParseError;
 use memchr::memrchr;
 use std::convert::Infallible;
 use std::error;
@@ -25,9 +26,11 @@ use std::slice::from_raw_parts;
 use std::str::FromStr;
 use std::str::from_utf8_unchecked;
 use swiss_army_knife::get_unchecked::GetUnchecked;
-use tiff_rational::TiffRationalParseError;
+use tiff_rational::NonZeroUnsignedTiffRationalParseError;
+use tiff_rational::UnsignedTiffRationalParseError;
 use universally_unique_identifier::XmpUniversallyUniqueIdentifier;
 use universally_unique_identifier::XmpUniversallyUniqueIdentifierParseError;
+use urgency::UrgencyParseError;
 
 
 include!("xml_name.rs");
@@ -37,12 +40,20 @@ include!("xml_name.rs");
 pub mod date_time;
 
 
+/// Lens information.
+pub mod lens_information;
+
+
 /// Namespace definitions.
 pub mod namespaces;
 
 
 /// TIFF RATIONAL definition.
 pub mod tiff_rational;
+
+
+/// Legacy urgency support.
+pub mod urgency;
 
 
 /// Universally Unique Identifiers (UUID).

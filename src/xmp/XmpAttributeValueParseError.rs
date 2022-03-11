@@ -19,7 +19,13 @@ pub enum XmpAttributeValueParseError
 	IptcDigitalSourceType(UnknownStringVariantParseError),
 	
 	#[allow(missing_docs)]
+	LensInformation(LensInformationParseError),
+	
+	#[allow(missing_docs)]
 	PhotoshopColorMode(U8ParseError),
+	
+	#[allow(missing_docs)]
+	NonZeroUnsignedTiffRational(NonZeroUnsignedTiffRationalParseError),
 	
 	#[allow(missing_docs)]
 	NonZeroU32(ParseIntError),
@@ -34,10 +40,13 @@ pub enum XmpAttributeValueParseError
 	PlusPropertyReleaseStatus(UnknownStringVariantParseError),
 	
 	#[allow(missing_docs)]
-	TiffRational(TiffRationalParseError),
+	UniversallyUniqueIdentifier(XmpUniversallyUniqueIdentifierParseError),
 	
 	#[allow(missing_docs)]
-	UniversallyUniqueIdentifier(XmpUniversallyUniqueIdentifierParseError),
+	UnsignedTiffRational(UnsignedTiffRationalParseError),
+	
+	#[allow(missing_docs)]
+	Urgency(UrgencyParseError),
 	
 	#[allow(missing_docs)]
 	XmpLabel(UnknownStringVariantParseError),
@@ -71,6 +80,10 @@ impl error::Error for XmpAttributeValueParseError
 			
 			IptcDigitalSourceType(cause) => Some(cause),
 			
+			LensInformation(cause) => Some(cause),
+			
+			NonZeroUnsignedTiffRational(cause) => Some(cause),
+			
 			NonZeroU32(cause) => Some(cause),
 			
 			OptionNonZeroU16(cause) => Some(cause),
@@ -81,9 +94,11 @@ impl error::Error for XmpAttributeValueParseError
 			
 			PlusPropertyReleaseStatus(cause) => Some(cause),
 			
-			TiffRational(cause) => Some(cause),
-			
 			UniversallyUniqueIdentifier(cause) => Some(cause),
+			
+			UnsignedTiffRational(cause) => Some(cause),
+			
+			Urgency(cause) => Some(cause),
 			
 			XmpLabel(cause) => Some(cause),
 			

@@ -35,10 +35,15 @@ use xml as _;
 
 
 use std::num::{NonZeroU16, NonZeroU32};
+use swiss_army_knife::non_zero::new_non_zero_u32;
 use olympus_xmp::xml_name;
 use olympus_xmp::xml::XmlDocument;
 use olympus_xmp::xml::XmlName;
-use olympus_xmp::xmp::{ExifSceneCaptureType, IptcDigitalSourceType, PlusModelReleaseStatus, PlusPropertyReleaseStatus, XmpElement};
+use olympus_xmp::xmp::ExifSceneCaptureType;
+use olympus_xmp::xmp::IptcDigitalSourceType;
+use olympus_xmp::xmp::PlusModelReleaseStatus;
+use olympus_xmp::xmp::PlusPropertyReleaseStatus;
+use olympus_xmp::xmp::XmpElement;
 use olympus_xmp::xmp::XmpValidationError;
 use olympus_xmp::xmp::namespaces::Iptc4xmpCore;
 use olympus_xmp::xmp::namespaces::Iptc4xmpExt;
@@ -58,74 +63,28 @@ use olympus_xmp::xmp::PhotoshopColorMode;
 use olympus_xmp::xmp::XmpLabel;
 use olympus_xmp::xmp::XmpRating;
 use olympus_xmp::xmp::date_time::XmpDateTime;
-use olympus_xmp::xmp::tiff_rational::TiffRational;
+use olympus_xmp::xmp::lens_information::LensInformation;
+use olympus_xmp::xmp::tiff_rational::{NonZeroUnsignedTiffRational, UnsignedTiffRational};
 use olympus_xmp::xmp::universally_unique_identifier::XmpUniversallyUniqueIdentifier;
+use olympus_xmp::xmp::urgency::Urgency;
+use crate::binary::{lens_focal_length_and_aperture, lens_model, width_or_height};
+use crate::binary::document_identifier;
+use crate::binary::Collated;
+use crate::binary::XmpOutcomeOfValidationError;
+
+
+mod binary;
 
 
 fn main()
 {
 	let path = "/path/to/file.xml";
-	let (xml_tree, file) = XmlDocument::parse_path(path, true).unwrap();
-	xml_tree.write_file(file).unwrap();
+	let (xml_document, file) = XmlDocument::parse_path(path, true).unwrap();
+	validate(&xml_document).unwrap();
+	xml_document.write_file(file).unwrap();
 }
 
-/// Outcome of XMP validation.
-#[derive(Debug, Clone, Eq, PartialEq)]
-pub enum XmpOutcomeOfValidationError<'name, 'namespace, 'local_name>
-{
-	/// Errors beyond which it is not possible to validate further a XMP document.
-	Fundamental(XmpValidationError<'name, 'namespace, 'local_name>),
-	
-	/// Non-empty collection of XMP validation errors.
-	Collated(Vec<XmpValidationError<'name, 'namespace, 'local_name>>),
-}
-
-impl<'name, 'namespace, 'local_name> XmpOutcomeOfValidationError<'name, 'namespace, 'local_name>
-{
-	#[inline(always)]
-	fn fundamental<R>(check: Result<R, XmpValidationError<'name, 'namespace, 'local_name>>) -> Result<R, Self>
-	{
-		check.map_err(XmpOutcomeOfValidationError::Fundamental)
-	}
-}
-
-#[derive(Default, Debug, Clone, Eq, PartialEq)]
-struct Collated<'name, 'namespace, 'local_name>(Vec<XmpValidationError<'name, 'namespace, 'local_name>>);
-
-impl<'name, 'namespace, 'local_name> Collated<'name, 'namespace, 'local_name>
-{
-	#[inline(always)]
-	fn check<R>(&mut self, check: Result<R, XmpValidationError<'name, 'namespace, 'local_name>>)
-	{
-		if let Err(xmp_validation_error) = check
-		{
-			self.push(xmp_validation_error)
-		}
-	}
-	
-	#[inline(always)]
-	fn validate<R>(&mut self, check: Result<R, XmpValidationError<'name, 'namespace, 'local_name>>) -> Option<R>
-	{
-		match check
-		{
-			Err(xmp_validation_error) =>
-			{
-				self.push(xmp_validation_error);
-				None
-			},
-			
-			Ok(result) => Some(result)
-		}
-	}
-	
-	#[inline(always)]
-	fn push(&mut self, error: XmpValidationError<'name, 'namespace, 'local_name>)
-	{
-		self.0.push(error)
-	}
-}
-
-fn validate(xml_document: XmlDocument) -> Result<(), XmpOutcomeOfValidationError<'static, 'static, 'static>>
+fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationError<'static, 'static, 'static>>
 {
 	use XmpValidationError::*;
 	
@@ -144,90 +103,33 @@ fn validate(xml_document: XmlDocument) -> Result<(), XmpOutcomeOfValidationError
 	
 	let mut collated = Collated::default();
 	
-	collated.check(xmpmeta.has_attribute_with_any_value::<&str>(xml_name!(x, "xmptk"))); // TODO: Parse this value?
-	collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(dc, "format"), "image/x-olympus-raw"));
-	collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(rdf, "about"), ""));
-	collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(exif, "ExifVersion"), "0230")); // TODO: Parse this value? Default this value? Update this value?
-	
-	#[inline(always)]
-	fn width_or_height<'a>(collated: &mut Collated, Description: &XmpElement<'a, 'static, 'static, 'static>, tiff_attribute: &'static XmlName<'static, 'static>, exif_attribute: &'static XmlName<'static, 'static>, error: impl FnOnce(NonZeroU32, NonZeroU32) -> XmpValidationError<'static, 'static, 'static>) -> Option<NonZeroU32>
-	{
-		let tiff_dimension_value = collated.validate(Description.get_attribute_or_error::<NonZeroU32>(tiff_attribute));
-		let exif_dimension_value = collated.validate(Description.get_attribute_or_error::<NonZeroU32>(exif_attribute));
-		
-		match (tiff_dimension_value, exif_dimension_value)
-		{
-			(Some(tiff_dimension_value), Some(exif_dimension_value)) => if tiff_dimension_value == exif_dimension_value
-			{
-				Some(tiff_dimension_value)
-			}
-			else
-			{
-				collated.push(error(tiff_dimension_value, exif_dimension_value));
-				None
-			}
-			
-			_ => None,
-		}
-	}
-	
 	// TODO: Use this to set Iptc4xmpExt:MaxAvailWidth
 	let pixel_x = width_or_height(&mut collated, &Description, xml_name!(tiff, "ImageLength"), xml_name!(exif, "PixelXDimension"), TiffWidthDoesNotMatchExifWidth);
 	
 	// TODO: Use this to set Iptc4xmpExt:MaxAvailHeight
 	let pixel_y = width_or_height(&mut collated, &Description, xml_name!(tiff, "ImageWidth"), xml_name!(exif, "PixelYDimension"), TiffHeightDoesNotMatchExifHeight);
 	
-	let document_identifier =
-	{
-		let original_document_identifier = collated.validate(Description.get_attribute_or_error::<XmpUniversallyUniqueIdentifier>(xml_name!(xmpMM, "OriginalDocumentID")));
-		let document_identifier = collated.validate(Description.get_attribute_or_error::<XmpUniversallyUniqueIdentifier>(xml_name!(xmpMM, "DocumentID")));
-		
-		match (original_document_identifier, document_identifier)
-		{
-			(Some(original_document_identifier), Some(document_identifier)) => if original_document_identifier == document_identifier
-			{
-				Some(document_identifier)
-			}
-			else
-			{
-				collated.push(OriginalDocumentIdentifierDoesNotMatchDocumentIdentifier { original_document_identifier, document_identifier });
-				None
-			}
-			
-			_ => None,
-		}
-	};
+	let document_identifier = document_identifier(&mut collated, &Description);
 	
 	/*
 		TODO: For Canon 200mm, add in.
-		   exifEX:LensModel="CANON FD.200mm F2.8"
-		   aux:Lens="CANON FD.200mm F2.8"
+		   exifEX:LensModel="CANON FD 200mm F2.8"
+		   aux:Lens="CANON FD 200mm F2.8"
 		   aux:LensSerialNumber="33574"
-		   aux:LensInfo="XXX"
+		   aux:LensInfo="200/1 200/1 28/10 28/10"
+		   exif:FNumber="28/10" ??
+		   exif:FocalLength="200"
+		   exif:FocalLengthIn35mmFilm="400"
 	 */
 	collated.check(Description.has_attribute_with_any_value::<&str>(xml_name!(aux, "LensSerialNumber")));
-	collated.check(Description.has_attribute_with_any_value::<&str>(xml_name!(aux, "LensInfo"))); // TODO: Parse as "45/1 45/1 18/10 18/10"
-	collated.check(Description.has_attribute_with_any_value::<Option<NonZeroU16>>(xml_name!(exif, "FocalLengthIn35mmFilm"))); // TODO: Verify value matches lens, etc and also exif:FocalLength
-	let lens_model =
-	{
-		let exifEx_lens_model = collated.validate(Description.get_attribute_or_error::<&str>(xml_name!(exifEX, "LensModel")));
-		let aux_lens_model = collated.validate(Description.get_attribute_or_error::<&str>(xml_name!(aux, "Lens")));
-		
-		match (exifEx_lens_model, aux_lens_model)
-		{
-			(Some(exifEx_lens_model), Some(aux_lens_model)) => if exifEx_lens_model == aux_lens_model
-			{
-				Some(exifEx_lens_model)
-			}
-			else
-			{
-				collated.push(MismatchedLensModels { exifEx_lens_model: exifEx_lens_model.to_string(), aux_lens_model: aux_lens_model.to_string() });
-				None
-			},
-			
-			_ => None,
-		}
-	};
+	collated.check(Description.has_attribute_with_any_value::<LensInformation>(xml_name!(aux, "LensInfo")));
+	collated.check(Description.has_attribute_with_any_value::<NonZeroUnsignedTiffRational>(xml_name!(exif, "FocalLength")));
+	collated.check(Description.has_attribute_with_any_value::<Option<NonZeroU16>>(xml_name!(exif, "FocalLengthIn35mmFilm"))); // TODO: Verify value matches lens, etc and also exif:FocalLength and is within LensInfo, too!
+	// TODO: exif:ExposureTime (eg 1/400)
+	// ShutterSpeedValue Tv = -log2 (exposure time).
+	let lens_model = lens_model(&mut collated, &Description);
+	const MicroFourThirdsCropFactor: NonZeroUnsignedTiffRational = NonZeroUnsignedTiffRational::from(new_non_zero_u32(2));
+	lens_focal_length_and_aperture(&mut collated, &Description, MicroFourThirdsCropFactor);
 	
 	let photoshop_created_date = collated.validate(Description.get_attribute_or_error::<XmpDateTime>(xml_name!(photoshop, "DateCreated")));
 	let xmp_create_date = collated.validate(Description.get_attribute_or_error::<XmpDateTime>(xml_name!(xmp, "CreateDate")));
@@ -235,25 +137,36 @@ fn validate(xml_document: XmlDocument) -> Result<(), XmpOutcomeOfValidationError
 	let xmp_metadata_date = collated.validate(Description.get_attribute_or_error::<XmpDateTime>(xml_name!(xmp, "MetadataDate")));
 	let exif_date_original = collated.validate(Description.get_attribute_or_error::<XmpDateTime>(xml_name!(exif, "DateTimeOriginal")));
 	
+	collated.check(Description.does_not_have_attribute(xml_name!(tiff, "Artist")));
+	collated.check(Description.does_not_have_attribute(xml_name!(tiff, "Copyright")));
+	collated.check(Description.does_not_have_attribute(xml_name!(tiff, "DateTime")));
+	collated.check(Description.does_not_have_attribute(xml_name!(tiff, "ImageDescription")));
+	collated.check(Description.does_not_have_attribute(xml_name!(tiff, "Software")));
+	collated.check(Description.does_not_have_attribute(xml_name!(exif, "DateTimeDigitized")));
+	// TODO xmpDM:* xmpTPg:*, which in xmpMM?
+	// photoshop:SupplementalCategories (set of category codes; legacy; not sure how codes are separated)
+	// photoshop:Category (could be parsed; 3 ASCII characters; legacy)
 	collated.check(Description.get_attribute::<XmpRating>(xml_name!(xmp, "Rating")));
 	collated.check(Description.get_attribute::<XmpLabel>(xml_name!(xmp, "Label")));
-	
+	collated.check(xmpmeta.has_attribute_with_any_value::<&str>(xml_name!(x, "xmptk"))); // TODO: Parse this value?
+	collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(dc, "format"), "image/x-olympus-raw"));
+	collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(rdf, "about"), ""));
+	collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(exif, "ExifVersion"), "0230"));
 	collated.check(Description.has_attribute_with_any_value::<&str>(xml_name!(tiff, "Make")));
 	collated.check(Description.has_attribute_with_any_value::<&str>(xml_name!(tiff, "Model")));
 	collated.check(Description.has_attribute_with_any_value::<&str>(xml_name!(aux, "SerialNumber")));
 	collated.check(Description.has_attribute_with_any_value::<&str>(xml_name!(xmp, "CreatorTool")));
-	collated.check(Description.has_attribute_with_any_value::<TiffRational>(xml_name!(aux, "FlashCompensation")));
+	collated.check(Description.has_attribute_with_any_value::<Urgency>(xml_name!(photoshop, "Urgency")));
+	collated.check(Description.has_attribute_with_any_value::<UnsignedTiffRational>(xml_name!(aux, "FlashCompensation")));
 	collated.check(Description.has_attribute_with_any_value::<ExifSceneCaptureType>(xml_name!(exif, "SceneCaptureType")));
-	
-	
 	collated.check(Description.has_attribute_with_expected_value::<PhotoshopColorMode>(xml_name!(photoshop, "ColorMode"), PhotoshopColorMode::RgbColor));
 	collated.check(Description.has_attribute_with_expected_value::<XmpUniversallyUniqueIdentifier>(xml_name!(photoshop, "EmbeddedXMPDigest"), XmpUniversallyUniqueIdentifier::Zero));
+	collated.check(Description.has_attribute_with_expected_value::<bool>(xml_name!(xmpRights, "Marked"), true));
+	collated.check(Description.has_attribute_with_expected_value::<IptcDigitalSourceType>(xml_name!(Iptc4xmpExt, "DigitalSourceType"), IptcDigitalSourceType::OriginalDigitalCapture));
 	
 	// Not so much checks as data that should be present, or, for creator details, should be complete.
 	{
 		const PhotographerProperName: &str = "Raphael James Cohn";
-		collated.check(Description.has_attribute_with_expected_value::<bool>(xml_name!(xmpRights, "Marked"), true));
-		collated.check(Description.has_attribute_with_expected_value::<IptcDigitalSourceType>(xml_name!(Iptc4xmpExt, "DigitalSourceType"), IptcDigitalSourceType::OriginalDigitalCapture));
 		collated.check(Description.has_attribute_with_expected_value::<PlusPropertyReleaseStatus>(xml_name!(plus, "PropertyReleaseStatus"), PlusPropertyReleaseStatus::NotApplicable));
 		collated.check(Description.has_attribute_with_expected_value::<PlusModelReleaseStatus>(xml_name!(plus, "ModelReleaseStatus"), PlusModelReleaseStatus::NotApplicable));
 		collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(photoshop, "AuthorsPosition"), "Photographer"));
@@ -280,6 +193,7 @@ fn validate(xml_document: XmlDocument) -> Result<(), XmpOutcomeOfValidationError
 	// TODO: Seq + li with text
 	// TODO: Alt + xml:lang with text
 	// TODO: Bag + li with properties but no text
+	// TODO: Should not be present photoshop:TextLayers
 	
    /*
    
@@ -293,19 +207,15 @@ fn validate(xml_document: XmlDocument) -> Result<(), XmpOutcomeOfValidationError
    Iptc4xmpCore:Location="Addingham Churchyard"
    photoshop:City="Addingham"
    photoshop:State="North Yorkshire"
-   photoshop:Country="United Kingdom of Great Britain and Northern Ireland (the)"
+   photoshop:Country="United Kingdom of Great Britain and Northern Ireland (the)" #TODO: Use the official ISO name here
    Iptc4xmpCore:CountryCode="GBR"
    
    TODO: Are these lens properties?
-   exif:FNumber="18/10"
-   exif:FocalLength="45/1"
-   exif:FocalLengthIn35mmFilm="90"
+   
    // 0 means unknown. SHORT.
    
    exif:ExposureTime="1/4000"
    exif:ShutterSpeedValue="11965784/1000000"
-   exif:ApertureValue="1695994/1000000"
-   exif:MaxApertureValue="434/256"
    exif:ExposureProgram="3"
    exif:SensitivityType="1"
    exif:ExposureBiasValue="0/10"
@@ -336,14 +246,13 @@ fn validate(xml_document: XmlDocument) -> Result<(), XmpOutcomeOfValidationError
    </rdf:Alt>
    </dc:rights>
    
-   TODO: Can be oj
    <Iptc4xmpExt:LocationCreated>
     <rdf:Bag>
      <rdf:li
       Iptc4xmpExt:ProvinceState="North Yorkshire"
       Iptc4xmpExt:CountryName="United Kingdom of Great Britain and Northern Ireland (the)"
-      Iptc4xmpExt:CountryCode="GBR"
-      Iptc4xmpExt:WorldRegion="Europe"
+      Iptc4xmpExt:CountryCode="GBR" TODO: Validate this is an ISO 3-digit code [2 digit is permitted]; there are also some non-standard extension codes eg for england
+      Iptc4xmpExt:WorldRegion="Europe" TODO: Validate world region is one of the values in https://cv.iptc.org/newscodes/worldregion/ (Antarctica Europe Asia North America Oceania South America Africa World)
       Iptc4xmpExt:Sublocation="Addingham Churchyard"
       Iptc4xmpExt:City="Addingham"/>
     </rdf:Bag>
@@ -352,12 +261,12 @@ fn validate(xml_document: XmlDocument) -> Result<(), XmpOutcomeOfValidationError
    <Iptc4xmpExt:LocationShown>
     <rdf:Bag>
      <rdf:li
+      Iptc4xmpExt:Sublocation="Addingham Churchyard"
+      Iptc4xmpExt:City="Addingham"
       Iptc4xmpExt:ProvinceState="North Yorkshire"
       Iptc4xmpExt:CountryName="United Kingdom of Great Britain and Northern Ireland (the)"
       Iptc4xmpExt:CountryCode="GBR"
-      Iptc4xmpExt:WorldRegion="Europe"
-      Iptc4xmpExt:Sublocation="Addingham Churchyard"
-      Iptc4xmpExt:City="Addingham"/>
+      Iptc4xmpExt:WorldRegion="Europe"/> TODO: Validate world region is one of the values in https://cv.iptc.org/newscodes/worldregion/ (Antarctica Europe Asia North America Oceania South America Africa World)
     </rdf:Bag>
    </Iptc4xmpExt:LocationShown>
    
