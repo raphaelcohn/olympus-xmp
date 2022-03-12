@@ -29,16 +29,24 @@
 
 
 use arrayvec as _;
+use gcd as _;
 use memchr as _;
 use swiss_army_knife as _;
 use xml as _;
 
 
-use std::num::{NonZeroU16, NonZeroU32};
 use swiss_army_knife::non_zero::new_non_zero_u32;
 use olympus_xmp::xml_name;
 use olympus_xmp::xml::XmlDocument;
-use olympus_xmp::xml::XmlName;
+use olympus_xmp::xmp::{ExifGainControl, ExifResolutionUnit, ExifSaturation};
+use olympus_xmp::xmp::ExifMeteringMode;
+use olympus_xmp::xmp::ExifLightSource;
+use olympus_xmp::xmp::ExifCustomRendered;
+use olympus_xmp::xmp::ExifContrastOrSharpness;
+use olympus_xmp::xmp::ExifExposureMode;
+use olympus_xmp::xmp::ExifExposureProgram;
+use olympus_xmp::xmp::ExifSensitivityType;
+use olympus_xmp::xmp::ExifFileSource;
 use olympus_xmp::xmp::ExifSceneCaptureType;
 use olympus_xmp::xmp::IptcDigitalSourceType;
 use olympus_xmp::xmp::PlusModelReleaseStatus;
@@ -50,24 +58,28 @@ use olympus_xmp::xmp::namespaces::Iptc4xmpExt;
 use olympus_xmp::xmp::namespaces::aux;
 use olympus_xmp::xmp::namespaces::dc;
 use olympus_xmp::xmp::namespaces::exif;
-use olympus_xmp::xmp::namespaces::exifEX;
 use olympus_xmp::xmp::namespaces::photoshop;
 use olympus_xmp::xmp::namespaces::plus;
 use olympus_xmp::xmp::namespaces::rdf;
 use olympus_xmp::xmp::namespaces::tiff;
 use olympus_xmp::xmp::namespaces::x;
 use olympus_xmp::xmp::namespaces::xmp;
-use olympus_xmp::xmp::namespaces::xmpMM;
 use olympus_xmp::xmp::namespaces::xmpRights;
 use olympus_xmp::xmp::PhotoshopColorMode;
 use olympus_xmp::xmp::XmpLabel;
 use olympus_xmp::xmp::XmpRating;
 use olympus_xmp::xmp::date_time::XmpDateTime;
-use olympus_xmp::xmp::lens_information::LensInformation;
-use olympus_xmp::xmp::tiff_rational::{NonZeroUnsignedTiffRational, UnsignedTiffRational};
+use olympus_xmp::xmp::exif_version::ExifVersion;
+use olympus_xmp::xmp::iso_country::Iso3166Dash1AlphaCountryCode;
+use olympus_xmp::xmp::iso_country::Iso3166Dash1Country;
+use olympus_xmp::xmp::non_empty_str::NonEmptyStr;
+use olympus_xmp::xmp::tiff_rational::NonZeroUnsignedTiffRational;
+use olympus_xmp::xmp::tiff_rational::UnsignedTiffRational;
 use olympus_xmp::xmp::universally_unique_identifier::XmpUniversallyUniqueIdentifier;
 use olympus_xmp::xmp::urgency::Urgency;
-use crate::binary::{lens_focal_length_and_aperture, lens_model, width_or_height};
+use crate::binary::lens_model;
+use crate::binary::lens_focal_length_and_aperture;
+use crate::binary::width_or_height;
 use crate::binary::document_identifier;
 use crate::binary::Collated;
 use crate::binary::XmpOutcomeOfValidationError;
@@ -103,10 +115,11 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
 	
 	let mut collated = Collated::default();
 	
-	// TODO: Use this to set Iptc4xmpExt:MaxAvailWidth
-	let pixel_x = width_or_height(&mut collated, &Description, xml_name!(tiff, "ImageLength"), xml_name!(exif, "PixelXDimension"), TiffWidthDoesNotMatchExifWidth);
+	// TODO: Read this first, as some fields will not be present; interprete 2.1, 2.2, 2.3x appropriately (tiff, exif, exifEX, aux).
+	collated.check(Description.has_attribute_with_expected_value::<ExifVersion>(xml_name!(exif, "ExifVersion"), ExifVersion::Version_2_30));
 	
-	// TODO: Use this to set Iptc4xmpExt:MaxAvailHeight
+	// TODO: Use thse to set Iptc4xmpExt:MaxAvailWidth and Iptc4xmpExt:MaxAvailHeight.
+	let pixel_x = width_or_height(&mut collated, &Description, xml_name!(tiff, "ImageLength"), xml_name!(exif, "PixelXDimension"), TiffWidthDoesNotMatchExifWidth);
 	let pixel_y = width_or_height(&mut collated, &Description, xml_name!(tiff, "ImageWidth"), xml_name!(exif, "PixelYDimension"), TiffHeightDoesNotMatchExifHeight);
 	
 	let document_identifier = document_identifier(&mut collated, &Description);
@@ -121,14 +134,9 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
 		   exif:FocalLength="200"
 		   exif:FocalLengthIn35mmFilm="400"
 	 */
-	collated.check(Description.has_attribute_with_any_value::<&str>(xml_name!(aux, "LensSerialNumber")));
-	collated.check(Description.has_attribute_with_any_value::<LensInformation>(xml_name!(aux, "LensInfo")));
-	collated.check(Description.has_attribute_with_any_value::<NonZeroUnsignedTiffRational>(xml_name!(exif, "FocalLength")));
-	collated.check(Description.has_attribute_with_any_value::<Option<NonZeroU16>>(xml_name!(exif, "FocalLengthIn35mmFilm"))); // TODO: Verify value matches lens, etc and also exif:FocalLength and is within LensInfo, too!
-	// TODO: exif:ExposureTime (eg 1/400)
-	// ShutterSpeedValue Tv = -log2 (exposure time).
+	collated.check(Description.has_attribute_with_any_value::<NonEmptyStr>(xml_name!(aux, "LensSerialNumber")));
 	let lens_model = lens_model(&mut collated, &Description);
-	const MicroFourThirdsCropFactor: NonZeroUnsignedTiffRational = NonZeroUnsignedTiffRational::from(new_non_zero_u32(2));
+	let MicroFourThirdsCropFactor: NonZeroUnsignedTiffRational = NonZeroUnsignedTiffRational::from(new_non_zero_u32(2));
 	lens_focal_length_and_aperture(&mut collated, &Description, MicroFourThirdsCropFactor);
 	
 	let photoshop_created_date = collated.validate(Description.get_attribute_or_error::<XmpDateTime>(xml_name!(photoshop, "DateCreated")));
@@ -144,49 +152,73 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
 	collated.check(Description.does_not_have_attribute(xml_name!(tiff, "Software")));
 	collated.check(Description.does_not_have_attribute(xml_name!(exif, "DateTimeDigitized")));
 	// TODO xmpDM:* xmpTPg:*, which in xmpMM?
-	// photoshop:SupplementalCategories (set of category codes; legacy; not sure how codes are separated)
-	// photoshop:Category (could be parsed; 3 ASCII characters; legacy)
+	// TODO photoshop:SupplementalCategories (set of category codes; legacy; not sure how codes are separated)
+	// TODO photoshop:Category (could be parsed; 3 ASCII characters; legacy)
 	collated.check(Description.get_attribute::<XmpRating>(xml_name!(xmp, "Rating")));
 	collated.check(Description.get_attribute::<XmpLabel>(xml_name!(xmp, "Label")));
-	collated.check(xmpmeta.has_attribute_with_any_value::<&str>(xml_name!(x, "xmptk"))); // TODO: Parse this value?
-	collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(dc, "format"), "image/x-olympus-raw"));
-	collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(rdf, "about"), ""));
-	collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(exif, "ExifVersion"), "0230"));
-	collated.check(Description.has_attribute_with_any_value::<&str>(xml_name!(tiff, "Make")));
-	collated.check(Description.has_attribute_with_any_value::<&str>(xml_name!(tiff, "Model")));
-	collated.check(Description.has_attribute_with_any_value::<&str>(xml_name!(aux, "SerialNumber")));
-	collated.check(Description.has_attribute_with_any_value::<&str>(xml_name!(xmp, "CreatorTool")));
+	let _ = collated.validate(Description.get_attribute::<ExifMeteringMode>(xml_name!(exif, "MeteringMode"))).unwrap_or_default();
+	let _ = collated.validate(Description.get_attribute::<ExifLightSource>(xml_name!(exif, "LightSource"))).unwrap_or_default();
+	let _ = collated.validate(Description.get_attribute::<ExifSaturation>(xml_name!(exif, "Saturation"))).unwrap_or_default();
+	let _ = collated.validate(Description.get_attribute::<ExifExposureProgram>(xml_name!(exif, "ExposureProgram"))).unwrap_or_default();
+	let _ = collated.validate(Description.get_attribute::<ExifContrastOrSharpness>(xml_name!(exif, "Contrast"))).unwrap_or_default();
+	let _ = collated.validate(Description.get_attribute::<ExifContrastOrSharpness>(xml_name!(exif, "Sharpness"))).unwrap_or_default();
+	let _ = collated.validate(Description.get_attribute::<ExifSceneCaptureType>(xml_name!(exif, "SceneCaptureType"))).unwrap_or_default();
+	let _ = collated.validate(Description.get_attribute::<ExifFileSource>(xml_name!(exif, "FileSource"))).unwrap_or_default();
+	let _ = collated.validate(Description.get_attribute::<ExifGainControl>(xml_name!(exif, "GainControl"))).unwrap_or_default();
+	let _ = collated.validate(Description.get_attribute::<ExifResolutionUnit>(xml_name!(exif, "FocalPlaneResolutionUnit"))).unwrap_or_default();
+	collated.check(xmpmeta.has_attribute_with_any_value::<NonEmptyStr>(xml_name!(x, "xmptk"))); // TODO: Parse this value?
+	collated.check(Description.has_attribute_with_any_value::<ExifCustomRendered>(xml_name!(exif, "CustomRendered")));
+	collated.check(Description.has_attribute_with_any_value::<NonZeroUnsignedTiffRational>(xml_name!(exif, "FocalPlaneXResolution")));
+	collated.check(Description.has_attribute_with_any_value::<NonZeroUnsignedTiffRational>(xml_name!(exif, "FocalPlaneYResolution")));
+	collated.check(Description.has_attribute_with_any_value::<NonZeroUnsignedTiffRational>(xml_name!(exif, "ExposureTime")));
+	collated.check(Description.has_attribute_with_any_value::<ExifExposureMode>(xml_name!(exif, "ExposureMode")));
+	collated.check(Description.has_attribute_with_any_value::<ExifSensitivityType>(xml_name!(exif, "SensitivityType")));
+	collated.check(Description.has_attribute_with_any_value::<NonEmptyStr>(xml_name!(xmp, "CreatorTool")));
 	collated.check(Description.has_attribute_with_any_value::<Urgency>(xml_name!(photoshop, "Urgency")));
+	collated.check(Description.has_attribute_with_any_value::<NonEmptyStr>(xml_name!(tiff, "Make")));
+	collated.check(Description.has_attribute_with_any_value::<NonEmptyStr>(xml_name!(tiff, "Model")));
+	collated.check(Description.has_attribute_with_any_value::<NonEmptyStr>(xml_name!(aux, "SerialNumber"))); // Body serial number.
 	collated.check(Description.has_attribute_with_any_value::<UnsignedTiffRational>(xml_name!(aux, "FlashCompensation")));
-	collated.check(Description.has_attribute_with_any_value::<ExifSceneCaptureType>(xml_name!(exif, "SceneCaptureType")));
+	collated.check(Description.has_attribute_with_any_value::<UnsignedTiffRational>(xml_name!(exif, "ExifWhiteBalanceMode")));
+	collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(dc, "format"), NonEmptyStr("image/x-olympus-raw")));
+	collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(rdf, "about"), ""));
 	collated.check(Description.has_attribute_with_expected_value::<PhotoshopColorMode>(xml_name!(photoshop, "ColorMode"), PhotoshopColorMode::RgbColor));
 	collated.check(Description.has_attribute_with_expected_value::<XmpUniversallyUniqueIdentifier>(xml_name!(photoshop, "EmbeddedXMPDigest"), XmpUniversallyUniqueIdentifier::Zero));
 	collated.check(Description.has_attribute_with_expected_value::<bool>(xml_name!(xmpRights, "Marked"), true));
 	collated.check(Description.has_attribute_with_expected_value::<IptcDigitalSourceType>(xml_name!(Iptc4xmpExt, "DigitalSourceType"), IptcDigitalSourceType::OriginalDigitalCapture));
+
+	// TODO: Overwrite with location shown data.
+	{
+		collated.check(Description.has_attribute_with_any_value::<NonEmptyStr>(xml_name!(Iptc4xmpCore, "Location")));
+		collated.check(Description.has_attribute_with_any_value::<NonEmptyStr>(xml_name!(photoshop, "City")));
+		collated.check(Description.has_attribute_with_any_value::<NonEmptyStr>(xml_name!(photoshop, "State")));
+		collated.check(Description.has_attribute_with_any_value::<Iso3166Dash1Country>(xml_name!(photoshop, "Country")));
+		collated.check(Description.has_attribute_with_any_value::<Iso3166Dash1AlphaCountryCode>(xml_name!(Iptc4xmpCore, "CountryCode")));
+	}
 	
 	// Not so much checks as data that should be present, or, for creator details, should be complete.
 	{
-		const PhotographerProperName: &str = "Raphael James Cohn";
+		const PhotographerProperName: NonEmptyStr = NonEmptyStr("Raphael James Cohn");
 		collated.check(Description.has_attribute_with_expected_value::<PlusPropertyReleaseStatus>(xml_name!(plus, "PropertyReleaseStatus"), PlusPropertyReleaseStatus::NotApplicable));
 		collated.check(Description.has_attribute_with_expected_value::<PlusModelReleaseStatus>(xml_name!(plus, "ModelReleaseStatus"), PlusModelReleaseStatus::NotApplicable));
-		collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(photoshop, "AuthorsPosition"), "Photographer"));
-		collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(photoshop, "Credit"), PhotographerProperName));
-		collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(photoshop, "Source"), PhotographerProperName));
-		collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(photoshop, "CaptionWriter"), PhotographerProperName));
+		collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(photoshop, "AuthorsPosition"), NonEmptyStr("Photographer")));
+		collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(photoshop, "Credit"), PhotographerProperName));
+		collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(photoshop, "Source"), PhotographerProperName));
+		collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(photoshop, "CaptionWriter"), PhotographerProperName));
 		
 		// TODO: Create this from make and model?
-		collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(photoshop, "Instructions"), "Original RAW capture Olympus E-PL8"));
+		collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(photoshop, "Instructions"), NonEmptyStr("Original RAW capture Olympus E-PL8")));
 		
 		if let Some(CreatorContactInfo) = collated.validate(Description.child(xml_name!(Iptc4xmpCore, "CreatorContactInfo")))
 		{
-			collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(Iptc4xmpCore, "CiAdrExtadr"), "6 Eller Mews"));
-			collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(Iptc4xmpCore, "CiAdrCity"), "Skipton"));
-			collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(Iptc4xmpCore, "CiAdrRegion"), "North Yorkshire"));
-			collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(Iptc4xmpCore, "CiAdrPcode"), "BD23 2TG"));
-			collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(Iptc4xmpCore, "CiAdrCtry"), "United Kingdom of Great Britain and Northern Ireland (the)"));
-			collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(Iptc4xmpCore, "CiTelWork"), "+44 7590 675 756")); // TODO: Normalise this without spaces.
-			collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(Iptc4xmpCore, "CiEmailWork"), "raphael.cohn@stormmq.com"));
-			collated.check(Description.has_attribute_with_expected_value::<&str>(xml_name!(Iptc4xmpCore, "CiUrlWork"), "https://photos.stormmq.com/"));
+			collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(Iptc4xmpCore, "CiAdrExtadr"), NonEmptyStr("6 Eller Mews")));
+			collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(Iptc4xmpCore, "CiAdrCity"), NonEmptyStr("Skipton")));
+			collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(Iptc4xmpCore, "CiAdrRegion"), NonEmptyStr("North Yorkshire")));
+			collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(Iptc4xmpCore, "CiAdrPcode"), NonEmptyStr("BD23 2TG")));
+			collated.check(Description.has_attribute_with_expected_value::<Iso3166Dash1Country>(xml_name!(Iptc4xmpCore, "CiAdrCtry"), Iso3166Dash1Country::UNITED_KINGDOM_OF_GREAT_BRITAIN_AND_NORTHERN_IRELAND));
+			collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(Iptc4xmpCore, "CiTelWork"), NonEmptyStr("+44 7590 675 756"))); // TODO: Normalise this without spaces.
+			collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(Iptc4xmpCore, "CiEmailWork"), NonEmptyStr("raphael.cohn@stormmq.com")));
+			collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(Iptc4xmpCore, "CiUrlWork"), NonEmptyStr("https://photos.stormmq.com/")));
 		}
 	}
 	
@@ -210,29 +242,33 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
    photoshop:Country="United Kingdom of Great Britain and Northern Ireland (the)" #TODO: Use the official ISO name here
    Iptc4xmpCore:CountryCode="GBR"
    
-   TODO: Are these lens properties?
+	
+	// TODO: To do the comparison, round to two decimal places; consider expressing f-number roundings to 1 dp if above 1 and 2 dp if below 1 (eg f/0.95).
+	// This is similar to the 'normal' accuracy used in Exif.
+	
+	// TODO: These aperture values are in APEX, and correlate to f-number.
+	// TODO: exif:ApertureValue="1695994/1000000"
+	// TODO: exif:MaxApertureValue="434/256"	=> Smallest (larger number) f-number of the lens.
+	//  	logb(x / y) = logb(x) - logb(y)
+	// Av=log₂A², where Av is ApertureValue and A is f-number
+	// (A²) = 2^Av
+	// A = SqRoot(2^Av)
+	
+	// We can back-calculate from the rounded number, I suppose.
+	// https://www.rapidtables.com/math/algebra/Logarithm.html
+	xxxxx;
    
-   // 0 means unknown. SHORT.
+   exif:ApertureValue="1695994/1000000"
+   Av=log₂A², where Av is ApertureValue and A is f-number
    
-   exif:ExposureTime="1/4000"
-   exif:ShutterSpeedValue="11965784/1000000"
-   exif:ExposureProgram="3"
-   exif:SensitivityType="1"
-   exif:ExposureBiasValue="0/10"
-   exif:MeteringMode="5"
-   exif:LightSource="9"
-   exif:FileSource="3"
-   exif:CustomRendered="0"
-   exif:ExposureMode="0"
-   exif:WhiteBalance="1"
-   exif:GainControl="1"		0,1,2,3,4
-   exif:Contrast="0"
-   exif:Saturation="0"
-   exif:Sharpness="0"
-   exif:DigitalZoomRatio="100/100"
-   exif:FocalPlaneXResolution="87196351/32768"
-   exif:FocalPlaneYResolution="87196351/32768"
-   exif:FocalPlaneResolutionUnit="3"
+   exif:MaxApertureValue="434/256" 			=> Smallest (larger number) f-number of the lens as RATIONAL APEX value.
+   
+   exif:ShutterSpeedValue="11965784/1000000"	SRATIONAL APEX	Numerator of 0xFFFF_FFFF means infinity for some fields; 0 means unknown for some fields (surely this should be impossible for this particular field).
+   ShutterSpeedValue = -log₂(exif:ExposureTime).
+   
+   exif:ExposureBiasValue="0/10"	SRATIONAL APEX
+   
+   exif:DigitalZoomRatio="100/100"	RATIONAL	numerator=0 => digital zoom not used
    
    <dc:creator>
    <rdf:Seq>
@@ -252,7 +288,7 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
       Iptc4xmpExt:ProvinceState="North Yorkshire"
       Iptc4xmpExt:CountryName="United Kingdom of Great Britain and Northern Ireland (the)"
       Iptc4xmpExt:CountryCode="GBR" TODO: Validate this is an ISO 3-digit code [2 digit is permitted]; there are also some non-standard extension codes eg for england
-      Iptc4xmpExt:WorldRegion="Europe" TODO: Validate world region is one of the values in https://cv.iptc.org/newscodes/worldregion/ (Antarctica Europe Asia North America Oceania South America Africa World)
+      Iptc4xmpExt:WorldRegion="Europe"
       Iptc4xmpExt:Sublocation="Addingham Churchyard"
       Iptc4xmpExt:City="Addingham"/>
     </rdf:Bag>
@@ -265,8 +301,8 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
       Iptc4xmpExt:City="Addingham"
       Iptc4xmpExt:ProvinceState="North Yorkshire"
       Iptc4xmpExt:CountryName="United Kingdom of Great Britain and Northern Ireland (the)"
-      Iptc4xmpExt:CountryCode="GBR"
-      Iptc4xmpExt:WorldRegion="Europe"/> TODO: Validate world region is one of the values in https://cv.iptc.org/newscodes/worldregion/ (Antarctica Europe Asia North America Oceania South America Africa World)
+      Iptc4xmpExt:CountryCode="GBR" (2 or 3 digit is permitted)
+      Iptc4xmpExt:WorldRegion="Europe"/> (Type done)
     </rdf:Bag>
    </Iptc4xmpExt:LocationShown>
    

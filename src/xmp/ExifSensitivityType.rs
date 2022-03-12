@@ -2,34 +2,39 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-/// A scene capture type.
+/// A sensitivity type.
+///
+/// See ISO 12232.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 #[repr(u16)]
-pub enum ExifSceneCaptureType
+pub enum ExifSensitivityType
 {
 	#[allow(missing_docs)]
-	Standard = 0,
+	Unknown = 0,
 
-	#[allow(missing_docs)]
-	Landscape = 1,
+	/// Standard Output Sensitivity (SOS).
+	StandardOutputSensitivity = 1,
 
-	#[allow(missing_docs)]
-	Portrait = 2,
+	/// Recommended Expure Index (REI).
+	RecommendedExposureIndex = 2,
 
-	#[allow(missing_docs)]
-	Night = 3,
+	/// ISO speed.
+	IsoSpeed = 3,
+	
+	/// Standard Output Sensitivity (SOS) and Recommended Expure Index (REI).
+	StandardOutputSensitivityAndRecommendedExposureIndex = 4,
+	
+	/// Standard Output Sensitivity (SOS) and ISO speed.
+	StandardOutputSensitivityAndIsoSpeed = 5,
+	
+	/// Recommended Expure Index (REI) and ISO speed.
+	RecommendedExposureIndexAndIsoSpeed = 6,
+	
+	/// Standard Output Sensitivity (SOS), Recommended Expure Index (REI) and ISO speed.
+	StandardOutputSensitivityAndRecommendedExposureIndexAndIsoSpeed = 7,
 }
 
-impl const Default for ExifSceneCaptureType
-{
-	#[inline(always)]
-	fn default() -> Self
-	{
-		ExifSceneCaptureType::Standard
-	}
-}
-
-impl<'a> XmpAttributeValue<'a> for ExifSceneCaptureType
+impl<'a> XmpAttributeValue<'a> for ExifSensitivityType
 {
 	type Error = U16ParseError;
 	
@@ -41,7 +46,7 @@ impl<'a> XmpAttributeValue<'a> for ExifSceneCaptureType
 		let value = u16::from_str(value).map_err(InvalidU16)?;
 		match value
 		{
-			0 ..= 3 => Ok(unsafe { transmute(value) }),
+			0 ..= 7 => Ok(unsafe { transmute(value) }),
 			
 			_ => Err(InvalidValue(value)),
 		}
@@ -50,6 +55,6 @@ impl<'a> XmpAttributeValue<'a> for ExifSceneCaptureType
 	#[inline(always)]
 	fn into_xmp_attribute_value_parse_error(error: Self::Error) -> XmpAttributeValueParseError
 	{
-		XmpAttributeValueParseError::ExifSceneCaptureType(error)
+		XmpAttributeValueParseError::ExifSensitivityType(error)
 	}
 }

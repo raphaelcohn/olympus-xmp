@@ -39,25 +39,20 @@ pub(super) fn lens_focal_length_and_aperture<'a>(collated: &mut Collated, Descri
 	
 	if let Some(lens_information) = collated.validate(Description.get_attribute_or_error::<LensInformation>(xml_name!(aux, "LensInfo")))
 	{
-		if !lens_information.contains_focal_length(focal_length, lens_information)
+		if let Some(focal_length) = focal_length
 		{
-			collated.push(LensInformationDoesNotContainShotFocalLength);
+			if !lens_information.contains_focal_length(focal_length)
+			{
+				collated.push(LensInformationDoesNotContainShotFocalLength);
+			}
 		}
-		if !lens_information.contains_f_number(focal_length, lens_information)
+		
+		if let Some(f_number) = f_number
 		{
-			collated.push(LensInformationDoesNotContainShotFNumber);
+			if !lens_information.could_have_f_number(f_number)
+			{
+				collated.push(LensInformationDoesCouldNotHaveShotFNumber);
+			}
 		}
 	}
-	
-	// TODO: These aperture values are in APEX, and should correlate to f-number somehow.
-	// TODO: exif:ApertureValue="1695994/1000000"
-	// TODO: exif:MaxApertureValue="434/256"	=> Smallest (larger number) f-number of the lens.
-	//  	logb(x / y) = logb(x) - logb(y)
-	// Av=log₂A², where Av is ApertureValue and A is f-number
-	// (A²) = 2^Av
-	// A = SqRoot(2^Av)
-	
-	// We can back-calculate from the rounded number, I suppose.
-	// https://www.rapidtables.com/math/algebra/Logarithm.html
-	xxxxx;
 }

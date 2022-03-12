@@ -9,8 +9,11 @@ use crate::xml::XmlDocumentOrXmlElement;
 use crate::xml::XmlElement;
 use crate::xml::XmlName;
 use date_time::XmpDateTimeParseError;
+use exif_version::ExifVersionParseError;
+use iso_country::Iso3166Dash1AlphaCountryCodeParseError;
 use lens_information::LensInformationParseError;
 use memchr::memrchr;
+use non_empty_str::NonEmptyStrParseError;
 use std::convert::Infallible;
 use std::error;
 use std::fmt;
@@ -33,11 +36,20 @@ use universally_unique_identifier::XmpUniversallyUniqueIdentifierParseError;
 use urgency::UrgencyParseError;
 
 
+
 include!("xml_name.rs");
 
 
 /// Date definition.
 pub mod date_time;
+
+
+/// Exif version.
+pub mod exif_version;
+
+
+/// ISO country and country codes.
+pub mod iso_country;
 
 
 /// Lens information.
@@ -46,6 +58,10 @@ pub mod lens_information;
 
 /// Namespace definitions.
 pub mod namespaces;
+
+
+/// Non-empty str.
+pub mod non_empty_str;
 
 
 /// TIFF RATIONAL definition.
@@ -60,13 +76,27 @@ pub mod urgency;
 pub mod universally_unique_identifier;
 
 
+include!("ExifContrastOrSharpness.rs");
+include!("ExifCustomRendered.rs");
+include!("ExifGainControl.rs");
+include!("ExifExposureMode.rs");
+include!("ExifExposureProgram.rs");
+include!("ExifFileSource.rs");
+include!("ExifLightSource.rs");
+include!("ExifMeteringMode.rs");
+include!("ExifResolutionUnit.rs");
+include!("ExifSaturation.rs");
 include!("ExifSceneCaptureType.rs");
+include!("ExifSensitivityType.rs");
+include!("ExifWhiteBalanceMode.rs");
 include!("I8ParseError.rs");
 include!("IptcDigitalSourceType.rs");
+include!("IptcWorldRegion.rs");
 include!("PhotoshopColorMode.rs");
 include!("PlusModelReleaseStatus.rs");
 include!("PlusPropertyReleaseStatus.rs");
 include!("U8ParseError.rs");
+include!("U16ParseError.rs");
 include!("UnknownStringVariantParseError.rs");
 include!("XmpAttributeValue.rs");
 include!("XmpAttributeValueParseError.rs");

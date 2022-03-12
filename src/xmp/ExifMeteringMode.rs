@@ -2,34 +2,48 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-/// A scene capture type.
+/// A metering mode.
+///
+/// Defaults to `Unknown`.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 #[repr(u16)]
-pub enum ExifSceneCaptureType
+pub enum ExifMeteringMode
 {
 	#[allow(missing_docs)]
-	Standard = 0,
-
+	Unknown = 0,
+	
 	#[allow(missing_docs)]
-	Landscape = 1,
-
+	Average = 1,
+	
 	#[allow(missing_docs)]
-	Portrait = 2,
-
+	CenterWeightedAverage = 2,
+	
 	#[allow(missing_docs)]
-	Night = 3,
+	Spot = 3,
+	
+	#[allow(missing_docs)]
+	MultiSpot = 4,
+	
+	#[allow(missing_docs)]
+	Pattern = 5,
+	
+	#[allow(missing_docs)]
+	Partial = 6,
+	
+	#[allow(missing_docs)]
+	Other = 255,
 }
 
-impl const Default for ExifSceneCaptureType
+impl const Default for ExifMeteringMode
 {
 	#[inline(always)]
 	fn default() -> Self
 	{
-		ExifSceneCaptureType::Standard
+		ExifMeteringMode::Unknown
 	}
 }
 
-impl<'a> XmpAttributeValue<'a> for ExifSceneCaptureType
+impl<'a> XmpAttributeValue<'a> for ExifMeteringMode
 {
 	type Error = U16ParseError;
 	
@@ -41,7 +55,7 @@ impl<'a> XmpAttributeValue<'a> for ExifSceneCaptureType
 		let value = u16::from_str(value).map_err(InvalidU16)?;
 		match value
 		{
-			0 ..= 3 => Ok(unsafe { transmute(value) }),
+			0 ..= 6 | 255 => Ok(unsafe { transmute(value) }),
 			
 			_ => Err(InvalidValue(value)),
 		}
@@ -50,6 +64,6 @@ impl<'a> XmpAttributeValue<'a> for ExifSceneCaptureType
 	#[inline(always)]
 	fn into_xmp_attribute_value_parse_error(error: Self::Error) -> XmpAttributeValueParseError
 	{
-		XmpAttributeValueParseError::ExifSceneCaptureType(error)
+		XmpAttributeValueParseError::ExifMeteringMode(error)
 	}
 }

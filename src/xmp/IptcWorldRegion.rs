@@ -2,54 +2,71 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-/// A scene capture type.
+/// IPTC world region.
+///
+/// One of the values listed in <https://cv.iptc.org/newscodes/worldregion/>.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-#[repr(u16)]
-pub enum ExifSceneCaptureType
+pub enum IptcWorldRegion
 {
 	#[allow(missing_docs)]
-	Standard = 0,
-
+	World,
+	
 	#[allow(missing_docs)]
-	Landscape = 1,
-
+	Africa,
+	
 	#[allow(missing_docs)]
-	Portrait = 2,
-
+	SouthAmerica,
+	
 	#[allow(missing_docs)]
-	Night = 3,
+	Oceania,
+	
+	#[allow(missing_docs)]
+	NorthAmerica,
+	
+	#[allow(missing_docs)]
+	Asia,
+	
+	#[allow(missing_docs)]
+	Europe,
+	
+	#[allow(missing_docs)]
+	Antarctica,
 }
 
-impl const Default for ExifSceneCaptureType
+impl<'a> XmpAttributeValue<'a> for IptcWorldRegion
 {
-	#[inline(always)]
-	fn default() -> Self
-	{
-		ExifSceneCaptureType::Standard
-	}
-}
-
-impl<'a> XmpAttributeValue<'a> for ExifSceneCaptureType
-{
-	type Error = U16ParseError;
+	type Error = UnknownStringVariantParseError;
 	
 	#[inline(always)]
-	fn parse(value: &'a str) -> Result<Self, Self::Error>
+	fn parse(raw: &'a str) -> Result<Self, Self::Error>
 	{
-		use U16ParseError::*;
+		use IptcWorldRegion::*;
 		
-		let value = u16::from_str(value).map_err(InvalidU16)?;
-		match value
+		match raw
 		{
-			0 ..= 3 => Ok(unsafe { transmute(value) }),
+			"World" => Ok(World),
 			
-			_ => Err(InvalidValue(value)),
+			"Africa" => Ok(Africa),
+			
+			"South America" => Ok(SouthAmerica),
+			
+			"Oceania" => Ok(Oceania),
+			
+			"North America" => Ok(NorthAmerica),
+			
+			"Asia" => Ok(Asia),
+			
+			"Europe" => Ok(Europe),
+			
+			"Antarctica" => Ok(Antarctica),
+			
+			_ => Err(UnknownStringVariantParseError::from(raw)),
 		}
 	}
 	
 	#[inline(always)]
 	fn into_xmp_attribute_value_parse_error(error: Self::Error) -> XmpAttributeValueParseError
 	{
-		XmpAttributeValueParseError::ExifSceneCaptureType(error)
+		XmpAttributeValueParseError::IptcWorldRegion(error)
 	}
 }

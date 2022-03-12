@@ -2,18 +2,18 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-/// An u8 parse error.
+/// An Exif version parse error.
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub enum U8ParseError
+pub enum ExifVersionFieldParseError
 {
 	#[allow(missing_docs)]
-	InvalidU8(ParseIntError),
+	FieldIsNotAscii(u8),
 	
 	#[allow(missing_docs)]
-	InvalidValue(u8),
+	FieldIsNotDecimalDigit(u8),
 }
 
-impl Display for U8ParseError
+impl Display for ExifVersionFieldParseError
 {
 	#[inline(always)]
 	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
@@ -22,17 +22,17 @@ impl Display for U8ParseError
 	}
 }
 
-impl error::Error for U8ParseError
+impl error::Error for ExifVersionFieldParseError
 {
 	#[inline(always)]
 	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		use U8ParseError::*;
+		use ExifVersionFieldParseError::*;
 		match self
 		{
-			InvalidU8(cause) => Some(cause),
+			FieldIsNotAscii(_) => None,
 			
-			InvalidValue(_) => None,
+			FieldIsNotDecimalDigit(_) => None,
 		}
 	}
 }

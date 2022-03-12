@@ -84,6 +84,32 @@ impl<'a> XmpAttributeValue<'a> for LensInformation
 
 impl LensInformation
 {
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub fn contains_focal_length(&self, focal_length: NonZeroUnsignedTiffRational) -> bool
+	{
+		use LensInformation::*;
+		match self
+		{
+			Prime(prime) => prime.focal_length_in_millimetres == focal_length,
+			
+			Zoom { minimum, maximum} => minimum.focal_length_in_millimetres <= focal_length && maximum.focal_length_in_millimetres >= focal_length,
+		}
+	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub fn could_have_f_number(&self, f_number: NonZeroUnsignedTiffRational) -> bool
+	{
+		use LensInformation::*;
+		match self
+		{
+			Prime(prime) => prime.widest_aperture_at_focal_length_in_millimetres <= f_number,
+			
+			Zoom { minimum, maximum} => minimum.widest_aperture_at_focal_length_in_millimetres <= f_number && maximum.widest_aperture_at_focal_length_in_millimetres <= f_number,
+		}
+	}
+	
 	#[inline(always)]
 	fn parse_field(iterator: &mut Split<char>, missing_error: LensInformationParseError, invalid_error: impl FnOnce(NonZeroUnsignedTiffRationalParseError) -> LensInformationParseError) -> Result<NonZeroUnsignedTiffRational, LensInformationParseError>
 	{

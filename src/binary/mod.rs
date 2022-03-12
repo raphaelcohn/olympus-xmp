@@ -12,12 +12,9 @@ use olympus_xmp::xmp::lens_information::LensInformation;
 use olympus_xmp::xmp::namespaces::aux;
 use olympus_xmp::xmp::namespaces::exif;
 use olympus_xmp::xmp::namespaces::exifEX;
-use olympus_xmp::xmp::namespaces::tiff;
 use olympus_xmp::xmp::namespaces::xmpMM;
 use olympus_xmp::xmp::tiff_rational::NonZeroUnsignedTiffRational;
-use olympus_xmp::xmp::tiff_rational::UnsignedTiffRational;
 use olympus_xmp::xmp::universally_unique_identifier::XmpUniversallyUniqueIdentifier;
-use swiss_army_knife::non_zero::new_non_zero_u32;
 
 
 include!("Collated.rs");

@@ -13,16 +13,67 @@ pub enum XmpAttributeValueParseError
 	DateTime(XmpDateTimeParseError),
 	
 	#[allow(missing_docs)]
-	ExifSceneCaptureType(U8ParseError),
+	ExifContrastOrSharpness(U16ParseError),
+	
+	#[allow(missing_docs)]
+	ExifCustomRendered(U16ParseError),
+	
+	#[allow(missing_docs)]
+	ExifExposureMode(U16ParseError),
+	
+	#[allow(missing_docs)]
+	ExifExposureProgram(U16ParseError),
+	
+	#[allow(missing_docs)]
+	ExifFileSource(U8ParseError),
+	
+	#[allow(missing_docs)]
+	ExifGainControl(U16ParseError),
+	
+	#[allow(missing_docs)]
+	ExifLightSource(U16ParseError),
+	
+	#[allow(missing_docs)]
+	ExifMeteringMode(U16ParseError),
+	
+	#[allow(missing_docs)]
+	ExifResolutionUnit(U16ParseError),
+	
+	#[allow(missing_docs)]
+	ExifSaturation(U16ParseError),
+	
+	#[allow(missing_docs)]
+	ExifSceneCaptureType(U16ParseError),
+	
+	#[allow(missing_docs)]
+	ExifSensitivityType(U16ParseError),
+	
+	#[allow(missing_docs)]
+	ExifVersion(ExifVersionParseError),
+	
+	#[allow(missing_docs)]
+	ExifWhiteBalanceMode(U16ParseError),
 	
 	#[allow(missing_docs)]
 	IptcDigitalSourceType(UnknownStringVariantParseError),
+	
+	#[allow(missing_docs)]
+	IptcWorldRegion(UnknownStringVariantParseError),
+	
+	#[allow(missing_docs)]
+	Iso3166Dash1AlphaCountryCode(Iso3166Dash1AlphaCountryCodeParseError),
+	
+	#[allow(missing_docs)]
+	Iso3166Dash1Country(UnknownStringVariantParseError),
 	
 	#[allow(missing_docs)]
 	LensInformation(LensInformationParseError),
 	
 	#[allow(missing_docs)]
 	PhotoshopColorMode(U8ParseError),
+	
+	#[allow(missing_docs)]
+	NonEmptyStr(NonEmptyStrParseError),
 	
 	#[allow(missing_docs)]
 	NonZeroUnsignedTiffRational(NonZeroUnsignedTiffRationalParseError),
@@ -76,11 +127,45 @@ impl error::Error for XmpAttributeValueParseError
 			
 			DateTime(cause) => Some(cause),
 			
+			ExifContrastOrSharpness(cause) => Some(cause),
+			
+			ExifCustomRendered(cause) => Some(cause),
+			
+			ExifExposureMode(cause) => Some(cause),
+			
+			ExifExposureProgram(cause) => Some(cause),
+			
+			ExifFileSource(cause) => Some(cause),
+			
+			ExifGainControl(cause) => Some(cause),
+			
+			ExifLightSource(cause) => Some(cause),
+			
+			ExifMeteringMode(cause) => Some(cause),
+			
+			ExifResolutionUnit(cause) => Some(cause),
+			
+			ExifSaturation(cause) => Some(cause),
+			
 			ExifSceneCaptureType(cause) => Some(cause),
+			
+			ExifSensitivityType(cause) => Some(cause),
+			
+			ExifVersion(cause) => Some(cause),
+			
+			ExifWhiteBalanceMode(cause) => Some(cause),
 			
 			IptcDigitalSourceType(cause) => Some(cause),
 			
+			IptcWorldRegion(cause) => Some(cause),
+			
+			Iso3166Dash1AlphaCountryCode(cause) => Some(cause),
+			
+			Iso3166Dash1Country(cause) => Some(cause),
+			
 			LensInformation(cause) => Some(cause),
+			
+			NonEmptyStr(cause) => Some(cause),
 			
 			NonZeroUnsignedTiffRational(cause) => Some(cause),
 			

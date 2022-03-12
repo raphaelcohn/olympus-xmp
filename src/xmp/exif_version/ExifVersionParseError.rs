@@ -2,18 +2,26 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-/// An u8 parse error.
+/// An Exif version parse error.
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub enum U8ParseError
+pub enum ExifVersionParseError
 {
 	#[allow(missing_docs)]
-	InvalidU8(ParseIntError),
+	NotExactly4Bytes
+	{
+		count: usize,
+	},
 	
 	#[allow(missing_docs)]
-	InvalidValue(u8),
+	InvalidField
+	{
+		cause: ExifVersionFieldParseError,
+	
+		field_index: u8,
+	},
 }
 
-impl Display for U8ParseError
+impl Display for ExifVersionParseError
 {
 	#[inline(always)]
 	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
@@ -22,17 +30,17 @@ impl Display for U8ParseError
 	}
 }
 
-impl error::Error for U8ParseError
+impl error::Error for ExifVersionParseError
 {
 	#[inline(always)]
 	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		use U8ParseError::*;
+		use ExifVersionParseError::*;
 		match self
 		{
-			InvalidU8(cause) => Some(cause),
+			NotExactly4Bytes { .. } => None,
 			
-			InvalidValue(_) => None,
+			InvalidField { cause, .. } => Some(cause),
 		}
 	}
 }

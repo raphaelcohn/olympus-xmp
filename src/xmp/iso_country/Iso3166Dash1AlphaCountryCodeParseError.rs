@@ -2,18 +2,29 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-/// An u8 parse error.
-#[derive(Debug, Clone, Eq, PartialEq)]
-pub enum U8ParseError
+/// Parse error for either an ISO 3166-1 Alpha-2 country code or an ISO 3166-1 Alpha-3 country code.
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+pub enum Iso3166Dash1AlphaCountryCodeParseError
 {
 	#[allow(missing_docs)]
-	InvalidU8(ParseIntError),
+	LengthIsNot2Or3(String),
 	
 	#[allow(missing_docs)]
-	InvalidValue(u8),
+	InvalidAsciiLetter
+	{
+		letter: u8,
+		
+		index: u8
+	},
+	
+	#[allow(missing_docs)]
+	UnknownIso3166Alpha2CountryCode([u8; 2]),
+	
+	#[allow(missing_docs)]
+	UnknownIso3166Alpha3CountryCode([u8; 3]),
 }
 
-impl Display for U8ParseError
+impl Display for Iso3166Dash1AlphaCountryCodeParseError
 {
 	#[inline(always)]
 	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
@@ -22,17 +33,21 @@ impl Display for U8ParseError
 	}
 }
 
-impl error::Error for U8ParseError
+impl error::Error for Iso3166Dash1AlphaCountryCodeParseError
 {
 	#[inline(always)]
 	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		use U8ParseError::*;
+		use Iso3166Dash1AlphaCountryCodeParseError::*;
 		match self
 		{
-			InvalidU8(cause) => Some(cause),
+			LengthIsNot2Or3(_) => None,
 			
-			InvalidValue(_) => None,
+			InvalidAsciiLetter { .. } => None,
+			
+			UnknownIso3166Alpha2CountryCode(_) => None,
+			
+			UnknownIso3166Alpha3CountryCode(_) => None,
 		}
 	}
 }

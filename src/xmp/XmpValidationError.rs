@@ -80,7 +80,7 @@ pub enum XmpValidationError<'name, 'namespace, 'local_name>
 	LensInformationDoesNotContainShotFocalLength,
 	
 	#[allow(missing_docs)]
-	LensInformationDoesNotContainShotFNumber,
+	LensInformationDoesCouldNotHaveShotFNumber,
 }
 
 impl<'name, 'namespace, 'local_name> Display for XmpValidationError<'name, 'namespace, 'local_name>
@@ -124,7 +124,7 @@ impl<'name, 'namespace, 'local_name> error::Error for XmpValidationError<'name, 
 			
 			LensInformationDoesNotContainShotFocalLength => None,
 			
-			LensInformationDoesNotContainShotFNumber => None,
+			LensInformationDoesCouldNotHaveShotFNumber => None,
 		}
 	}
 }

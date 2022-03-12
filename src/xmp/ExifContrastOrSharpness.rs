@@ -2,34 +2,31 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-/// A scene capture type.
+/// Contrast or sharpness.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 #[repr(u16)]
-pub enum ExifSceneCaptureType
+pub enum ExifContrastOrSharpness
 {
 	#[allow(missing_docs)]
-	Standard = 0,
+	Normal = 0,
 
 	#[allow(missing_docs)]
-	Landscape = 1,
-
+	Soft = 1,
+	
 	#[allow(missing_docs)]
-	Portrait = 2,
-
-	#[allow(missing_docs)]
-	Night = 3,
+	Hard = 2,
 }
 
-impl const Default for ExifSceneCaptureType
+impl const Default for ExifContrastOrSharpness
 {
 	#[inline(always)]
 	fn default() -> Self
 	{
-		ExifSceneCaptureType::Standard
+		ExifContrastOrSharpness::Normal
 	}
 }
 
-impl<'a> XmpAttributeValue<'a> for ExifSceneCaptureType
+impl<'a> XmpAttributeValue<'a> for ExifContrastOrSharpness
 {
 	type Error = U16ParseError;
 	
@@ -41,7 +38,7 @@ impl<'a> XmpAttributeValue<'a> for ExifSceneCaptureType
 		let value = u16::from_str(value).map_err(InvalidU16)?;
 		match value
 		{
-			0 ..= 3 => Ok(unsafe { transmute(value) }),
+			0 ..= 2 => Ok(unsafe { transmute(value) }),
 			
 			_ => Err(InvalidValue(value)),
 		}
@@ -50,6 +47,6 @@ impl<'a> XmpAttributeValue<'a> for ExifSceneCaptureType
 	#[inline(always)]
 	fn into_xmp_attribute_value_parse_error(error: Self::Error) -> XmpAttributeValueParseError
 	{
-		XmpAttributeValueParseError::ExifSceneCaptureType(error)
+		XmpAttributeValueParseError::ExifContrastOrSharpness(error)
 	}
 }
