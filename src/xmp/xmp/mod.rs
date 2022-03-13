@@ -2,28 +2,21 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+use std::mem::transmute;
+use std::str::FromStr;
+use super::attribute_parse_errors::I8ParseError;
 use super::attribute_parse_errors::UnknownStringVariantParseError;
 use super::XmpAttributeValue;
 use super::XmpAttributeValueParseError;
-use std::convert::TryFrom;
-use std::error;
-use std::fmt;
-use std::fmt::Display;
-use std::fmt::Debug;
-use std::fmt::Formatter;
-use std::mem::transmute;
-use std::str::FromStr;
-use Iso3166Dash1Alpha2CountryCode::*;
-use Iso3166Dash1Alpha3CountryCode::*;
-use Iso3166Dash1AlphaCountryCode::*;
-use Iso3166Dash1NumericCountryCode::*;
-use swiss_army_knife::get_unchecked::GetUnchecked;
 
 
-include!("Iso3166Dash1Country.rs");
-include!("Iso3166Dash1Alpha2CountryCode.rs");
-include!("Iso3166Dash1Alpha3CountryCode.rs");
-include!("Iso3166Dash1NumericCountryCode.rs");
-include!("Iso3166Dash1AlphaCountryCode.rs");
-include!("Iso3166Dash1AlphaCountryCodeParseError.rs");
-include!("UnknownIso3166Dash1CodeError.rs");
+/// Date (and time) domain types.
+pub mod date_time;
+
+
+/// Universally Unique Identifiers (UUID) domain types.
+pub mod universally_unique_identifier;
+
+
+include!("XmpLabel.rs");
+include!("XmpRating.rs");

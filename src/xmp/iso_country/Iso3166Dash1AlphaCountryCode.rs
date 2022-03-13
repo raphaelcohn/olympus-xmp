@@ -2,9 +2,6 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use std::mem::transmute;
-use swiss_army_knife::get_unchecked::GetUnchecked;
-
 /// Either an ISO 3166-1 Alpha-2 country code or an ISO 3166-1 Alpha-3 country code.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub enum Iso3166Dash1AlphaCountryCode

@@ -85,6 +85,9 @@ pub enum XmpAttributeValueParseError
 	OptionNonZeroU16(ParseIntError),
 	
 	#[allow(missing_docs)]
+	PlusLicensorTelephoneType(UnknownStringVariantParseError),
+	
+	#[allow(missing_docs)]
 	PlusModelReleaseStatus(UnknownStringVariantParseError),
 	
 	#[allow(missing_docs)]
@@ -174,6 +177,8 @@ impl error::Error for XmpAttributeValueParseError
 			OptionNonZeroU16(cause) => Some(cause),
 			
 			PhotoshopColorMode(cause) => Some(cause),
+			
+			PlusLicensorTelephoneType(cause) => Some(cause),
 			
 			PlusModelReleaseStatus(cause) => Some(cause),
 			

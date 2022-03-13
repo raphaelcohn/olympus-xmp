@@ -8,13 +8,13 @@ use olympus_xmp::xml_name;
 use olympus_xmp::xml::XmlName;
 use olympus_xmp::xmp::XmpElement;
 use olympus_xmp::xmp::XmpValidationError;
-use olympus_xmp::xmp::lens_information::LensInformation;
 use olympus_xmp::xmp::namespaces::aux;
 use olympus_xmp::xmp::namespaces::exif;
 use olympus_xmp::xmp::namespaces::exifEX;
 use olympus_xmp::xmp::namespaces::xmpMM;
+use olympus_xmp::xmp::exif::lens_information::LensInformation;
 use olympus_xmp::xmp::tiff_rational::NonZeroUnsignedTiffRational;
-use olympus_xmp::xmp::universally_unique_identifier::XmpUniversallyUniqueIdentifier;
+use olympus_xmp::xmp::xmp::universally_unique_identifier::XmpUniversallyUniqueIdentifier;
 
 
 include!("Collated.rs");

@@ -38,19 +38,23 @@ use xml as _;
 use swiss_army_knife::non_zero::new_non_zero_u32;
 use olympus_xmp::xml_name;
 use olympus_xmp::xml::XmlDocument;
-use olympus_xmp::xmp::{ExifGainControl, ExifResolutionUnit, ExifSaturation};
-use olympus_xmp::xmp::ExifMeteringMode;
-use olympus_xmp::xmp::ExifLightSource;
-use olympus_xmp::xmp::ExifCustomRendered;
-use olympus_xmp::xmp::ExifContrastOrSharpness;
-use olympus_xmp::xmp::ExifExposureMode;
-use olympus_xmp::xmp::ExifExposureProgram;
-use olympus_xmp::xmp::ExifSensitivityType;
-use olympus_xmp::xmp::ExifFileSource;
-use olympus_xmp::xmp::ExifSceneCaptureType;
-use olympus_xmp::xmp::IptcDigitalSourceType;
-use olympus_xmp::xmp::PlusModelReleaseStatus;
-use olympus_xmp::xmp::PlusPropertyReleaseStatus;
+use olympus_xmp::xmp::exif::ExifGainControl;
+use olympus_xmp::xmp::exif::ExifResolutionUnit;
+use olympus_xmp::xmp::exif::ExifSaturation;
+use olympus_xmp::xmp::exif::ExifMeteringMode;
+use olympus_xmp::xmp::exif::ExifLightSource;
+use olympus_xmp::xmp::exif::ExifCustomRendered;
+use olympus_xmp::xmp::exif::ExifContrastOrSharpness;
+use olympus_xmp::xmp::exif::ExifExposureMode;
+use olympus_xmp::xmp::exif::ExifExposureProgram;
+use olympus_xmp::xmp::exif::ExifSensitivityType;
+use olympus_xmp::xmp::exif::ExifFileSource;
+use olympus_xmp::xmp::exif::ExifSceneCaptureType;
+use olympus_xmp::xmp::exif::version::ExifVersion;
+use olympus_xmp::xmp::iptc::IptcDigitalSourceType;
+use olympus_xmp::xmp::iptc::urgency::Urgency;
+use olympus_xmp::xmp::plus::PlusModelReleaseStatus;
+use olympus_xmp::xmp::plus::PlusPropertyReleaseStatus;
 use olympus_xmp::xmp::XmpElement;
 use olympus_xmp::xmp::XmpValidationError;
 use olympus_xmp::xmp::namespaces::Iptc4xmpCore;
@@ -65,18 +69,16 @@ use olympus_xmp::xmp::namespaces::tiff;
 use olympus_xmp::xmp::namespaces::x;
 use olympus_xmp::xmp::namespaces::xmp;
 use olympus_xmp::xmp::namespaces::xmpRights;
-use olympus_xmp::xmp::PhotoshopColorMode;
-use olympus_xmp::xmp::XmpLabel;
-use olympus_xmp::xmp::XmpRating;
-use olympus_xmp::xmp::date_time::XmpDateTime;
-use olympus_xmp::xmp::exif_version::ExifVersion;
 use olympus_xmp::xmp::iso_country::Iso3166Dash1AlphaCountryCode;
 use olympus_xmp::xmp::iso_country::Iso3166Dash1Country;
 use olympus_xmp::xmp::non_empty_str::NonEmptyStr;
+use olympus_xmp::xmp::photoshop::PhotoshopColorMode;
 use olympus_xmp::xmp::tiff_rational::NonZeroUnsignedTiffRational;
 use olympus_xmp::xmp::tiff_rational::UnsignedTiffRational;
-use olympus_xmp::xmp::universally_unique_identifier::XmpUniversallyUniqueIdentifier;
-use olympus_xmp::xmp::urgency::Urgency;
+use olympus_xmp::xmp::xmp::XmpLabel;
+use olympus_xmp::xmp::xmp::XmpRating;
+use olympus_xmp::xmp::xmp::date_time::XmpDateTime;
+use olympus_xmp::xmp::xmp::universally_unique_identifier::XmpUniversallyUniqueIdentifier;
 use crate::binary::lens_model;
 use crate::binary::lens_focal_length_and_aperture;
 use crate::binary::width_or_height;
@@ -229,6 +231,17 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
 	
    /*
    
+   xmptk
+   "Adobe XMP Core 7.0-c000 1.000000, 0000/00/00-00:00:00        "
+   - seems to be a name, a version number, a revision, another version number, a date time stamp and a lot of spaces...
+   
+   Name				Adobe XMP Core			Followed by " "
+   Version			7.0-c0000				Followed by " "
+   Second Version	1.000000				Followed by ", "
+   Timestamp		0000/00/00-00:00:00		YYYY/MM/DD-HH:MM:SS		Invalid date-time stamp
+   
+   "Adobe XMP Core 5.6-c017 91.164464, 2020/06/15-10:20:05 "
+   
    // TODO: Default this.
    photoshop:ICCProfile=""
    
@@ -269,7 +282,26 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
    exif:ExposureBiasValue="0/10"	SRATIONAL APEX
    
    exif:DigitalZoomRatio="100/100"	RATIONAL	numerator=0 => digital zoom not used
-   
+      <tiff:BitsPerSample>
+    <rdf:Seq>
+     <rdf:li>16</rdf:li>
+     <rdf:li>16</rdf:li>
+     <rdf:li>16</rdf:li>
+    </rdf:Seq>
+   </tiff:BitsPerSample>
+   <exif:ISOSpeedRatings>
+    <rdf:Seq>
+     <rdf:li>200</rdf:li>
+    </rdf:Seq>
+   </exif:ISOSpeedRatings>
+   <exif:Flash
+    exif:Fired="False"
+    exif:Return="0"
+    exif:Mode="1"
+    exif:Function="False"
+    exif:RedEyeMode="False"/>
+    
+    
    <dc:creator>
    <rdf:Seq>
    <rdf:li>Raphael James Cohn</rdf:li>
@@ -281,6 +313,36 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
    <rdf:li xml:lang="x-default">Copyright © 2021 Raphael James Cohn, all rights reserved</rdf:li>
    </rdf:Alt>
    </dc:rights>
+   
+   <dc:subject>
+    <rdf:Bag>
+     <rdf:li>Runswick Bay</rdf:li>
+     <rdf:li>Boat Houses</rdf:li>
+    </rdf:Bag>
+   </dc:subject>
+   
+   <xmpMM:History>
+    <rdf:Seq>
+     <rdf:li
+      stEvt:action="saved"
+      stEvt:instanceID="xmp.iid:eede698f-798c-4257-a8b3-44571c1902a8"
+      stEvt:when="2022-02-05T09:09Z"
+      stEvt:softwareAgent="Adobe Photoshop Camera Raw 14.1"
+      stEvt:changed="/metadata"/>
+     <rdf:li
+      stEvt:action="saved"
+      stEvt:instanceID="xmp.iid:e21382d1-c016-4b24-b2b4-06b2ae7a402f"
+      stEvt:when="2022-02-23T08:28:26Z"
+      stEvt:softwareAgent="Adobe Photoshop Camera Raw 14.1 (Macintosh)"
+      stEvt:changed="/metadata"/>
+    </rdf:Seq>
+   </xmpMM:History>
+   
+   <xmpRights:UsageTerms>
+    <rdf:Alt>
+     <rdf:li xml:lang="x-default">For consideration only, no reproduction without prior permission</rdf:li>
+    </rdf:Alt>
+   </xmpRights:UsageTerms>
    
    <Iptc4xmpExt:LocationCreated>
     <rdf:Bag>
@@ -340,12 +402,12 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
      <rdf:li
       plus:LicensorName="Raphael James Cohn"
       plus:LicensorID="raphael.cohn@stormmq.com"
-      plus:LicensorTelephoneType1="http://ns.useplus.org/ldf/vocab/cell"
+      plus:LicensorTelephoneType1="http://ns.useplus.org/ldf/vocab/cell" DONE: type parser
       plus:LicensorTelephone1="+44 7590 675 756"
-      plus:LicensorTelephoneType2="http://ns.useplus.org/ldf/vocab/cell"
-      plus:LicensorTelephone2="+44 7590 675 756"
-      plus:LicensorEmail="raphael.cohn@stormmq.com"
-      plus:LicensorURL="https://photos.stormmq.com/"/>
+      plus:LicensorTelephoneType2="http://ns.useplus.org/ldf/vocab/cell" DONE: type parser
+      plus:LicensorTelephone2="+44 7590 675 756"	TODO: telephone number parser
+      plus:LicensorEmail="raphael.cohn@stormmq.com"	TODO: email parser
+      plus:LicensorURL="https://photos.stormmq.com/"/>	TODO: URL parser
     </rdf:Seq>
    </plus:Licensor>
    
@@ -356,6 +418,13 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
       plus:ImageSupplierID="raphael.cohn@stormmq.com"/>
     </rdf:Seq>
    </plus:ImageSupplier>
+   
+   <lr:hierarchicalSubject>
+    <rdf:Bag>
+     <rdf:li>Places|United Kingdom|England|Yorkshire|Runswick Bay</rdf:li>	TODO: hierarchicalSubject parser.
+     <rdf:li>Buildings|Old|Boat Houses</rdf:li>
+    </rdf:Bag>
+   </lr:hierarchicalSubject>
    
    
     http://ns.useplus.org/ldf/vocab/PR-NON (None)

@@ -2,10 +2,6 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use std::convert::TryFrom;
-use std::str::FromStr;
-use crate::xmp::UnknownStringVariantParseError;
-
 /// A country coding; definitions from <https://www.iso.org/obp/ui/#search>.
 ///
 /// See <https://www.davros.org/misc/iso3166.html> for some legacy definitions.
@@ -232,7 +228,7 @@ impl FromStr for Iso3166Dash1Country
 			
 			"TRISTAN DA CUNHA" | "Tristan da Cunha" => Ok(Self::TRISTAN_DA_CUNHA),
 			
-			_ => Err(UnknownStringVariantParseError(raw.to_string())),
+			_ => Err(UnknownStringVariantParseError::from(raw)),
 		}
 	}
 }

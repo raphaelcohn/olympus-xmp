@@ -2,15 +2,11 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+use std::mem::transmute;
+use std::str::FromStr;
+use super::attribute_parse_errors::U8ParseError;
 use super::XmpAttributeValue;
 use super::XmpAttributeValueParseError;
-use std::error;
-use std::fmt;
-use std::fmt::Debug;
-use std::fmt::Display;
-use std::fmt::Formatter;
-use swiss_army_knife::get_unchecked::GetUnchecked;
 
 
-include!("XmpUniversallyUniqueIdentifier.rs");
-include!("XmpUniversallyUniqueIdentifierParseError.rs");
+include!("PhotoshopColorMode.rs");

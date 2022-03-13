@@ -31,7 +31,7 @@ impl error::Error for UnknownStringVariantParseError
 impl UnknownStringVariantParseError
 {
 	#[inline(always)]
-	fn parse_prefixed_value_returning_suffix<'a, const prefix: &'static str>(raw: &'a str) -> Result<&'a str, Self>
+	pub(super) fn parse_prefixed_value_returning_suffix<'a, const prefix: &'static str>(raw: &'a str) -> Result<&'a str, Self>
 	{
 		let needle =
 		{

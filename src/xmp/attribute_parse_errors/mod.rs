@@ -2,19 +2,18 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use std::cmp::Ordering;
+use memchr::memrchr;
 use std::error;
 use std::fmt;
 use std::fmt::Debug;
 use std::fmt::Display;
 use std::fmt::Formatter;
-use std::str::Split;
-use super::XmpAttributeValue;
-use super::XmpAttributeValueParseError;
-use super::tiff_rational::NonZeroUnsignedTiffRational;
-use super::tiff_rational::NonZeroUnsignedTiffRationalParseError;
+use std::num::ParseIntError;
+use std::str::from_utf8_unchecked;
+use swiss_army_knife::get_unchecked::GetUnchecked;
 
 
-include!("LensInformation.rs");
-include!("FocalLengthAndWidestAperture.rs");
-include!("LensInformationParseError.rs");
+include!("I8ParseError.rs");
+include!("U8ParseError.rs");
+include!("U16ParseError.rs");
+include!("UnknownStringVariantParseError.rs");

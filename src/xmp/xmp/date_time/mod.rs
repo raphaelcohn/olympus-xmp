@@ -2,8 +2,8 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use super::XmpAttributeValue;
-use super::XmpAttributeValueParseError;
+use super::super::XmpAttributeValue;
+use super::super::XmpAttributeValueParseError;
 use hours_and_minutes::Hour;
 use hours_and_minutes::Minute;
 use hours_and_minutes::HourMinute;

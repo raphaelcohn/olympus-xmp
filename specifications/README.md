@@ -20,3 +20,9 @@
 
 * [TIFF Tag Reference (includes EXIF)](https://www.awaresystems.be/imaging/tiff/tifftags.html).
 * [Exiv2 Metadata Reference](https://exiv2.org/metadata.html).
+* Examples of RAW files: <https://raw.pixls.us/>.
+
+
+# Other
+
+* GitHub Issue with an OM-1 JPEG that has different TIFF MakerNote: <https://github.com/Exiv2/exiv2/issues/2126>.

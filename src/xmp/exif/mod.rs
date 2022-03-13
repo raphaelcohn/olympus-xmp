@@ -2,18 +2,32 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use std::error;
-use std::fmt;
-use std::fmt::Debug;
-use std::fmt::Display;
-use std::fmt::Formatter;
-use std::hash::Hash;
 use std::mem::transmute;
-use std::num::ParseIntError;
 use std::str::FromStr;
+use super::attribute_parse_errors::U8ParseError;
+use super::attribute_parse_errors::U16ParseError;
 use super::XmpAttributeValue;
 use super::XmpAttributeValueParseError;
 
 
-include!("Urgency.rs");
-include!("UrgencyParseError.rs");
+/// Lens information.
+pub mod lens_information;
+
+
+/// Exif version.
+pub mod version;
+
+
+include!("ExifContrastOrSharpness.rs");
+include!("ExifCustomRendered.rs");
+include!("ExifGainControl.rs");
+include!("ExifExposureMode.rs");
+include!("ExifExposureProgram.rs");
+include!("ExifFileSource.rs");
+include!("ExifLightSource.rs");
+include!("ExifMeteringMode.rs");
+include!("ExifResolutionUnit.rs");
+include!("ExifSaturation.rs");
+include!("ExifSceneCaptureType.rs");
+include!("ExifSensitivityType.rs");
+include!("ExifWhiteBalanceMode.rs");
