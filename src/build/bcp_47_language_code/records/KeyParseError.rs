@@ -16,7 +16,21 @@ pub(crate) enum KeyParseError
 		subtag: String,
 	},
 	
-	TagOrSubtagIsNotLowercaseAlpha
+	TagOrSubtagByteIsNotDigit
+	{
+		index: usize,
+	
+		byte: u8,
+	},
+	
+	TagOrSubtagByteIsNotUpperCaseAlpha
+	{
+		index: usize,
+	
+		byte: u8,
+	},
+	
+	TagOrSubtagByteIsNotLowerCaseAlpha
 	{
 		index: usize,
 	

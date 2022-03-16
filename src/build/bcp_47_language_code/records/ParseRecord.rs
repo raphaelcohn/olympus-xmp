@@ -18,31 +18,74 @@ trait ParseRecord: Clone
 	
 	#[doc(hidden)]
 	#[inline(always)]
-	fn subtag_to_byte_array<const C: usize>(subtag: &str) -> Result<[u8; C], KeyParseError>
+	fn subtag_to_byte_array<V: FnOnce(&str) -> Result<(), KeyParseError>, const C: usize>(subtag: &str, validator: V) -> Result<[u8; C], KeyParseError>
 	{
-		use KeyParseError::*;
+		validator(subtag)?;
 		
-		{
-			let length = subtag.len();
-			if length != C
-			{
-				return Err(SubtagInvalidLength { length, minimum: C, maximum: C, subtag: subtag.to_string() })
-			}
-		}
-		
-		Self::validate_is_lower_case_alpha(subtag)?;
-		
+		Ok(Self::copy_to_array::<C>(subtag))
+	}
+	
+	#[doc(hidden)]
+	#[inline(always)]
+	fn copy_to_array<const C: usize>(subtag: &str) -> [u8; C]
+	{
 		let mut key: [MaybeUninit<u8>; C] = MaybeUninit::uninit_array();
 		let slice = MaybeUninit::slice_as_mut_ptr(&mut key);
 		let pointer = subtag.as_ptr();
-		Ok
-		(
-			unsafe
+		unsafe
+		{
+			slice.copy_from_nonoverlapping(pointer, C);
+			MaybeUninit::array_assume_init(key)
+		}
+	}
+	
+	#[doc(hidden)]
+	#[inline(always)]
+	fn validate_length<const C: usize>(subtag: &str) -> Result<(), KeyParseError>
+	{
+		let length = subtag.len();
+		if length == C
+		{
+			Ok(())
+		}
+		else
+		{
+			Err(KeyParseError::SubtagInvalidLength { length, minimum: C, maximum: C, subtag: subtag.to_string() })
+		}
+	}
+	
+	#[doc(hidden)]
+	#[inline(always)]
+	fn validate_is_digit(value: &str) -> Result<(), KeyParseError>
+	{
+		let bytes = value.as_bytes();
+		for index in 0 .. bytes.len()
+		{
+			match bytes.get_unchecked_value_safe(index)
 			{
-				slice.copy_from_nonoverlapping(pointer, C);
-				MaybeUninit::array_assume_init(key)
+				b'0' ..= b'9' => (),
+				
+				byte @ _ => return Err(KeyParseError::TagOrSubtagByteIsNotDigit { index, byte })
 			}
-		)
+		}
+		Ok(())
+	}
+	
+	#[doc(hidden)]
+	#[inline(always)]
+	fn validate_is_upper_case_alpha(value: &str) -> Result<(), KeyParseError>
+	{
+		let bytes = value.as_bytes();
+		for index in 0 .. bytes.len()
+		{
+			match bytes.get_unchecked_value_safe(index)
+			{
+				b'A' ..= b'Z' => (),
+				
+				byte @ _ => return Err(KeyParseError::TagOrSubtagByteIsNotUpperCaseAlpha { index, byte })
+			}
+		}
+		Ok(())
 	}
 	
 	#[doc(hidden)]
@@ -56,7 +99,7 @@ trait ParseRecord: Clone
 			{
 				b'a' ..= b'z' => (),
 				
-				byte @ _ => return Err(KeyParseError::TagOrSubtagIsNotLowercaseAlpha { index, byte })
+				byte @ _ => return Err(KeyParseError::TagOrSubtagByteIsNotLowerCaseAlpha { index, byte })
 			}
 		}
 		Ok(())

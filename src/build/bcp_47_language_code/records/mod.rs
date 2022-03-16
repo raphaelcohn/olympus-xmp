@@ -32,6 +32,7 @@ include!("KeyParseError.rs");
 include!("LanguageRecord.rs");
 include!("LanguageSubtag.rs");
 include!("ParseRecord.rs");
+include!("RegionSubtag.rs");
 include!("Record.rs");
 include!("RecordFields.rs");
 include!("MissingFieldError.rs");

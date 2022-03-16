@@ -7,9 +7,9 @@ struct ExtlangRecord
 {
 	extended_language_range: Option<String>,
 	
-	prefix: Vec<String>,
+	prefix: String,
 	
-	suppress_script: Option<String>,
+	suppress_script: Option<[u8; 4]>,
 	
 	macrolanguage: Option<String>,
 	
@@ -29,11 +29,13 @@ impl ParseRecord for ExtlangRecord
 	#[inline(always)]
 	fn parse_key(subtag: String) -> Result<Self::Key, KeyParseError>
 	{
-		Self::subtag_to_byte_array::<3>(&subtag)
+		const Length: usize = 3;
+		Self::validate_length::<Length>(&subtag)?;
+		Self::subtag_to_byte_array::<_, Length>(&subtag, Self::validate_is_lower_case_alpha)
 	}
 	
 	#[inline(always)]
-	fn parse(preferred_value: Option<String>, prefix: Vec<String>, suppress_script: Option<String>, macrolanguage: Option<String>, scope: Option<Scope>) -> Result<Self, RecordParseError>
+	fn parse(preferred_value: Option<String>, mut prefix: Vec<String>, suppress_script: Option<String>, macrolanguage: Option<String>, scope: Option<Scope>) -> Result<Self, RecordParseError>
 	{
 		Ok
 		(
@@ -41,9 +43,22 @@ impl ParseRecord for ExtlangRecord
 			{
 				extended_language_range: preferred_value,
 				
-				prefix,
+				prefix:
+				{
+					if prefix.len() != 1
+					{
+						Err(FieldNotPermittedError::PrefixMustHaveExactlyOneValueForExtlangRecord)?
+					}
+					let pop = prefix.pop();
+					unsafe { pop.unwrap_unchecked() }
+				},
 				
-				suppress_script,
+				suppress_script: match suppress_script
+				{
+					None => None,
+					
+					Some(suppress_script) => Some(ScriptRecord::parse_key(suppress_script)?),
+				},
 				
 				macrolanguage,
 				

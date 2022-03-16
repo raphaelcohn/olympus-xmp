@@ -2,9 +2,10 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 struct RedundantRecord
 {
+	extended_language_range: Option<String>,
 }
 
 impl ParseRecord for RedundantRecord
@@ -12,14 +13,39 @@ impl ParseRecord for RedundantRecord
 	type Key = String;
 	
 	#[inline(always)]
-	fn parse_key(tag_or_subtag: String) -> Result<Self::Key, KeyParseError>
+	fn parse_key(tag: String) -> Result<Self::Key, KeyParseError>
 	{
-		unimplemented!()
+		Ok(tag)
 	}
 	
 	#[inline(always)]
 	fn parse(preferred_value: Option<String>, prefix: Vec<String>, suppress_script: Option<String>, macrolanguage: Option<String>, scope: Option<Scope>) -> Result<Self, RecordParseError>
 	{
-		unimplemented!()
+		use FieldNotPermittedError::*;
+		
+		if !prefix.is_empty()
+		{
+			Err(PrefixNotPermittedInThisRecordType)?
+		}
+		if suppress_script.is_some()
+		{
+			Err(SuppressScriptNotPermittedInThisRecordType)?
+		}
+		if macrolanguage.is_some()
+		{
+			Err(MacrolanguageNotPermittedInThisRecordType)?
+		}
+		if scope.is_some()
+		{
+			Err(ScopeNotPermittedInThisRecordType)?
+		}
+		
+		Ok
+		(
+			Self
+			{
+				extended_language_range: preferred_value,
+			}
+		)
 	}
 }

@@ -15,7 +15,7 @@ pub(crate) enum LanguageSubtagRegistryFileParseError
 	
 	MissingTypeField,
 	
-	Record(RecordParseError, Type),
+	Record(Type, RecordParseError),
 }
 
 impl From<PullEventParserError> for LanguageSubtagRegistryFileParseError
@@ -72,7 +72,7 @@ impl error::Error for LanguageSubtagRegistryFileParseError
 			
 			MissingTypeField => None,
 			
-			Record(cause, ..) => Some(cause),
+			Record(_, cause) => Some(cause),
 		}
 	}
 }

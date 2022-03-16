@@ -22,7 +22,7 @@ impl Record
 		
 		let type_ = type_.ok_or(LanguageSubtagRegistryFileParseError::MissingTypeField)?;
 		
-		Self::parse_record_from_fields(type_, records, record_fields).map_err(|cause| LanguageSubtagRegistryFileParseError::Record(cause, type_))?;
+		Self::parse_record_from_fields(type_, records, record_fields).map_err(|cause| LanguageSubtagRegistryFileParseError::Record(type_, cause))?;
 		
 		Ok(no_more_records)
 	}

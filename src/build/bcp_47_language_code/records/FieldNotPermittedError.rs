@@ -12,6 +12,8 @@ pub(crate) enum FieldNotPermittedError
 	MacrolanguageNotPermittedInThisRecordType,
 	
 	ScopeNotPermittedInThisRecordType,
+	
+	PrefixMustHaveExactlyOneValueForExtlangRecord,
 }
 
 impl Display for FieldNotPermittedError

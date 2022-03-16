@@ -15,7 +15,6 @@ impl ParseRecord for GrandfatheredRecord
 	#[inline(always)]
 	fn parse_key(tag: String) -> Result<Self::Key, KeyParseError>
 	{
-		Self::validate_is_lower_case_alpha(&tag)?;
 		Ok(tag)
 	}
 	

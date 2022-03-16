@@ -3,9 +3,9 @@
 
 
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-enum LanguageSubtag
+enum RegionSubtag
 {
-	TwoLowerCaseAlpha([u8; 2]),
+	TwoUpperCaseAlpha([u8; 2]),
 	
-	ThreeLowerCaseAlpha([u8; 3]),
+	ThreeDigit([u8; 3]),
 }

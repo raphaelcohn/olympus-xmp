@@ -2,9 +2,10 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 struct ScriptRecord
 {
+	preferred_subtag: Option<String>,
 }
 
 impl ParseRecord for ScriptRecord
@@ -78,14 +79,43 @@ impl ParseRecord for ScriptRecord
 	}
 	
 	#[inline(always)]
-	fn parse_key(tag_or_subtag: String) -> Result<Self::Key, KeyParseError>
+	fn parse_key(subtag: String) -> Result<Self::Key, KeyParseError>
 	{
-		unimplemented!()
+		const Length: usize = 4;
+		Self::validate_length::<Length>(&subtag)?;
+		Self::validate_is_upper_case_alpha(&subtag.as_str()[ .. 1])?;
+		Self::validate_is_lower_case_alpha(&subtag.as_str()[1 .. ])?;
+		Ok(Self::copy_to_array::<Length>(&subtag))
 	}
 	
 	#[inline(always)]
 	fn parse(preferred_value: Option<String>, prefix: Vec<String>, suppress_script: Option<String>, macrolanguage: Option<String>, scope: Option<Scope>) -> Result<Self, RecordParseError>
 	{
-		unimplemented!()
+		use FieldNotPermittedError::*;
+		
+		if !prefix.is_empty()
+		{
+			Err(PrefixNotPermittedInThisRecordType)?
+		}
+		if suppress_script.is_some()
+		{
+			Err(SuppressScriptNotPermittedInThisRecordType)?
+		}
+		if macrolanguage.is_some()
+		{
+			Err(MacrolanguageNotPermittedInThisRecordType)?
+		}
+		if scope.is_some()
+		{
+			Err(ScopeNotPermittedInThisRecordType)?
+		}
+		
+		Ok
+		(
+			Self
+			{
+				preferred_subtag: preferred_value,
+			}
+		)
 	}
 }

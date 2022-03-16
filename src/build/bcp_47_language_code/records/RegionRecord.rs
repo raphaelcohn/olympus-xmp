@@ -2,64 +2,67 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 struct RegionRecord
 {
+	preferred_subtag: Option<String>,
 }
 
 impl ParseRecord for RegionRecord
 {
-	type Key = [u8; 2];
+	type Key = RegionSubtag;
 	
 	#[inline(always)]
 	fn parse_key_range(inclusive_from: &str, inclusive_to: &str) -> Result<&'static [Self::Key], TagOrSubtagRangeError>
 	{
-		static RegionUseRange1: [[u8; 2]; 14] =
+		use RegionSubtag::TwoUpperCaseAlpha;
+		
+		static RegionUseRange1: [RegionSubtag; 14] =
 		[
-			[b'Q', b'M'],
-			[b'Q', b'N'],
-			[b'Q', b'O'],
-			[b'Q', b'P'],
-			[b'Q', b'Q'],
-			[b'Q', b'R'],
-			[b'Q', b'S'],
-			[b'Q', b'T'],
-			[b'Q', b'U'],
-			[b'Q', b'V'],
-			[b'Q', b'W'],
-			[b'Q', b'X'],
-			[b'Q', b'Y'],
-			[b'Q', b'Z'],
+			TwoUpperCaseAlpha([b'Q', b'M']),
+			TwoUpperCaseAlpha([b'Q', b'N']),
+			TwoUpperCaseAlpha([b'Q', b'O']),
+			TwoUpperCaseAlpha([b'Q', b'P']),
+			TwoUpperCaseAlpha([b'Q', b'Q']),
+			TwoUpperCaseAlpha([b'Q', b'R']),
+			TwoUpperCaseAlpha([b'Q', b'S']),
+			TwoUpperCaseAlpha([b'Q', b'T']),
+			TwoUpperCaseAlpha([b'Q', b'U']),
+			TwoUpperCaseAlpha([b'Q', b'V']),
+			TwoUpperCaseAlpha([b'Q', b'W']),
+			TwoUpperCaseAlpha([b'Q', b'X']),
+			TwoUpperCaseAlpha([b'Q', b'Y']),
+			TwoUpperCaseAlpha([b'Q', b'Z']),
 		];
 		
-		static RegionUseRange2: [[u8; 2]; 26] =
+		static RegionUseRange2: [RegionSubtag; 26] =
 		[
-			[b'X', b'A'],
-			[b'X', b'B'],
-			[b'X', b'C'],
-			[b'X', b'D'],
-			[b'X', b'E'],
-			[b'X', b'F'],
-			[b'X', b'G'],
-			[b'X', b'H'],
-			[b'X', b'I'],
-			[b'X', b'J'],
-			[b'X', b'K'],
-			[b'X', b'L'],
-			[b'X', b'M'],
-			[b'X', b'N'],
-			[b'X', b'O'],
-			[b'X', b'P'],
-			[b'X', b'Q'],
-			[b'X', b'R'],
-			[b'X', b'S'],
-			[b'X', b'T'],
-			[b'X', b'U'],
-			[b'X', b'V'],
-			[b'X', b'W'],
-			[b'X', b'X'],
-			[b'X', b'Y'],
-			[b'X', b'Z'],
+			TwoUpperCaseAlpha([b'X', b'A']),
+			TwoUpperCaseAlpha([b'X', b'B']),
+			TwoUpperCaseAlpha([b'X', b'C']),
+			TwoUpperCaseAlpha([b'X', b'D']),
+			TwoUpperCaseAlpha([b'X', b'E']),
+			TwoUpperCaseAlpha([b'X', b'F']),
+			TwoUpperCaseAlpha([b'X', b'G']),
+			TwoUpperCaseAlpha([b'X', b'H']),
+			TwoUpperCaseAlpha([b'X', b'I']),
+			TwoUpperCaseAlpha([b'X', b'J']),
+			TwoUpperCaseAlpha([b'X', b'K']),
+			TwoUpperCaseAlpha([b'X', b'L']),
+			TwoUpperCaseAlpha([b'X', b'M']),
+			TwoUpperCaseAlpha([b'X', b'N']),
+			TwoUpperCaseAlpha([b'X', b'O']),
+			TwoUpperCaseAlpha([b'X', b'P']),
+			TwoUpperCaseAlpha([b'X', b'Q']),
+			TwoUpperCaseAlpha([b'X', b'R']),
+			TwoUpperCaseAlpha([b'X', b'S']),
+			TwoUpperCaseAlpha([b'X', b'T']),
+			TwoUpperCaseAlpha([b'X', b'U']),
+			TwoUpperCaseAlpha([b'X', b'V']),
+			TwoUpperCaseAlpha([b'X', b'W']),
+			TwoUpperCaseAlpha([b'X', b'X']),
+			TwoUpperCaseAlpha([b'X', b'Y']),
+			TwoUpperCaseAlpha([b'X', b'Z']),
 		];
 		
 		match (inclusive_from, inclusive_to)
@@ -73,14 +76,48 @@ impl ParseRecord for RegionRecord
 	}
 	
 	#[inline(always)]
-	fn parse_key(tag_or_subtag: String) -> Result<Self::Key, KeyParseError>
+	fn parse_key(subtag: String) -> Result<Self::Key, KeyParseError>
 	{
-		unimplemented!()
+		use RegionSubtag::*;
+		
+		match subtag.len()
+		{
+			2 => Ok(TwoUpperCaseAlpha(Self::subtag_to_byte_array::<_, 2>(&subtag, Self::validate_is_upper_case_alpha)?)),
+			
+			3 => Ok(ThreeDigit(Self::subtag_to_byte_array::<_, 3>(&subtag, Self::validate_is_digit)?)),
+			
+			length @ _ => Err(KeyParseError::SubtagInvalidLength { length, minimum: 2, maximum: 3, subtag: subtag.to_string() }),
+		}
 	}
 	
 	#[inline(always)]
 	fn parse(preferred_value: Option<String>, prefix: Vec<String>, suppress_script: Option<String>, macrolanguage: Option<String>, scope: Option<Scope>) -> Result<Self, RecordParseError>
 	{
-		unimplemented!()
+		use FieldNotPermittedError::*;
+		
+		if !prefix.is_empty()
+		{
+			Err(PrefixNotPermittedInThisRecordType)?
+		}
+		if suppress_script.is_some()
+		{
+			Err(SuppressScriptNotPermittedInThisRecordType)?
+		}
+		if macrolanguage.is_some()
+		{
+			Err(MacrolanguageNotPermittedInThisRecordType)?
+		}
+		if scope.is_some()
+		{
+			Err(ScopeNotPermittedInThisRecordType)?
+		}
+		
+		Ok
+		(
+			Self
+			{
+				preferred_subtag: preferred_value,
+			}
+		)
 	}
 }

@@ -15,7 +15,7 @@ pub(crate) struct Records
 	
 	redundant: HashMap<String, (Record, RedundantRecord)>,
 	
-	region: HashMap<[u8; 2], (Record, RegionRecord)>,
+	region: HashMap<RegionSubtag, (Record, RegionRecord)>,
 	
 	script: HashMap<[u8; 4], (Record, ScriptRecord)>,
 	
