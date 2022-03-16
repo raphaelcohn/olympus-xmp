@@ -2,25 +2,40 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use std::mem::transmute;
-use std::str::FromStr;
-use super::attribute_parse_errors::I8ParseError;
-use super::attribute_parse_errors::UnknownStringVariantParseError;
-use super::XmpAttributeValue;
-use super::XmpAttributeValueParseError;
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+pub(crate) enum TagOrSubtagRangeError
+{
+	RangeKeysDifferentLengths
+	{
+		inclusive_from: String,
+		
+		inclusive_to: String,
+	},
+	
+	TypeDoesNotHaveRangeSupportImplemented
+	{
+		inclusive_from: String,
+		
+		inclusive_to: String,
+	},
+	
+	TypeDoesNotSupportSpecificRange
+	{
+		inclusive_from: String,
+		
+		inclusive_to: String,
+	},
+}
 
+impl Display for TagOrSubtagRangeError
+{
+	#[inline(always)]
+	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	{
+		Debug::fmt(self, f)
+	}
+}
 
-/// BCP 47 language codes (as used by `xml:lang`).
-pub mod bcp_47_language;
-
-
-/// Date (and time) domain types.
-pub mod date_time;
-
-
-/// Universally Unique Identifiers (UUID) domain types.
-pub mod universally_unique_identifier;
-
-
-include!("XmpLabel.rs");
-include!("XmpRating.rs");
+impl error::Error for TagOrSubtagRangeError
+{
+}

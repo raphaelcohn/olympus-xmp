@@ -2,25 +2,10 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use std::mem::transmute;
-use std::str::FromStr;
-use super::attribute_parse_errors::I8ParseError;
-use super::attribute_parse_errors::UnknownStringVariantParseError;
-use super::XmpAttributeValue;
-use super::XmpAttributeValueParseError;
-
-
-/// BCP 47 language codes (as used by `xml:lang`).
-pub mod bcp_47_language;
-
-
-/// Date (and time) domain types.
-pub mod date_time;
-
-
-/// Universally Unique Identifiers (UUID) domain types.
-pub mod universally_unique_identifier;
-
-
-include!("XmpLabel.rs");
-include!("XmpRating.rs");
+fn open_our_module_file_path(relative_module_path: Vec<&str>, file_name: impl AsRef<Path>, capacity_in_kilobytes: usize) -> io::Result<String>
+{
+	let mut buffer = String::with_capacity(capacity_in_kilobytes * BytesPerKilobyte);
+	let mut file = File::open(our_module_file_path(relative_module_path, file_name))?;
+	file.read_to_string(&mut buffer)?;
+	Ok(buffer)
+}

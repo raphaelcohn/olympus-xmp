@@ -2,25 +2,24 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use std::mem::transmute;
-use std::str::FromStr;
-use super::attribute_parse_errors::I8ParseError;
-use super::attribute_parse_errors::UnknownStringVariantParseError;
-use super::XmpAttributeValue;
-use super::XmpAttributeValueParseError;
+#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+struct VariantRecord
+{
+}
 
-
-/// BCP 47 language codes (as used by `xml:lang`).
-pub mod bcp_47_language;
-
-
-/// Date (and time) domain types.
-pub mod date_time;
-
-
-/// Universally Unique Identifiers (UUID) domain types.
-pub mod universally_unique_identifier;
-
-
-include!("XmpLabel.rs");
-include!("XmpRating.rs");
+impl ParseRecord for VariantRecord
+{
+	type Key = String;
+	
+	#[inline(always)]
+	fn parse_key(tag_or_subtag: String) -> Result<Self::Key, KeyParseError>
+	{
+		unimplemented!()
+	}
+	
+	#[inline(always)]
+	fn parse(preferred_value: Option<String>, prefix: Vec<String>, suppress_script: Option<String>, macrolanguage: Option<String>, scope: Option<Scope>) -> Result<Self, RecordParseError>
+	{
+		unimplemented!()
+	}
+}

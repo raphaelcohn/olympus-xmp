@@ -2,25 +2,30 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use std::mem::transmute;
-use std::str::FromStr;
-use super::attribute_parse_errors::I8ParseError;
-use super::attribute_parse_errors::UnknownStringVariantParseError;
-use super::XmpAttributeValue;
-use super::XmpAttributeValueParseError;
+use parser::PullEventParser;
+use parser::PullEventParserError;
+use records::FieldError;
+use records::Records;
+use records::RecordParseError;
+use records::RecordsFileHeaderParseError;
+use records::Type;
+use std::error;
+use std::fmt;
+use std::fmt::Debug;
+use std::fmt::Display;
+use std::fmt::Formatter;
+use std::io;
+use super::open_our_module_file_path;
 
 
-/// BCP 47 language codes (as used by `xml:lang`).
-pub mod bcp_47_language;
+mod date;
 
 
-/// Date (and time) domain types.
-pub mod date_time;
+pub(crate) mod records;
 
 
-/// Universally Unique Identifiers (UUID) domain types.
-pub mod universally_unique_identifier;
+mod parser;
 
 
-include!("XmpLabel.rs");
-include!("XmpRating.rs");
+include!("LanguageSubtagRegistryFileParseError.rs");
+include!("parse_language_subtag_registry.rs");

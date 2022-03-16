@@ -153,6 +153,7 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
 	collated.check(Description.does_not_have_attribute(xml_name!(tiff, "ImageDescription")));
 	collated.check(Description.does_not_have_attribute(xml_name!(tiff, "Software")));
 	collated.check(Description.does_not_have_attribute(xml_name!(exif, "DateTimeDigitized")));
+	// TODO: Check the following are not present:-
 	// TODO xmpDM:* xmpTPg:*, which in xmpMM?
 	// TODO photoshop:SupplementalCategories (set of category codes; legacy; not sure how codes are separated)
 	// TODO photoshop:Category (could be parsed; 3 ASCII characters; legacy)
@@ -282,18 +283,24 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
    exif:ExposureBiasValue="0/10"	SRATIONAL APEX
    
    exif:DigitalZoomRatio="100/100"	RATIONAL	numerator=0 => digital zoom not used
-      <tiff:BitsPerSample>
+   
+   TODO: Validate this
+   <tiff:BitsPerSample>
     <rdf:Seq>
      <rdf:li>16</rdf:li>
      <rdf:li>16</rdf:li>
      <rdf:li>16</rdf:li>
     </rdf:Seq>
    </tiff:BitsPerSample>
+   
+   TODO: Validate this
    <exif:ISOSpeedRatings>
     <rdf:Seq>
      <rdf:li>200</rdf:li>
     </rdf:Seq>
    </exif:ISOSpeedRatings>
+   
+   TODO: Validate this
    <exif:Flash
     exif:Fired="False"
     exif:Return="0"
@@ -301,19 +308,21 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
     exif:Function="False"
     exif:RedEyeMode="False"/>
     
-    
+   TODO: Validate this
    <dc:creator>
    <rdf:Seq>
    <rdf:li>Raphael James Cohn</rdf:li>
    </rdf:Seq>
    </dc:creator>
    
+   TODO: Validate this
    <dc:rights>
    <rdf:Alt>
    <rdf:li xml:lang="x-default">Copyright © 2021 Raphael James Cohn, all rights reserved</rdf:li>
    </rdf:Alt>
    </dc:rights>
    
+   TODO: Validate this
    <dc:subject>
     <rdf:Bag>
      <rdf:li>Runswick Bay</rdf:li>
@@ -321,6 +330,7 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
     </rdf:Bag>
    </dc:subject>
    
+   TODO: Validate this
    <xmpMM:History>
     <rdf:Seq>
      <rdf:li
@@ -338,24 +348,27 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
     </rdf:Seq>
    </xmpMM:History>
    
+   TODO: Validate this
    <xmpRights:UsageTerms>
     <rdf:Alt>
      <rdf:li xml:lang="x-default">For consideration only, no reproduction without prior permission</rdf:li>
     </rdf:Alt>
    </xmpRights:UsageTerms>
    
+   TODO: Validate this
    <Iptc4xmpExt:LocationCreated>
     <rdf:Bag>
      <rdf:li
       Iptc4xmpExt:ProvinceState="North Yorkshire"
       Iptc4xmpExt:CountryName="United Kingdom of Great Britain and Northern Ireland (the)"
-      Iptc4xmpExt:CountryCode="GBR" TODO: Validate this is an ISO 3-digit code [2 digit is permitted]; there are also some non-standard extension codes eg for england
+      Iptc4xmpExt:CountryCode="GBR"
       Iptc4xmpExt:WorldRegion="Europe"
       Iptc4xmpExt:Sublocation="Addingham Churchyard"
       Iptc4xmpExt:City="Addingham"/>
     </rdf:Bag>
    </Iptc4xmpExt:LocationCreated>
    
+   TODO: Validate this
    <Iptc4xmpExt:LocationShown>
     <rdf:Bag>
      <rdf:li
@@ -364,16 +377,18 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
       Iptc4xmpExt:ProvinceState="North Yorkshire"
       Iptc4xmpExt:CountryName="United Kingdom of Great Britain and Northern Ireland (the)"
       Iptc4xmpExt:CountryCode="GBR" (2 or 3 digit is permitted)
-      Iptc4xmpExt:WorldRegion="Europe"/> (Type done)
+      Iptc4xmpExt:WorldRegion="Europe"/>
     </rdf:Bag>
    </Iptc4xmpExt:LocationShown>
    
+   TODO: Validate this
    <Iptc4xmpExt:Event>
     <rdf:Alt>
      <rdf:li xml:lang="x-default">Addingham Churchyard 5th April 2021</rdf:li>
     </rdf:Alt>
    </Iptc4xmpExt:Event>
    
+   TODO: Validate this
    <Iptc4xmpExt:RegistryId>
     <rdf:Bag>
      <rdf:li
@@ -381,6 +396,7 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
     </rdf:Bag>
    </Iptc4xmpExt:RegistryId>
    
+   TODO: Validate this
    <plus:ImageCreator>
     <rdf:Seq>
      <rdf:li
@@ -397,6 +413,7 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
     </rdf:Seq>
    </plus:CopyrightOwner>
    
+   TODO: Validate this
    <plus:Licensor>
     <rdf:Seq>
      <rdf:li
@@ -419,6 +436,7 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
     </rdf:Seq>
    </plus:ImageSupplier>
    
+   TODO: Validate this; overlaps with dc:subject
    <lr:hierarchicalSubject>
     <rdf:Bag>
      <rdf:li>Places|United Kingdom|England|Yorkshire|Runswick Bay</rdf:li>	TODO: hierarchicalSubject parser.
@@ -426,17 +444,6 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
     </rdf:Bag>
    </lr:hierarchicalSubject>
    
-   
-    http://ns.useplus.org/ldf/vocab/PR-NON (None)
-    http://ns.useplus.org/ldf/vocab/PR-NAP (Not Applicable)
-    http://ns.useplus.org/ldf/vocab/PR-UPR (Unlimited Property Releases)
-    http://ns.useplus.org/ldf/vocab/PR-LPR (Limited or Incomplete Property Releases)
-
-    http://ns.useplus.org/ldf/vocab/MR-NON (None)
-    http://ns.useplus.org/ldf/vocab/MR-NAP (Not Applicable)
-    http://ns.useplus.org/ldf/vocab/MR-UMR (Unlimited Model Releases)
-    http://ns.useplus.org/ldf/vocab/MR-LMR (Limited or Incomplete Model Releases)
-    
     http://ns.useplus.org/ldf/vocab/AG-UNK (Age Unknown)
     http://ns.useplus.org/ldf/vocab/AG-A25 (Age 25 or Over)
     http://ns.useplus.org/ldf/vocab/AG-A24 (Age 24)
@@ -450,14 +457,6 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
     http://ns.useplus.org/ldf/vocab/AG-A16 (Age 16)
     http://ns.useplus.org/ldf/vocab/AG-A15 (Age 15)
     http://ns.useplus.org/ldf/vocab/AG-U14 (Age 14 or Under)
-    
-    
-
-    http://ns.useplus.org/ldf/vocab/work (work)
-    http://ns.useplus.org/ldf/vocab/cell (cell)
-    http://ns.useplus.org/ldf/vocab/fax (fax)
-    http://ns.useplus.org/ldf/vocab/home (home)
-    http://ns.useplus.org/ldf/vocab/pager (pager)
 
 
 	 */

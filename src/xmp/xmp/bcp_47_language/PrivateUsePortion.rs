@@ -2,25 +2,31 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use std::mem::transmute;
-use std::str::FromStr;
-use super::attribute_parse_errors::I8ParseError;
-use super::attribute_parse_errors::UnknownStringVariantParseError;
-use super::XmpAttributeValue;
-use super::XmpAttributeValueParseError;
-
-
-/// BCP 47 language codes (as used by `xml:lang`).
-pub mod bcp_47_language;
-
-
-/// Date (and time) domain types.
-pub mod date_time;
-
-
-/// Universally Unique Identifiers (UUID) domain types.
-pub mod universally_unique_identifier;
-
-
-include!("XmpLabel.rs");
-include!("XmpRating.rs");
+/// `"-" (1*8alphanum)`.
+#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+pub enum PrivateUsePortion
+{
+	#[allow(missing_docs)]
+	_1([Alphanumeric; 1]),
+	
+	#[allow(missing_docs)]
+	_2([Alphanumeric; 2]),
+	
+	#[allow(missing_docs)]
+	_3([Alphanumeric; 3]),
+	
+	#[allow(missing_docs)]
+	_4([Alphanumeric; 4]),
+	
+	#[allow(missing_docs)]
+	_5([Alphanumeric; 5]),
+	
+	#[allow(missing_docs)]
+	_6([Alphanumeric; 6]),
+	
+	#[allow(missing_docs)]
+	_7([Alphanumeric; 7]),
+	
+	#[allow(missing_docs)]
+	_8([Alphanumeric; 8]),
+}
