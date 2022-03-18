@@ -24,9 +24,6 @@ impl<'a> XmpAttributeValue<'a> for XmpUniversallyUniqueIdentifier
 			return Err(Not32CharactersLong(length))
 		}
 		
-		const _0: u128 = b'0' as u128;
-		const _A: u128 = b'A' as u128;
-		
 		let mut result: u128 = 0;
 		let bytes = value.as_bytes();
 		for index in 0 .. Length
@@ -34,9 +31,9 @@ impl<'a> XmpAttributeValue<'a> for XmpUniversallyUniqueIdentifier
 			let byte = bytes.get_unchecked_value_safe(index);
 			let correction = match byte
 			{
-				0 ..= 9 => _0,
+				_0 ..= _9 => _0 as u128,
 				
-				b'A' ..= b'F' => _A,
+				A ..= F => A as u128,
 				
 				_ => return Err(InvalidByteAtIndex { byte, index })
 			};

@@ -9,9 +9,9 @@ pub struct UnknownIso3166Dash1CodeError;
 impl Display for UnknownIso3166Dash1CodeError
 {
 	#[inline(always)]
-	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
 	{
-		Debug::fmt(self, f)
+		Debug::fmt(self, formatter)
 	}
 }
 

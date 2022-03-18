@@ -24,9 +24,9 @@ pub enum ExifVersionParseError
 impl Display for ExifVersionParseError
 {
 	#[inline(always)]
-	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
 	{
-		Debug::fmt(self, f)
+		Debug::fmt(self, formatter)
 	}
 }
 

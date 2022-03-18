@@ -55,6 +55,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7a81dae078cea95a014a339291cec439d2f232ebe854a9d672b796c6afafa9b7"
 
 [[package]]
+name = "either"
+version = "1.6.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e78d4f1cc4ae33bbfc157ed5d5a5ef3bc29227303d595861deb238fcec4e9457"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "gcd"
 version = "2.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -113,6 +122,7 @@ name = "olympus-xmp"
 version = "0.0.0"
 dependencies = [
  "arrayvec",
+ "either",
  "gcd",
  "memchr",
  "swiss-army-knife",

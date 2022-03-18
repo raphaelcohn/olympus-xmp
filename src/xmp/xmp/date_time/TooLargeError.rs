@@ -9,9 +9,9 @@ pub struct TooLargeError<V: Debug + Copy + Ord + Eq + Hash>(V);
 impl<V: Debug + Copy + Ord + Eq + Hash> Display for TooLargeError<V>
 {
 	#[inline(always)]
-	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
 	{
-		Debug::fmt(self, f)
+		Debug::fmt(self, formatter)
 	}
 }
 

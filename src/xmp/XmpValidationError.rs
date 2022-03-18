@@ -86,9 +86,9 @@ pub enum XmpValidationError<'name, 'namespace, 'local_name>
 impl<'name, 'namespace, 'local_name> Display for XmpValidationError<'name, 'namespace, 'local_name>
 {
 	#[inline(always)]
-	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
 	{
-		Debug::fmt(self, f)
+		Debug::fmt(self, formatter)
 	}
 }
 

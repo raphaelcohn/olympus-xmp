@@ -25,12 +25,22 @@
 
 #![feature(adt_const_params)]
 #![feature(const_trait_impl)]
+#![feature(const_transmute_copy)]
 #![feature(generic_arg_infer)]
-
+#![feature(maybe_uninit_array_assume_init)]
+#![feature(maybe_uninit_uninit_array)]
 
 //! #olympus-xmp
 //! 
 //! This is a rust library.
+
+
+#![allow(dead_code)]
+mod a_to_z;
+
+
+/// BCP 47 language tag (as used by `xml:lang`).
+pub mod bcp_47_language_tag;
 
 
 /// XMP (Extensible Metadata) transformations.

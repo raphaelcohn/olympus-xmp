@@ -50,17 +50,13 @@ impl<'a> XmpAttributeValue<'a> for Iso3166Dash1AlphaCountryCode
 
 impl Iso3166Dash1AlphaCountryCode
 {
-	const A: u8 = b'A';
-	
-	const Z: u8 = b'Z';
-	
 	#[inline(always)]
 	fn letter_to_number<const index: u8>(bytes: &[u8]) -> Result<u16, Iso3166Dash1AlphaCountryCodeParseError>
 	{
 		let letter = bytes.get_unchecked_value_safe(index);
 		match letter
 		{
-			Self::A ..= Self::Z => Ok(Self::letter_to_number_scaled::<index>(letter)),
+			A ..= Z => Ok(Self::letter_to_number_scaled::<index>(letter)),
 			
 			_ => return Err(Iso3166Dash1AlphaCountryCodeParseError::InvalidAsciiLetter { letter, index })
 		}
@@ -88,7 +84,7 @@ impl Iso3166Dash1AlphaCountryCode
 		let letter = bytes[index as usize];
 		if cfg!(debug_assertions)
 		{
-			if letter < Iso3166Dash1AlphaCountryCode::A || letter > Iso3166Dash1AlphaCountryCode::Z
+			if letter < A || letter > Z
 			{
 				panic!("letter must be A to Z inclusive")
 			}
@@ -100,7 +96,7 @@ impl Iso3166Dash1AlphaCountryCode
 	#[inline(always)]
 	const fn letter_to_number_scaled<const index: u8>(letter: u8) -> u16
 	{
-		const Scalar: u8 = Iso3166Dash1AlphaCountryCode::Z - Iso3166Dash1AlphaCountryCode::A + 1;
-		((letter - Self::A) as u16) * (Scalar as u16).pow(index as u32)
+		const Scalar: u8 = Z - A + 1;
+		((letter - A) as u16) * (Scalar as u16).pow(index as u32)
 	}
 }

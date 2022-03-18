@@ -19,7 +19,8 @@ edition = '2018'
 version = "0.0.0"
 
 [dependencies]
-arrayvec = { version = "^0.7.0", features = ["std", "serde"] }
+arrayvec = { version = "0.7.0", features = ["std", "serde"] }
+either = { version = "1.6.1", features = ["use_std", "serde"] }
 gcd = "2.1.0"
 memchr = "2.4.1"
 swiss-army-knife = "0.0.31"

@@ -13,7 +13,7 @@ use std::path::PathBuf;
 include!("relative_module_path.rs");
 
 
-pub(super) mod bcp_47_language_code;
+pub(super) mod bcp_47_language_tag;
 
 
 include!("BytesPerKilobyte.rs");

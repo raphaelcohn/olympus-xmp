@@ -10,10 +10,6 @@ use super::XmpAttributeValue;
 use super::XmpAttributeValueParseError;
 
 
-/// BCP 47 language codes (as used by `xml:lang`).
-pub mod bcp_47_language;
-
-
 /// Date (and time) domain types.
 pub mod date_time;
 

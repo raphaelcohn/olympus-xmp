@@ -27,9 +27,9 @@ pub enum Iso3166Dash1AlphaCountryCodeParseError
 impl Display for Iso3166Dash1AlphaCountryCodeParseError
 {
 	#[inline(always)]
-	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
 	{
-		Debug::fmt(self, f)
+		Debug::fmt(self, formatter)
 	}
 }
 
