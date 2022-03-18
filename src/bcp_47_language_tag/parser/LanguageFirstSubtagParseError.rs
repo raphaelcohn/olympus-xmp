@@ -3,7 +3,7 @@
 
 
 #[allow(missing_docs)]
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub enum LanguageFirstSubtagParseError
 {
 	FirstSubtagLengthIsZero,
@@ -13,6 +13,17 @@ pub enum LanguageFirstSubtagParseError
 	FirstSubtagLengthIsTwoToEightButInvalidAlpha(InvalidAlphaError),
 	
 	FirstSubtagLengthIsMoreThanEight,
+
+	LanguageExtensionSubtag(LanguageExtensionSubtagParseError)
+}
+
+impl From<LanguageExtensionSubtagParseError> for LanguageFirstSubtagParseError
+{
+	#[inline(always)]
+	fn from(cause: LanguageExtensionSubtagParseError) -> Self
+	{
+		LanguageFirstSubtagParseError::LanguageExtensionSubtag(cause)
+	}
 }
 
 impl Display for LanguageFirstSubtagParseError
@@ -34,6 +45,8 @@ impl error::Error for LanguageFirstSubtagParseError
 		match self
 		{
 			FirstSubtagLengthIsTwoToEightButInvalidAlpha(cause) => Some(cause),
+			
+			LanguageExtensionSubtag(cause) => Some(cause),
 			
 			_ => None,
 		}

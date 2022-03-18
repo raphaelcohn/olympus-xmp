@@ -5,12 +5,3 @@
 #[allow(missing_docs)]
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct IanaRegisteredIso639Alpha2Code([Alpha; 2]);
-
-impl IanaRegisteredIso639Alpha2Code
-{
-	#[inline(always)]
-	fn parse(first_subtag: &[u8]) -> Result<Self, LanguageFirstSubtagParseError>
-	{
-		Alpha::validate_alpha_to_lower_case::<_, _, _, _, 2>(first_subtag, Self, FirstSubtagLengthIsTwoToEightButInvalidAlpha)
-	}
-}

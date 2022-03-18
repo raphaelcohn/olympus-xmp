@@ -2,8 +2,9 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+#[allow(missing_docs)]
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub(super) enum LanguageExtensionTagParseError
+pub enum LanguageExtensionSubtagParseError
 {
 	InvalidIanaRegisteredIso639Alpha3Code(InvalidAlphaError),
 	
@@ -12,7 +13,7 @@ pub(super) enum LanguageExtensionTagParseError
 	Invalid(ArrayVec<u8, 3>),
 }
 
-impl Display for LanguageExtensionTagParseError
+impl Display for LanguageExtensionSubtagParseError
 {
 	#[inline(always)]
 	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
@@ -21,12 +22,12 @@ impl Display for LanguageExtensionTagParseError
 	}
 }
 
-impl error::Error for LanguageExtensionTagParseError
+impl error::Error for LanguageExtensionSubtagParseError
 {
 	#[inline(always)]
 	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		use LanguageExtensionTagParseError::*;
+		use LanguageExtensionSubtagParseError::*;
 		
 		match self
 		{

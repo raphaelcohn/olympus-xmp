@@ -7,7 +7,7 @@
 /// * `0-9`.
 /// Case insensitive.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub struct Singleton(u8);
+pub(crate) struct Singleton(u8);
 
 impl RestrictedByte for Singleton
 {

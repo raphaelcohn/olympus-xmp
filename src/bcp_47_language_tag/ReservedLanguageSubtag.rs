@@ -9,8 +9,8 @@ pub struct ReservedLanguageSubtag([Alpha; 4]);
 impl ReservedLanguageSubtag
 {
 	#[inline(always)]
-	fn parse(first_subtag: &[u8]) -> Result<Self, LanguageFirstSubtagParseError>
+	fn parse(first_subtag: &[u8]) -> Result<Language, LanguageFirstSubtagParseError>
 	{
-		Alpha::validate_alpha_to_lower_case::<_, _, _, _, 4>(first_subtag, Self, FirstSubtagLengthIsTwoToEightButInvalidAlpha)
+		Alpha::validate_alpha_to_lower_case::<_, _, _, _, 4>(first_subtag, |alpha_array| Language::Reserved(Self(alpha_array)), FirstSubtagLengthIsTwoToEightButInvalidAlpha)
 	}
 }

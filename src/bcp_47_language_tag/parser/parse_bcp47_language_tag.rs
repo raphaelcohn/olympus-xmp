@@ -6,56 +6,39 @@ pub(super) fn parse_bcp47_language_tag(language_tag: &str) -> Result<Bcp47Langua
 {
 	let mut subtags = MemchrIterator::from_str(language_tag);
 	
-	let language =
+	let (language, next_subtag) =
 	{
 		let first_subtag = subtags.next_first();
 		use Bcp47LanguageTag::*;
-		use IanaRegisteredIso639Code::*;
-		use Language::*;
 		use LanguageFirstSubtagParseError::*;
+		use NextSubtag::Pending;
 		use RegisteredLanguageSubtag::*;
 		match first_subtag.len()
 		{
 			0 => Err(FirstSubtagLengthIsZero)?,
 			
-			1 => match first_subtag.get_unchecked_value_safe(0usize)
+			1 => match to_lower_case(first_subtag.get_unchecked_value_safe(0usize))
 			{
-				I | i => return Ok(Grandfathered(super::Grandfathered::Irregular(IrregularGrandfathered::parse_irregular_i(subtags)?))),
+				i => return Ok(Grandfathered(super::Grandfathered::Irregular(IrregularGrandfathered::parse_irregular_i(subtags)?))),
 				
-				X | x => return Ok(PrivateUse(super::PrivateUse::parse(subtags)?)),
+				x => return Ok(PrivateUse(super::PrivateUse::parse(subtags)?)),
 				
 				byte @ _ => Err(FirstSubtagLengthIsOneAndIsNotPrivateUseOrGrandfatheredIrregularTag(byte))?,
 			},
 			
-			2 => Iso
-			{
-				shortest_iso_639_code: Alpha2(IanaRegisteredIso639Alpha2Code::parse(first_subtag)?),
-				
-				extension:
-				{
-					unimplemented!()
-				}
-			},
+			2 => OrdinaryLanguage::parse_2(first_subtag, &mut subtags)?,
 			
-			3 => Iso
-			{
-				shortest_iso_639_code: Alpha3(IanaRegisteredIso639Alpha3Code::parse(first_subtag)?),
-				
-				extension:
-				{
-					unimplemented!()
-				}
-			},
+			3 => OrdinaryLanguage::parse_3(first_subtag, &mut subtags)?,
 			
-			4 => Reserved(ReservedLanguageSubtag::parse(first_subtag)?),
+			4 => (ReservedLanguageSubtag::parse(first_subtag)?, Pending),
 			
-			5 => Registered(RegisteredLanguageSubtag::parse::<_, 5>(first_subtag, Alpha5)?),
+			5 => (RegisteredLanguageSubtag::parse::<_, 5>(first_subtag, Alpha5)?, Pending),
 			
-			6 => Registered(RegisteredLanguageSubtag::parse::<_, 6>(first_subtag, Alpha6)?),
+			6 => (RegisteredLanguageSubtag::parse::<_, 6>(first_subtag, Alpha6)?, Pending),
 			
-			7 => Registered(RegisteredLanguageSubtag::parse::<_, 7>(first_subtag, Alpha7)?),
+			7 => (RegisteredLanguageSubtag::parse::<_, 7>(first_subtag, Alpha7)?, Pending),
 			
-			8 => Registered(RegisteredLanguageSubtag::parse::<_, 8>(first_subtag, Alpha8)?),
+			8 => (RegisteredLanguageSubtag::parse::<_, 8>(first_subtag, Alpha8)?, Pending),
 			
 			_ => Err(FirstSubtagLengthIsMoreThanEight)?,
 		}

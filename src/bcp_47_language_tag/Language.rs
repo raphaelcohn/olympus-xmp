@@ -6,19 +6,12 @@
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub enum Language
 {
-	#[allow(missing_docs)]
-	Iso
-	{
-		#[allow(missing_docs)]
-		shortest_iso_639_code: IanaRegisteredIso639Code,
-		
-		#[allow(missing_docs)]
-		extension: Option<LanguageExtension>,
-	},
+	/// Typically a 2 or 3 character ISO 639 code, but can be much more.
+	Ordinary(OrdinaryLanguage),
 	
 	/// Reserved for future use.
 	Reserved(ReservedLanguageSubtag),
 	
-	#[allow(missing_docs)]
+	/// Registered for future use.
 	Registered(RegisteredLanguageSubtag),
 }
