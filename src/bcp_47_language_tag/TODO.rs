@@ -11,7 +11,7 @@ pub struct Normal
 	script: Option<Iso15924ScriptCode>,
 	
 	/// Presence detected as consists of 2 ALPHA or 3 DIGIT.
-	region: Option<IanaRegisteredIso3166Dash1AlphaCountryCodeOrIanaRegisteredUnM49RegionCode>,
+	region: Option<IanaRegisteredRegionCode>,
 	
 	/// Presence detected as consists of 5 - 8 ALPHA or starts with one DIGIT.
 	variant: IndexSet<Variant>,
@@ -24,23 +24,9 @@ pub struct Normal
 	private_use: Option<PrivateUse>,
 }
 
-pub enum IanaRegisteredIso3166Dash1AlphaCountryCodeOrIanaRegisteredUnM49RegionCode
-{
-	#[allow(missing_docs)]
-	Alpha2([u8; Alpha2]),
-	
-	/// Standard Country or Area Codes for Statistical Use (Series M, No. 49).
-	/// TODO: See <https://en.wikipedia.org/wiki/UN_M49>.
-	#[allow(missing_docs)]
-	M49RegionCode([u8; 3]),
-}
 
 
 
-
-#[allow(missing_docs)]
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub struct Iso15924ScriptCode([Alpha; 4]);
 
 /// Must be registered `5*8alphanum / DIGIT 3alphanum`.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]

@@ -22,9 +22,14 @@ pub enum Bcp47LanguageTag
 impl Bcp47LanguageTag
 {
 	#[allow(missing_docs)]
-	#[inline(always)]
 	pub fn parse(language_tag: &str) -> Result<Self, Bcp47LanguageTagParseError>
 	{
 		parse_bcp47_language_tag(language_tag)
+	}
+	
+	#[inline(always)]
+	const fn from_language(language: Language) -> Result<Self, Bcp47LanguageTagParseError>
+	{
+		Ok(Bcp47LanguageTag::Normal(Normal::from_language(language)))
 	}
 }

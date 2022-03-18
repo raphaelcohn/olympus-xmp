@@ -4,4 +4,27 @@
 
 #[allow(missing_docs)]
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub struct Normal;
+pub struct Normal
+{
+	language: Language,
+	
+	script: Option<Iso15924ScriptCode>,
+	
+	region: Option<IanaRegisteredRegionCode>,
+}
+
+impl Normal
+{
+	#[inline(always)]
+	const fn from_language(language: Language) -> Self
+	{
+		Self
+		{
+			language,
+		
+			script: None,
+		
+			region: None,
+		}
+	}
+}

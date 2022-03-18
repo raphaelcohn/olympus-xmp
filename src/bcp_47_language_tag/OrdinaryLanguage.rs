@@ -29,7 +29,7 @@ impl OrdinaryLanguage
 	fn parse_n<'a, Constructor: FnOnce([Alpha; length]) -> IanaRegisteredIso639Code, const length: usize>(first_subtag: &'a [u8], subtags: &mut MemchrIterator<'a, Hyphen>, constructor: Constructor) -> Result<(Language, NextSubtag<'a>), LanguageFirstSubtagParseError>
 	{
 		let iana_registered_iso_639_code = Alpha::validate_alpha_to_lower_case::<_, _, _, _, length>(first_subtag, constructor, FirstSubtagLengthIsTwoToEightButInvalidAlpha)?;
-		let (extension, next_subtag) = LanguageExtension::parse(subtags)?;
+		let (extension, next_subtag) = LanguageExtension::parse(subtags, iana_registered_iso_639_code)?;
 		
 		Ok
 		(

@@ -2,6 +2,24 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-/// UN M.49 region code registered in the IANA language registry.
+/// UN Standard Country or Area Codes for Statistical Use (Series M, Nº 49) region code registered in the IANA language registry.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct IanaRegisteredUnM49RegionCode([Digit; 3]);
+
+impl<'a> const From<&'a [u8; 3]> for IanaRegisteredUnM49RegionCode
+{
+	#[inline(always)]
+	const fn from(value: &'a [u8; 3]) -> Self
+	{
+		Self(unsafe { transmute_copy(value) })
+	}
+}
+
+impl const From<[u8; 3]> for IanaRegisteredUnM49RegionCode
+{
+	#[inline(always)]
+	const fn from(value: [u8; 3]) -> Self
+	{
+		Self(unsafe { transmute(value) })
+	}
+}

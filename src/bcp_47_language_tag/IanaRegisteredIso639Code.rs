@@ -13,3 +13,39 @@ pub enum IanaRegisteredIso639Code
 	#[allow(missing_docs)]
 	Alpha3(IanaRegisteredIso639Alpha3Code),
 }
+
+impl<'a> const From<&'a [u8; 2]> for IanaRegisteredIso639Code
+{
+	#[inline(always)]
+	fn from(value: &'a [u8; 2]) -> Self
+	{
+		IanaRegisteredIso639Code::Alpha2(IanaRegisteredIso639Alpha2Code::from(value))
+	}
+}
+
+impl const From<[u8; 2]> for IanaRegisteredIso639Code
+{
+	#[inline(always)]
+	fn from(value: [u8; 2]) -> Self
+	{
+		IanaRegisteredIso639Code::Alpha2(IanaRegisteredIso639Alpha2Code::from(value))
+	}
+}
+
+impl<'a> const From<&'a [u8; 3]> for IanaRegisteredIso639Code
+{
+	#[inline(always)]
+	fn from(value: &'a [u8; 3]) -> Self
+	{
+		IanaRegisteredIso639Code::Alpha3(IanaRegisteredIso639Alpha3Code::from(value))
+	}
+}
+
+impl const From<[u8; 3]> for IanaRegisteredIso639Code
+{
+	#[inline(always)]
+	fn from(value: [u8; 3]) -> Self
+	{
+		IanaRegisteredIso639Code::Alpha3(IanaRegisteredIso639Alpha3Code::from(value))
+	}
+}

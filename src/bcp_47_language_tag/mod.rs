@@ -13,6 +13,7 @@ use crate::a_to_z::h;
 use crate::a_to_z::i;
 use crate::a_to_z::p;
 use crate::a_to_z::t;
+use crate::a_to_z::n;
 use crate::a_to_z::o;
 use crate::a_to_z::y;
 use crate::a_to_z::s;
@@ -43,6 +44,9 @@ use restricted_byte::Digit;
 use restricted_byte::Alpha;
 use restricted_byte::Alphanumeric;
 use restricted_byte::RestrictedByte;
+use std::mem::transmute;
+use std::mem::transmute_copy;
+use swiss_army_knife::unreachable_code;
 
 
 #[macro_use]
@@ -54,10 +58,13 @@ mod restricted_byte;
 
 include!("Bcp47LanguageTag.rs");
 include!("Grandfathered.rs");
+include!("IanaRegisteredIso3166Dash1Alpha2CountryCode.rs");
+include!("IanaRegisteredRegionCode.rs");
 include!("IanaRegisteredIso639Code.rs");
 include!("IanaRegisteredIso639Alpha2Code.rs");
 include!("IanaRegisteredIso639Alpha3Code.rs");
 include!("IanaRegisteredUnM49RegionCode.rs");
+include!("IanaRegisteredIso15924ScriptCode.rs");
 include!("IrregularGrandfathered.rs");
 include!("Language.rs");
 include!("LanguageExtension.rs");

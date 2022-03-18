@@ -4,21 +4,21 @@
 
 #[allow(missing_docs)]
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub struct IanaRegisteredIso639Alpha3Code([Alpha; 3]);
+pub struct IanaRegisteredIso3166Dash1Alpha2CountryCode([Alpha; 2]);
 
-impl<'a> const From<&'a [u8; 3]> for IanaRegisteredIso639Alpha3Code
+impl<'a> const From<&'a [u8; 2]> for IanaRegisteredIso3166Dash1Alpha2CountryCode
 {
 	#[inline(always)]
-	const fn from(value: &'a [u8; 3]) -> Self
+	const fn from(value: &'a [u8; 2]) -> Self
 	{
 		Self(unsafe { transmute_copy(value) })
 	}
 }
 
-impl const From<[u8; 3]> for IanaRegisteredIso639Alpha3Code
+impl const From<[u8; 2]> for IanaRegisteredIso3166Dash1Alpha2CountryCode
 {
 	#[inline(always)]
-	const fn from(value: [u8; 3]) -> Self
+	const fn from(value: [u8; 2]) -> Self
 	{
 		Self(unsafe { transmute(value) })
 	}
