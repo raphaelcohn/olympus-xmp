@@ -14,6 +14,7 @@
 use build::bcp_47_language_tag::parse_language_subtag_registry;
 
 
+#[allow(dead_code)]
 #[path = "src/a_to_z/mod.rs"]
 pub(crate) mod a_to_z;
 

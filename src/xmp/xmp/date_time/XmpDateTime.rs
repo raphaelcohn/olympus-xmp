@@ -49,14 +49,6 @@ impl<'a> XmpAttributeValue<'a> for XmpDateTime
 		use XmpDateTimeParseError::*;
 		use TimeZone::UniversalTimeCoordinated;
 		
-		const Hyphen: u8 = b'-';
-		const T: u8 = b'T';
-		const Colon: u8 = b':';
-		const Z: u8 = b'Z';
-		const PlusSign: u8 = b'+';
-		const MinusSign: u8 = b'-';
-		const Period: u8 = b'.';
-		
 		const SeparatorWidth: usize = size_of::<u8>();
 		const FourDigitWidth: usize = 4;
 		const TwoDigitWidth: usize = 2;
@@ -319,8 +311,6 @@ impl XmpDateTime
 	fn parse_offset_time_zone(bytes: &[u8], separator_index: usize, time_zone: impl FnOnce(HourMinute) -> TimeZone) -> Result<TimeZone, XmpDateTimeParseError>
 	{
 		use XmpDateTimeParseError::*;
-		
-		const Colon: u8 = b':';
 		
 		let remainder = bytes.get_unchecked_range_safe((separator_index + 1) .. );
 		if remainder.len() != 5

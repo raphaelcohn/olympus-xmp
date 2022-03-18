@@ -8,6 +8,8 @@ pub(super) enum LanguageExtensionTagParseError
 	InvalidIanaRegisteredIso639Alpha3Code(InvalidAlphaError),
 	
 	InvalidIanaRegisteredUnM49RegionCode(InvalidDigitError),
+
+	Invalid(ArrayVec<u8, 3>),
 }
 
 impl Display for LanguageExtensionTagParseError
@@ -31,6 +33,8 @@ impl error::Error for LanguageExtensionTagParseError
 			InvalidIanaRegisteredIso639Alpha3Code(cause) => Some(cause),
 			
 			InvalidIanaRegisteredUnM49RegionCode(cause) => Some(cause),
+			
+			_ => None,
 		}
 	}
 }

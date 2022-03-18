@@ -35,7 +35,7 @@
 //! This is a rust library.
 
 
-#![allow(dead_code)]
+#[allow(dead_code)]
 mod a_to_z;
 
 

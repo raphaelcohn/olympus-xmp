@@ -61,8 +61,6 @@ trait ParseRecord: Clone
 		let bytes = value.as_bytes();
 		for index in 0 .. bytes.len()
 		{
-			const _0: u8 = b'0';
-			const _9: u8 = b'9';
 			match bytes.get_unchecked_value_safe(index)
 			{
 				_0 ..= _9 => (),
@@ -82,7 +80,7 @@ trait ParseRecord: Clone
 		{
 			match bytes.get_unchecked_value_safe(index)
 			{
-				b'A' ..= b'Z' => (),
+				A ..= Z => (),
 				
 				byte @ _ => return Err(KeyParseError::TagOrSubtagByteIsNotUpperCaseAlpha { index, byte })
 			}
@@ -99,7 +97,7 @@ trait ParseRecord: Clone
 		{
 			match bytes.get_unchecked_value_safe(index)
 			{
-				b'a' ..= b'z' => (),
+				a ..= z => (),
 				
 				byte @ _ => return Err(KeyParseError::TagOrSubtagByteIsNotLowerCaseAlpha { index, byte })
 			}

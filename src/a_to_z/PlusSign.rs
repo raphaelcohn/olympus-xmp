@@ -2,24 +2,4 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-/// Value is one of `0-9`.
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub struct Digit(u8);
-
-impl RestrictedByte for Digit
-{
-	type Error = InvalidDigitError;
-	
-	#[inline(always)]
-	fn construct(validated_byte: u8) -> Self
-	{
-		debug_assert!(validated_byte >= _0 && validated_byte <= _9);
-		Self(validated_byte)
-	}
-	
-	#[inline(always)]
-	fn error<const length: usize>(index: usize, byte: u8) -> Self::Error
-	{
-		InvalidDigitError { length, index, byte }
-	}
-}
+pub(crate) const PlusSign: u8 = b'+';

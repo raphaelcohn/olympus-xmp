@@ -2,6 +2,8 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+use crate::a_to_z::_0;
+use crate::a_to_z::_9;
 use crate::a_to_z::a;
 use crate::a_to_z::b;
 use crate::a_to_z::c;

@@ -25,10 +25,6 @@ impl<'a> PullEventParser<'a>
 	/// See RFC 5646, Section 3.1.1.
 	fn split_line(line: Cow<'a, str>) -> Result<Event<'a>, PullEventParserError>
 	{
-		const Hyphen: u8 = b'-';
-		const Percent: u8 = b'%';
-		const Space: u8 = b' ';
-		const Colon: u8 = b':';
 		const MinimumLineLength: usize = 2;
 		
 		use Event::*;

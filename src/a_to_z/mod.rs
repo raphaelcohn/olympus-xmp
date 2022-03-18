@@ -1,7 +1,15 @@
 // This file is part of olympus-xmp. It is subject to the license terms in the COPYRIGHT file found in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT. No part of olympus-xmp, including this file, may be copied, modified, propagated, or distributed except according to the terms contained in the COPYRIGHT file.
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
-
+include!("Colon.rs");
+include!("Hyphen.rs");
+include!("LineFeed.rs");
+include!("MinusSign.rs");
+include!("Percent.rs");
+include!("Period.rs");
+include!("PlusSign.rs");
+include!("Slash.rs");
+include!("Space.rs");
 include!("_0.rs");
 include!("_9.rs");
 include!("a.rs");

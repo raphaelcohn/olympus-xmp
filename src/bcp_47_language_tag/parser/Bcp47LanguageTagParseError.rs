@@ -3,7 +3,7 @@
 
 
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-enum Bcp47LanguageTagParseError
+pub enum Bcp47LanguageTagParseError
 {
 	FirstSubtag(LanguageFirstSubtagParseError),
 

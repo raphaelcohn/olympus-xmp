@@ -34,7 +34,6 @@ impl<'a> Iterator for UnfoldedLinesIterator<'a>
 				break
 			}
 			
-			const Space: u8 = b' ';
 			if self.buffer.get_unchecked_value_safe(0u8) != Space
 			{
 				break
@@ -86,7 +85,6 @@ impl<'a> UnfoldedLinesIterator<'a>
 	
 	fn next_line_feed_index(&mut self) -> Option<usize>
 	{
-		const LineFeed: u8 = b'\n';
 		memchr(LineFeed, self.buffer)
 	}
 	

@@ -18,3 +18,13 @@ pub enum Bcp47LanguageTag
 	#[allow(missing_docs)]
 	Grandfathered(Grandfathered),
 }
+
+impl Bcp47LanguageTag
+{
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub fn parse(language_tag: &str) -> Result<Self, Bcp47LanguageTagParseError>
+	{
+		parse_bcp47_language_tag(language_tag)
+	}
+}

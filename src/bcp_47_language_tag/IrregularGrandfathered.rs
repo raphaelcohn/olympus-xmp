@@ -89,6 +89,12 @@ impl IrregularGrandfathered
 		}
 	}
 	
+	#[inline(always)]
+	fn unregistered<const _length: usize>(second_subtag: &[u8]) -> Result<Self, GrandfatheredIrregularISubtagParseError>
+	{
+		Err(GrandfatheredIrregularISubtagParseError::Unregistered(array_vec_u8::<8>(second_subtag)))
+	}
+	
 	/// * `i-ami`.
 	/// * `i-bnn`.`
 	/// * `i-hak`.`
@@ -118,6 +124,8 @@ impl IrregularGrandfathered
 			b => Self::parse_irregular_i_n_slice::<length, b"bnn", i_bnn, 1>(second_subtag),
 			
 			h => Self::parse_irregular_i_n_slice::<length, b"hak", i_hak, 1>(second_subtag),
+			
+			i => Self::parse_irregular_i_n_slice::<length, b"lux", i_lux, 1>(second_subtag),
 			
 			p => Self::parse_irregular_i_n_slice::<length, b"pwn", i_pwn, 1>(second_subtag),
 			
@@ -215,22 +223,5 @@ impl IrregularGrandfathered
 		}
 		
 		Ok(ok)
-	}
-	
-	#[inline(always)]
-	fn unregistered<const length: usize>(second_subtag: &[u8]) -> Result<Self, GrandfatheredIrregularISubtagParseError>
-	{
-		debug_assert_eq!(second_subtag.len(), length);
-		
-		let unregistered =
-		{
-			let mut unregistered = ArrayVec::new_const();
-			let to_pointer: *mut u8 = unregistered.as_mut_ptr();
-			let from_pointer = second_subtag.as_ptr();
-			unsafe { to_pointer.copy_from_nonoverlapping(from_pointer, length) };
-			unregistered
-		};
-		
-		Err(GrandfatheredIrregularISubtagParseError::Unregistered(unregistered))
 	}
 }
