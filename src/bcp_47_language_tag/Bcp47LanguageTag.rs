@@ -19,17 +19,70 @@ pub enum Bcp47LanguageTag
 	Grandfathered(Grandfathered),
 }
 
+impl const From<Normal> for Bcp47LanguageTag
+{
+	#[inline(always)]
+	fn from(normal: Normal) -> Self
+	{
+		Bcp47LanguageTag::Normal(normal)
+	}
+}
+
+impl const From<Grandfathered> for Bcp47LanguageTag
+{
+	#[inline(always)]
+	fn from(grandfathered: Grandfathered) -> Self
+	{
+		Bcp47LanguageTag::Grandfathered(grandfathered)
+	}
+}
+
+impl const From<PrivateUse> for Bcp47LanguageTag
+{
+	#[inline(always)]
+	fn from(private_use: PrivateUse) -> Self
+	{
+		Bcp47LanguageTag::PrivateUse(private_use)
+	}
+}
+
 impl Bcp47LanguageTag
 {
 	#[allow(missing_docs)]
 	pub fn parse(language_tag: &str) -> Result<Self, Bcp47LanguageTagParseError>
 	{
-		parse_bcp47_language_tag(language_tag)
+		let subtags = MemchrIterator::from_str(language_tag);
+		parse_bcp47_language_subtag(subtags)
 	}
 	
 	#[inline(always)]
-	const fn from_language(language: Language) -> Result<Self, Bcp47LanguageTagParseError>
+	fn parse_x_or_i_subtag<'a>(first_subtag: &'a [u8], subtags: MemchrIterator<'a, Hyphen>) -> Result<Self, Bcp47LanguageTagParseError>
 	{
-		Ok(Bcp47LanguageTag::Normal(Normal::from_language(language)))
+		match to_lower_case(first_subtag.get_unchecked_value_safe(0usize))
+		{
+			i => Ok(Self::irregular_grandfathered(IrregularGrandfathered::parse_irregular_i(subtags)?)),
+			
+			x => Ok(PrivateUse::parse(subtags)?.into()),
+			
+			byte @ _ => Err(LanguageFirstSubtagParseError::FirstSubtagLengthIsOneAndIsNotPrivateUseOrGrandfatheredIrregularTag(byte))?,
+		}
+	}
+	
+	#[inline(always)]
+	const fn regular_grandfathered(regular_grandfathered: RegularGrandfathered) -> Self
+	{
+		Grandfathered::Regular(regular_grandfathered).into()
+	}
+	
+	#[inline(always)]
+	const fn irregular_grandfathered(irregular_grandfathered: IrregularGrandfathered) -> Self
+	{
+		Grandfathered::Irregular(irregular_grandfathered).into()
+	}
+	
+	#[inline(always)]
+	const fn from_language_ok(language: Language) -> Result<Self, Bcp47LanguageTagParseError>
+	{
+		Ok(Normal::from(language).into())
 	}
 }

@@ -12,3 +12,21 @@ pub enum Grandfathered
 	#[allow(missing_docs)]
 	Regular(RegularGrandfathered),
 }
+
+impl const From<IrregularGrandfathered> for Grandfathered
+{
+	#[inline(always)]
+	fn from(irregular_grandfathered: IrregularGrandfathered) -> Self
+	{
+		Grandfathered::Irregular(irregular_grandfathered)
+	}
+}
+
+impl const From<RegularGrandfathered> for Grandfathered
+{
+	#[inline(always)]
+	fn from(regular_grandfathered: RegularGrandfathered) -> Self
+	{
+		Grandfathered::Regular(regular_grandfathered)
+	}
+}

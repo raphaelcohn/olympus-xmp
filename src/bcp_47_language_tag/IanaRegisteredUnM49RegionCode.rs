@@ -9,7 +9,7 @@ pub struct IanaRegisteredUnM49RegionCode([Digit; 3]);
 impl<'a> const From<&'a [u8; 3]> for IanaRegisteredUnM49RegionCode
 {
 	#[inline(always)]
-	const fn from(value: &'a [u8; 3]) -> Self
+	fn from(value: &'a [u8; 3]) -> Self
 	{
 		Self(unsafe { transmute_copy(value) })
 	}
@@ -18,7 +18,7 @@ impl<'a> const From<&'a [u8; 3]> for IanaRegisteredUnM49RegionCode
 impl const From<[u8; 3]> for IanaRegisteredUnM49RegionCode
 {
 	#[inline(always)]
-	const fn from(value: [u8; 3]) -> Self
+	fn from(value: [u8; 3]) -> Self
 	{
 		Self(unsafe { transmute(value) })
 	}

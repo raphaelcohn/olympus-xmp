@@ -55,6 +55,7 @@ impl Alphanumeric
 		unsafe { transmute_copy(value) }
 	}
 	
+	#[unroll_for_loops]
 	#[inline(always)]
 	pub(super) fn validate_alphanumeric_to_lower_case<OkConstructor: FnOnce([Self; length]) -> O, ErrorConstructor: FnOnce(InvalidAlphanumericError) -> E, O, E: error::Error, const length: usize>(bytes: &[u8], ok: OkConstructor, error: ErrorConstructor) -> Result<O, E>
 	{

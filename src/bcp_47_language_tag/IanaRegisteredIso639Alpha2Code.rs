@@ -9,7 +9,7 @@ pub struct IanaRegisteredIso639Alpha2Code([Alpha; 2]);
 impl<'a> const From<&'a [u8; 2]> for IanaRegisteredIso639Alpha2Code
 {
 	#[inline(always)]
-	const fn from(value: &'a [u8; 2]) -> Self
+	fn from(value: &'a [u8; 2]) -> Self
 	{
 		Self(unsafe { transmute_copy(value) })
 	}
@@ -18,7 +18,7 @@ impl<'a> const From<&'a [u8; 2]> for IanaRegisteredIso639Alpha2Code
 impl const From<[u8; 2]> for IanaRegisteredIso639Alpha2Code
 {
 	#[inline(always)]
-	const fn from(value: [u8; 2]) -> Self
+	fn from(value: [u8; 2]) -> Self
 	{
 		Self(unsafe { transmute(value) })
 	}

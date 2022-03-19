@@ -21,6 +21,7 @@ use super::parser::restricted_byte::UninitialisedArray;
 use super::parser::restricted_byte::to_lower_case;
 use swiss_army_knife::get_unchecked::AsUsizeIndex;
 use swiss_army_knife::get_unchecked::GetUnchecked;
+use unroll::unroll_for_loops;
 
 
 include!("Alpha.rs");

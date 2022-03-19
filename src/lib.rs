@@ -24,6 +24,7 @@
 
 
 #![feature(adt_const_params)]
+#![feature(const_convert)]
 #![feature(const_trait_impl)]
 #![feature(const_transmute_copy)]
 #![feature(generic_arg_infer)]

@@ -3,27 +3,27 @@
 
 
 #[allow(missing_docs)]
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct Normal
 {
 	language: Language,
 	
-	script: Option<Iso15924ScriptCode>,
+	script: Option<IanaRegisteredIso15924ScriptCode>,
 	
 	region: Option<IanaRegisteredRegionCode>,
 }
 
-impl Normal
+impl const From<Language> for Normal
 {
 	#[inline(always)]
-	const fn from_language(language: Language) -> Self
+	fn from(language: Language) -> Self
 	{
 		Self
 		{
 			language,
-		
+			
 			script: None,
-		
+			
 			region: None,
 		}
 	}

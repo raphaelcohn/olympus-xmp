@@ -3,7 +3,7 @@
 
 
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub(in crate::bcp_47_language_tag) struct InvalidDigitError
+pub struct InvalidDigitError
 {
 	pub(in crate::bcp_47_language_tag) length: usize,
 	

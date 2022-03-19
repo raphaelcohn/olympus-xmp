@@ -27,6 +27,7 @@ impl RestrictedByte for Alpha
 
 impl Alpha
 {
+	#[unroll_for_loops]
 	#[inline(always)]
 	pub(super) fn validate_alpha_to_lower_case<OkConstructor: FnOnce([Self; length]) -> O, ErrorConstructor: FnOnce(InvalidAlphaError) -> E, O, E: error::Error, const length: usize>(bytes: &[u8], ok: OkConstructor, error: ErrorConstructor) -> Result<O, E>
 	{

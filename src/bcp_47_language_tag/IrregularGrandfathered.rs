@@ -205,6 +205,7 @@ impl IrregularGrandfathered
 		Self::parse_irregular_i_n_slice::<length, pattern, ok, 0>(second_subtag)
 	}
 	
+	#[unroll_for_loops]
 	#[inline(always)]
 	fn parse_irregular_i_n_slice<const length: usize, const pattern: &'static [u8], const ok: IrregularGrandfathered, const second_subtag_from_index: usize>(second_subtag: &[u8]) -> Result<Self, GrandfatheredIrregularISubtagParseError>
 	{

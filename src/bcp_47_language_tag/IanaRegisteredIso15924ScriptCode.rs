@@ -9,16 +9,16 @@ pub struct IanaRegisteredIso15924ScriptCode([Alpha; 4]);
 impl<'a> const From<&'a [u8; 4]> for IanaRegisteredIso15924ScriptCode
 {
 	#[inline(always)]
-	const fn from(value: &'a [u8; 4]) -> Self
+	fn from(value: &'a [u8; 4]) -> Self
 	{
 		Self(unsafe { transmute_copy(value) })
 	}
 }
 
-impl const From<[u8; 4]> for IanaRegisteredIso3166Dash1Alpha2CountryCode
+impl const From<[u8; 4]> for IanaRegisteredIso15924ScriptCode
 {
 	#[inline(always)]
-	const fn from(value: [u8; 4]) -> Self
+	fn from(value: [u8; 4]) -> Self
 	{
 		Self(unsafe { transmute(value) })
 	}

@@ -24,7 +24,7 @@ impl LanguageExtension
 	/// extlang = 3ALPHA          ; Selected ISO 639 codes.
 	///           *2("-" 3ALPHA)  ; Permanently reserved.
 	/// ```
-	fn parse<'a>(subtags: &mut MemchrIterator<'a, Hyphen>, iana_registered_iso_639_code: IanaRegisteredIso639Code) -> Result<(Either<Option<Self>, RegularGrandfathered>, NextSubtag<'a>), LanguageExtensionSubtagParseError>
+	fn parse<'a>(subtags: &mut MemchrIterator<'a, Hyphen>, iana_registered_iso_639_code: IanaRegisteredIso639Code) -> Result<Either<(Language, NextSubtag<'a>), Bcp47LanguageTag>, LanguageExtensionSubtagParseError>
 	{
 		use NextSubtag::*;
 		use RegularGrandfathered::*;
@@ -35,120 +35,102 @@ impl LanguageExtension
 		const nyn: IanaRegisteredIso639Alpha3Code = IanaRegisteredIso639Alpha3Code::from(b"nyn");
 		const min: IanaRegisteredIso639Alpha3Code = IanaRegisteredIso639Alpha3Code::from(b"min");
 		const nan: IanaRegisteredIso639Alpha3Code = IanaRegisteredIso639Alpha3Code::from(b"nan");
+		const PendingImpossibleMessage: &'static str = "Pending never returned from parse_extended_language_subtag";
+		
+		type Output<'a> = Either<(Language, NextSubtag<'a>), Bcp47LanguageTag>;
 		
 		#[inline(always)]
-		const fn right<'a>(regular_grandfathered: RegularGrandfathered) -> (Either<Option<LanguageExtension>, RegularGrandfathered>, NextSubtag<'a>)
+		const fn left(iana_registered_iso_639_code: IanaRegisteredIso639Code, language_extension: Option<LanguageExtension>, next_subtag: NextSubtag) -> Output
 		{
-			(Right(regular_grandfathered), Exhausted)
-		}
-		
-		#[inline(always)]
-		const fn left(language_extension: LanguageExtension, next_subtag: NextSubtag) -> (Either<Option<LanguageExtension>, RegularGrandfathered>, NextSubtag)
-		{
-			(Left(Some(language_extension)), next_subtag)
-		}
-		
-		// TODO: Create a macro;
-		xxx;
-		
-		let language_extension_0 = match Self::parse_extended_language_subtag(subtags)?
-		{
-			Right(language_extension_0) => language_extension_0,
-			
-			Left(next_subtag) =>
-			{
-				debug_assert_ne!(next_subtag, Pending, "Pending never returned from parse_extended_language_subtag");
-				return Ok((Left(None), next_subtag))
-			},
-		};
-		
-		let language_extension_1 = match Self::parse_extended_language_subtag(subtags)?
-		{
-			Right(language_extension_2) => language_extension_2,
-			
-			Left(next_subtag) => return Ok
+			Left
 			(
-				match (next_subtag, iana_registered_iso_639_code, language_extension_0)
-				{
-					(Exhausted, no, bok) => right(no_bok),
-					
-					(Exhausted, no, nyn) => right(no_nyn),
-					
-					(Exhausted, zh, min) => right(zh_min),
-					
-					(Pending, _, _) => unreachable_code(format_args!("Pending never returned from parse_extended_language_subtag")),
-					
-					(next_subtag @ _, _, _) => left(Self::language_extension_0(language_extension_0), next_subtag),
-				}
-			),
-		};
-		
-		match Self::parse_extended_language_subtag(subtags)?
-		{
-			Right(language_extension_3) => Some(language_extension_3),
-			
-			Left(next_subtag) => return Ok
-			(
-				match (next_subtag, iana_registered_iso_639_code, language_extension_0, language_extension_1)
-				{
-					(Exhausted, zh, min, nan) => right(zh_min_nan),
-					
-					(Pending, _, _, _) => unreachable_code(format_args!("Pending never returned from parse_extended_language_subtag")),
-					
-					(next_subtag @ _, _, _, _) => left(Self::language_extension_1(language_extension_0, language_extension_1), next_subtag),
-				}
+				(
+					Language::Ordinary
+					(
+						OrdinaryLanguage
+						{
+							iana_registered_iso_639_code,
+							
+							language_extension,
+						}
+					),
+					next_subtag
+				)
 			)
 		}
 		
-		Ok(left(Self::language_extension_2(language_extension_0, language_extension_1, language_extension_2), Pending))
-	}
-	
-	#[inline(always)]
-	const fn language_extension_0(language_extension_0: IanaRegisteredIso639Alpha3Code) -> Self
-	{
-		Self
+		#[inline(always)]
+		const fn left_none(iana_registered_iso_639_code: IanaRegisteredIso639Code, next_subtag: NextSubtag) -> Output
 		{
-			language_extension_0,
-			
-			permanently_reserved: ArrayVec::new_const(),
+			left(iana_registered_iso_639_code, None, next_subtag)
 		}
-	}
-	
-	#[inline(always)]
-	fn language_extension_1(language_extension_0: IanaRegisteredIso639Alpha3Code, language_extension_1: IanaRegisteredIso639Alpha3Code) -> Self
-	{
-		let mut permanently_reserved = ArrayVec::new_const();
-		let mut_ptr = permanently_reserved.as_mut_ptr();
-		unsafe
+		
+		#[inline(always)]
+		const fn left_some(iana_registered_iso_639_code: IanaRegisteredIso639Code, language_extension: LanguageExtension, next_subtag: NextSubtag) -> Output
 		{
-			*mut_ptr = language_extension_1;
-			permanently_reserved.set_len(1);
+			left(iana_registered_iso_639_code, Some(language_extension), next_subtag)
 		}
-		Self
+		
+		#[inline(always)]
+		const fn right<'a>(regular_grandfathered: RegularGrandfathered) -> Output<'a>
 		{
-			language_extension_0,
-			
-			permanently_reserved,
+			Right(Bcp47LanguageTag::regular_grandfathered(regular_grandfathered))
 		}
-	}
-	
-	#[inline(always)]
-	fn language_extension_2(language_extension_0: IanaRegisteredIso639Alpha3Code, language_extension_1: IanaRegisteredIso639Alpha3Code, language_extension_2: IanaRegisteredIso639Alpha3Code) -> Self
-	{
-		let mut permanently_reserved = ArrayVec::new_const();
-		let mut_ptr = permanently_reserved.as_mut_ptr();
-		unsafe
+		
+		#[inline(always)]
+		fn unreachable_code_because_pending_impossible() -> !
 		{
-			*mut_ptr = language_extension_1;
-			*mut_ptr.add(1) = language_extension_2;
-			permanently_reserved.set_len(2);
+			unreachable_code(format_args!("{}", PendingImpossibleMessage))
 		}
-		Self
+		
+		macro_rules! parse_extended_language_subtag
 		{
-			language_extension_0,
-			
-			permanently_reserved,
+			($subtags: ident, $next_subtag: ident, $ok: block) =>
+			{
+				match Self::parse_extended_language_subtag(subtags)?
+				{
+					Right(language_extension) => language_extension,
+					
+					Left($next_subtag) => return Ok($ok),
+				}
+			}
 		}
+		
+		let language_extension_0 = parse_extended_language_subtag!(subtags, next_subtag,
+		{
+			debug_assert_ne!(next_subtag, Pending, "{}", PendingImpossibleMessage);
+			left_none(iana_registered_iso_639_code, next_subtag)
+		});
+		
+		let language_extension_1 = parse_extended_language_subtag!(subtags, next_subtag,
+		{
+			match (next_subtag, iana_registered_iso_639_code, language_extension_0)
+			{
+				(Exhausted, no, bok) => right(no_bok),
+				
+				(Exhausted, no, nyn) => right(no_nyn),
+				
+				(Exhausted, zh, min) => right(zh_min),
+				
+				(Pending, _, _) => unreachable_code_because_pending_impossible(),
+				
+				(next_subtag @ _, _, _) => left_some(iana_registered_iso_639_code, Self::language_extension_0(language_extension_0), next_subtag),
+			}
+		});
+		
+		let language_extension_2 = parse_extended_language_subtag!(subtags, next_subtag,
+		{
+			match (next_subtag, iana_registered_iso_639_code, language_extension_0, language_extension_1)
+			{
+				(Exhausted, zh, min, nan) => right(zh_min_nan),
+				
+				(Pending, _, _, _) => unreachable_code_because_pending_impossible(),
+				
+				(next_subtag @ _, _, _, _) => left_some(iana_registered_iso_639_code, Self::language_extension_1(language_extension_0, language_extension_1), next_subtag),
+			}
+		});
+		
+		Ok(left_some(iana_registered_iso_639_code, Self::language_extension_2(language_extension_0, language_extension_1, language_extension_2), Pending))
 	}
 	
 	#[inline(always)]
@@ -243,6 +225,7 @@ impl LanguageExtension
 		)
 	}
 	
+	#[unroll_for_loops]
 	#[inline(always)]
 	fn validate_as_iana_registered<IR, RB: RestrictedByte, Validate: Copy + FnOnce(u8) -> Option<u8>, Constructor: FnOnce([RB; Self::length]) -> IR, EitherConstructor: FnOnce(IR) -> Either<IanaRegisteredUnM49RegionCode, IanaRegisteredIso639Alpha3Code>, Error: FnOnce(usize, u8) -> LanguageExtensionSubtagParseError>(subtag: &[u8], zeroth_byte: u8, validate: Validate, constructor: Constructor, either: EitherConstructor, error: Error) -> Result<Either<IanaRegisteredUnM49RegionCode, IanaRegisteredIso639Alpha3Code>, LanguageExtensionSubtagParseError>
 	{
@@ -263,5 +246,45 @@ impl LanguageExtension
 			}
 		}
 		Ok(either(constructor(converted.initialise())))
+	}
+	
+	#[inline(always)]
+	const fn language_extension_0(language_extension_0: IanaRegisteredIso639Alpha3Code) -> Self
+	{
+		Self
+		{
+			language_extension_0,
+			
+			permanently_reserved: ArrayVec::new_const(),
+		}
+	}
+	
+	#[inline(always)]
+	fn language_extension_1(language_extension_0: IanaRegisteredIso639Alpha3Code, language_extension_1: IanaRegisteredIso639Alpha3Code) -> Self
+	{
+		Self::language_extension_::<_, 1>(language_extension_0, language_extension_1, |_| {})
+	}
+	
+	#[inline(always)]
+	fn language_extension_2(language_extension_0: IanaRegisteredIso639Alpha3Code, language_extension_1: IanaRegisteredIso639Alpha3Code, language_extension_2: IanaRegisteredIso639Alpha3Code) -> Self
+	{
+		Self::language_extension_::<_, 2>(language_extension_0, language_extension_1, |mut_ptr| unsafe { mut_ptr.add(1).write(language_extension_2) })
+	}
+	
+	#[inline(always)]
+	fn language_extension_<LE3: FnOnce(*mut IanaRegisteredIso639Alpha3Code), const length: usize>(language_extension_0: IanaRegisteredIso639Alpha3Code, language_extension_1: IanaRegisteredIso639Alpha3Code, language_extension_3: LE3) -> Self
+	{
+		let mut permanently_reserved: ArrayVec<_, { Self::PermanentlyReservedCount }> = ArrayVec::new_const();
+		let mut_ptr: *mut IanaRegisteredIso639Alpha3Code = permanently_reserved.as_mut_ptr();
+		unsafe { mut_ptr.write(language_extension_1) };
+		language_extension_3(mut_ptr);
+		unsafe { permanently_reserved.set_len(length) };
+		
+		Self
+		{
+			language_extension_0,
+			
+			permanently_reserved,
+		}
 	}
 }

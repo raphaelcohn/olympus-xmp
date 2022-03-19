@@ -6,6 +6,7 @@ use crate::a_to_z::_0;
 use crate::a_to_z::_9;
 use crate::a_to_z::A;
 use crate::a_to_z::F;
+use unroll::unroll_for_loops;
 use std::error;
 use std::fmt;
 use std::fmt::Debug;

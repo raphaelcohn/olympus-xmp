@@ -12,6 +12,7 @@ impl<'a> XmpAttributeValue<'a> for XmpUniversallyUniqueIdentifier
 {
 	type Error = XmpUniversallyUniqueIdentifierParseError;
 	
+	#[unroll_for_loops]
 	#[inline(always)]
 	fn parse(value: &'a str) -> Result<Self, Self::Error>
 	{

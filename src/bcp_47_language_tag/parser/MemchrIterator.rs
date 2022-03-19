@@ -43,16 +43,16 @@ impl<'a, const needle: u8> Iterator for MemchrIterator<'a, needle>
 impl<'a, const needle: u8> MemchrIterator<'a, needle>
 {
 	#[inline(always)]
+	pub(super) const fn from_str(str: &'a str) -> Self
+	{
+		Self::new(str.as_bytes())
+	}
+	
+	#[inline(always)]
 	fn next_first(&mut self) -> &'a [u8]
 	{
 		let first = self.next();
 		unsafe { first.unwrap_unchecked() }
-	}
-	
-	#[inline(always)]
-	const fn from_str(str: &'a str) -> Self
-	{
-		Self::new(str.as_bytes())
 	}
 	
 	#[inline(always)]

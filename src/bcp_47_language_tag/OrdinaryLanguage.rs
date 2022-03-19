@@ -8,44 +8,27 @@ pub struct OrdinaryLanguage
 {
 	iana_registered_iso_639_code: IanaRegisteredIso639Code,
 	
-	extension: Option<LanguageExtension>,
+	language_extension: Option<LanguageExtension>,
 }
 
 impl OrdinaryLanguage
 {
 	#[inline(always)]
-	fn parse_2<'a>(first_subtag: &'a [u8], subtags: &mut MemchrIterator<'a, Hyphen>) -> Result<(Language, NextSubtag<'a>), LanguageFirstSubtagParseError>
+	fn parse_2<'a>(first_subtag: &'a [u8], subtags: &mut MemchrIterator<'a, Hyphen>) -> Result<Either<(Language, NextSubtag<'a>), Bcp47LanguageTag>, LanguageFirstSubtagParseError>
 	{
 		Self::parse_n::<_, 2>(first_subtag, subtags, |alpha_array| IanaRegisteredIso639Code::Alpha2(IanaRegisteredIso639Alpha2Code(alpha_array)))
 	}
 	
 	#[inline(always)]
-	fn parse_3<'a>(first_subtag: &'a [u8], subtags: &mut MemchrIterator<'a, Hyphen>) -> Result<(Language, NextSubtag<'a>), LanguageFirstSubtagParseError>
+	fn parse_3<'a>(first_subtag: &'a [u8], subtags: &mut MemchrIterator<'a, Hyphen>) -> Result<Either<(Language, NextSubtag<'a>), Bcp47LanguageTag>, LanguageFirstSubtagParseError>
 	{
 		Self::parse_n::<_, 3>(first_subtag, subtags, |alpha_array| IanaRegisteredIso639Code::Alpha3(IanaRegisteredIso639Alpha3Code(alpha_array)))
 	}
 	
 	#[inline(always)]
-	fn parse_n<'a, Constructor: FnOnce([Alpha; length]) -> IanaRegisteredIso639Code, const length: usize>(first_subtag: &'a [u8], subtags: &mut MemchrIterator<'a, Hyphen>, constructor: Constructor) -> Result<(Language, NextSubtag<'a>), LanguageFirstSubtagParseError>
+	fn parse_n<'a, Constructor: FnOnce([Alpha; length]) -> IanaRegisteredIso639Code, const length: usize>(first_subtag: &'a [u8], subtags: &mut MemchrIterator<'a, Hyphen>, constructor: Constructor) -> Result<Either<(Language, NextSubtag<'a>), Bcp47LanguageTag>, LanguageFirstSubtagParseError>
 	{
 		let iana_registered_iso_639_code = Alpha::validate_alpha_to_lower_case::<_, _, _, _, length>(first_subtag, constructor, FirstSubtagLengthIsTwoToEightButInvalidAlpha)?;
-		let (extension, next_subtag) = LanguageExtension::parse(subtags, iana_registered_iso_639_code)?;
-		
-		Ok
-		(
-			(
-				Language::Ordinary
-				(
-					Self
-					{
-						iana_registered_iso_639_code,
-						
-						extension,
-					}
-				),
-				
-				next_subtag
-			)
-		)
+		Ok(LanguageExtension::parse(subtags, iana_registered_iso_639_code)?)
 	}
 }
