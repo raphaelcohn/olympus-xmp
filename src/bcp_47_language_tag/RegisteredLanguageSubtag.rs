@@ -23,6 +23,6 @@ impl RegisteredLanguageSubtag
 		debug_assert!(length >= 5);
 		debug_assert!(length <= 8);
 		
-		Alpha::validate_alpha_to_lower_case::<_, _, _, _, length>(first_subtag, |alpha_array| Language::Registered(ok(alpha_array)), FirstSubtagLengthIsTwoToEightButInvalidAlpha)
+		Alpha::validate_and_convert_array::<_, _, _, _, length>(first_subtag, |alpha_array| Language::Registered(ok(alpha_array)), FirstSubtagLengthIsTwoToEightButInvalidAlpha)
 	}
 }

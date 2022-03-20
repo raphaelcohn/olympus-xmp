@@ -5,7 +5,6 @@
 /// Value is one of:
 /// * `a-z`.
 /// * `0-9`.
-/// Case insensitive.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct Alphanumeric(u8);
 
@@ -25,58 +24,35 @@ impl RestrictedByte for Alphanumeric
 	{
 		InvalidAlphanumericError { length, index, byte }
 	}
-}
-
-impl Alphanumeric
-{
+	
 	#[inline(always)]
-	const fn validate_byte(byte: u8) -> bool
+	fn validate_byte(byte: u8) -> bool
 	{
 		(byte >= _0 && byte <= _9) || (byte >= a && byte <= z)
 	}
 	
 	#[inline(always)]
-	pub(super) const fn new_array_unchecked<const length: usize>(value: &[u8; length]) -> [Self; length]
+	fn validate_and_convert_byte<E, ErrorConstructor: FnOnce(Self::Error) -> E, const length: usize>(bytes: &[u8], error: ErrorConstructor, index: usize) -> Result<u8, E>
 	{
-		if cfg!(debug_assertions)
+		let byte = bytes.get_unchecked_value_safe(index);
+		match byte
 		{
-			let mut index = 0;
-			while index < length
-			{
-				let byte = value[index];
-				if !Self::validate_byte(byte)
-				{
-					panic!("Invalid byte")
-				}
-				index += 1;
-			}
+			_0 ..= _9 => Ok(byte),
+			
+			A ..= Z => Ok(to_lower_case(byte)),
+			
+			a ..= z => Ok(byte),
+			
+			_ => Err(error(Self::error::<length>(index, byte)))
 		}
-		
-		unsafe { transmute_copy(value) }
 	}
-	
-	#[unroll_for_loops]
+}
+
+impl Alphanumeric
+{
 	#[inline(always)]
-	pub(super) fn validate_alphanumeric_to_lower_case<OkConstructor: FnOnce([Self; length]) -> O, ErrorConstructor: FnOnce(InvalidAlphanumericError) -> E, O, E: error::Error, const length: usize>(bytes: &[u8], ok: OkConstructor, error: ErrorConstructor) -> Result<O, E>
+	pub(super) fn validate_and_convert_array_identity_constructor_variant<const length: usize>(bytes: &[u8]) -> Result<[Alphanumeric; length], VariantParseError>
 	{
-		debug_assert_eq!(bytes.len(), length);
-		
-		let mut converted = UninitialisedArray::<_, length>::default();
-		for index in 0 .. length
-		{
-			let byte = bytes.get_unchecked_value_safe(index);
-			match byte
-			{
-				_0 ..= _9 => converted.convert(byte, index),
-				
-				A ..= Z => converted.convert(to_lower_case(byte), index),
-				
-				a ..= z => converted.convert(byte, index),
-				
-				_ => return Err(error(InvalidAlphanumericError { length, index, byte }))
-			}
-		}
-		
-		Ok(ok(converted.initialise()))
+		Self::validate_and_convert_array::<_, _, _, _, length>(bytes, |alphanumeic_array| alphanumeic_array, VariantParseError::InvalidAlphanumeric)
 	}
 }

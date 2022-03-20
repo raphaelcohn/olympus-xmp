@@ -16,7 +16,7 @@ impl RestrictedByte for Singleton
 	#[inline(always)]
 	fn construct(validated_byte: u8) -> Self
 	{
-		debug_assert!((validated_byte >= _0 && validated_byte <= _9) || (validated_byte >= a && validated_byte <= w) || (validated_byte >= y && validated_byte <= z));
+		debug_assert!();
 		Self(validated_byte)
 	}
 	
@@ -24,5 +24,27 @@ impl RestrictedByte for Singleton
 	fn error<const length: usize>(index: usize, byte: u8) -> Self::Error
 	{
 		InvalidSingletonError { length, index, byte }
+	}
+	
+	#[inline(always)]
+	fn validate_byte(byte: u8) -> bool
+	{
+		(byte >= _0 && byte <= _9) || (byte >= a && byte <= w) || (byte >= y && byte <= z)
+	}
+	
+	#[inline(always)]
+	fn validate_and_convert_byte<E, ErrorConstructor: FnOnce(Self::Error) -> E, const length: usize>(bytes: &[u8], error: ErrorConstructor, index: usize) -> Result<u8, E>
+	{
+		let byte = bytes.get_unchecked_value_safe(index);
+		match byte
+		{
+			_0 ..= _9 => Ok(byte),
+			
+			A ..= W | Y ..= Z => Ok(to_lower_case(byte)),
+			
+			a ..= w | y ..= z => Ok(byte),
+			
+			_ => Err(error(Self::error::<length>(index, byte)))
+		}
 	}
 }

@@ -14,6 +14,24 @@ pub enum IanaRegisteredIso639Code
 	Alpha3(IanaRegisteredIso639Alpha3Code),
 }
 
+impl const From<IanaRegisteredIso639Alpha2Code> for IanaRegisteredIso639Code
+{
+	#[inline(always)]
+	fn from(value: IanaRegisteredIso639Alpha2Code) -> Self
+	{
+		IanaRegisteredIso639Code::Alpha2(value)
+	}
+}
+
+impl const From<IanaRegisteredIso639Alpha3Code> for IanaRegisteredIso639Code
+{
+	#[inline(always)]
+	fn from(value: IanaRegisteredIso639Alpha3Code) -> Self
+	{
+		IanaRegisteredIso639Code::Alpha3(value)
+	}
+}
+
 impl<'a> const From<&'a [u8; 2]> for IanaRegisteredIso639Code
 {
 	#[inline(always)]

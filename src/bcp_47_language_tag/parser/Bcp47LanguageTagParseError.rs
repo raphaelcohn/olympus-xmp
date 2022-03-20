@@ -10,6 +10,8 @@ pub enum Bcp47LanguageTagParseError
 	GrandfatheredIrregularI(GrandfatheredIrregularISubtagParseError),
 	
 	PrivateUseSubtags(PrivateUseSubtagsParseError),
+
+	Variant(VariantParseError),
 }
 
 impl From<LanguageFirstSubtagParseError> for Bcp47LanguageTagParseError
@@ -39,6 +41,15 @@ impl From<PrivateUseSubtagsParseError> for Bcp47LanguageTagParseError
 	}
 }
 
+impl From<VariantParseError> for Bcp47LanguageTagParseError
+{
+	#[inline(always)]
+	fn from(cause: VariantParseError) -> Self
+	{
+		Bcp47LanguageTagParseError::Variant(cause)
+	}
+}
+
 impl Display for Bcp47LanguageTagParseError
 {
 	#[inline(always)]
@@ -62,6 +73,8 @@ impl error::Error for Bcp47LanguageTagParseError
 			GrandfatheredIrregularI(cause) => Some(cause),
 			
 			PrivateUseSubtags(cause) => Some(cause),
+			
+			Variant(cause) => Some(cause),
 		}
 	}
 }

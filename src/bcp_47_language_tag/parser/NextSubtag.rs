@@ -7,9 +7,9 @@ pub(super) enum NextSubtag<'a>
 {
 	Exhausted,
 	
-	Pending,
-	
 	Next(&'a [u8]),
 	
 	IanaRegisteredUnM49RegionCode(IanaRegisteredUnM49RegionCode),
+	
+	Pending,
 }

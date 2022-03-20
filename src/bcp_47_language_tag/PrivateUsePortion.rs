@@ -2,7 +2,7 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-/// `"-" (1*8alphanum)`.
+/// `(1*8alphanum)`.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub enum PrivateUsePortion
 {
@@ -43,21 +43,21 @@ impl PrivateUsePortion
 		{
 			0 => Err(LengthIsZero),
 			
-			1 => Alphanumeric::validate_alphanumeric_to_lower_case::<_, _, _, _, 1>(subtag, Alphanumeric1, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
+			1 => Alphanumeric::validate_and_convert_array::<_, _, _, _, 1>(subtag, Alphanumeric1, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
 			
-			2 => Alphanumeric::validate_alphanumeric_to_lower_case::<_, _, _, _, 2>(subtag, Alphanumeric2, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
+			2 => Alphanumeric::validate_and_convert_array::<_, _, _, _, 2>(subtag, Alphanumeric2, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
 			
-			3 => Alphanumeric::validate_alphanumeric_to_lower_case::<_, _, _, _, 3>(subtag, Alphanumeric3, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
+			3 => Alphanumeric::validate_and_convert_array::<_, _, _, _, 3>(subtag, Alphanumeric3, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
 			
-			4 => Alphanumeric::validate_alphanumeric_to_lower_case::<_, _, _, _, 4>(subtag, Alphanumeric4, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
+			4 => Alphanumeric::validate_and_convert_array::<_, _, _, _, 4>(subtag, Alphanumeric4, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
 			
-			5 => Alphanumeric::validate_alphanumeric_to_lower_case::<_, _, _, _, 5>(subtag, Alphanumeric5, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
+			5 => Alphanumeric::validate_and_convert_array::<_, _, _, _, 5>(subtag, Alphanumeric5, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
 			
-			6 => Alphanumeric::validate_alphanumeric_to_lower_case::<_, _, _, _, 6>(subtag, Alphanumeric6, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
+			6 => Alphanumeric::validate_and_convert_array::<_, _, _, _, 6>(subtag, Alphanumeric6, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
 			
-			7 => Alphanumeric::validate_alphanumeric_to_lower_case::<_, _, _, _, 7>(subtag, Alphanumeric7, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
+			7 => Alphanumeric::validate_and_convert_array::<_, _, _, _, 7>(subtag, Alphanumeric7, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
 			
-			8 => Alphanumeric::validate_alphanumeric_to_lower_case::<_, _, _, _, 8>(subtag, Alphanumeric8, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
+			8 => Alphanumeric::validate_and_convert_array::<_, _, _, _, 8>(subtag, Alphanumeric8, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
 			
 			_ => Err(LengthIsGreaterThanEight),
 		}

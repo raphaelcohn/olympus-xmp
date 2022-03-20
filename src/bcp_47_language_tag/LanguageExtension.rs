@@ -144,19 +144,14 @@ impl LanguageExtension
 			Ok(Left(next_subtag))
 		}
 		
-		let first_potential_extended_language_subtag = match subtags.next()
-		{
-			None => return next_subtag(Exhausted),
-			
-			Some(first_potential_extended_language_subtag) => first_potential_extended_language_subtag,
-		};
+		let potential_extended_language_subtag = return_next!(subtags, next_subtag(Exhausted));
 		
-		if first_potential_extended_language_subtag.len() != Self::length
+		if potential_extended_language_subtag.len() != Self::length
 		{
-			return next_subtag(Next(first_potential_extended_language_subtag))
+			return next_subtag(Next(potential_extended_language_subtag))
 		}
 		
-		match Self::validate_as_either_iana_registered_iso_639_alpha_3_code_or_iana_registered_un_m49_region_code(first_potential_extended_language_subtag)?
+		match Self::validate_as_either_iana_registered_iso_639_alpha_3_code_or_iana_registered_un_m49_region_code(potential_extended_language_subtag)?
 		{
 			Left(iana_registered_un_m49_region_code) => next_subtag(IanaRegisteredUnM49RegionCode(iana_registered_un_m49_region_code)),
 			

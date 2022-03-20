@@ -3,7 +3,6 @@
 
 
 /// Value is one of `a-z`.
-/// Case insensitive.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct Alpha(u8);
 
@@ -14,7 +13,7 @@ impl RestrictedByte for Alpha
 	#[inline(always)]
 	fn construct(validated_byte: u8) -> Self
 	{
-		debug_assert!(validated_byte >= a && validated_byte <= z);
+		debug_assert!(Self::validate_byte(validated_byte));
 		Self(validated_byte)
 	}
 	
@@ -23,31 +22,28 @@ impl RestrictedByte for Alpha
 	{
 		InvalidAlphaError { length, index, byte }
 	}
+	
+	#[inline(always)]
+	fn validate_byte(byte: u8) -> bool
+	{
+		validated_byte >= a && validated_byte <= z
+	}
+	
+	#[inline(always)]
+	fn validate_and_convert_byte<E, ErrorConstructor: FnOnce(Self::Error) -> E, const length: usize>(bytes: &[u8], error: ErrorConstructor, index: usize) -> Result<u8, E>
+	{
+		let byte = bytes.get_unchecked_value_safe(index);
+		match to_lower_case(byte)
+		{
+			lower_case_byte @ a ..= z => Ok(lower_case_byte),
+			
+			_ => Err(error(Self::error::<length>(index, byte)))
+		}
+	}
 }
 
 impl Alpha
 {
-	#[unroll_for_loops]
-	#[inline(always)]
-	pub(super) fn validate_alpha_to_lower_case<OkConstructor: FnOnce([Self; length]) -> O, ErrorConstructor: FnOnce(InvalidAlphaError) -> E, O, E: error::Error, const length: usize>(bytes: &[u8], ok: OkConstructor, error: ErrorConstructor) -> Result<O, E>
-	{
-		debug_assert_eq!(bytes.len(), length);
-		
-		let mut converted = UninitialisedArray::<_, length>::default();
-		for index in 0 .. length
-		{
-			let original_byte = bytes.get_unchecked_value_safe(index);
-			match to_lower_case(original_byte)
-			{
-				byte @ a ..= z => converted.convert(byte, index),
-				
-				_ => return Err(error(InvalidAlphaError { length, index, byte: original_byte }))
-			}
-		}
-		
-		Ok(ok(converted.initialise()))
-	}
-	
 	#[inline(always)]
 	pub(super) fn lower_case_alpha<const index: u8>(bytes: &[u8]) -> u8
 	{

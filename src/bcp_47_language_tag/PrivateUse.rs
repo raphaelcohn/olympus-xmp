@@ -3,7 +3,8 @@
 
 
 /// Start with `x`.
-pub type PrivateUse = OneWithOptionalSuffixes<PrivateUsePortion>;
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+pub struct PrivateUse(OneWithOptionalSuffixes<PrivateUsePortion>);
 
 impl Default for PrivateUse
 {
@@ -11,7 +12,7 @@ impl Default for PrivateUse
 	fn default() -> Self
 	{
 		const default: PrivateUsePortion = PrivateUsePortion::Alphanumeric7(Alphanumeric::new_array_unchecked(b"default"));
-		Self::without_suffixes(default)
+		Self(OneWithOptionalSuffixes::without_suffixes(default))
 	}
 }
 
@@ -24,20 +25,23 @@ impl PrivateUse
 		
 		Ok
 		(
-			PrivateUse
-			{
-				one: PrivateUsePortion::parse(next_mandatory!(subtags, HasNoSubtags))?,
-				
-				suffixes:
+			Self
+			(
+				OneWithOptionalSuffixes
 				{
-					let mut suffixes = vec![];
-					for subtag in subtags
+					one: PrivateUsePortion::parse(next_or_error!(subtags, HasNoSubtags))?,
+					
+					suffixes:
 					{
-						suffixes.push(PrivateUsePortion::parse(subtag)?)
+						let mut suffixes = vec![];
+						for subtag in subtags
+						{
+							suffixes.push(PrivateUsePortion::parse(subtag)?)
+						}
+						suffixes
 					}
-					suffixes
 				}
-			}
+			)
 		)
 	}
 }

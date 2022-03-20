@@ -49,3 +49,21 @@ impl const From<[u8; 3]> for IanaRegisteredRegionCode
 		IanaRegisteredRegionCode::IanaRegisteredUnM49RegionCode(IanaRegisteredUnM49RegionCode::from(value))
 	}
 }
+
+impl const From<IanaRegisteredIso3166Dash1Alpha2CountryCode> for IanaRegisteredRegionCode
+{
+	#[inline(always)]
+	fn from(value: IanaRegisteredIso3166Dash1Alpha2CountryCode) -> Self
+	{
+		IanaRegisteredRegionCode::IanaRegisteredIso3166Dash1Alpha2CountryCode(value)
+	}
+}
+
+impl const From<IanaRegisteredUnM49RegionCode> for IanaRegisteredRegionCode
+{
+	#[inline(always)]
+	fn from(value: IanaRegisteredUnM49RegionCode) -> Self
+	{
+		IanaRegisteredRegionCode::IanaRegisteredUnM49RegionCode(value)
+	}
+}

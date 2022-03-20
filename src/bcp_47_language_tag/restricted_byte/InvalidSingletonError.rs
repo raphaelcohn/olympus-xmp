@@ -4,22 +4,24 @@
 
 #[allow(missing_docs)]
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub struct IanaRegisteredIso15924ScriptCode(UpperCaseAlpha, [Alpha; 3]);
+pub(super) struct InvalidSingletonError
+{
+	pub(in crate::bcp_47_language_tag) length: usize,
+	
+	pub(in crate::bcp_47_language_tag) index: usize,
+	
+	pub(in crate::bcp_47_language_tag) byte: u8,
+}
 
-impl<'a> const From<&'a [u8; 4]> for IanaRegisteredIso639Alpha2Code
+impl Display for InvalidSingletonError
 {
 	#[inline(always)]
-	fn from(value: &'a [u8; 4]) -> Self
+	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
 	{
-		unsafe { transmute_copy(value) }
+		Debug::fmt(self, formatter)
 	}
 }
 
-impl const From<[u8; 4]> for IanaRegisteredIso639Alpha2Code
+impl error::Error for InvalidSingletonError
 {
-	#[inline(always)]
-	fn from(value: [u8; 4]) -> Self
-	{
-		unsafe { transmute(value) }
-	}
 }

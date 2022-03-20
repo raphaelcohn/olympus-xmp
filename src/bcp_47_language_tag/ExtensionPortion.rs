@@ -2,24 +2,28 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[allow(missing_docs)]
+/// `(2*8alphanum)`.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub struct IanaRegisteredIso15924ScriptCode(UpperCaseAlpha, [Alpha; 3]);
-
-impl<'a> const From<&'a [u8; 4]> for IanaRegisteredIso639Alpha2Code
+pub enum ExtensionPortion
 {
-	#[inline(always)]
-	fn from(value: &'a [u8; 4]) -> Self
-	{
-		unsafe { transmute_copy(value) }
-	}
-}
-
-impl const From<[u8; 4]> for IanaRegisteredIso639Alpha2Code
-{
-	#[inline(always)]
-	fn from(value: [u8; 4]) -> Self
-	{
-		unsafe { transmute(value) }
-	}
+	#[allow(missing_docs)]
+	Alphanumeric2([Alphanumeric; 2]),
+	
+	#[allow(missing_docs)]
+	Alphanumeric3([Alphanumeric; 3]),
+	
+	#[allow(missing_docs)]
+	Alphanumeric4([Alphanumeric; 4]),
+	
+	#[allow(missing_docs)]
+	Alphanumeric5([Alphanumeric; 5]),
+	
+	#[allow(missing_docs)]
+	Alphanumeric6([Alphanumeric; 6]),
+	
+	#[allow(missing_docs)]
+	Alphanumeric7([Alphanumeric; 7]),
+	
+	#[allow(missing_docs)]
+	Alphanumeric8([Alphanumeric; 8]),
 }

@@ -11,9 +11,15 @@ pub struct Normal
 	script: Option<IanaRegisteredIso15924ScriptCode>,
 	
 	region: Option<IanaRegisteredRegionCode>,
+
+	variants: HashSet<Variant>,
+
+	extensions: HashMap<Singleton, Extension>,
+
+	private_use: Option<PrivateUse>,
 }
 
-impl const From<Language> for Normal
+impl From<Language> for Normal
 {
 	#[inline(always)]
 	fn from(language: Language) -> Self
@@ -25,6 +31,12 @@ impl const From<Language> for Normal
 			script: None,
 			
 			region: None,
+		
+			variants: HashSet::new(),
+		
+			extensions: HashMap::new(),
+		
+			private_use: None,
 		}
 	}
 }

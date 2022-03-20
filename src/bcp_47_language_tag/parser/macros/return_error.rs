@@ -2,25 +2,10 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub(in crate::bcp_47_language_tag) struct InvalidSingletonError
+macro_rules! return_error
 {
-	pub(in crate::bcp_47_language_tag) length: usize,
-	
-	pub(in crate::bcp_47_language_tag) index: usize,
-	
-	pub(in crate::bcp_47_language_tag) byte: u8,
-}
-
-impl Display for InvalidSingletonError
-{
-	#[inline(always)]
-	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
+	($error: ident) =>
 	{
-		Debug::fmt(self, formatter)
+		Err($error)?
 	}
-}
-
-impl error::Error for InvalidSingletonError
-{
 }

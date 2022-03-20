@@ -4,22 +4,45 @@
 
 #[allow(missing_docs)]
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub struct IanaRegisteredIso15924ScriptCode(UpperCaseAlpha, [Alpha; 3]);
+pub enum ExtensionParseError
+{
+	FirstSubtagIsMandatory,
+	
+	FirstSubtagIsOne,
+	
+	SubtagOfZero,
+	
+	SubtagMoreThanEight
+	{
+		length: usize,
+	},
+	
+	InvalidAlphanumeric(InvalidAlphanumericError),
+	
+	DuplicateExtension(Singleton),
+}
 
-impl<'a> const From<&'a [u8; 4]> for IanaRegisteredIso639Alpha2Code
+impl Display for ExtensionParseError
 {
 	#[inline(always)]
-	fn from(value: &'a [u8; 4]) -> Self
+	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
 	{
-		unsafe { transmute_copy(value) }
+		Debug::fmt(self, formatter)
 	}
 }
 
-impl const From<[u8; 4]> for IanaRegisteredIso639Alpha2Code
+impl error::Error for ExtensionParseError
 {
 	#[inline(always)]
-	fn from(value: [u8; 4]) -> Self
+	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		unsafe { transmute(value) }
+		use ExtensionParseError::*;
+		
+		match self
+		{
+			InvalidAlphanumeric(cause) => Some(cause),
+			
+			_ => None,
+		}
 	}
 }

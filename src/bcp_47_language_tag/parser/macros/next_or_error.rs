@@ -2,24 +2,15 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[allow(missing_docs)]
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub struct IanaRegisteredIso15924ScriptCode(UpperCaseAlpha, [Alpha; 3]);
-
-impl<'a> const From<&'a [u8; 4]> for IanaRegisteredIso639Alpha2Code
+macro_rules! next_or_error
 {
-	#[inline(always)]
-	fn from(value: &'a [u8; 4]) -> Self
+	($subtags: ident, $error: path) =>
 	{
-		unsafe { transmute_copy(value) }
-	}
-}
-
-impl const From<[u8; 4]> for IanaRegisteredIso639Alpha2Code
-{
-	#[inline(always)]
-	fn from(value: [u8; 4]) -> Self
-	{
-		unsafe { transmute(value) }
+		match $subtags.next()
+		{
+			None => return_error!($error),
+		
+			Some(subtag) => subtag,
+		}
 	}
 }

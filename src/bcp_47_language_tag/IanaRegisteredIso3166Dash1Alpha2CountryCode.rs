@@ -4,7 +4,7 @@
 
 #[allow(missing_docs)]
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub struct IanaRegisteredIso3166Dash1Alpha2CountryCode([Alpha; 2]);
+pub struct IanaRegisteredIso3166Dash1Alpha2CountryCode([UpperCaseAlpha; 2]);
 
 impl<'a> const From<&'a [u8; 2]> for IanaRegisteredIso3166Dash1Alpha2CountryCode
 {

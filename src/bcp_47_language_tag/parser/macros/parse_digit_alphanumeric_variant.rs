@@ -2,24 +2,11 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[allow(missing_docs)]
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub struct IanaRegisteredIso15924ScriptCode(UpperCaseAlpha, [Alpha; 3]);
-
-impl<'a> const From<&'a [u8; 4]> for IanaRegisteredIso639Alpha2Code
+macro_rules! parse_digit_alphanumeric_variant
 {
-	#[inline(always)]
-	fn from(value: &'a [u8; 4]) -> Self
+	($subtag: ident) =>
 	{
-		unsafe { transmute_copy(value) }
-	}
-}
-
-impl const From<[u8; 4]> for IanaRegisteredIso639Alpha2Code
-{
-	#[inline(always)]
-	fn from(value: [u8; 4]) -> Self
-	{
-		unsafe { transmute(value) }
+		let digit = Digit(Digit::validate_digit_to_lower_case(subtag, InvalidDigit, 0)?);
+		Alphanumeric::validate_alphanumerics_to_lower_case::<_, _, _, _, 3>(subtag.get_unchecked_range_safe(1 .. ), |alphanumeric_array| DigitAlphanumeric3(digit, alphanumeric_array), InvalidAlphanumeric)?
 	}
 }

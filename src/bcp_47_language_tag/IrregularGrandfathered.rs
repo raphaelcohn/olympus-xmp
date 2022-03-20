@@ -66,7 +66,7 @@ impl IrregularGrandfathered
 	fn parse_irregular_i(mut subtags: MemchrIterator<Hyphen>) -> Result<Self, GrandfatheredIrregularISubtagParseError>
 	{
 		use GrandfatheredIrregularISubtagParseError::*;
-		let second_subtag = next_mandatory!(subtags, MissingSecondSubtag);
+		let second_subtag = next_or_error!(subtags, MissingSecondSubtag);
 		finished!(subtags, MoreThanTwoSubtags);
 		
 		match second_subtag.len()

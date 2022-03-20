@@ -15,3 +15,96 @@ pub enum Language
 	/// Registered for future use.
 	Registered(RegisteredLanguageSubtag),
 }
+
+impl const From<OrdinaryLanguage> for Language
+{
+	#[inline(always)]
+	fn from(language: OrdinaryLanguage) -> Self
+	{
+		Language::Ordinary(language)
+	}
+}
+
+impl const From<ReservedLanguageSubtag> for Language
+{
+	#[inline(always)]
+	fn from(language: ReservedLanguageSubtag) -> Self
+	{
+		Language::Reserved(language)
+	}
+}
+
+impl const From<RegisteredLanguageSubtag> for Language
+{
+	#[inline(always)]
+	fn from(language: RegisteredLanguageSubtag) -> Self
+	{
+		Language::Registered(language)
+	}
+}
+
+impl const From<IanaRegisteredIso639Code> for Language
+{
+	#[inline(always)]
+	fn from(iana_registered_iso_639_code: IanaRegisteredIso639Code) -> Self
+	{
+		let ordinary_language: OrdinaryLanguage = value.into();
+		Self::from(ordinary_language)
+	}
+}
+
+impl const From<IanaRegisteredIso639Alpha2Code> for Language
+{
+	#[inline(always)]
+	fn from(value: IanaRegisteredIso639Alpha2Code) -> Self
+	{
+		let ordinary_language: OrdinaryLanguage = value.into();
+		Self::from(ordinary_language)
+	}
+}
+
+impl const From<IanaRegisteredIso639Alpha3Code> for Language
+{
+	#[inline(always)]
+	fn from(value: IanaRegisteredIso639Alpha3Code) -> Self
+	{
+		let ordinary_language: OrdinaryLanguage = value.into();
+		Self::from(ordinary_language)
+	}
+}
+
+impl<'a> const From<&'a [u8; 2]> for Language
+{
+	#[inline(always)]
+	fn from(value: &'a [u8; 2]) -> Self
+	{
+		Self::from(OrdinaryLanguage::from(value))
+	}
+}
+
+impl const From<[u8; 2]> for Language
+{
+	#[inline(always)]
+	fn from(value: [u8; 2]) -> Self
+	{
+		Self::from(OrdinaryLanguage::from(value))
+	}
+}
+
+impl<'a> const From<&'a [u8; 3]> for Language
+{
+	#[inline(always)]
+	fn from(value: &'a [u8; 3]) -> Self
+	{
+		Self::from(OrdinaryLanguage::from(value))
+	}
+}
+
+impl const From<[u8; 3]> for Language
+{
+	#[inline(always)]
+	fn from(value: [u8; 3]) -> Self
+	{
+		Self::from(OrdinaryLanguage::from(value))
+	}
+}

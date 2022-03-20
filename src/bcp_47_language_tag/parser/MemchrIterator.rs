@@ -49,10 +49,16 @@ impl<'a, const needle: u8> MemchrIterator<'a, needle>
 	}
 	
 	#[inline(always)]
-	fn next_first(&mut self) -> &'a [u8]
+	pub(super) fn next_first(&mut self) -> &'a [u8]
 	{
 		let first = self.next();
 		unsafe { first.unwrap_unchecked() }
+	}
+	
+	#[inline(always)]
+	pub(super) fn is_empty(&self) -> bool
+	{
+		self.bytes.is_none()
 	}
 	
 	#[inline(always)]

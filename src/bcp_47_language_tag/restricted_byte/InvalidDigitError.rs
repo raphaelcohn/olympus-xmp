@@ -2,9 +2,26 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[inline(always)]
-pub(in crate::bcp_47_language_tag) const fn to_lower_case(byte: u8) -> u8
+#[allow(missing_docs)]
+#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+pub struct InvalidDigitError
 {
-	const SetForLowerCaseBit: u8 = 1 << 5;
-	byte | SetForLowerCaseBit
+	pub(in crate::bcp_47_language_tag) length: usize,
+	
+	pub(in crate::bcp_47_language_tag) index: usize,
+	
+	pub(in crate::bcp_47_language_tag) byte: u8,
+}
+
+impl Display for InvalidDigitError
+{
+	#[inline(always)]
+	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
+	{
+		Debug::fmt(self, formatter)
+	}
+}
+
+impl error::Error for InvalidDigitError
+{
 }

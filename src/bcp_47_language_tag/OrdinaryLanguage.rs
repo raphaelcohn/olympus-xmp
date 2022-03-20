@@ -11,6 +11,76 @@ pub struct OrdinaryLanguage
 	language_extension: Option<LanguageExtension>,
 }
 
+impl const From<IanaRegisteredIso639Code> for OrdinaryLanguage
+{
+	#[inline(always)]
+	fn from(iana_registered_iso_639_code: IanaRegisteredIso639Code) -> Self
+	{
+		OrdinaryLanguage
+		{
+			iana_registered_iso_639_code,
+		
+			language_extension: None,
+		}
+	}
+}
+
+impl const From<IanaRegisteredIso639Alpha2Code> for OrdinaryLanguage
+{
+	#[inline(always)]
+	fn from(value: IanaRegisteredIso639Alpha2Code) -> Self
+	{
+		let iana_registered_iso_639_code: IanaRegisteredIso639Code = value.into();
+		OrdinaryLanguage::from(iana_registered_iso_639_code)
+	}
+}
+
+impl const From<IanaRegisteredIso639Alpha3Code> for OrdinaryLanguage
+{
+	#[inline(always)]
+	fn from(value: IanaRegisteredIso639Alpha3Code) -> Self
+	{
+		let iana_registered_iso_639_code: IanaRegisteredIso639Code = value.into();
+		OrdinaryLanguage::from(iana_registered_iso_639_code)
+	}
+}
+
+impl<'a> const From<&'a [u8; 2]> for OrdinaryLanguage
+{
+	#[inline(always)]
+	fn from(value: &'a [u8; 2]) -> Self
+	{
+		Self::from(IanaRegisteredIso639Code::from(value))
+	}
+}
+
+impl const From<[u8; 2]> for OrdinaryLanguage
+{
+	#[inline(always)]
+	fn from(value: [u8; 2]) -> Self
+	{
+		Self::from(IanaRegisteredIso639Code::from(value))
+	}
+}
+
+impl<'a> const From<&'a [u8; 3]> for OrdinaryLanguage
+{
+	#[inline(always)]
+	fn from(value: &'a [u8; 3]) -> Self
+	{
+		Self::from(IanaRegisteredIso639Code::from(value))
+	}
+}
+
+impl const From<[u8; 3]> for OrdinaryLanguage
+{
+	#[inline(always)]
+	fn from(value: [u8; 3]) -> Self
+	{
+		Self::from(IanaRegisteredIso639Code::from(value))
+	}
+}
+
 impl OrdinaryLanguage
 {
 	#[inline(always)]
@@ -28,7 +98,7 @@ impl OrdinaryLanguage
 	#[inline(always)]
 	fn parse_n<'a, Constructor: FnOnce([Alpha; length]) -> IanaRegisteredIso639Code, const length: usize>(first_subtag: &'a [u8], subtags: &mut MemchrIterator<'a, Hyphen>, constructor: Constructor) -> Result<Either<(Language, NextSubtag<'a>), Bcp47LanguageTag>, LanguageFirstSubtagParseError>
 	{
-		let iana_registered_iso_639_code = Alpha::validate_alpha_to_lower_case::<_, _, _, _, length>(first_subtag, constructor, FirstSubtagLengthIsTwoToEightButInvalidAlpha)?;
+		let iana_registered_iso_639_code = Alpha::validate_and_convert_array::<_, _, _, _, length>(first_subtag, constructor, FirstSubtagLengthIsTwoToEightButInvalidAlpha)?;
 		Ok(LanguageExtension::parse(subtags, iana_registered_iso_639_code)?)
 	}
 }

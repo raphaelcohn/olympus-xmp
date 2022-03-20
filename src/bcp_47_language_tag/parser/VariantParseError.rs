@@ -2,17 +2,33 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+#[allow(missing_docs)]
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub struct InvalidDigitError
+pub enum VariantParseError
 {
-	pub(in crate::bcp_47_language_tag) length: usize,
+	VariantOfZero,
 	
-	pub(in crate::bcp_47_language_tag) index: usize,
+	InvalidExtensionSingleton(u8),
 	
-	pub(in crate::bcp_47_language_tag) byte: u8,
+	VariantOfTwo,
+	
+	VariantOfThree,
+	
+	VariantMoreThanEight
+	{
+		length: usize,
+	},
+	
+	DuplicateVariant(Variant),
+
+	InvalidDigit(InvalidDigitError),
+
+	InvalidAlphanumeric(InvalidAlphanumericError),
+
+	InvalidUpperCaseAlpha(InvalidUpperCaseAlphaError),
 }
 
-impl Display for InvalidDigitError
+impl Display for VariantParseError
 {
 	#[inline(always)]
 	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
@@ -21,6 +37,22 @@ impl Display for InvalidDigitError
 	}
 }
 
-impl error::Error for InvalidDigitError
+impl error::Error for VariantParseError
 {
+	#[inline(always)]
+	fn source(&self) -> Option<&(dyn error::Error + 'static)>
+	{
+		use VariantParseError::*;
+		
+		match self
+		{
+			InvalidDigit(cause) => Some(cause),
+			
+			InvalidAlphanumeric(cause) => Some(cause),
+			
+			InvalidUpperCaseAlpha(cause) => Some(cause),
+			
+			_ => None,
+		}
+	}
 }

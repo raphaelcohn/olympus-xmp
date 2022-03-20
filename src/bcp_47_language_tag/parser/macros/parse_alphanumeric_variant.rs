@@ -2,15 +2,10 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-macro_rules! next_mandatory
+macro_rules! parse_alphanumeric_variant
 {
-	($subtags: ident, $error: path) =>
+	($subtag: ident, $n: expr, $alphanumeric_n: ident) =>
 	{
-		match $subtags.next()
-		{
-			None => return Err($error),
-		
-			Some(subtag) => subtag,
-		}
+		Alphanumeric::validate_alphanumerics_to_lower_case::<_, _, _, _, $n>($subtag, $alphanumeric_n, InvalidAlphanumeric)?
 	}
 }
