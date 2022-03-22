@@ -69,19 +69,19 @@ impl IetfBcp47LanguageTag
 				
 				return Self::parse_x_or_i_subtag(subtag, subtags),
 				
-				parse_ordinary_language_subtag!(subtag, subtags, parse_2),
+				parse_ordinary_language_subtag!(subtag, subtags, 2),
 				
-				parse_ordinary_language_subtag!(subtag, subtags, parse_3),
+				parse_ordinary_language_subtag!(subtag, subtags, 3),
 				
 				parse_reserved_language_subtag!(subtag),
 				
-				parse_registered_language_subtag!(subtag, 5, Alpha5),
+				parse_registered_language_subtag!(subtag, 5),
 				
-				parse_registered_language_subtag!(subtag, 6, Alpha6),
+				parse_registered_language_subtag!(subtag, 6),
 				
-				parse_registered_language_subtag!(subtag, 7, Alpha7),
+				parse_registered_language_subtag!(subtag, 7),
 				
-				parse_registered_language_subtag!(subtag, 8, Alpha8)
+				parse_registered_language_subtag!(subtag, 8)
 			}
 		};
 		
@@ -146,44 +146,11 @@ impl IetfBcp47LanguageTag
 	}
 	
 	#[inline(always)]
-	fn parse_from_region_2<'a>(subtag: &'a [u8], subtags: Subtags<'a>, language: Language, script: Option<IanaRegisteredIso15924ScriptCode>) -> Result<Self, IetfBcp47LanguageTagParseError>
-	{
-		const length: usize = 2;
-		debug_assert_eq!(subtag.len(), length);
-		Self::parse_from_region_n::<UpperCaseAlpha, IanaRegisteredIso3166Dash1Alpha2CountryCode, _, _, length>(subtag, subtags, language, script, IanaRegisteredIso3166Dash1Alpha2CountryCode, RegionParseError::InvalidUpperCaseAlpha)
-	}
-	
-	#[inline(always)]
-	fn parse_from_region_3<'a>(subtag: &'a [u8], subtags: Subtags<'a>, language: Language, script: Option<IanaRegisteredIso15924ScriptCode>) -> Result<Self, IetfBcp47LanguageTagParseError>
-	{
-		const length: usize = 3;
-		debug_assert_eq!(subtag.len(), length);
-		Self::parse_from_region_n::<Digit, IanaRegisteredUnM49RegionCode, _, _, length>(subtag, subtags, language, script, IanaRegisteredUnM49RegionCode, RegionParseError::InvalidDigit)
-	}
-	
-	#[inline(always)]
-	fn parse_from_region_n<'a, RB: RestrictedByte, F: Into<IanaRegisteredRegionCode>, OkConstructor: FnOnce([RB; length]) -> F, ErrorConstructor: Copy + FnOnce(RB::Error) -> RegionParseError, const length: usize>(subtag: &'a [u8], subtags: Subtags<'a>, language: Language, script: Option<IanaRegisteredIso15924ScriptCode>, constructor: OkConstructor, error: ErrorConstructor) -> Result<Self, IetfBcp47LanguageTagParseError>
-	{
-		debug_assert_eq!(subtag.len(), length);
-		let code = RB::validate_and_convert_array::<_, _, _, _, length>(subtag, constructor, error)?;
-		Self::parse_from_variant(subtags, language, script, Some(code.into()))
-	}
-	
-	#[inline(always)]
 	fn parse_from_region(mut subtags: Subtags, language: Language, script: Option<IanaRegisteredIso15924ScriptCode>) -> Result<Self, IetfBcp47LanguageTagParseError>
 	{
 		use RegionParseError::*;
 		
 		let subtag = return_next!(subtags, Self::from_script_ok(language, script));
-		
-		#[inline(always)]
-		fn parse_region<RB: RestrictedByte, Error: Copy + FnOnce(RB::Error) -> RegionParseError, const length: usize>(subtags: Subtags, language: Language, script: Option<IanaRegisteredIso15924ScriptCode>, subtag: &[u8], error: Error) -> Result<IetfBcp47LanguageTag, IetfBcp47LanguageTagParseError>
-		where IanaRegisteredRegionCode: From<[RB; length]>
-		{
-			let region = RB::validate_and_convert_array::<_, _, _, _, length>(subtag, |array| IanaRegisteredRegionCode::from(array), error)?;
-			IetfBcp47LanguageTag::parse_from_variant(subtags, language, script, Some(region))
-		}
-		
 		match_subtag_length!
 		{
 			subtag,
@@ -193,9 +160,9 @@ impl IetfBcp47LanguageTag
 			
 			Self::parse_from_extension(validated_extension_code, subtags, language, script, None, Default::default()),
 			
-			parse_region::<UpperCaseAlpha, _, 2>(subtags, language, script, subtag, InvalidUpperCaseAlpha),
+			Self::parse_from_region_2(subtag, subtags, language, script),
 			
-			parse_region::<Digit, _, 3>(subtags, language, script, subtag, InvalidDigit),
+			Self::parse_from_region_3(subtag, subtags, language, script),
 			
 			match subtag.byte_0()
 			{
@@ -212,7 +179,30 @@ impl IetfBcp47LanguageTag
 			
 			Self::parse_from_variant_8(subtag, subtags, language, script, None)
 		}
-		
+	}
+	
+	#[inline(always)]
+	fn parse_from_region_2<'a>(subtag: &'a [u8], subtags: Subtags<'a>, language: Language, script: Option<IanaRegisteredIso15924ScriptCode>) -> Result<Self, IetfBcp47LanguageTagParseError>
+	{
+		const length: usize = 2;
+		debug_assert_eq!(subtag.len(), length);
+		Self::parse_from_region_n::<UpperCaseAlpha, _, length>(subtag, subtags, language, script, RegionParseError::InvalidUpperCaseAlpha)
+	}
+	
+	#[inline(always)]
+	fn parse_from_region_3<'a>(subtag: &'a [u8], subtags: Subtags<'a>, language: Language, script: Option<IanaRegisteredIso15924ScriptCode>) -> Result<Self, IetfBcp47LanguageTagParseError>
+	{
+		const length: usize = 3;
+		debug_assert_eq!(subtag.len(), length);
+		Self::parse_from_region_n::<Digit, _, length>(subtag, subtags, language, script, RegionParseError::InvalidDigit)
+	}
+	
+	#[inline(always)]
+	fn parse_from_region_n<RB: RestrictedByte, Error: Copy + FnOnce(RB::Error) -> RegionParseError, const length: usize>(subtag: &[u8], subtags: Subtags, language: Language, script: Option<IanaRegisteredIso15924ScriptCode>, error: Error) -> Result<IetfBcp47LanguageTag, IetfBcp47LanguageTagParseError>
+	where IanaRegisteredRegionCode: From<[RB; length]>
+	{
+		let region = RB::validate_and_convert_array::<_, _, _, _, length>(subtag, |array| IanaRegisteredRegionCode::from(array), error)?;
+		IetfBcp47LanguageTag::parse_from_variant(subtags, language, script, Some(region))
 	}
 	
 	#[inline(always)]
@@ -261,9 +251,9 @@ impl IetfBcp47LanguageTag
 		const sgn: Language = Language::from(b"sgn");
 		const BE: Option<IanaRegisteredRegionCode> = Some(IanaRegisteredRegionCode::from(b"BE"));
 		const CH: Option<IanaRegisteredRegionCode> = Some(IanaRegisteredRegionCode::from(b"CH"));
-		const FR: [UpperCaseAlpha; SecondRegionLength] = UpperCaseAlpha::new_array_unchecked(b"FR");
-		const NL: [UpperCaseAlpha; SecondRegionLength] = UpperCaseAlpha::new_array_unchecked(b"NL");
-		const DE: [UpperCaseAlpha; SecondRegionLength] = UpperCaseAlpha::new_array_unchecked(b"DE");
+		const FR: [UpperCaseAlpha; SecondRegionLength] = UpperCaseAlpha::new_array_unchecked_ref(b"FR");
+		const NL: [UpperCaseAlpha; SecondRegionLength] = UpperCaseAlpha::new_array_unchecked_ref(b"NL");
+		const DE: [UpperCaseAlpha; SecondRegionLength] = UpperCaseAlpha::new_array_unchecked_ref(b"DE");
 		
 		if subtags.is_empty() && language == sgn
 		{
@@ -302,7 +292,7 @@ impl IetfBcp47LanguageTag
 		const OedLength: usize = 3;
 		const en: Language = Language::from(b"en");
 		const GB: Option<IanaRegisteredRegionCode> = Some(IanaRegisteredRegionCode::from(b"GB"));
-		const oed: [Alpha; OedLength] = Alpha::new_array_unchecked(b"oed");
+		const oed: [Alpha; OedLength] = Alpha::new_array_unchecked_ref(b"oed");
 		
 		if subtags.is_empty() && language == en && region == GB
 		{
@@ -334,9 +324,9 @@ impl IetfBcp47LanguageTag
 		
 		const length: usize = 5;
 		const zh: Language = Language::from(b"zh");
-		const guoyu: [Alphanumeric; length] = Alphanumeric::new_array_unchecked(b"guoyu");
-		const hakka: [Alphanumeric; length] = Alphanumeric::new_array_unchecked(b"hakka");
-		const xiang: [Alphanumeric; length] = Alphanumeric::new_array_unchecked(b"xiang");
+		const guoyu: [Alphanumeric; length] = Alphanumeric::new_array_unchecked_ref(b"guoyu");
+		const hakka: [Alphanumeric; length] = Alphanumeric::new_array_unchecked_ref(b"hakka");
+		const xiang: [Alphanumeric; length] = Alphanumeric::new_array_unchecked_ref(b"xiang");
 		
 		debug_assert_eq!(subtag.len(), length);
 		Self::parse_from_variant_5_to_7::<_, _, length>(zh, subtag, subtags, language, script, region, Variant::Alphanumeric5, |validated_subtag| match validated_subtag
@@ -358,7 +348,7 @@ impl IetfBcp47LanguageTag
 		
 		const length: usize = 6;
 		const art: Language = Language::from(b"art");
-		const lojban: [Alphanumeric; length] = Alphanumeric::new_array_unchecked(b"lojban");
+		const lojban: [Alphanumeric; length] = Alphanumeric::new_array_unchecked_ref(b"lojban");
 		
 		debug_assert_eq!(subtag.len(), length);
 		Self::parse_from_variant_5_to_7::<_, _, length>(art, subtag, subtags, language, script, region, Variant::Alphanumeric6, |validated_subtag| match validated_subtag
@@ -376,7 +366,7 @@ impl IetfBcp47LanguageTag
 		
 		const length: usize = 7;
 		const cel: Language = Language::from(b"cel");
-		const gaulish: [Alphanumeric; length] = Alphanumeric::new_array_unchecked(b"gaulish");
+		const gaulish: [Alphanumeric; length] = Alphanumeric::new_array_unchecked_ref(b"gaulish");
 		
 		debug_assert_eq!(subtag.len(), length);
 		Self::parse_from_variant_5_to_7::<_, _, length>(cel, subtag, subtags, language, script, region, Variant::Alphanumeric7,  |validated_subtag| match validated_subtag

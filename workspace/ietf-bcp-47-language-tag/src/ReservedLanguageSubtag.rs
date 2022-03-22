@@ -6,6 +6,42 @@
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct ReservedLanguageSubtag([Alpha; 4]);
 
+impl const Into<[Alpha; 4]> for ReservedLanguageSubtag
+{
+	#[inline(always)]
+	fn into(self) -> [Alpha; 4]
+	{
+		self.0
+	}
+}
+
+impl<'a> const From<&'a [u8; 4]> for ReservedLanguageSubtag
+{
+	#[inline(always)]
+	fn from(value: &'a [u8; 4]) -> Self
+	{
+		Self(Alpha::new_array_unchecked_ref(value))
+	}
+}
+
+impl const From<[u8; 4]> for ReservedLanguageSubtag
+{
+	#[inline(always)]
+	fn from(value: [u8; 4]) -> Self
+	{
+		Self(Alpha::new_array_unchecked(value))
+	}
+}
+
+impl const From<[Alpha; 4]> for ReservedLanguageSubtag
+{
+	#[inline(always)]
+	fn from(value: [Alpha; 4]) -> Self
+	{
+		Self(value)
+	}
+}
+
 impl ReservedLanguageSubtag
 {
 	#[inline(always)]

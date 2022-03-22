@@ -2,11 +2,10 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use iso_3166_1_country::UnknownStringVariantParseError;
-use super::XmpAttributeValue;
-use super::XmpAttributeValueParseError;
-
-
-include!("PlusLicensorTelephoneType.rs");
-include!("PlusModelReleaseStatus.rs");
-include!("PlusPropertyReleaseStatus.rs");
+/// Only exists because of a design flaw in Rust that does not allow const impl Traits contain default functions.
+#[inline(always)]
+const fn new_array_unchecked_ref<RBC: ~const RestrictedByteConst, const length: usize>(value: &[u8; length]) -> [RBC; length]
+{
+	new_array_unchecked_validation::<RBC, length>(value);
+	unsafe { transmute_copy(value) }
+}

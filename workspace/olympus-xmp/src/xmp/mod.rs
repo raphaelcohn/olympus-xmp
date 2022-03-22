@@ -11,11 +11,13 @@ use crate::xml::XmlName;
 use attribute_parse_errors::I8ParseError;
 use attribute_parse_errors::U8ParseError;
 use attribute_parse_errors::U16ParseError;
-use attribute_parse_errors::UnknownStringVariantParseError;
 use exif::version::ExifVersionParseError;
 use exif::lens_information::LensInformationParseError;
 use iptc::urgency::UrgencyParseError;
-use iso_country::Iso3166Dash1AlphaCountryCodeParseError;
+use iso_3166_1_country::Iso3166Dash1AlphaCountryCode;
+use iso_3166_1_country::Iso3166Dash1AlphaCountryCodeParseError;
+use iso_3166_1_country::Iso3166Dash1Country;
+use iso_3166_1_country::UnknownStringVariantParseError;
 use non_empty_str::NonEmptyStrParseError;
 use std::convert::Infallible;
 use std::error;
@@ -23,6 +25,7 @@ use std::fmt;
 use std::fmt::Debug;
 use std::fmt::Display;
 use std::fmt::Formatter;
+use std::mem::transmute;
 use std::num::ParseIntError;
 use std::num::NonZeroU16;
 use std::num::NonZeroU32;
@@ -34,6 +37,7 @@ use tiff_rational::UnsignedTiffRationalParseError;
 use xmp::date_time::XmpDateTimeParseError;
 use xmp::universally_unique_identifier::XmpUniversallyUniqueIdentifier;
 use xmp::universally_unique_identifier::XmpUniversallyUniqueIdentifierParseError;
+
 
 
 include!("xml_name.rs");

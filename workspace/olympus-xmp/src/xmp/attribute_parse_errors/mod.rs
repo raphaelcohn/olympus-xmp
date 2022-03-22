@@ -8,7 +8,6 @@ use std::fmt::Debug;
 use std::fmt::Display;
 use std::fmt::Formatter;
 use std::num::ParseIntError;
-use swiss_army_knife::get_unchecked::GetUnchecked;
 
 
 include!("I8ParseError.rs");

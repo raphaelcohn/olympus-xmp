@@ -4,7 +4,7 @@
 
 /// One item with optional suffixes of a type.
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub struct OneWithOptionalSuffixes<T>
+struct OneWithOptionalSuffixes<T>
 {
 	one: T,
 	
@@ -14,8 +14,20 @@ pub struct OneWithOptionalSuffixes<T>
 impl<T> OneWithOptionalSuffixes<T>
 {
 	#[inline(always)]
-	#[allow(missing_docs)]
-	pub fn without_suffixes(one: T) -> Self
+	const fn one(&self) -> T
+	where T: Copy
+	{
+		self.one
+	}
+	
+	#[inline(always)]
+	fn suffixes(&self) -> &[T]
+	{
+		self.suffixes.as_slice()
+	}
+	
+	#[inline(always)]
+	fn without_suffixes(one: T) -> Self
 	{
 		Self
 		{

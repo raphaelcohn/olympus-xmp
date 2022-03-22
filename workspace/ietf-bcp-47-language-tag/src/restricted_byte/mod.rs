@@ -38,6 +38,8 @@ include!("InvalidDigitError.rs");
 include!("InvalidSingletonError.rs");
 include!("InvalidUpperCaseAlphaError.rs");
 include!("new_array_unchecked.rs");
+include!("new_array_unchecked_ref.rs");
+include!("new_array_unchecked_validation.rs");
 include!("SetForLowerCaseBit.rs");
 include!("to_lower_case.rs");
 include!("to_upper_case.rs");

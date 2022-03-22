@@ -29,13 +29,14 @@
 
 
 use arrayvec as _;
+use either as _;
 use gcd as _;
 use memchr as _;
-use swiss_army_knife as _;
 use xml as _;
 
 
-use swiss_army_knife::non_zero::new_non_zero_u32;
+use iso_3166_1_country::Iso3166Dash1AlphaCountryCode;
+use iso_3166_1_country::Iso3166Dash1Country;
 use olympus_xmp::xml_name;
 use olympus_xmp::xml::XmlDocument;
 use olympus_xmp::xmp::exif::ExifGainControl;
@@ -69,8 +70,6 @@ use olympus_xmp::xmp::namespaces::tiff;
 use olympus_xmp::xmp::namespaces::x;
 use olympus_xmp::xmp::namespaces::xmp;
 use olympus_xmp::xmp::namespaces::xmpRights;
-use olympus_xmp::xmp::iso_country::Iso3166Dash1AlphaCountryCode;
-use olympus_xmp::xmp::iso_country::Iso3166Dash1Country;
 use olympus_xmp::xmp::non_empty_str::NonEmptyStr;
 use olympus_xmp::xmp::photoshop::PhotoshopColorMode;
 use olympus_xmp::xmp::tiff_rational::NonZeroUnsignedTiffRational;
@@ -85,6 +84,7 @@ use crate::binary::width_or_height;
 use crate::binary::document_identifier;
 use crate::binary::Collated;
 use crate::binary::XmpOutcomeOfValidationError;
+use swiss_army_knife::non_zero::new_non_zero_u32;
 
 
 mod binary;

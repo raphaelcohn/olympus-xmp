@@ -14,6 +14,33 @@ pub enum IanaRegisteredIso639Code
 	Alpha3(IanaRegisteredIso639Alpha3Code),
 }
 
+impl<'a> const From<&'a [u8; 2]> for IanaRegisteredIso639Code
+{
+	#[inline(always)]
+	fn from(value: &'a [u8; 2]) -> Self
+	{
+		Self::from(IanaRegisteredIso639Alpha2Code::from(value))
+	}
+}
+
+impl const From<[u8; 2]> for IanaRegisteredIso639Code
+{
+	#[inline(always)]
+	fn from(value: [u8; 2]) -> Self
+	{
+		Self::from(IanaRegisteredIso639Alpha2Code::from(value))
+	}
+}
+
+impl const From<[Alpha; 2]> for IanaRegisteredIso639Code
+{
+	#[inline(always)]
+	fn from(value: [Alpha; 2]) -> Self
+	{
+		Self::from(IanaRegisteredIso639Alpha2Code::from(value))
+	}
+}
+
 impl const From<IanaRegisteredIso639Alpha2Code> for IanaRegisteredIso639Code
 {
 	#[inline(always)]
@@ -23,39 +50,12 @@ impl const From<IanaRegisteredIso639Alpha2Code> for IanaRegisteredIso639Code
 	}
 }
 
-impl const From<IanaRegisteredIso639Alpha3Code> for IanaRegisteredIso639Code
-{
-	#[inline(always)]
-	fn from(value: IanaRegisteredIso639Alpha3Code) -> Self
-	{
-		IanaRegisteredIso639Code::Alpha3(value)
-	}
-}
-
-impl<'a> const From<&'a [u8; 2]> for IanaRegisteredIso639Code
-{
-	#[inline(always)]
-	fn from(value: &'a [u8; 2]) -> Self
-	{
-		IanaRegisteredIso639Code::Alpha2(IanaRegisteredIso639Alpha2Code::from(value))
-	}
-}
-
-impl const From<[u8; 2]> for IanaRegisteredIso639Code
-{
-	#[inline(always)]
-	fn from(value: [u8; 2]) -> Self
-	{
-		IanaRegisteredIso639Code::Alpha2(IanaRegisteredIso639Alpha2Code::from(value))
-	}
-}
-
 impl<'a> const From<&'a [u8; 3]> for IanaRegisteredIso639Code
 {
 	#[inline(always)]
 	fn from(value: &'a [u8; 3]) -> Self
 	{
-		IanaRegisteredIso639Code::Alpha3(IanaRegisteredIso639Alpha3Code::from(value))
+		Self::from(IanaRegisteredIso639Alpha3Code::from(value))
 	}
 }
 
@@ -64,6 +64,24 @@ impl const From<[u8; 3]> for IanaRegisteredIso639Code
 	#[inline(always)]
 	fn from(value: [u8; 3]) -> Self
 	{
-		IanaRegisteredIso639Code::Alpha3(IanaRegisteredIso639Alpha3Code::from(value))
+		Self::from(IanaRegisteredIso639Alpha3Code::from(value))
+	}
+}
+
+impl const From<[Alpha; 3]> for IanaRegisteredIso639Code
+{
+	#[inline(always)]
+	fn from(value: [Alpha; 3]) -> Self
+	{
+		Self::from(IanaRegisteredIso639Alpha3Code::from(value))
+	}
+}
+
+impl const From<IanaRegisteredIso639Alpha3Code> for IanaRegisteredIso639Code
+{
+	#[inline(always)]
+	fn from(value: IanaRegisteredIso639Alpha3Code) -> Self
+	{
+		IanaRegisteredIso639Code::Alpha3(value)
 	}
 }

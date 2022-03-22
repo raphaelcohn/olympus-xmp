@@ -40,3 +40,48 @@ impl From<Language> for Normal
 		}
 	}
 }
+
+impl Normal
+{
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub const fn language(&self) -> &Language
+	{
+		&self.language
+	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub const fn script(&self) -> Option<IanaRegisteredIso15924ScriptCode>
+	{
+		self.script
+	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub const fn region(&self) -> Option<IanaRegisteredRegionCode>
+	{
+		self.region
+	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub fn variants(&self) -> &HashSet<Variant>
+	{
+		&self.variants
+	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub fn extensions(&self) -> &HashMap<Singleton, Extension>
+	{
+		&self.extensions
+	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub fn private_use(&self) -> Option<&PrivateUse>
+	{
+		self.private_use.as_ref()
+	}
+}

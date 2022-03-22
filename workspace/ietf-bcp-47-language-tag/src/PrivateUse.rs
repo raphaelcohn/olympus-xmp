@@ -11,13 +11,27 @@ impl Default for PrivateUse
 	#[inline(always)]
 	fn default() -> Self
 	{
-		const default: PrivateUsePortion = PrivateUsePortion::Alphanumeric7(Alphanumeric::new_array_unchecked(b"default"));
+		const default: PrivateUsePortion = PrivateUsePortion::from(b"default");
 		Self(OneWithOptionalSuffixes::without_suffixes(default))
 	}
 }
 
 impl PrivateUse
 {
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub const fn first(&self) -> PrivateUsePortion
+	{
+		self.0.one()
+	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub fn subsequent(&self) -> &[PrivateUsePortion]
+	{
+		self.0.suffixes()
+	}
+	
 	#[inline(always)]
 	fn parse(mut subtags: Subtags) -> Result<Self, PrivateUseSubtagsParseError>
 	{

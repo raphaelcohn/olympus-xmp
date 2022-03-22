@@ -2,7 +2,7 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use super::attribute_parse_errors::UnknownStringVariantParseError;
+use iso_3166_1_country::UnknownStringVariantParseError;
 use super::XmpAttributeValue;
 use super::XmpAttributeValueParseError;
 

@@ -10,7 +10,9 @@ pub(crate) trait RestrictedByteConst: Copy + Debug
 	
 	fn error<const length: usize>(index: usize, byte: u8) -> Self::Error;
 	
-	fn new_array_unchecked<const length: usize>(value: &[u8; length]) -> [Self; length];
+	fn new_array_unchecked<const length: usize>(value: [u8; length]) -> [Self; length];
+	
+	fn new_array_unchecked_ref<const length: usize>(value: &[u8; length]) -> [Self; length];
 	
 	fn validate_byte(byte: u8) -> bool;
 }

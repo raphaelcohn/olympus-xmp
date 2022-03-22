@@ -6,6 +6,15 @@
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct IanaRegisteredUnM49RegionCode([Digit; 3]);
 
+impl Into<[Digit; 3]> for IanaRegisteredUnM49RegionCode
+{
+	#[inline(always)]
+	fn into(self) -> [Digit; 3]
+	{
+		self.0
+	}
+}
+
 impl<'a> const From<&'a [u8; 3]> for IanaRegisteredUnM49RegionCode
 {
 	#[inline(always)]

@@ -6,6 +6,15 @@
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct IanaRegisteredIso3166Dash1Alpha2CountryCode([UpperCaseAlpha; 2]);
 
+impl Into<[UpperCaseAlpha; 2]> for IanaRegisteredIso3166Dash1Alpha2CountryCode
+{
+	#[inline(always)]
+	fn into(self) -> [UpperCaseAlpha; 2]
+	{
+		self.0
+	}
+}
+
 impl<'a> const From<&'a [u8; 2]> for IanaRegisteredIso3166Dash1Alpha2CountryCode
 {
 	#[inline(always)]

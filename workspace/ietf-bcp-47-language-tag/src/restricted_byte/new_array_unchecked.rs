@@ -4,22 +4,8 @@
 
 /// Only exists because of a design flaw in Rust that does not allow const impl Traits contain default functions.
 #[inline(always)]
-const fn new_array_unchecked<RBC: ~const RestrictedByteConst, const length: usize>(value: &[u8; length]) -> [RBC; length]
+const fn new_array_unchecked<RBC: ~const RestrictedByteConst, const length: usize>(value: [u8; length]) -> [RBC; length]
 {
-	if cfg!(debug_assertions)
-	{
-		// TODO: Uses a while loop because for loops are not yet implemented for const functions.
-		let mut index = 0;
-		while index < length
-		{
-			let byte = value[index];
-			if !RBC::validate_byte(byte)
-			{
-				panic!("Invalid byte")
-			}
-			index += 1;
-		}
-	}
-	
-	unsafe { transmute_copy(value) }
+	new_array_unchecked_validation::<RBC, length>(&value);
+	unsafe { transmute_copy(&value) }
 }

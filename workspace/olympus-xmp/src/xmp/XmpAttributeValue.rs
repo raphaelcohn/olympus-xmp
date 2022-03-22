@@ -115,6 +115,7 @@ impl<'a> XmpAttributeValue<'a> for Iso3166Dash1AlphaCountryCode
 	fn parse(raw: &'a str) -> Result<Self, Self::Error>
 	{
 		use Iso3166Dash1AlphaCountryCodeParseError::*;
+		use Iso3166Dash1AlphaCountryCode::*;
 		
 		let bytes = raw.as_bytes();
 		match bytes.len()

@@ -8,6 +8,20 @@ pub struct Extension(OneWithOptionalSuffixes<ExtensionPortion>);
 
 impl Extension
 {
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub const fn first(&self) -> ExtensionPortion
+	{
+		self.0.one()
+	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub fn subsequent(&self) -> &[ExtensionPortion]
+	{
+		self.0.suffixes()
+	}
+	
 	#[inline(always)]
 	fn new(one: ExtensionPortion) -> Self
 	{

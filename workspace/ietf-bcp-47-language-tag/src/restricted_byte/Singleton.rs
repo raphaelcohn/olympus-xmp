@@ -33,9 +33,15 @@ impl const RestrictedByteConst for Singleton
 	}
 	
 	#[inline(always)]
-	fn new_array_unchecked<const length: usize>(value: &[u8; length]) -> [Self; length]
+	fn new_array_unchecked<const length: usize>(value: [u8; length]) -> [Self; length]
 	{
 		new_array_unchecked::<Self, length>(value)
+	}
+	
+	#[inline(always)]
+	fn new_array_unchecked_ref<const length: usize>(value: &[u8; length]) -> [Self; length]
+	{
+		new_array_unchecked_ref::<Self, length>(value)
 	}
 }
 

@@ -6,12 +6,21 @@
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct IanaRegisteredIso639Alpha2Code([Alpha; 2]);
 
+impl Into<[Alpha; 2]> for IanaRegisteredIso639Alpha2Code
+{
+	#[inline(always)]
+	fn into(self) -> [Alpha; 2]
+	{
+		self.0
+	}
+}
+
 impl<'a> const From<&'a [u8; 2]> for IanaRegisteredIso639Alpha2Code
 {
 	#[inline(always)]
 	fn from(value: &'a [u8; 2]) -> Self
 	{
-		Self(unsafe { transmute_copy(value) })
+		Self::from(Alpha::new_array_unchecked_ref(value))
 	}
 }
 
@@ -20,6 +29,15 @@ impl const From<[u8; 2]> for IanaRegisteredIso639Alpha2Code
 	#[inline(always)]
 	fn from(value: [u8; 2]) -> Self
 	{
-		Self(unsafe { transmute(value) })
+		Self::from(Alpha::new_array_unchecked(value))
+	}
+}
+
+impl const From<[Alpha; 2]> for IanaRegisteredIso639Alpha2Code
+{
+	#[inline(always)]
+	fn from(value: [Alpha; 2]) -> Self
+	{
+		Self(value)
 	}
 }

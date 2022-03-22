@@ -15,10 +15,119 @@ pub enum RegisteredLanguageSubtag
 	Alpha8([Alpha; 8]),
 }
 
+impl const From<[u8; 5]> for RegisteredLanguageSubtag
+{
+	#[inline(always)]
+	fn from(value: [u8; 5]) -> Self
+	{
+		Self::from(Alpha::new_array_unchecked(value))
+	}
+}
+
+impl<'a> const From<&'a [u8; 5]> for RegisteredLanguageSubtag
+{
+	#[inline(always)]
+	fn from(value: &'a [u8; 5]) -> Self
+	{
+		Self::from(Alpha::new_array_unchecked_ref(value))
+	}
+}
+
+impl const From<[Alpha; 5]> for RegisteredLanguageSubtag
+{
+	#[inline(always)]
+	fn from(value: [Alpha; 5]) -> Self
+	{
+		RegisteredLanguageSubtag::Alpha5(value)
+	}
+}
+
+impl const From<[u8; 6]> for RegisteredLanguageSubtag
+{
+	#[inline(always)]
+	fn from(value: [u8; 6]) -> Self
+	{
+		Self::from(Alpha::new_array_unchecked(value))
+	}
+}
+
+impl<'a> const From<&'a [u8; 6]> for RegisteredLanguageSubtag
+{
+	#[inline(always)]
+	fn from(value: &'a [u8; 6]) -> Self
+	{
+		Self::from(Alpha::new_array_unchecked_ref(value))
+	}
+}
+
+impl const From<[Alpha; 6]> for RegisteredLanguageSubtag
+{
+	#[inline(always)]
+	fn from(value: [Alpha; 6]) -> Self
+	{
+		RegisteredLanguageSubtag::Alpha6(value)
+	}
+}
+
+impl const From<[u8; 7]> for RegisteredLanguageSubtag
+{
+	#[inline(always)]
+	fn from(value: [u8; 7]) -> Self
+	{
+		Self::from(Alpha::new_array_unchecked(value))
+	}
+}
+
+impl<'a> const From<&'a [u8; 7]> for RegisteredLanguageSubtag
+{
+	#[inline(always)]
+	fn from(value: &'a [u8; 7]) -> Self
+	{
+		Self::from(Alpha::new_array_unchecked_ref(value))
+	}
+}
+
+impl const From<[Alpha; 7]> for RegisteredLanguageSubtag
+{
+	#[inline(always)]
+	fn from(value: [Alpha; 7]) -> Self
+	{
+		RegisteredLanguageSubtag::Alpha7(value)
+	}
+}
+
+impl const From<[u8; 8]> for RegisteredLanguageSubtag
+{
+	#[inline(always)]
+	fn from(value: [u8; 8]) -> Self
+	{
+		Self::from(Alpha::new_array_unchecked(value))
+	}
+}
+
+impl<'a> const From<&'a [u8; 8]> for RegisteredLanguageSubtag
+{
+	#[inline(always)]
+	fn from(value: &'a [u8; 8]) -> Self
+	{
+		Self::from(Alpha::new_array_unchecked_ref(value))
+	}
+}
+
+impl const From<[Alpha; 8]> for RegisteredLanguageSubtag
+{
+	#[inline(always)]
+	fn from(value: [Alpha; 8]) -> Self
+	{
+		RegisteredLanguageSubtag::Alpha8(value)
+	}
+}
+
 impl RegisteredLanguageSubtag
 {
 	#[inline(always)]
-	fn parse<OkConstructor: FnOnce([Alpha; length]) -> Self, const length: usize>(subtag: &[u8], ok: OkConstructor) -> Result<Language, LanguageSubtagParseError>
+	fn parse<const length: usize>(subtag: &[u8]) -> Result<Language, LanguageSubtagParseError>
+	where RegisteredLanguageSubtag: From<[Alpha; length]>
 	{
 		const InclusiveMinimumLength: usize = 5;
 		const InclusiveMaximumLength: usize = 8;
@@ -27,6 +136,6 @@ impl RegisteredLanguageSubtag
 		debug_assert!(subtag.len() >= InclusiveMinimumLength);
 		debug_assert!(subtag.len() <= InclusiveMaximumLength);
 		
-		Alpha::validate_and_convert_array::<_, _, _, _, length>(subtag, |alpha_array| Language::Registered(ok(alpha_array)), LanguageSubtagParseError::InvalidAlpha)
+		Alpha::validate_and_convert_array::<_, _, _, _, length>(subtag, |alpha_array| Language::Registered(RegisteredLanguageSubtag::from(alpha_array)), LanguageSubtagParseError::InvalidAlpha)
 	}
 }

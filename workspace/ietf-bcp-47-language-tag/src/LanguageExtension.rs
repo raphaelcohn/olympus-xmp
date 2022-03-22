@@ -20,6 +20,20 @@ impl LanguageExtension
 	
 	const length: usize = 3;
 	
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub const fn language_extension_0(&self) -> IanaRegisteredIso639Alpha3Code
+	{
+		self.language_extension_0
+	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub fn permanently_reserved(&self) -> &[IanaRegisteredIso639Alpha3Code]
+	{
+		self.permanently_reserved.as_slice()
+	}
+	
 	/// ```bash
 	/// extlang = 3ALPHA          ; Selected ISO 639 codes.
 	///           *2("-" 3ALPHA)  ; Permanently reserved.
@@ -114,7 +128,7 @@ impl LanguageExtension
 				
 				(Pending, _, _) => unreachable_code_because_pending_impossible(),
 				
-				(next_subtag @ _, _, _) => left_some(iana_registered_iso_639_code, Self::language_extension_0(language_extension_0), next_subtag),
+				(next_subtag @ _, _, _) => left_some(iana_registered_iso_639_code, Self::new_language_extension_0(language_extension_0), next_subtag),
 			}
 		});
 		
@@ -126,11 +140,11 @@ impl LanguageExtension
 				
 				(Pending, _, _, _) => unreachable_code_because_pending_impossible(),
 				
-				(next_subtag @ _, _, _, _) => left_some(iana_registered_iso_639_code, Self::language_extension_1(language_extension_0, language_extension_1), next_subtag),
+				(next_subtag @ _, _, _, _) => left_some(iana_registered_iso_639_code, Self::new_language_extension_1(language_extension_0, language_extension_1), next_subtag),
 			}
 		});
 		
-		Ok(left_some(iana_registered_iso_639_code, Self::language_extension_2(language_extension_0, language_extension_1, language_extension_2), Pending))
+		Ok(left_some(iana_registered_iso_639_code, Self::new_language_extension_2(language_extension_0, language_extension_1, language_extension_2), Pending))
 	}
 	
 	#[inline(always)]
@@ -244,7 +258,7 @@ impl LanguageExtension
 	}
 	
 	#[inline(always)]
-	const fn language_extension_0(language_extension_0: IanaRegisteredIso639Alpha3Code) -> Self
+	const fn new_language_extension_0(language_extension_0: IanaRegisteredIso639Alpha3Code) -> Self
 	{
 		Self
 		{
@@ -255,19 +269,19 @@ impl LanguageExtension
 	}
 	
 	#[inline(always)]
-	fn language_extension_1(language_extension_0: IanaRegisteredIso639Alpha3Code, language_extension_1: IanaRegisteredIso639Alpha3Code) -> Self
+	fn new_language_extension_1(language_extension_0: IanaRegisteredIso639Alpha3Code, language_extension_1: IanaRegisteredIso639Alpha3Code) -> Self
 	{
-		Self::language_extension_::<_, 1>(language_extension_0, language_extension_1, |_| {})
+		Self::new_language_extension_::<_, 1>(language_extension_0, language_extension_1, |_| {})
 	}
 	
 	#[inline(always)]
-	fn language_extension_2(language_extension_0: IanaRegisteredIso639Alpha3Code, language_extension_1: IanaRegisteredIso639Alpha3Code, language_extension_2: IanaRegisteredIso639Alpha3Code) -> Self
+	fn new_language_extension_2(language_extension_0: IanaRegisteredIso639Alpha3Code, language_extension_1: IanaRegisteredIso639Alpha3Code, language_extension_2: IanaRegisteredIso639Alpha3Code) -> Self
 	{
-		Self::language_extension_::<_, 2>(language_extension_0, language_extension_1, |mut_ptr| unsafe { mut_ptr.add(1).write(language_extension_2) })
+		Self::new_language_extension_::<_, 2>(language_extension_0, language_extension_1, |mut_ptr| unsafe { mut_ptr.add(1).write(language_extension_2) })
 	}
 	
 	#[inline(always)]
-	fn language_extension_<LE3: FnOnce(*mut IanaRegisteredIso639Alpha3Code), const length: usize>(language_extension_0: IanaRegisteredIso639Alpha3Code, language_extension_1: IanaRegisteredIso639Alpha3Code, language_extension_3: LE3) -> Self
+	fn new_language_extension_<LE3: FnOnce(*mut IanaRegisteredIso639Alpha3Code), const length: usize>(language_extension_0: IanaRegisteredIso639Alpha3Code, language_extension_1: IanaRegisteredIso639Alpha3Code, language_extension_3: LE3) -> Self
 	{
 		let mut permanently_reserved: ArrayVec<_, { Self::PermanentlyReservedCount }> = ArrayVec::new_const();
 		let mut_ptr: *mut IanaRegisteredIso639Alpha3Code = permanently_reserved.as_mut_ptr();

@@ -6,6 +6,15 @@
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct IanaRegisteredIso15924ScriptCode(UpperCaseAlpha, [Alpha; 3]);
 
+impl Into<(UpperCaseAlpha, [Alpha; 3])> for IanaRegisteredIso15924ScriptCode
+{
+	#[inline(always)]
+	fn into(self) -> (UpperCaseAlpha, [Alpha; 3])
+	{
+		(self.0, self.1)
+	}
+}
+
 impl<'a> const From<&'a [u8; 4]> for IanaRegisteredIso15924ScriptCode
 {
 	#[inline(always)]
@@ -21,5 +30,14 @@ impl const From<[u8; 4]> for IanaRegisteredIso15924ScriptCode
 	fn from(value: [u8; 4]) -> Self
 	{
 		unsafe { transmute(value) }
+	}
+}
+
+impl const From<(UpperCaseAlpha, [Alpha; 3])> for IanaRegisteredIso15924ScriptCode
+{
+	#[inline(always)]
+	fn from(value: (UpperCaseAlpha, [Alpha; 3])) -> Self
+	{
+		Self(value.0, value.1)
 	}
 }
