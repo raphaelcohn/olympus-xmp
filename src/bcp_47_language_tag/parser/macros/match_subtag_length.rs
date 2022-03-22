@@ -8,7 +8,7 @@ macro_rules! match_subtag_length
 	{
 		match $subtag.len()
 		{
-			0 => return_error_is_zero!(),
+			0 => return_error!(InvalidSubtagLength(InvalidSubtagLengthError::IsZero)),
 			
 			1 => $parse_1,
 			
@@ -26,7 +26,7 @@ macro_rules! match_subtag_length
 			
 			8 => $parse_8,
 			
-			length @ _ => return_error_is_greater_than_eight!(length),
+			length @ _ => return_error!(InvalidSubtagLength(InvalidSubtagLengthError::IsGreaterThanEight { length })),
 		}
 	};
 	

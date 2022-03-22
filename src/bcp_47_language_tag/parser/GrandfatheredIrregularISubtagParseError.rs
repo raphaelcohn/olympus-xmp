@@ -11,10 +11,6 @@ pub enum GrandfatheredIrregularISubtagParseError
 	MissingSecondSubtag,
 	
 	MoreThanTwoSubtags,
-	
-	IsOne,
-	
-	IsTwo,
 
 	Unregistered(ArrayVec<u8, 8>),
 }

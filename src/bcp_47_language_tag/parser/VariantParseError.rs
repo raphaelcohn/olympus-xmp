@@ -8,9 +8,9 @@ pub enum VariantParseError
 {
 	InvalidExtensionSingleton(u8),
 	
-	VariantOfTwo,
+	IsTwo,
 	
-	VariantOfThree,
+	IsThree,
 	
 	DuplicateVariant(Variant),
 	

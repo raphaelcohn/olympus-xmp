@@ -6,6 +6,8 @@
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub enum RegionParseError
 {
+	InvalidExtensionSingleton(u8),
+	
 	InvalidSubtagLength(InvalidSubtagLengthError),
 	
 	InvalidUpperCaseAlpha(InvalidUpperCaseAlphaError),
@@ -36,6 +38,8 @@ impl error::Error for RegionParseError
 			InvalidUpperCaseAlpha(cause) => Some(cause),
 			
 			InvalidDigit(cause) => Some(cause),
+			
+			_ => None,
 		}
 	}
 }

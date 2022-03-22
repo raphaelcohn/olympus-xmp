@@ -67,7 +67,7 @@ impl Bcp47LanguageTag
 			{
 				subtag,
 				
-				{ return Self::parse_x_or_i_subtag(subtag, subtags) },
+				return Self::parse_x_or_i_subtag(subtag, subtags),
 				
 				parse_ordinary_language_subtag!(subtag, subtags, parse_2),
 				
@@ -176,12 +176,40 @@ impl Bcp47LanguageTag
 		
 		let subtag = return_next!(subtags, Self::from_script_ok(language, script));
 		
-		match subtag.len()
+		fn parse_x_or_extension() -> !
 		{
-			0 => return_error_is_zero!(),
+			unimplemented!();
+			panic!()
+		}
+		
+		fn parse(count: usize) -> !
+		{
+			unimplemented!();
+			panic!()
+		}
+		
+		match_subtag_length!
+		{
+			subtag,
+			validated_extension_code,
 			
+			parse_x_or_extension(),
 			
-			length @ _ => return_error_is_greater_than_eight!(length),
+			parse_x_or_extension(),
+			
+			parse(2),
+			
+			parse(3),
+			
+			parse(4),
+			
+			parse(5),
+			
+			parse(6),
+			
+			parse(7),
+			
+			parse(8)
 		}
 		
 		/*
@@ -267,7 +295,7 @@ impl Bcp47LanguageTag
 				_ => (),
 			}
 		}
-		Err(Bcp47LanguageTagParseError::from(VariantParseError::VariantOfTwo))
+		Err(Bcp47LanguageTagParseError::from(VariantParseError::IsTwo))
 	}
 	
 	#[inline(always)]
@@ -288,7 +316,7 @@ impl Bcp47LanguageTag
 				return Self::from_irregular_granfathered_ok(en_GB_oed)
 			}
 		}
-		Err(Bcp47LanguageTagParseError::from(VariantParseError::VariantOfThree))
+		Err(Bcp47LanguageTagParseError::from(VariantParseError::IsThree))
 	}
 	
 	#[inline(always)]
@@ -420,9 +448,9 @@ impl Bcp47LanguageTag
 				
 				return Self::parse_from_extension(validated_extension_code, subtags, language, script, region, variants),
 				
-				return_error!(VariantOfTwo),
+				return_error!(IsTwo),
 				
-				return_error!(VariantOfThree),
+				return_error!(IsThree),
 				
 				{
 					const length: usize = 4;

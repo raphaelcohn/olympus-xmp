@@ -69,27 +69,25 @@ impl IrregularGrandfathered
 		let subtag = next_or_error!(subtags, MissingSecondSubtag);
 		finished!(subtags, MoreThanTwoSubtags);
 		
-		match subtag.len()
+		match_subtag_length!
 		{
-			0 => return_error_is_zero!(),
+			subtag,
 			
-			1 => return_error!(IsOne),
+			Self::unregistered::<1>(subtag),
 			
-			2 => return_error!(IsTwo),
+			Self::unregistered::<2>(subtag),
 			
-			3 => Self::parse_irregular_i_3(subtag),
+			Self::parse_irregular_i_3(subtag),
 			
-			4 => Self::unregistered::<4>(subtag),
+			Self::unregistered::<4>(subtag),
 			
-			5 => Self::parse_irregular_i_5(subtag),
+			Self::parse_irregular_i_5(subtag),
 			
-			6 => Self::parse_irregular_i_6(subtag),
+			Self::parse_irregular_i_6(subtag),
 			
-			7 => Self::parse_irregular_i_7(subtag),
+			Self::parse_irregular_i_7(subtag),
 			
-			8 => Self::parse_irregular_i_8(subtag),
-			
-			length @ _ => return_error_is_greater_than_eight!(length),
+			Self::parse_irregular_i_8(subtag)
 		}
 	}
 	
