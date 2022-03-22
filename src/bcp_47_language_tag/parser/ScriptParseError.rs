@@ -3,17 +3,12 @@
 
 
 #[allow(missing_docs)]
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub enum ScriptParseError
 {
-	SubtagOfZero,
-	
 	InvalidExtensionSingleton(u8),
 	
-	SubtagMoreThanEight
-	{
-		length: usize,
-	},
+	InvalidSubtagLength(InvalidSubtagLengthError),
 	
 	InvalidAlpha(InvalidAlphaError),
 	
@@ -38,6 +33,8 @@ impl error::Error for ScriptParseError
 		
 		match self
 		{
+			InvalidSubtagLength(cause) => Some(cause),
+			
 			InvalidAlpha(cause) => Some(cause),
 			
 			InvalidAlphanumeric(cause) => Some(cause),

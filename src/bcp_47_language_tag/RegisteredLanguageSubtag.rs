@@ -18,11 +18,15 @@ pub enum RegisteredLanguageSubtag
 impl RegisteredLanguageSubtag
 {
 	#[inline(always)]
-	fn parse<OkConstructor: FnOnce([Alpha; length]) -> Self, const length: usize>(first_subtag: &[u8], ok: OkConstructor) -> Result<Language, LanguageFirstSubtagParseError>
+	fn parse<OkConstructor: FnOnce([Alpha; length]) -> Self, const length: usize>(subtag: &[u8], ok: OkConstructor) -> Result<Language, LanguageSubtagParseError>
 	{
-		debug_assert!(length >= 5);
-		debug_assert!(length <= 8);
+		const InclusiveMinimumLength: usize = 5;
+		const InclusiveMaximumLength: usize = 8;
+		debug_assert!(length >= InclusiveMinimumLength);
+		debug_assert!(length <= InclusiveMaximumLength);
+		debug_assert!(subtag.len() >= InclusiveMinimumLength);
+		debug_assert!(subtag.len() <= InclusiveMaximumLength);
 		
-		Alpha::validate_and_convert_array::<_, _, _, _, length>(first_subtag, |alpha_array| Language::Registered(ok(alpha_array)), FirstSubtagLengthIsTwoToEightButInvalidAlpha)
+		Alpha::validate_and_convert_array::<_, _, _, _, length>(subtag, |alpha_array| Language::Registered(ok(alpha_array)), LanguageSubtagParseError::InvalidAlpha)
 	}
 }

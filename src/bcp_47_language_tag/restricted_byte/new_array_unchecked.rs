@@ -2,41 +2,24 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[allow(missing_docs)]
-#[derive(Debug, Clone, Eq, PartialEq)]
-pub struct Normal
+/// Only exists because of a design flaw in Rust that does not allow const impl Traits contain default functions.
+#[inline(always)]
+const fn new_array_unchecked<RBC: ~const RestrictedByteConst, const length: usize>(value: &[u8; length]) -> [RBC; length]
 {
-	language: Language,
-	
-	script: Option<IanaRegisteredIso15924ScriptCode>,
-	
-	region: Option<IanaRegisteredRegionCode>,
-
-	variants: HashSet<Variant>,
-
-	extensions: HashMap<Singleton, Extension>,
-
-	private_use: Option<PrivateUse>,
-}
-
-impl From<Language> for Normal
-{
-	#[inline(always)]
-	fn from(language: Language) -> Self
+	if cfg!(debug_assertions)
 	{
-		Self
+		// TODO: Uses a while loop because for loops are not yet implemented for const functions.
+		let mut index = 0;
+		while index < length
 		{
-			language,
-			
-			script: None,
-			
-			region: None,
-		
-			variants: HashSet::new(),
-		
-			extensions: HashMap::new(),
-		
-			private_use: None,
+			let byte = value[index];
+			if !RBC::validate_byte(byte)
+			{
+				panic!("Invalid byte")
+			}
+			index += 1;
 		}
 	}
+	
+	unsafe { transmute_copy(value) }
 }

@@ -8,7 +8,7 @@
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct Alphanumeric(u8);
 
-impl RestrictedByte for Alphanumeric
+impl const RestrictedByteConst for Alphanumeric
 {
 	type Error = InvalidAlphanumericError;
 	
@@ -31,6 +31,15 @@ impl RestrictedByte for Alphanumeric
 		(byte >= _0 && byte <= _9) || (byte >= a && byte <= z)
 	}
 	
+	#[inline(always)]
+	fn new_array_unchecked<const length: usize>(value: &[u8; length]) -> [Self; length]
+	{
+		new_array_unchecked::<Self, length>(value)
+	}
+}
+
+impl RestrictedByte for Alphanumeric
+{
 	#[inline(always)]
 	fn validate_and_convert_byte<E, ErrorConstructor: FnOnce(Self::Error) -> E, const length: usize>(bytes: &[u8], error: ErrorConstructor, index: usize) -> Result<u8, E>
 	{

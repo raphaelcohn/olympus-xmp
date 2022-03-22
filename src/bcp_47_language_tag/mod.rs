@@ -2,7 +2,6 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use crate::a_to_z::Hyphen;
 use crate::a_to_z::_0;
 use crate::a_to_z::_9;
 use crate::a_to_z::A;
@@ -14,10 +13,9 @@ use crate::a_to_z::a;
 use crate::a_to_z::b;
 use crate::a_to_z::h;
 use crate::a_to_z::i;
+use crate::a_to_z::o;
 use crate::a_to_z::p;
 use crate::a_to_z::t;
-use crate::a_to_z::o;
-use crate::a_to_z::y;
 use crate::a_to_z::s;
 use crate::a_to_z::d;
 use crate::a_to_z::k;
@@ -34,28 +32,26 @@ use parser::array_vec_u8;
 use parser::Bcp47LanguageTagParseError;
 use parser::ExtensionParseError;
 use parser::GrandfatheredIrregularISubtagParseError;
+use parser::InvalidSubtagLengthError;
 use parser::LanguageExtensionSubtagParseError;
-use parser::LanguageFirstSubtagParseError;
-use parser::LanguageFirstSubtagParseError::FirstSubtagLengthIsTwoToEightButInvalidAlpha;
+use parser::LanguageSubtagParseError;
 use parser::MemchrIterator;
-use parser::NextSubtag;
-use parser::parse_bcp47_language_subtag;
+use parser::NextSubtagAfterLanguageExtension;
 use parser::PrivateUseSubtagsParseError;
 use parser::RegionParseError;
 use parser::ScriptParseError;
+use parser::Subtag;
+use parser::Subtags;
 use parser::UninitialisedArray;
 use parser::VariantParseError;
 use restricted_byte::Alpha;
 use restricted_byte::Alphanumeric;
 use restricted_byte::Digit;
-use restricted_byte::InvalidAlphaError;
-use restricted_byte::InvalidAlphanumericError;
-use restricted_byte::InvalidDigitError;
-use restricted_byte::InvalidSingletonError;
-use restricted_byte::InvalidUpperCaseAlphaError;
 use restricted_byte::RestrictedByte;
+use restricted_byte::RestrictedByteConst;
 use restricted_byte::Singleton;
 use restricted_byte::to_lower_case;
+use restricted_byte::to_upper_case;
 use restricted_byte::UpperCaseAlpha;
 use std::collections::HashMap;
 use std::collections::HashSet;
@@ -73,7 +69,8 @@ use unroll::unroll_for_loops;
 mod parser;
 
 
-mod restricted_byte;
+/// A byte with a restricted range of valid values.
+pub mod restricted_byte;
 
 
 include!("Bcp47LanguageTag.rs");

@@ -4,13 +4,13 @@
 
 macro_rules! return_next
 {
-	($subtags: ident, $returns: stmt) =>
+	($subtags: ident, $returns: expr) =>
 	{
 		match $subtags.next()
 		{
-			None => return $returns,
+			Some(subtag) => subtag,
 			
-			Some(subtag) => subtag
+			None => return $returns,
 		}
 	}
 }

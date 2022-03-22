@@ -24,9 +24,9 @@ impl LanguageExtension
 	/// extlang = 3ALPHA          ; Selected ISO 639 codes.
 	///           *2("-" 3ALPHA)  ; Permanently reserved.
 	/// ```
-	fn parse<'a>(subtags: &mut MemchrIterator<'a, Hyphen>, iana_registered_iso_639_code: IanaRegisteredIso639Code) -> Result<Either<(Language, NextSubtag<'a>), Bcp47LanguageTag>, LanguageExtensionSubtagParseError>
+	fn parse<'a>(subtags: &mut Subtags<'a>, iana_registered_iso_639_code: IanaRegisteredIso639Code) -> Result<Either<(Language, NextSubtagAfterLanguageExtension<'a>), Bcp47LanguageTag>, LanguageExtensionSubtagParseError>
 	{
-		use NextSubtag::*;
+		use NextSubtagAfterLanguageExtension::*;
 		use RegularGrandfathered::*;
 		
 		const no: IanaRegisteredIso639Code = IanaRegisteredIso639Code::from(b"no");
@@ -37,10 +37,10 @@ impl LanguageExtension
 		const nan: IanaRegisteredIso639Alpha3Code = IanaRegisteredIso639Alpha3Code::from(b"nan");
 		const PendingImpossibleMessage: &'static str = "Pending never returned from parse_extended_language_subtag";
 		
-		type Output<'a> = Either<(Language, NextSubtag<'a>), Bcp47LanguageTag>;
+		type Output<'a> = Either<(Language, NextSubtagAfterLanguageExtension<'a>), Bcp47LanguageTag>;
 		
 		#[inline(always)]
-		const fn left(iana_registered_iso_639_code: IanaRegisteredIso639Code, language_extension: Option<LanguageExtension>, next_subtag: NextSubtag) -> Output
+		const fn left(iana_registered_iso_639_code: IanaRegisteredIso639Code, language_extension: Option<LanguageExtension>, next_subtag: NextSubtagAfterLanguageExtension) -> Output
 		{
 			Left
 			(
@@ -60,13 +60,13 @@ impl LanguageExtension
 		}
 		
 		#[inline(always)]
-		const fn left_none(iana_registered_iso_639_code: IanaRegisteredIso639Code, next_subtag: NextSubtag) -> Output
+		const fn left_none(iana_registered_iso_639_code: IanaRegisteredIso639Code, next_subtag: NextSubtagAfterLanguageExtension) -> Output
 		{
 			left(iana_registered_iso_639_code, None, next_subtag)
 		}
 		
 		#[inline(always)]
-		const fn left_some(iana_registered_iso_639_code: IanaRegisteredIso639Code, language_extension: LanguageExtension, next_subtag: NextSubtag) -> Output
+		const fn left_some(iana_registered_iso_639_code: IanaRegisteredIso639Code, language_extension: LanguageExtension, next_subtag: NextSubtagAfterLanguageExtension) -> Output
 		{
 			left(iana_registered_iso_639_code, Some(language_extension), next_subtag)
 		}
@@ -134,12 +134,12 @@ impl LanguageExtension
 	}
 	
 	#[inline(always)]
-	fn parse_extended_language_subtag<'a>(subtags: &mut MemchrIterator<'a, Hyphen>) -> Result<Either<NextSubtag<'a>, IanaRegisteredIso639Alpha3Code>, LanguageExtensionSubtagParseError>
+	fn parse_extended_language_subtag<'a>(subtags: &mut Subtags<'a>) -> Result<Either<NextSubtagAfterLanguageExtension<'a>, IanaRegisteredIso639Alpha3Code>, LanguageExtensionSubtagParseError>
 	{
-		use NextSubtag::*;
+		use NextSubtagAfterLanguageExtension::*;
 		
 		#[inline(always)]
-		const fn next_subtag<R>(next_subtag: NextSubtag) -> Result<Either<NextSubtag, R>, LanguageExtensionSubtagParseError>
+		const fn next_subtag<R>(next_subtag: NextSubtagAfterLanguageExtension) -> Result<Either<NextSubtagAfterLanguageExtension, R>, LanguageExtensionSubtagParseError>
 		{
 			Ok(Left(next_subtag))
 		}
@@ -162,7 +162,7 @@ impl LanguageExtension
 	#[inline(always)]
 	fn validate_as_either_iana_registered_iso_639_alpha_3_code_or_iana_registered_un_m49_region_code(subtag: &[u8]) -> Result<Either<IanaRegisteredUnM49RegionCode, IanaRegisteredIso639Alpha3Code>, LanguageExtensionSubtagParseError>
 	{
-		match subtag.get_unchecked_value_safe(0usize)
+		match subtag.byte_0()
 		{
 			zeroth_byte @ _0 ..= _9 => Self::validate_as_iana_registered_un_m49_region_code(subtag, zeroth_byte),
 			
@@ -191,7 +191,7 @@ impl LanguageExtension
 			},
 			IanaRegisteredUnM49RegionCode,
 			Left,
-			|index, byte| LanguageExtensionSubtagParseError::InvalidIanaRegisteredUnM49RegionCode(InvalidDigitError { length: Self::length, index, byte })
+			|index, byte| LanguageExtensionSubtagParseError::InvalidIanaRegisteredUnM49RegionCode(Digit::error::<{Self::length}>(index, byte))
 		)
 	}
 	
@@ -216,7 +216,7 @@ impl LanguageExtension
 			},
 			IanaRegisteredIso639Alpha3Code,
 			Right,
-			|index, byte| LanguageExtensionSubtagParseError::InvalidIanaRegisteredIso639Alpha3Code(InvalidAlphaError { length: Self::length, index, byte })
+			|index, byte| LanguageExtensionSubtagParseError::InvalidIanaRegisteredIso639Alpha3Code(Alpha::error::<{Self::length}>(index, byte))
 		)
 	}
 	

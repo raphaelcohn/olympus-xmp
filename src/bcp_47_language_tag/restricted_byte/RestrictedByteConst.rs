@@ -2,41 +2,15 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[allow(missing_docs)]
-#[derive(Debug, Clone, Eq, PartialEq)]
-pub struct Normal
+pub(in crate::bcp_47_language_tag) trait RestrictedByteConst: Copy + Debug
 {
-	language: Language,
+	type Error: error::Error;
 	
-	script: Option<IanaRegisteredIso15924ScriptCode>,
+	fn construct(validated_byte: u8) -> Self;
 	
-	region: Option<IanaRegisteredRegionCode>,
-
-	variants: HashSet<Variant>,
-
-	extensions: HashMap<Singleton, Extension>,
-
-	private_use: Option<PrivateUse>,
-}
-
-impl From<Language> for Normal
-{
-	#[inline(always)]
-	fn from(language: Language) -> Self
-	{
-		Self
-		{
-			language,
-			
-			script: None,
-			
-			region: None,
-		
-			variants: HashSet::new(),
-		
-			extensions: HashMap::new(),
-		
-			private_use: None,
-		}
-	}
+	fn error<const length: usize>(index: usize, byte: u8) -> Self::Error;
+	
+	fn new_array_unchecked<const length: usize>(value: &[u8; length]) -> [Self; length];
+	
+	fn validate_byte(byte: u8) -> bool;
 }

@@ -5,9 +5,11 @@
 include!("finished.rs");
 include!("next_or_error.rs");
 include!("parse_alphanumeric_variant.rs");
-include!("parse_digit_alphanumeric_variant.rs");
+include!("parse_digit_alphanumeric_variant_4.rs");
 include!("parse_ordinary_language_subtag.rs");
 include!("parse_registered_language_subtag.rs");
 include!("parse_reserved_language_subtag.rs");
 include!("return_error.rs");
+include!("return_error_is_greater_than_eight.rs");
+include!("return_error_is_zero.rs");
 include!("return_next.rs");

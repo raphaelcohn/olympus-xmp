@@ -2,22 +2,29 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+#[allow(missing_docs)]
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub enum Bcp47LanguageTagParseError
 {
-	FirstSubtag(LanguageFirstSubtagParseError),
+	FirstSubtag(LanguageSubtagParseError),
 
 	GrandfatheredIrregularI(GrandfatheredIrregularISubtagParseError),
 	
 	PrivateUseSubtags(PrivateUseSubtagsParseError),
 
+	Script(ScriptParseError),
+
+	Region(RegionParseError),
+
 	Variant(VariantParseError),
+
+	Extension(ExtensionParseError),
 }
 
-impl From<LanguageFirstSubtagParseError> for Bcp47LanguageTagParseError
+impl From<LanguageSubtagParseError> for Bcp47LanguageTagParseError
 {
 	#[inline(always)]
-	fn from(cause: LanguageFirstSubtagParseError) -> Self
+	fn from(cause: LanguageSubtagParseError) -> Self
 	{
 		Bcp47LanguageTagParseError::FirstSubtag(cause)
 	}
@@ -41,12 +48,39 @@ impl From<PrivateUseSubtagsParseError> for Bcp47LanguageTagParseError
 	}
 }
 
+impl From<RegionParseError> for Bcp47LanguageTagParseError
+{
+	#[inline(always)]
+	fn from(cause: RegionParseError) -> Self
+	{
+		Bcp47LanguageTagParseError::Region(cause)
+	}
+}
+
+impl From<ScriptParseError> for Bcp47LanguageTagParseError
+{
+	#[inline(always)]
+	fn from(cause: ScriptParseError) -> Self
+	{
+		Bcp47LanguageTagParseError::Script(cause)
+	}
+}
+
 impl From<VariantParseError> for Bcp47LanguageTagParseError
 {
 	#[inline(always)]
 	fn from(cause: VariantParseError) -> Self
 	{
 		Bcp47LanguageTagParseError::Variant(cause)
+	}
+}
+
+impl From<ExtensionParseError> for Bcp47LanguageTagParseError
+{
+	#[inline(always)]
+	fn from(cause: ExtensionParseError) -> Self
+	{
+		Bcp47LanguageTagParseError::Extension(cause)
 	}
 }
 
@@ -74,7 +108,13 @@ impl error::Error for Bcp47LanguageTagParseError
 			
 			PrivateUseSubtags(cause) => Some(cause),
 			
+			Region(cause) => Some(cause),
+			
+			Script(cause) => Some(cause),
+			
 			Variant(cause) => Some(cause),
+			
+			Extension(cause) => Some(cause),
 		}
 	}
 }

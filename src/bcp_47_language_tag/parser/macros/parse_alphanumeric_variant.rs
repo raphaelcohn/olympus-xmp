@@ -6,6 +6,6 @@ macro_rules! parse_alphanumeric_variant
 {
 	($subtag: ident, $n: expr, $alphanumeric_n: ident) =>
 	{
-		Alphanumeric::validate_alphanumerics_to_lower_case::<_, _, _, _, $n>($subtag, $alphanumeric_n, InvalidAlphanumeric)?
+		Alphanumeric::validate_and_convert_array::<_, _, _, _, $n>($subtag, $alphanumeric_n, InvalidAlphanumeric)?
 	}
 }

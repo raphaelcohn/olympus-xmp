@@ -37,7 +37,7 @@
 
 
 #[allow(dead_code)]
-mod a_to_z;
+pub(crate) mod a_to_z;
 
 
 /// BCP 47 language tag (as used by `xml:lang`).

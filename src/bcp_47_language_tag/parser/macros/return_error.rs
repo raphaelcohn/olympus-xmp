@@ -4,7 +4,7 @@
 
 macro_rules! return_error
 {
-	($error: ident) =>
+	($error: expr) =>
 	{
 		Err($error)?
 	}

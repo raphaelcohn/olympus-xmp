@@ -36,30 +36,46 @@ impl PrivateUsePortion
 	#[inline(always)]
 	fn parse(subtag: &[u8]) -> Result<Self, PrivateUseSubtagsParseError>
 	{
-		use PrivateUsePortion::*;
 		use PrivateUseSubtagsParseError::*;
+		use PrivateUsePortion::*;
+		
+		macro_rules! parse_n
+		{
+			($subtag: ident, $n: expr, $n_enum: ident) =>
+			{
+				Self::parse_n::<_, $n>(subtag, $n_enum)
+			}
+		}
 		
 		match subtag.len()
 		{
-			0 => Err(LengthIsZero),
+			0 => return_error_is_zero!(),
 			
-			1 => Alphanumeric::validate_and_convert_array::<_, _, _, _, 1>(subtag, Alphanumeric1, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
+			1 => parse_n!(subtag, 1, Alphanumeric1),
 			
-			2 => Alphanumeric::validate_and_convert_array::<_, _, _, _, 2>(subtag, Alphanumeric2, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
+			2 => parse_n!(subtag, 2, Alphanumeric2),
 			
-			3 => Alphanumeric::validate_and_convert_array::<_, _, _, _, 3>(subtag, Alphanumeric3, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
+			3 => parse_n!(subtag, 3, Alphanumeric3),
 			
-			4 => Alphanumeric::validate_and_convert_array::<_, _, _, _, 4>(subtag, Alphanumeric4, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
+			4 => parse_n!(subtag, 4, Alphanumeric4),
 			
-			5 => Alphanumeric::validate_and_convert_array::<_, _, _, _, 5>(subtag, Alphanumeric5, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
+			5 => parse_n!(subtag, 5, Alphanumeric5),
 			
-			6 => Alphanumeric::validate_and_convert_array::<_, _, _, _, 6>(subtag, Alphanumeric6, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
+			6 => parse_n!(subtag, 6, Alphanumeric6),
 			
-			7 => Alphanumeric::validate_and_convert_array::<_, _, _, _, 7>(subtag, Alphanumeric7, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
+			7 => parse_n!(subtag, 7, Alphanumeric7),
 			
-			8 => Alphanumeric::validate_and_convert_array::<_, _, _, _, 8>(subtag, Alphanumeric8, PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha),
+			8 => parse_n!(subtag, 8, Alphanumeric8),
 			
-			_ => Err(LengthIsGreaterThanEight),
+			length @ _ => return_error_is_greater_than_eight!(length),
 		}
+	}
+	
+	#[inline(always)]
+	fn parse_n<OkConstructor: FnOnce([Alphanumeric; length]) -> PrivateUsePortion, const length: usize>(subtag: &[u8], ok: OkConstructor) -> Result<Self, PrivateUseSubtagsParseError>
+	{
+		debug_assert_eq!(length, subtag.len());
+		
+		Alphanumeric::validate_and_convert_array::<_, _, _, _,length>(subtag, ok, PrivateUseSubtagsParseError::InvalidAlphanumeric)
 	}
 }

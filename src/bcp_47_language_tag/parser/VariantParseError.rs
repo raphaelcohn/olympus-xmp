@@ -3,24 +3,21 @@
 
 
 #[allow(missing_docs)]
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub enum VariantParseError
 {
-	VariantOfZero,
-	
 	InvalidExtensionSingleton(u8),
 	
 	VariantOfTwo,
 	
 	VariantOfThree,
 	
-	VariantMoreThanEight
-	{
-		length: usize,
-	},
-	
 	DuplicateVariant(Variant),
-
+	
+	InvalidSubtagLength(InvalidSubtagLengthError),
+	
+	InvalidAlpha(InvalidAlphaError),
+	
 	InvalidDigit(InvalidDigitError),
 
 	InvalidAlphanumeric(InvalidAlphanumericError),
@@ -46,6 +43,10 @@ impl error::Error for VariantParseError
 		
 		match self
 		{
+			InvalidSubtagLength(cause) => Some(cause),
+			
+			InvalidAlpha(cause) => Some(cause),
+			
 			InvalidDigit(cause) => Some(cause),
 			
 			InvalidAlphanumeric(cause) => Some(cause),

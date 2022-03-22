@@ -9,8 +9,10 @@ pub struct ReservedLanguageSubtag([Alpha; 4]);
 impl ReservedLanguageSubtag
 {
 	#[inline(always)]
-	fn parse(first_subtag: &[u8]) -> Result<Language, LanguageFirstSubtagParseError>
+	fn parse(subtag: &[u8]) -> Result<Language, LanguageSubtagParseError>
 	{
-		Alpha::validate_and_convert_array::<_, _, _, _, 4>(first_subtag, |alpha_array| Language::Reserved(Self(alpha_array)), FirstSubtagLengthIsTwoToEightButInvalidAlpha)
+		const length: usize = 4;
+		debug_assert_eq!(subtag.len(), length);
+		Alpha::validate_and_convert_array::<_, _, _, _, length>(subtag, |alpha_array| Language::Reserved(Self(alpha_array)), LanguageSubtagParseError::InvalidAlpha)
 	}
 }

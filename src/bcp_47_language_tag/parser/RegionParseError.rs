@@ -3,9 +3,11 @@
 
 
 #[allow(missing_docs)]
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub enum RegionParseError
 {
+	InvalidSubtagLength(InvalidSubtagLengthError),
+	
 	InvalidUpperCaseAlpha(InvalidUpperCaseAlphaError),
 	
 	InvalidDigit(InvalidDigitError),
@@ -29,11 +31,11 @@ impl error::Error for RegionParseError
 		
 		match self
 		{
+			InvalidSubtagLength(cause) => Some(cause),
+			
 			InvalidUpperCaseAlpha(cause) => Some(cause),
 			
 			InvalidDigit(cause) => Some(cause),
-			
-			_ => None,
 		}
 	}
 }

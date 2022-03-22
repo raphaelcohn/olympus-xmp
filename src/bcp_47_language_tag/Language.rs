@@ -3,7 +3,7 @@
 
 
 /// Basically, a 2 - 8 byte alpha code.
-#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Debug, Clone, Eq, PartialEq)]
 pub enum Language
 {
 	/// Typically a 2 or 3 character ISO 639 code, but can be much more.
@@ -46,7 +46,7 @@ impl const From<RegisteredLanguageSubtag> for Language
 impl const From<IanaRegisteredIso639Code> for Language
 {
 	#[inline(always)]
-	fn from(iana_registered_iso_639_code: IanaRegisteredIso639Code) -> Self
+	fn from(value: IanaRegisteredIso639Code) -> Self
 	{
 		let ordinary_language: OrdinaryLanguage = value.into();
 		Self::from(ordinary_language)

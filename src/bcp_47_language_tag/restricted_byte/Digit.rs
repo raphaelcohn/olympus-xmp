@@ -4,16 +4,16 @@
 
 /// Value is one of `0-9`.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub(crate) struct Digit(u8);
+pub struct Digit(u8);
 
-impl RestrictedByte for Digit
+impl const RestrictedByteConst for Digit
 {
 	type Error = InvalidDigitError;
 	
 	#[inline(always)]
 	fn construct(validated_byte: u8) -> Self
 	{
-		debug_assert!(Self::validate_byte(byte));
+		debug_assert!(Self::validate_byte(validated_byte));
 		Self(validated_byte)
 	}
 	
@@ -26,9 +26,18 @@ impl RestrictedByte for Digit
 	#[inline(always)]
 	fn validate_byte(byte: u8) -> bool
 	{
-		(byte >= _0 && byte <= _9)
+		byte >= _0 && byte <= _9
 	}
 	
+	#[inline(always)]
+	fn new_array_unchecked<const length: usize>(value: &[u8; length]) -> [Self; length]
+	{
+		new_array_unchecked::<Self, length>(value)
+	}
+}
+
+impl RestrictedByte for Digit
+{
 	#[inline(always)]
 	fn validate_and_convert_byte<E, ErrorConstructor: FnOnce(Self::Error) -> E, const length: usize>(bytes: &[u8], error: ErrorConstructor, index: usize) -> Result<u8, E>
 	{

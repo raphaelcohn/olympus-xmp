@@ -4,29 +4,36 @@
 
 #[allow(missing_docs)]
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub enum LanguageFirstSubtagParseError
+pub enum LanguageSubtagParseError
 {
-	FirstSubtagLengthIsZero,
-	
 	FirstSubtagLengthIsOneAndIsNotPrivateUseOrGrandfatheredIrregularTag(u8),
 	
-	FirstSubtagLengthIsTwoToEightButInvalidAlpha(InvalidAlphaError),
+	InvalidSubtagLength(InvalidSubtagLengthError),
 	
-	FirstSubtagLengthIsMoreThanEight,
+	InvalidAlpha(InvalidAlphaError),
 
 	LanguageExtensionSubtag(LanguageExtensionSubtagParseError)
 }
 
-impl From<LanguageExtensionSubtagParseError> for LanguageFirstSubtagParseError
+impl From<InvalidSubtagLengthError> for LanguageSubtagParseError
+{
+	#[inline(always)]
+	fn from(cause: InvalidSubtagLengthError) -> Self
+	{
+		LanguageSubtagParseError::InvalidSubtagLength(cause)
+	}
+}
+
+impl From<LanguageExtensionSubtagParseError> for LanguageSubtagParseError
 {
 	#[inline(always)]
 	fn from(cause: LanguageExtensionSubtagParseError) -> Self
 	{
-		LanguageFirstSubtagParseError::LanguageExtensionSubtag(cause)
+		LanguageSubtagParseError::LanguageExtensionSubtag(cause)
 	}
 }
 
-impl Display for LanguageFirstSubtagParseError
+impl Display for LanguageSubtagParseError
 {
 	#[inline(always)]
 	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
@@ -35,16 +42,18 @@ impl Display for LanguageFirstSubtagParseError
 	}
 }
 
-impl error::Error for LanguageFirstSubtagParseError
+impl error::Error for LanguageSubtagParseError
 {
 	#[inline(always)]
 	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		use LanguageFirstSubtagParseError::*;
+		use LanguageSubtagParseError::*;
 		
 		match self
 		{
-			FirstSubtagLengthIsTwoToEightButInvalidAlpha(cause) => Some(cause),
+			InvalidSubtagLength(cause) => Some(cause),
+			
+			InvalidAlpha(cause) => Some(cause),
 			
 			LanguageExtensionSubtag(cause) => Some(cause),
 			

@@ -2,14 +2,10 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub(super) enum NextSubtag<'a>
+macro_rules! return_error_is_greater_than_eight
 {
-	Exhausted,
-	
-	Next(&'a [u8]),
-	
-	IanaRegisteredUnM49RegionCode(IanaRegisteredUnM49RegionCode),
-	
-	Pending,
+	($length: ident) =>
+	{
+		return_error!(InvalidSubtagLength(InvalidSubtagLengthError::IsGreaterThanEight { length: $length }))
+	}
 }

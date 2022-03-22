@@ -3,7 +3,7 @@
 
 
 #[inline(always)]
-const fn to_upper_case(byte: u8) -> u8
+pub(super) const fn to_upper_case(byte: u8) -> u8
 {
 	const Mask: u8 = !SetForLowerCaseBit;
 	byte & Mask

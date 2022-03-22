@@ -6,7 +6,7 @@
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct IanaRegisteredIso15924ScriptCode(UpperCaseAlpha, [Alpha; 3]);
 
-impl<'a> const From<&'a [u8; 4]> for IanaRegisteredIso639Alpha2Code
+impl<'a> const From<&'a [u8; 4]> for IanaRegisteredIso15924ScriptCode
 {
 	#[inline(always)]
 	fn from(value: &'a [u8; 4]) -> Self
@@ -15,7 +15,7 @@ impl<'a> const From<&'a [u8; 4]> for IanaRegisteredIso639Alpha2Code
 	}
 }
 
-impl const From<[u8; 4]> for IanaRegisteredIso639Alpha2Code
+impl const From<[u8; 4]> for IanaRegisteredIso15924ScriptCode
 {
 	#[inline(always)]
 	fn from(value: [u8; 4]) -> Self

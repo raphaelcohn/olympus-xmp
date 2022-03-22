@@ -135,8 +135,7 @@ impl<'a> PullEventParser<'a>
 				return Err(LineTooShort)
 			}
 			
-			let byte = line_bytes.get_unchecked_value_safe(0);
-			match byte
+			match line_bytes.get_unchecked_value_safe(0)
 			{
 				Percent => return parse_second_percent(length, line_bytes),
 				

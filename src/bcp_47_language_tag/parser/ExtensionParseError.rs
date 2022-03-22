@@ -3,21 +3,18 @@
 
 
 #[allow(missing_docs)]
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub enum ExtensionParseError
 {
 	FirstSubtagIsMandatory,
 	
 	FirstSubtagIsOne,
 	
-	SubtagOfZero,
-	
-	SubtagMoreThanEight
-	{
-		length: usize,
-	},
+	InvalidSubtagLength(InvalidSubtagLengthError),
 	
 	InvalidAlphanumeric(InvalidAlphanumericError),
+	
+	InvalidExtensionSingleton(u8),
 	
 	DuplicateExtension(Singleton),
 }
@@ -40,6 +37,8 @@ impl error::Error for ExtensionParseError
 		
 		match self
 		{
+			InvalidSubtagLength(cause) => Some(cause),
+			
 			InvalidAlphanumeric(cause) => Some(cause),
 			
 			_ => None,

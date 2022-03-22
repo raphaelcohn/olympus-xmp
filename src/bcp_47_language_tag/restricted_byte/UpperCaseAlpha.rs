@@ -6,7 +6,7 @@
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct UpperCaseAlpha(u8);
 
-impl RestrictedByte for UpperCaseAlpha
+impl const RestrictedByteConst for UpperCaseAlpha
 {
 	type Error = InvalidUpperCaseAlphaError;
 	
@@ -29,6 +29,15 @@ impl RestrictedByte for UpperCaseAlpha
 		byte >= A && byte <= Z
 	}
 	
+	#[inline(always)]
+	fn new_array_unchecked<const length: usize>(value: &[u8; length]) -> [Self; length]
+	{
+		new_array_unchecked::<Self, length>(value)
+	}
+}
+
+impl RestrictedByte for UpperCaseAlpha
+{
 	#[inline(always)]
 	fn validate_and_convert_byte<E, ErrorConstructor: FnOnce(Self::Error) -> E, const length: usize>(bytes: &[u8], error: ErrorConstructor, index: usize) -> Result<u8, E>
 	{

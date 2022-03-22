@@ -19,7 +19,7 @@ impl Default for PrivateUse
 impl PrivateUse
 {
 	#[inline(always)]
-	fn parse(mut subtags: MemchrIterator<Hyphen>) -> Result<Self, PrivateUseSubtagsParseError>
+	fn parse(mut subtags: Subtags) -> Result<Self, PrivateUseSubtagsParseError>
 	{
 		use PrivateUseSubtagsParseError::*;
 		

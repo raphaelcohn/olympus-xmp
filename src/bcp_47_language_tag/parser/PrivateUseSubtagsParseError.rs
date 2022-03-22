@@ -3,16 +3,23 @@
 
 
 #[allow(missing_docs)]
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub enum PrivateUseSubtagsParseError
 {
 	HasNoSubtags,
 	
-	LengthIsZero,
+	InvalidSubtagLength(InvalidSubtagLengthError),
 	
-	LengthIsGreaterThanEight,
-	
-	PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha(InvalidAlphanumericError),
+	InvalidAlphanumeric(InvalidAlphanumericError),
+}
+
+impl From<InvalidSubtagLengthError> for PrivateUseSubtagsParseError
+{
+	#[inline(always)]
+	fn from(cause: InvalidSubtagLengthError) -> Self
+	{
+		PrivateUseSubtagsParseError::InvalidSubtagLength(cause)
+	}
 }
 
 impl Display for PrivateUseSubtagsParseError
@@ -33,7 +40,9 @@ impl error::Error for PrivateUseSubtagsParseError
 		
 		match self
 		{
-			PrivateUseSubtagLengthIsTwoToEightButInvalidAlpha(cause) => Some(cause),
+			InvalidSubtagLength(cause) => Some(cause),
+			
+			InvalidAlphanumeric(cause) => Some(cause),
 			
 			_ => None,
 		}

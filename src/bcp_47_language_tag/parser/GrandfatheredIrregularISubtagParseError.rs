@@ -6,13 +6,15 @@
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub enum GrandfatheredIrregularISubtagParseError
 {
+	InvalidSubtagLength(InvalidSubtagLengthError),
+	
 	MissingSecondSubtag,
 	
 	MoreThanTwoSubtags,
 	
-	LengthIsLessThanThree { length: usize },
+	IsOne,
 	
-	LengthIsGreaterThanEight { length: usize },
+	IsTwo,
 
 	Unregistered(ArrayVec<u8, 8>),
 }
@@ -28,4 +30,16 @@ impl Display for GrandfatheredIrregularISubtagParseError
 
 impl error::Error for GrandfatheredIrregularISubtagParseError
 {
+	#[inline(always)]
+	fn source(&self) -> Option<&(dyn error::Error + 'static)>
+	{
+		use GrandfatheredIrregularISubtagParseError::*;
+		
+		match self
+		{
+			InvalidSubtagLength(cause) => Some(cause),
+			
+			_ => None,
+		}
+	}
 }
