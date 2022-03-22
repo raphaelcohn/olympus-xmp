@@ -4,8 +4,8 @@
 
 macro_rules! parse_reserved_language_subtag
 {
-	($first_subtag: ident) =>
+	($subtag: ident) =>
 	{
-		(ReservedLanguageSubtag::parse($first_subtag)?, Pending)
+		(ReservedLanguageSubtag::parse($subtag)?, Pending)
 	}
 }

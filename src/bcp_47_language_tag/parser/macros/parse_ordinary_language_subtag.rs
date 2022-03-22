@@ -4,9 +4,9 @@
 
 macro_rules! parse_ordinary_language_subtag
 {
-	($first_subtag: ident, $subtags: ident, $parse_n: ident) =>
+	($subtag: ident, $subtags: ident, $parse_n: ident) =>
 	{
-		match OrdinaryLanguage::$parse_n($first_subtag, &mut $subtags)?
+		match OrdinaryLanguage::$parse_n($subtag, &mut $subtags)?
 		{
 			Left(ok) => ok,
 			

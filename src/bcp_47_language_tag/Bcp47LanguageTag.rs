@@ -63,27 +63,25 @@ impl Bcp47LanguageTag
 			use LanguageSubtagParseError::*;
 			
 			let subtag = subtags.next_first();
-			match subtag.len()
+			match_subtag_length!
 			{
-				0 => return_error_is_zero!(),
+				subtag,
 				
-				1 => return Self::parse_x_or_i_subtag(subtag, subtags),
+				{ return Self::parse_x_or_i_subtag(subtag, subtags) },
 				
-				2 => parse_ordinary_language_subtag!(subtag, subtags, parse_2),
+				parse_ordinary_language_subtag!(subtag, subtags, parse_2),
 				
-				3 => parse_ordinary_language_subtag!(subtag, subtags, parse_3),
+				parse_ordinary_language_subtag!(subtag, subtags, parse_3),
 				
-				4 => parse_reserved_language_subtag!(subtag),
+				parse_reserved_language_subtag!(subtag),
 				
-				5 => parse_registered_language_subtag!(subtag, 5, Alpha5),
+				parse_registered_language_subtag!(subtag, 5, Alpha5),
 				
-				6 => parse_registered_language_subtag!(subtag, 6, Alpha6),
+				parse_registered_language_subtag!(subtag, 6, Alpha6),
 				
-				7 => parse_registered_language_subtag!(subtag, 7, Alpha7),
+				parse_registered_language_subtag!(subtag, 7, Alpha7),
 				
-				8 => parse_registered_language_subtag!(subtag, 8, Alpha8),
-				
-				length @ _ => return_error_is_greater_than_eight!(length),
+				parse_registered_language_subtag!(subtag, 8, Alpha8)
 			}
 		};
 		
@@ -110,46 +108,40 @@ impl Bcp47LanguageTag
 	{
 		use ScriptParseError::*;
 		
-		match subtag.len()
+		match_subtag_length!
 		{
-			0 => return_error_is_zero!(),
+			subtag,
+			validated_extension_code,
 			
-			1 => match subtag.byte_0()
-			{
-				X | x => Self::parse_from_private_use(subtags, language, None, None, Default::default(), Default::default()),
-				
-				validated_extension_code @ (_0 ..= _9 | A ..= W | Y ..= Z | a ..= w | y ..= z) => Self::parse_from_extension(validated_extension_code, subtags, language, None, None, Default::default()),
-				
-				invalid_extension_code @ _ => return_error!(InvalidExtensionSingleton(invalid_extension_code))
-			}
+			Self::parse_from_private_use(subtags, language, None, None, Default::default(), Default::default()),
 			
-			2 => Self::parse_from_region_2(subtag, subtags, language, None),
+			Self::parse_from_extension(validated_extension_code, subtags, language, None, None, Default::default()),
 			
-			3 => Self::parse_from_region_3(subtag, subtags, language, None),
+			Self::parse_from_region_2(subtag, subtags, language, None),
 			
-			4 => match subtag.byte_0()
+			Self::parse_from_region_3(subtag, subtags, language, None),
+			
+			match subtag.byte_0()
 			{
 				digit @ _0 ..= _9 => Self::parse_from_variant_4_first_digit(subtag, subtags, language, None, None, Digit::construct(digit)),
 				
 				alpha @ (A ..= Z | a ..= z) =>
 				{
 					let initial = UpperCaseAlpha::construct(to_upper_case(alpha));
-					let script = Alpha::validate_and_convert_array(subtag.get_unchecked_range_safe(1 .. ), |alpha_array| IanaRegisteredIso15924ScriptCode(initial, alpha_array), InvalidAlpha)?;
+					let script = Alpha::validate_and_convert_array(subtag.slice_less_first_byte(), |alpha_array| IanaRegisteredIso15924ScriptCode(initial, alpha_array), InvalidAlpha)?;
 					Self::parse_from_region(subtags, language, Some(script))
 				}
 				
 				byte @ _ => return_error!(InvalidAlphanumeric(Alphanumeric::error::<4>(0, byte))),
-			}
+			},
 			
-			5 => Self::parse_from_variant_5(subtag, subtags, language, None, None),
+			Self::parse_from_variant_5(subtag, subtags, language, None, None),
 			
-			6 => Self::parse_from_variant_6(subtag, subtags, language, None, None),
+			Self::parse_from_variant_6(subtag, subtags, language, None, None),
 			
-			7 => Self::parse_from_variant_7(subtag, subtags, language, None, None),
+			Self::parse_from_variant_7(subtag, subtags, language, None, None),
 			
-			8 => Self::parse_from_variant_8(subtag, subtags, language, None, None),
-			
-			length @ _ => return_error_is_greater_than_eight!(length),
+			Self::parse_from_variant_8(subtag, subtags, language, None, None)
 		}
 	}
 	
@@ -195,7 +187,8 @@ impl Bcp47LanguageTag
 		/*
 			TODO Remember regular & irregular variants
 		 */
-		unimplemented!()
+		unimplemented!();
+		panic!("FINISH ME")
 	}
 	
 	#[inline(always)]
@@ -205,39 +198,33 @@ impl Bcp47LanguageTag
 		
 		let subtag = return_next!(subtags, Self::from_region_ok(language, script, region));
 		
-		match subtag.len()
+		match_subtag_length!
 		{
-			0 => return_error_is_zero!(),
+			subtag,
+			validated_extension_code,
 			
-			1 => match subtag.byte_0()
-			{
-				x | X => Self::parse_from_private_use(subtags, language, script, region, Default::default(), Default::default()),
-				
-				validated_extension_code @ (_0 ..= _9 | A ..= W | Y ..= Z | a ..= w | y ..= z) => Self::parse_from_extension(validated_extension_code, subtags, language, script, region, Default::default()),
-				
-				invalid_extension_code @ _ => return_error!(InvalidExtensionSingleton(invalid_extension_code))
-			},
+			Self::parse_from_private_use(subtags, language, script, region, Default::default(), Default::default()),
 			
-			2 => Self::parse_from_variant_irregular_grandfathered_second_region(subtags, subtag, language, region),
+			Self::parse_from_extension(validated_extension_code, subtags, language, script, region, Default::default()),
 			
-			3 => Self::parse_from_variant_irregular_grandfathered_oed(subtags, subtag, language, region),
+			Self::parse_from_variant_irregular_grandfathered_second_region(subtags, subtag, language, region),
 			
-			4 => match subtag.byte_0()
+			Self::parse_from_variant_irregular_grandfathered_oed(subtags, subtag, language, region),
+			
+			match subtag.byte_0()
 			{
 				digit @ _0 ..= _9 => Self::parse_from_variant_4_first_digit(subtag, subtags, language, None, None, Digit::construct(digit)),
 				
 				byte @ _ => return_error!(InvalidDigit(Digit::error::<4>(0, byte))),
 			},
 			
-			5 => Self::parse_from_variant_5(subtag, subtags, language, script, region),
+			Self::parse_from_variant_5(subtag, subtags, language, script, region),
 			
-			6 => Self::parse_from_variant_6(subtag, subtags, language, script, region),
+			Self::parse_from_variant_6(subtag, subtags, language, script, region),
 			
-			7 => Self::parse_from_variant_7(subtag, subtags, language, script, region),
+			Self::parse_from_variant_7(subtag, subtags, language, script, region),
 			
-			8 => Self::parse_from_variant_8(subtag, subtags, language, script, region),
-			
-			length @ _ => return_error_is_greater_than_eight!(length),
+			Self::parse_from_variant_8(subtag, subtags, language, script, region)
 		}
 	}
 	
@@ -424,36 +411,34 @@ impl Bcp47LanguageTag
 			use Variant::*;
 			use VariantParseError::*;
 			
-			let variant = match subtag.len()
+			let variant = match_subtag_length!
 			{
-				0 => return_error_is_zero!(),
+				subtag,
+				validated_extension_code,
 				
-				1 => match subtag.byte_0()
+				Self::parse_from_private_use(subtags, language, script, region, variants, Default::default()),
+				
+				return Self::parse_from_extension(validated_extension_code, subtags, language, script, region, variants),
+				
+				return_error!(VariantOfTwo),
+				
+				return_error!(VariantOfThree),
+				
 				{
-					X | x => return Self::parse_from_private_use(subtags, language, script, region, variants, Default::default()),
-					
-					validated_extension_code @ (_0 ..= _9 | A ..= W | Y ..= Z | a ..= w | y ..= z) => return Self::parse_from_extension(validated_extension_code, subtags, language, script, region, variants),
-					
-					invalid_extension @ _ => return_error!(InvalidExtensionSingleton(invalid_extension))
+					const length: usize = 4;
+					const length_alphanumeric: usize = length - 1;
+					let digit = Digit::construct(Digit::validate_and_convert_byte::<_, _, length>(subtag, InvalidDigit, 0)?);
+					Alphanumeric::validate_and_convert_array::<_, _, _, _, length_alphanumeric>(subtag.slice_less_first_byte(), |alphanumeric_array| DigitAlphanumeric3(digit, alphanumeric_array), InvalidAlphanumeric)?
 				},
 				
-				2 => return_error!(VariantOfTwo),
+				parse_alphanumeric_variant!(subtag, 5, Alphanumeric5),
 				
-				3 => return_error!(VariantOfThree),
+				parse_alphanumeric_variant!(subtag, 6, Alphanumeric6),
 				
-				4 => parse_digit_alphanumeric_variant_4!(subtag),
+				parse_alphanumeric_variant!(subtag, 7, Alphanumeric7),
 				
-				5 => parse_alphanumeric_variant!(subtag, 5, Alphanumeric5),
-				
-				6 => parse_alphanumeric_variant!(subtag, 6, Alphanumeric6),
-				
-				7 => parse_alphanumeric_variant!(subtag, 7, Alphanumeric7),
-				
-				8 => parse_alphanumeric_variant!(subtag, 8, Alphanumeric8),
-				
-				length @ _ => return_error_is_greater_than_eight!(length),
+				parse_alphanumeric_variant!(subtag, 8, Alphanumeric8)
 			};
-			
 			let inserted = variants.insert(variant);
 			if !inserted
 			{
@@ -507,27 +492,26 @@ impl Bcp47LanguageTag
 		fn mandatory_first_subtag(subtags: &mut Subtags) -> Result<Extension, Bcp47LanguageTagParseError>
 		{
 			let mandatory_first_subtag = next_or_error!(subtags, FirstSubtagIsMandatory);
-			let one = match mandatory_first_subtag.len()
+			
+			let one = match_subtag_length!
 			{
-				0 => return_error_is_zero!(),
+				mandatory_first_subtag,
 				
-				1 => return_error!(FirstSubtagIsOne),
+				return_error!(FirstSubtagIsOne),
 				
-				2 => parse_alphanumeric_variant!(mandatory_first_subtag, 2, Alphanumeric2),
+				parse_alphanumeric_variant!(mandatory_first_subtag, 2, Alphanumeric2),
 				
-				3 => parse_alphanumeric_variant!(mandatory_first_subtag, 3, Alphanumeric3),
+				parse_alphanumeric_variant!(mandatory_first_subtag, 3, Alphanumeric3),
 				
-				4 => parse_alphanumeric_variant!(mandatory_first_subtag, 4, Alphanumeric4),
+				parse_alphanumeric_variant!(mandatory_first_subtag, 4, Alphanumeric4),
 				
-				5 => parse_alphanumeric_variant!(mandatory_first_subtag, 5, Alphanumeric5),
+				parse_alphanumeric_variant!(mandatory_first_subtag, 5, Alphanumeric5),
 				
-				6 => parse_alphanumeric_variant!(mandatory_first_subtag, 6, Alphanumeric6),
+				parse_alphanumeric_variant!(mandatory_first_subtag, 6, Alphanumeric6),
 				
-				7 => parse_alphanumeric_variant!(mandatory_first_subtag, 7, Alphanumeric7),
+				parse_alphanumeric_variant!(mandatory_first_subtag, 7, Alphanumeric7),
 				
-				8 => parse_alphanumeric_variant!(mandatory_first_subtag, 8, Alphanumeric8),
-				
-				length @ _ => return_error_is_greater_than_eight!(length),
+				parse_alphanumeric_variant!(mandatory_first_subtag, 8, Alphanumeric8)
 			};
 			Ok(Extension::new(one))
 		}
@@ -545,34 +529,28 @@ impl Bcp47LanguageTag
 				
 				extension.push
 				(
-					match subsequent_subtag.len()
+					match_subtag_length!
 					{
-						0 => return_error_is_zero!(),
+						subsequent_subtag,
+						validated_extension_code,
 						
-						1 => match subsequent_subtag.byte_0()
-						{
-							X | x => return Self::parse_from_private_use(subtags, language, script, region, variants, extensions),
-							
-							validated_extension_code @ (_0 ..= _9 | A ..= W | Y ..= Z | a ..= w | y ..= z) => break extension_entry_subsequent(&mut extensions, validated_extension_code)?,
-							
-							extension @ _ => return_error!(InvalidExtensionSingleton(extension))
-						},
+						Self::parse_from_private_use(subtags, language, script, region, variants, extensions),
 						
-						2 => parse_alphanumeric_variant!(subsequent_subtag, 2, Alphanumeric2),
+						break extension_entry_subsequent(&mut extensions, validated_extension_code)?,
 						
-						3 => parse_alphanumeric_variant!(subsequent_subtag, 3, Alphanumeric3),
+						parse_alphanumeric_variant!(subsequent_subtag, 2, Alphanumeric2),
 						
-						4 => parse_alphanumeric_variant!(subsequent_subtag, 4, Alphanumeric4),
+						parse_alphanumeric_variant!(subsequent_subtag, 3, Alphanumeric3),
 						
-						5 => parse_alphanumeric_variant!(subsequent_subtag, 5, Alphanumeric5),
+						parse_alphanumeric_variant!(subsequent_subtag, 4, Alphanumeric4),
 						
-						6 => parse_alphanumeric_variant!(subsequent_subtag, 6, Alphanumeric6),
+						parse_alphanumeric_variant!(subsequent_subtag, 5, Alphanumeric5),
 						
-						7 => parse_alphanumeric_variant!(subsequent_subtag, 7, Alphanumeric7),
+						parse_alphanumeric_variant!(subsequent_subtag, 6, Alphanumeric6),
 						
-						8 => parse_alphanumeric_variant!(subsequent_subtag, 8, Alphanumeric8),
+						parse_alphanumeric_variant!(subsequent_subtag, 7, Alphanumeric7),
 						
-						length @ _ => return_error_is_greater_than_eight!(length),
+						parse_alphanumeric_variant!(subsequent_subtag, 8, Alphanumeric8)
 					}
 				)
 			}

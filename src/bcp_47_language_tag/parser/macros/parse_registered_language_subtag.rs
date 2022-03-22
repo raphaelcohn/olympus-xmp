@@ -4,8 +4,8 @@
 
 macro_rules! parse_registered_language_subtag
 {
-	($first_subtag: ident, $n: expr, $alpha_n: ident) =>
+	($subtag: ident, $n: expr, $alpha_n: ident) =>
 	{
-		(RegisteredLanguageSubtag::parse::<_, $n>($first_subtag, RegisteredLanguageSubtag::$alpha_n)?, Pending)
+		(RegisteredLanguageSubtag::parse::<_, $n>($subtag, RegisteredLanguageSubtag::$alpha_n)?, Pending)
 	}
 }

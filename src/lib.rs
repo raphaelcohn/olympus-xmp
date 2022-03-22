@@ -18,6 +18,7 @@
 #![deny(unused_must_use)]
 #![deny(unused_qualifications)]
 #![deny(unused_results)]
+#![deny(unreachable_code)]
 #![warn(unreachable_pub)]
 #![warn(unused_lifetimes)]
 #![warn(unused_crate_dependencies)]

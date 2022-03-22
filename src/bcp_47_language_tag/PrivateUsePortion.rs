@@ -47,27 +47,25 @@ impl PrivateUsePortion
 			}
 		}
 		
-		match subtag.len()
+		match_subtag_length!
 		{
-			0 => return_error_is_zero!(),
+			subtag,
 			
-			1 => parse_n!(subtag, 1, Alphanumeric1),
+			parse_n!(subtag, 1, Alphanumeric1),
 			
-			2 => parse_n!(subtag, 2, Alphanumeric2),
+			parse_n!(subtag, 2, Alphanumeric2),
 			
-			3 => parse_n!(subtag, 3, Alphanumeric3),
+			parse_n!(subtag, 3, Alphanumeric3),
 			
-			4 => parse_n!(subtag, 4, Alphanumeric4),
+			parse_n!(subtag, 4, Alphanumeric4),
 			
-			5 => parse_n!(subtag, 5, Alphanumeric5),
+			parse_n!(subtag, 5, Alphanumeric5),
 			
-			6 => parse_n!(subtag, 6, Alphanumeric6),
+			parse_n!(subtag, 6, Alphanumeric6),
 			
-			7 => parse_n!(subtag, 7, Alphanumeric7),
+			parse_n!(subtag, 7, Alphanumeric7),
 			
-			8 => parse_n!(subtag, 8, Alphanumeric8),
-			
-			length @ _ => return_error_is_greater_than_eight!(length),
+			parse_n!(subtag, 8, Alphanumeric8)
 		}
 	}
 	
