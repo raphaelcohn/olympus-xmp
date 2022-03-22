@@ -11,10 +11,10 @@
 #![allow(non_upper_case_globals)]
 
 
-use build::bcp_47_language_tag::parse_language_subtag_registry;
+use ietf_bcp_47_language_tag_database::language_subtag_registry;
 
 
-#[path = "src/build/mod.rs"]
+#[path = "build/mod.rs"]
 mod build;
 
 
@@ -22,10 +22,7 @@ fn main()
 {
 	println!("cargo:rerun-if-changed=src/build.rs");
 	println!("cargo:rerun-if-changed=src/build");
-	println!("cargo:rerun-if-changed=src/build/bcp_47_language_tag");
-	println!("cargo:rerun-if-changed=src/build/bcp_47_language_tag/date");
-	println!("cargo:rerun-if-changed=src/build/bcp_47_language_tag/parser");
-	println!("cargo:rerun-if-changed=src/build/bcp_47_language_tag/records");
 	
-	parse_language_subtag_registry().unwrap();
+	let records = language_subtag_registry().unwrap();
+	panic!("FAIL")
 }

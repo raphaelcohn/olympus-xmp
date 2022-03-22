@@ -27,9 +27,9 @@ mod macros;
 
 
 include!("array_vec_u8.rs");
-include!("Bcp47LanguageTagParseError.rs");
 include!("ExtensionParseError.rs");
 include!("GrandfatheredIrregularISubtagParseError.rs");
+include!("IetfBcp47LanguageTagParseError.rs");
 include!("InvalidSubtagLengthError.rs");
 include!("LanguageExtensionSubtagParseError.rs");
 include!("LanguageSubtagParseError.rs");

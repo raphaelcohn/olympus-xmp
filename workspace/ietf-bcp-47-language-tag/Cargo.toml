@@ -14,13 +14,13 @@ repository = "https://github.com/lemonrock/olympus-xmp.git"
 exclude = ["*"]
 include = ["README.md", "LICENSE", "COPYRIGHT", "src/**/*.rs", "Cargo.toml", "rustfmt.toml", "clippy.toml"]
 readme = "README.md"
+build = "src/build.rs"
 publish = false
 edition = '2021'
 version = "0.0.0"
 
 [build-dependencies]
-memchr = "2.4.1"
-swiss-army-knife = "^0.0.32"
+ietf-bcp-47-language-tag-database = { version = "^0.0.0", path = "../ietf-bcp-47-language-tag-database" }
 
 [dependencies]
 arrayvec = { version = "0.7.0", features = ["std", "serde"] }

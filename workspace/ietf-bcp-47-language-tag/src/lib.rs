@@ -34,7 +34,7 @@
 
 //! #ietf-bcp-47-language-tag
 //!
-//! An IETF BCP 47 language tag parser and database.
+//! An IETF BCP 47 language tag parser.
 
 
 use arrayvec::ArrayVec;
@@ -42,7 +42,7 @@ use either::Either;
 use either::Left;
 use either::Right;
 use parser::array_vec_u8;
-use parser::Bcp47LanguageTagParseError;
+use parser::IetfBcp47LanguageTagParseError;
 use parser::ExtensionParseError;
 use parser::GrandfatheredIrregularISubtagParseError;
 use parser::InvalidSubtagLengthError;
@@ -108,7 +108,6 @@ mod parser;
 pub mod restricted_byte;
 
 
-include!("Bcp47LanguageTag.rs");
 include!("Grandfathered.rs");
 include!("Extension.rs");
 include!("ExtensionPortion.rs");
@@ -119,6 +118,7 @@ include!("IanaRegisteredIso639Alpha2Code.rs");
 include!("IanaRegisteredIso639Alpha3Code.rs");
 include!("IanaRegisteredUnM49RegionCode.rs");
 include!("IanaRegisteredIso15924ScriptCode.rs");
+include!("IetfBcp47LanguageTag.rs");
 include!("IrregularGrandfathered.rs");
 include!("Language.rs");
 include!("LanguageExtension.rs");

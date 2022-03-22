@@ -84,19 +84,19 @@ impl const From<[u8; 3]> for OrdinaryLanguage
 impl OrdinaryLanguage
 {
 	#[inline(always)]
-	fn parse_2<'a>(first_subtag: &'a [u8], subtags: &mut Subtags<'a>) -> Result<Either<(Language, NextSubtagAfterLanguageExtension<'a>), Bcp47LanguageTag>, LanguageSubtagParseError>
+	fn parse_2<'a>(first_subtag: &'a [u8], subtags: &mut Subtags<'a>) -> Result<Either<(Language, NextSubtagAfterLanguageExtension<'a>), IetfBcp47LanguageTag>, LanguageSubtagParseError>
 	{
 		Self::parse_n::<_, 2>(first_subtag, subtags, |alpha_array| IanaRegisteredIso639Code::Alpha2(IanaRegisteredIso639Alpha2Code(alpha_array)))
 	}
 	
 	#[inline(always)]
-	fn parse_3<'a>(first_subtag: &'a [u8], subtags: &mut Subtags<'a>) -> Result<Either<(Language, NextSubtagAfterLanguageExtension<'a>), Bcp47LanguageTag>, LanguageSubtagParseError>
+	fn parse_3<'a>(first_subtag: &'a [u8], subtags: &mut Subtags<'a>) -> Result<Either<(Language, NextSubtagAfterLanguageExtension<'a>), IetfBcp47LanguageTag>, LanguageSubtagParseError>
 	{
 		Self::parse_n::<_, 3>(first_subtag, subtags, |alpha_array| IanaRegisteredIso639Code::Alpha3(IanaRegisteredIso639Alpha3Code(alpha_array)))
 	}
 	
 	#[inline(always)]
-	fn parse_n<'a, Constructor: FnOnce([Alpha; length]) -> IanaRegisteredIso639Code, const length: usize>(first_subtag: &'a [u8], subtags: &mut Subtags<'a>, constructor: Constructor) -> Result<Either<(Language, NextSubtagAfterLanguageExtension<'a>), Bcp47LanguageTag>, LanguageSubtagParseError>
+	fn parse_n<'a, Constructor: FnOnce([Alpha; length]) -> IanaRegisteredIso639Code, const length: usize>(first_subtag: &'a [u8], subtags: &mut Subtags<'a>, constructor: Constructor) -> Result<Either<(Language, NextSubtagAfterLanguageExtension<'a>), IetfBcp47LanguageTag>, LanguageSubtagParseError>
 	{
 		let iana_registered_iso_639_code = Alpha::validate_and_convert_array::<_, _, _, _, length>(first_subtag, constructor, LanguageSubtagParseError::InvalidAlpha)?;
 		Ok(LanguageExtension::parse(subtags, iana_registered_iso_639_code)?)

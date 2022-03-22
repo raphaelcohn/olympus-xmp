@@ -24,7 +24,7 @@ impl LanguageExtension
 	/// extlang = 3ALPHA          ; Selected ISO 639 codes.
 	///           *2("-" 3ALPHA)  ; Permanently reserved.
 	/// ```
-	fn parse<'a>(subtags: &mut Subtags<'a>, iana_registered_iso_639_code: IanaRegisteredIso639Code) -> Result<Either<(Language, NextSubtagAfterLanguageExtension<'a>), Bcp47LanguageTag>, LanguageExtensionSubtagParseError>
+	fn parse<'a>(subtags: &mut Subtags<'a>, iana_registered_iso_639_code: IanaRegisteredIso639Code) -> Result<Either<(Language, NextSubtagAfterLanguageExtension<'a>), IetfBcp47LanguageTag>, LanguageExtensionSubtagParseError>
 	{
 		use NextSubtagAfterLanguageExtension::*;
 		use RegularGrandfathered::*;
@@ -37,7 +37,7 @@ impl LanguageExtension
 		const nan: IanaRegisteredIso639Alpha3Code = IanaRegisteredIso639Alpha3Code::from(b"nan");
 		const PendingImpossibleMessage: &'static str = "Pending never returned from parse_extended_language_subtag";
 		
-		type Output<'a> = Either<(Language, NextSubtagAfterLanguageExtension<'a>), Bcp47LanguageTag>;
+		type Output<'a> = Either<(Language, NextSubtagAfterLanguageExtension<'a>), IetfBcp47LanguageTag>;
 		
 		#[inline(always)]
 		const fn left(iana_registered_iso_639_code: IanaRegisteredIso639Code, language_extension: Option<LanguageExtension>, next_subtag: NextSubtagAfterLanguageExtension) -> Output
@@ -74,7 +74,7 @@ impl LanguageExtension
 		#[inline(always)]
 		const fn right<'a>(regular_grandfathered: RegularGrandfathered) -> Output<'a>
 		{
-			Right(Bcp47LanguageTag::regular_grandfathered(regular_grandfathered))
+			Right(IetfBcp47LanguageTag::regular_grandfathered(regular_grandfathered))
 		}
 		
 		#[inline(always)]

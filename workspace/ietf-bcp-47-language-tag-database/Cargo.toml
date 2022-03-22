@@ -3,9 +3,9 @@
 
 
 [package]
-name = "olympus-xmp"
-description = "olympus-xmp"
-keywords = ["olympus", "xmp"]
+name = "ietf-bcp-47-language-tag-database"
+description = "IETF BCP 47 language tag database"
+keywords = ["ietf", "bcp", "47", "language", "database"]
 categories = []
 license = "MIT"
 authors = ["Raphael Cohn <raphael.cohn@stormmq.com>"]
@@ -15,16 +15,9 @@ exclude = ["*"]
 include = ["README.md", "LICENSE", "COPYRIGHT", "src/**/*.rs", "Cargo.toml", "rustfmt.toml", "clippy.toml"]
 readme = "README.md"
 publish = false
-edition = '2018'
+edition = '2021'
 version = "0.0.0"
 
 [dependencies]
-arrayvec = { version = "0.7.0", features = ["std", "serde"] }
-either = { version = "1.6.1", features = ["use_std", "serde"] }
-gcd = "2.1.0"
-ietf-bcp-47-language-tag = { version = "^0.0.0", path = "../ietf-bcp-47-language-tag" }
-iso-3166-1-country = { version = "^0.0.0", path = "../iso-3166-1-country" }
 memchr = "2.4.1"
 swiss-army-knife = "^0.0.32"
-xml-rs = "0.8"
-unroll = "0.1.5"
