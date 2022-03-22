@@ -3,7 +3,7 @@
 
 
 /// An XMP validation error.
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Debug)]
 pub enum XmpValidationError<'name, 'namespace, 'local_name>
 {
 	#[allow(missing_docs)]
@@ -23,7 +23,23 @@ pub enum XmpValidationError<'name, 'namespace, 'local_name>
 	},
 	
 	#[allow(missing_docs)]
-	HasAttributeWhichShouldNotPresent
+	HasAttributeWhichShouldNotBePresent
+	{
+		path: XmpElementPath<'name, 'namespace, 'local_name>,
+		
+		attribute_name: &'name XmlName<'namespace, 'local_name>,
+	},
+	
+	#[allow(missing_docs)]
+	HasAttributesInNamespace
+	{
+		path: XmpElementPath<'name, 'namespace, 'local_name>,
+		
+		namespace_prefix: &'static str,
+	},
+	
+	#[allow(missing_docs)]
+	HasAttributeWhichIsObsolete
 	{
 		path: XmpElementPath<'name, 'namespace, 'local_name>,
 		
@@ -102,10 +118,6 @@ impl<'name, 'namespace, 'local_name> error::Error for XmpValidationError<'name, 
 		{
 			MissingOnlyElement { cause, .. } => Some(cause),
 			
-			MissingAttribute { .. } => None,
-			
-			HasAttributeWhichShouldNotPresent { .. } => None,
-			
 			CouldNotParseAttribute { cause, .. } => Some(cause),
 			
 			AttributeDoesNotHaveExpectedValue { .. } => None,
@@ -125,6 +137,14 @@ impl<'name, 'namespace, 'local_name> error::Error for XmpValidationError<'name, 
 			LensInformationDoesNotContainShotFocalLength => None,
 			
 			LensInformationDoesCouldNotHaveShotFNumber => None,
+			
+			HasAttributesInNamespace { .. } => None,
+			
+			HasAttributeWhichShouldNotBePresent { .. } => None,
+			
+			HasAttributeWhichIsObsolete { .. } => None,
+			
+			MissingAttribute { .. } => None,
 		}
 	}
 }

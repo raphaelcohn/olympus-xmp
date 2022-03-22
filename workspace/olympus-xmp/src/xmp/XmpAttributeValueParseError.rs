@@ -3,7 +3,7 @@
 
 
 /// An XMP attribute value parse error.
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Debug)]
 pub enum XmpAttributeValueParseError
 {
 	#[allow(missing_docs)]
@@ -11,6 +11,9 @@ pub enum XmpAttributeValueParseError
 	
 	#[allow(missing_docs)]
 	DateTime(XmpDateTimeParseError),
+	
+	#[allow(missing_docs)]
+	EmailAddress(EmailAddressParseError),
 	
 	#[allow(missing_docs)]
 	ExifContrastOrSharpness(U16ParseError),
@@ -55,6 +58,12 @@ pub enum XmpAttributeValueParseError
 	ExifWhiteBalanceMode(U16ParseError),
 	
 	#[allow(missing_docs)]
+	IimCategoryCode(IimCategoryCodeParseError),
+	
+	#[allow(missing_docs)]
+	IimSupplementalCategories(IimSupplementalCategoriesParseError),
+	
+	#[allow(missing_docs)]
 	IptcDigitalSourceType(UnknownStringVariantParseError),
 	
 	#[allow(missing_docs)]
@@ -85,6 +94,9 @@ pub enum XmpAttributeValueParseError
 	OptionNonZeroU16(ParseIntError),
 	
 	#[allow(missing_docs)]
+	PhoneNumber(PhoneNumberParseError),
+	
+	#[allow(missing_docs)]
 	PlusLicensorTelephoneType(UnknownStringVariantParseError),
 	
 	#[allow(missing_docs)]
@@ -101,6 +113,9 @@ pub enum XmpAttributeValueParseError
 	
 	#[allow(missing_docs)]
 	Urgency(UrgencyParseError),
+	
+	#[allow(missing_docs)]
+	Url(UrlParseError),
 	
 	#[allow(missing_docs)]
 	XmpLabel(UnknownStringVariantParseError),
@@ -130,6 +145,8 @@ impl error::Error for XmpAttributeValueParseError
 			
 			DateTime(cause) => Some(cause),
 			
+			EmailAddress(cause) => Some(cause),
+			
 			ExifContrastOrSharpness(cause) => Some(cause),
 			
 			ExifCustomRendered(cause) => Some(cause),
@@ -158,6 +175,10 @@ impl error::Error for XmpAttributeValueParseError
 			
 			ExifWhiteBalanceMode(cause) => Some(cause),
 			
+			IimCategoryCode(cause) => Some(cause),
+			
+			IimSupplementalCategories(cause) => Some(cause),
+			
 			IptcDigitalSourceType(cause) => Some(cause),
 			
 			IptcWorldRegion(cause) => Some(cause),
@@ -176,6 +197,8 @@ impl error::Error for XmpAttributeValueParseError
 			
 			OptionNonZeroU16(cause) => Some(cause),
 			
+			PhoneNumber(cause) => Some(cause),
+			
 			PhotoshopColorMode(cause) => Some(cause),
 			
 			PlusLicensorTelephoneType(cause) => Some(cause),
@@ -187,6 +210,8 @@ impl error::Error for XmpAttributeValueParseError
 			UniversallyUniqueIdentifier(cause) => Some(cause),
 			
 			UnsignedTiffRational(cause) => Some(cause),
+			
+			Url(cause) => Some(cause),
 			
 			Urgency(cause) => Some(cause),
 			

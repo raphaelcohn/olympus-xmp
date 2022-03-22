@@ -2,6 +2,10 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+use xml::namespace::NS_XML_URI;
+use xml::namespace::NS_XMLNS_URI;
+
+
 include!("aux.rs");
 include!("crd.rs");
 include!("crs.rs");
@@ -17,6 +21,10 @@ include!("rdf.rs");
 include!("stEvt.rs");
 include!("tiff.rs");
 include!("x.rs");
+include!("xml.rs");
 include!("xmp.rs");
+include!("xmpDM.rs");
 include!("xmpMM.rs");
 include!("xmpRights.rs");
+include!("xmpTPg.rs");
+include!("xmlns.rs");

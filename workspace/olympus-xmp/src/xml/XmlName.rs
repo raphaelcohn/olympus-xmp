@@ -42,6 +42,12 @@ impl<'namespace, 'local_name> XmlName<'namespace, 'local_name>
 	}
 	
 	#[inline(always)]
+	fn has_namespace(&self, namespace_uniform_resource_identifier: Option<&str>) -> bool
+	{
+		self.namespace_uniform_resource_identifier.as_ref().map(|x| x.deref()) == namespace_uniform_resource_identifier
+	}
+	
+	#[inline(always)]
 	fn matches_owned_name(&self, name: &OwnedName) -> bool
 	{
 		self.namespace_uniform_resource_identifier.as_ref().map(|x| x.deref()) == name.namespace.as_ref().map(|x| x.as_str()) && self.local_name.deref() == name.local_name.as_str()

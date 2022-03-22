@@ -39,6 +39,12 @@ impl XmlDocumentOrXmlElement for XmlDocument
 	{
 		self.root.get_elements(path)
 	}
+	
+	#[inline(always)]
+	fn has_no_attributes_in_namespace(&self, namespace_uniform_resource_identifier: Option<&str>) -> bool
+	{
+		self.root.has_no_attributes_in_namespace(namespace_uniform_resource_identifier)
+	}
 }
 
 impl XmlDocument

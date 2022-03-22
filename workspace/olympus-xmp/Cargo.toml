@@ -20,11 +20,13 @@ version = "0.0.0"
 
 [dependencies]
 arrayvec = { version = "0.7.0", features = ["std", "serde"] }
-either = { version = "1.6.1", features = ["use_std", "serde"] }
+email-address-parser = "1.0.3"
 gcd = "2.1.0"
 ietf-bcp-47-language-tag = { version = "^0.0.0", path = "../ietf-bcp-47-language-tag" }
 iso-3166-1-country = { version = "^0.0.0", path = "../iso-3166-1-country" }
 memchr = "2.4.1"
+phonenumber = "0.3.1+8.12.9"
 swiss-army-knife = "^0.0.32"
 xml-rs = "0.8"
 unroll = "0.1.5"
+url = "2.2.2"

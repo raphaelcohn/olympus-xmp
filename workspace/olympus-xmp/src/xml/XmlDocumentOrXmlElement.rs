@@ -14,4 +14,7 @@ pub trait XmlDocumentOrXmlElement
 	
 	/// Get elements.
 	fn get_elements<'a>(&'a self, path: &[XmlName]) -> Vec<&'a XmlElement>;
+	
+	/// Has no attributes in namespace.
+	fn has_no_attributes_in_namespace(&self, namespace_uniform_resource_identifier: Option<&str>) -> bool;
 }

@@ -35,6 +35,12 @@ impl XmlDocumentOrXmlElement for XmlElement
 		self.get_elements_inner(path, &mut results);
 		results
 	}
+	
+	#[inline(always)]
+	fn has_no_attributes_in_namespace(&self, namespace_uniform_resource_identifier: Option<&str>) -> bool
+	{
+		self.common.has_no_attributes_in_namespace(namespace_uniform_resource_identifier)
+	}
 }
 
 impl XmlElement

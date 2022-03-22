@@ -3,7 +3,7 @@
 
 
 /// Outcome of XMP validation.
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Debug)]
 pub(super) enum XmpOutcomeOfValidationError<'name, 'namespace, 'local_name>
 {
 	/// Errors beyond which it is not possible to validate further a XMP document.

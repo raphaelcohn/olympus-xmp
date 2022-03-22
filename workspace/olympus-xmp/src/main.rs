@@ -29,7 +29,6 @@
 
 
 use arrayvec as _;
-use either as _;
 use gcd as _;
 use memchr as _;
 use xml as _;
@@ -52,7 +51,7 @@ use olympus_xmp::xmp::exif::ExifSensitivityType;
 use olympus_xmp::xmp::exif::ExifFileSource;
 use olympus_xmp::xmp::exif::ExifSceneCaptureType;
 use olympus_xmp::xmp::exif::version::ExifVersion;
-use olympus_xmp::xmp::iptc::IptcDigitalSourceType;
+use olympus_xmp::xmp::iptc::{IimCategoryCode, IimSupplementalCategories, IptcDigitalSourceType};
 use olympus_xmp::xmp::iptc::urgency::Urgency;
 use olympus_xmp::xmp::plus::PlusModelReleaseStatus;
 use olympus_xmp::xmp::plus::PlusPropertyReleaseStatus;
@@ -68,8 +67,12 @@ use olympus_xmp::xmp::namespaces::plus;
 use olympus_xmp::xmp::namespaces::rdf;
 use olympus_xmp::xmp::namespaces::tiff;
 use olympus_xmp::xmp::namespaces::x;
+use olympus_xmp::xmp::namespaces::xml;
 use olympus_xmp::xmp::namespaces::xmp;
+use olympus_xmp::xmp::namespaces::xmpDM;
+use olympus_xmp::xmp::namespaces::xmpMM;
 use olympus_xmp::xmp::namespaces::xmpRights;
+use olympus_xmp::xmp::namespaces::xmpTPg;
 use olympus_xmp::xmp::non_empty_str::NonEmptyStr;
 use olympus_xmp::xmp::photoshop::PhotoshopColorMode;
 use olympus_xmp::xmp::tiff_rational::NonZeroUnsignedTiffRational;
@@ -101,6 +104,13 @@ fn main()
 fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationError<'static, 'static, 'static>>
 {
 	use XmpValidationError::*;
+	
+	// TODO: Root should only have the namespace x and only the attribute xmptk
+	// TODO: RDF should have no attributes and only the namespaces x and rdf (rdf defined directly)
+	// TODO: Description should have (or have added) the namespaces:-
+	// tiff, exif, dc, xmp, aux, exifEX, photoshop, xmpMM, stEvt, crd, xmpRights, Iptc4xmpExt, plus, Iptc4xmpCore, lr
+	// Also DICOM and ?crs
+	// TODO: Strip unused namespaces.
 	
 	let xmpmeta = XmpOutcomeOfValidationError::fundamental(XmpElement::root(&xml_document, xml_name!(x, "xmpmeta")))?;
 	
@@ -147,16 +157,35 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
 	let xmp_metadata_date = collated.validate(Description.get_attribute_or_error::<XmpDateTime>(xml_name!(xmp, "MetadataDate")));
 	let exif_date_original = collated.validate(Description.get_attribute_or_error::<XmpDateTime>(xml_name!(exif, "DateTimeOriginal")));
 	
+	collated.check(Description.does_not_have_attribute(xml_name!(xml, "lang")));
+	
 	collated.check(Description.does_not_have_attribute(xml_name!(tiff, "Artist")));
 	collated.check(Description.does_not_have_attribute(xml_name!(tiff, "Copyright")));
 	collated.check(Description.does_not_have_attribute(xml_name!(tiff, "DateTime")));
 	collated.check(Description.does_not_have_attribute(xml_name!(tiff, "ImageDescription")));
 	collated.check(Description.does_not_have_attribute(xml_name!(tiff, "Software")));
 	collated.check(Description.does_not_have_attribute(xml_name!(exif, "DateTimeDigitized")));
-	// TODO: Check the following are not present:-
-	// TODO xmpDM:* xmpTPg:*, which in xmpMM?
-	// TODO photoshop:SupplementalCategories (set of category codes; legacy; not sure how codes are separated)
-	// TODO photoshop:Category (could be parsed; 3 ASCII characters; legacy)
+	
+	// TODO: Check XML structures are not present for xmpMM::Pantry and xmpMM::Versions
+	collated.check(Description.does_not_have_attribute(xml_name!(xmpMM, "DerivedFrom")));
+	collated.check(Description.does_not_have_attribute(xml_name!(xmpMM, "Ingredients")));
+	collated.check(Description.does_not_have_attribute(xml_name!(xmpMM, "ManagedFrom")));
+	collated.check(Description.does_not_have_attribute(xml_name!(xmpMM, "Manager")));
+	collated.check(Description.does_not_have_attribute(xml_name!(xmpMM, "ManageTo")));
+	collated.check(Description.does_not_have_attribute(xml_name!(xmpMM, "ManageUI")));
+	collated.check(Description.does_not_have_attribute(xml_name!(xmpMM, "ManagerVariant")));
+	collated.check(Description.does_not_have_attribute(xml_name!(xmpMM, "RenditionClass"))); // can be defaulted.
+	collated.check(Description.does_not_have_attribute(xml_name!(xmpMM, "RenditionParams")));
+	collated.check(Description.does_not_have_attribute(xml_name!(xmpMM, "VersionID")));
+	collated.check(Description.does_not_have_attribute(xml_name!(xmpMM, "RenditionOf")));
+	collated.check(Description.does_not_have_attribute(xml_name!(xmpMM, "LastURL"))); // strip if present.
+	collated.check(Description.does_not_have_attribute(xml_name!(xmpMM, "SaveID"))); // strip if present.
+	
+	collated.check(Description.does_not_have_any_attributes_in_namespace::<"xmpDM">(Some(xmpDM)));
+	collated.check(Description.does_not_have_any_attributes_in_namespace::<"xmpTPg">(Some(xmpTPg)));
+	
+	collated.check(Description.does_not_have_attribute_which_is_obsolete::<IimCategoryCode>(xml_name!(photoshop, "Category")));
+	collated.check(Description.does_not_have_attribute_which_is_obsolete::<IimSupplementalCategories>(xml_name!(photoshop, "SupplementalCategories")));
 	collated.check(Description.get_attribute::<XmpRating>(xml_name!(xmp, "Rating")));
 	collated.check(Description.get_attribute::<XmpLabel>(xml_name!(xmp, "Label")));
 	let _ = collated.validate(Description.get_attribute::<ExifMeteringMode>(xml_name!(exif, "MeteringMode"))).unwrap_or_default();
@@ -374,10 +403,10 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
      <rdf:li
       Iptc4xmpExt:Sublocation="Addingham Churchyard"
       Iptc4xmpExt:City="Addingham"
-      Iptc4xmpExt:ProvinceState="North Yorkshire"
-      Iptc4xmpExt:CountryName="United Kingdom of Great Britain and Northern Ireland (the)"
-      Iptc4xmpExt:CountryCode="GBR" (2 or 3 digit is permitted)
-      Iptc4xmpExt:WorldRegion="Europe"/>
+      Iptc4xmpExt:ProvinceState="North Yorkshire"	TODO: UK province validator?
+      Iptc4xmpExt:CountryName="United Kingdom of Great Britain and Northern Ireland (the)"	DONE ISO 3166 parser
+      Iptc4xmpExt:CountryCode="GBR" DONE: ISO 3166 parser
+      Iptc4xmpExt:WorldRegion="Europe"/>	DONE: region parser
     </rdf:Bag>
    </Iptc4xmpExt:LocationShown>
    
@@ -417,14 +446,14 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
    <plus:Licensor>
     <rdf:Seq>
      <rdf:li
-      plus:LicensorName="Raphael James Cohn"
-      plus:LicensorID="raphael.cohn@stormmq.com"
+      plus:LicensorName="Raphael James Cohn"  TODO: Name parser?
+      plus:LicensorID="raphael.cohn@stormmq.com"	DONE: email parser parser
       plus:LicensorTelephoneType1="http://ns.useplus.org/ldf/vocab/cell" DONE: type parser
-      plus:LicensorTelephone1="+44 7590 675 756"
+      plus:LicensorTelephone1="+44 7590 675 756"	DONE: phonenumber parser
       plus:LicensorTelephoneType2="http://ns.useplus.org/ldf/vocab/cell" DONE: type parser
-      plus:LicensorTelephone2="+44 7590 675 756"	TODO: telephone number parser
-      plus:LicensorEmail="raphael.cohn@stormmq.com"	TODO: email parser
-      plus:LicensorURL="https://photos.stormmq.com/"/>	TODO: URL parser
+      plus:LicensorTelephone2="+44 7590 675 756"	DONE: phonenumber parser
+      plus:LicensorEmail="raphael.cohn@stormmq.com"	DONE: email parser parser
+      plus:LicensorURL="https://photos.stormmq.com/"/>	DONE: URL parser
     </rdf:Seq>
    </plus:Licensor>
    
@@ -443,6 +472,7 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
      <rdf:li>Buildings|Old|Boat Houses</rdf:li>
     </rdf:Bag>
    </lr:hierarchicalSubject>
+   
    
     http://ns.useplus.org/ldf/vocab/AG-UNK (Age Unknown)
     http://ns.useplus.org/ldf/vocab/AG-A25 (Age 25 or Over)

@@ -2,7 +2,7 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[derive(Default, Debug, Clone, Eq, PartialEq)]
+#[derive(Default, Debug)]
 pub(super) struct Collated<'name, 'namespace, 'local_name>(Vec<XmpValidationError<'name, 'namespace, 'local_name>>);
 
 impl<'name, 'namespace, 'local_name> Collated<'name, 'namespace, 'local_name>

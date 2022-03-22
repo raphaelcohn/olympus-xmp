@@ -109,6 +109,34 @@ impl<'a, 'name, 'namespace, 'local_name> XmpElement<'a, 'name, 'namespace, 'loca
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
+	pub fn does_not_have_any_attributes_in_namespace<const namespace_prefix: &'static str>(&self, namespace_uniform_resource_identifier: Option<&str>) -> Result<(), XmpValidationError<'name, 'namespace, 'local_name>>
+	{
+		if self.xml_element.has_no_attributes_in_namespace(namespace_uniform_resource_identifier)
+		{
+			Ok(())
+		}
+		else
+		{
+			Err(XmpValidationError::HasAttributesInNamespace { path: self.path(), namespace_prefix })
+		}
+	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub fn does_not_have_attribute_which_is_obsolete<XAV: XmpAttributeValue<'a>>(&self, attribute_name: &'name XmlName<'namespace, 'local_name>) -> Result<(), XmpValidationError<'name, 'namespace, 'local_name>>
+	{
+		if let Some(_) = self.get_attribute::<XAV>(attribute_name)?
+		{
+			Err(XmpValidationError::HasAttributeWhichIsObsolete { path: self.path(), attribute_name })
+		}
+		else
+		{
+			Ok(())
+		}
+	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
 	pub fn does_not_have_attribute(&self, attribute_name: &'name XmlName<'namespace, 'local_name>) -> Result<(), XmpValidationError<'name, 'namespace, 'local_name>>
 	{
 		if self.get_raw_attribute(attribute_name).is_none()
@@ -117,7 +145,7 @@ impl<'a, 'name, 'namespace, 'local_name> XmpElement<'a, 'name, 'namespace, 'loca
 		}
 		else
 		{
-			Err(XmpValidationError::HasAttributeWhichShouldNotPresent { path: self.path(), attribute_name })
+			Err(XmpValidationError::HasAttributeWhichShouldNotBePresent { path: self.path(), attribute_name })
 		}
 	}
 	

@@ -49,6 +49,19 @@ impl XmlElementCommon
 	}
 	
 	#[inline(always)]
+	fn has_no_attributes_in_namespace(&self, namespace_uniform_resource_identifier: Option<&str>) -> bool
+	{
+		for name in self.attributes.keys()
+		{
+			if name.has_namespace(namespace_uniform_resource_identifier)
+			{
+				return false
+			}
+		}
+		true
+	}
+	
+	#[inline(always)]
 	fn get_attribute<'a>(&'a self, attribute_name: &XmlName) -> Option<&'a str>
 	{
 		let option = self.attributes.get(attribute_name);

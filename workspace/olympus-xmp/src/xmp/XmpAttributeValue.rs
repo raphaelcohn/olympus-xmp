@@ -142,3 +142,64 @@ impl<'a> XmpAttributeValue<'a> for Iso3166Dash1AlphaCountryCode
 		XmpAttributeValueParseError::Iso3166Dash1AlphaCountryCode(error)
 	}
 }
+
+impl<'a> XmpAttributeValue<'a> for Url
+{
+	type Error = UrlParseError;
+	
+	#[inline(always)]
+	fn parse(raw: &'a str) -> Result<Self, Self::Error>
+	{
+		Url::parse(raw)
+	}
+	
+	#[inline(always)]
+	fn into_xmp_attribute_value_parse_error(error: Self::Error) -> XmpAttributeValueParseError
+	{
+		XmpAttributeValueParseError::Url(error)
+	}
+}
+
+impl<'a> XmpAttributeValue<'a> for EmailAddress
+{
+	type Error = EmailAddressParseError;
+	
+	#[inline(always)]
+	fn parse(raw: &'a str) -> Result<Self, Self::Error>
+	{
+		EmailAddress::parse(raw, Some(ParsingOptions { is_lax: false })).ok_or(EmailAddressParseError)
+	}
+	
+	#[inline(always)]
+	fn into_xmp_attribute_value_parse_error(error: Self::Error) -> XmpAttributeValueParseError
+	{
+		XmpAttributeValueParseError::EmailAddress(error)
+	}
+}
+
+impl<'a> XmpAttributeValue<'a> for PhoneNumber
+{
+	type Error = PhoneNumberParseError;
+	
+	#[inline(always)]
+	fn parse(raw: &'a str) -> Result<Self, Self::Error>
+	{
+		use PhoneNumberParseError::*;
+		
+		let phone_number = phone_number_parse(None, raw).map_err(Parse)?;
+		if phone_number_is_valid(&phone_number)
+		{
+			Ok(phone_number)
+		}
+		else
+		{
+			Err(Invalid(phone_number))
+		}
+	}
+	
+	#[inline(always)]
+	fn into_xmp_attribute_value_parse_error(error: Self::Error) -> XmpAttributeValueParseError
+	{
+		XmpAttributeValueParseError::PhoneNumber(error)
+	}
+}

@@ -11,14 +11,21 @@ use crate::xml::XmlName;
 use attribute_parse_errors::I8ParseError;
 use attribute_parse_errors::U8ParseError;
 use attribute_parse_errors::U16ParseError;
+use email_address_parser::EmailAddress;
+use email_address_parser::ParsingOptions;
 use exif::version::ExifVersionParseError;
 use exif::lens_information::LensInformationParseError;
+use iptc::IimCategoryCodeParseError;
+use iptc::IimSupplementalCategoriesParseError;
 use iptc::urgency::UrgencyParseError;
 use iso_3166_1_country::Iso3166Dash1AlphaCountryCode;
 use iso_3166_1_country::Iso3166Dash1AlphaCountryCodeParseError;
 use iso_3166_1_country::Iso3166Dash1Country;
 use iso_3166_1_country::UnknownStringVariantParseError;
 use non_empty_str::NonEmptyStrParseError;
+use phonenumber::PhoneNumber;
+use phonenumber::parse as phone_number_parse;
+use phonenumber::is_valid as phone_number_is_valid;
 use std::convert::Infallible;
 use std::error;
 use std::fmt;
@@ -34,10 +41,11 @@ use std::slice::from_raw_parts;
 use std::str::FromStr;
 use tiff_rational::NonZeroUnsignedTiffRationalParseError;
 use tiff_rational::UnsignedTiffRationalParseError;
+use url::ParseError as UrlParseError;
+use url::Url;
 use xmp::date_time::XmpDateTimeParseError;
 use xmp::universally_unique_identifier::XmpUniversallyUniqueIdentifier;
 use xmp::universally_unique_identifier::XmpUniversallyUniqueIdentifierParseError;
-
 
 
 include!("xml_name.rs");
@@ -79,6 +87,8 @@ pub mod tiff_rational;
 pub mod xmp;
 
 
+include!("EmailAddressParseError.rs");
+include!("PhoneNumberParseError.rs");
 include!("XmpAttributeValue.rs");
 include!("XmpAttributeValueParseError.rs");
 include!("XmpElement.rs");

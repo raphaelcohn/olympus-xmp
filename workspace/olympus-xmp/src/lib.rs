@@ -24,6 +24,9 @@
 #![warn(unused_crate_dependencies)]
 
 
+#![feature(adt_const_params)]
+#![feature(const_ptr_offset)]
+#![feature(const_ptr_read)]
 #![feature(const_trait_impl)]
 
 
