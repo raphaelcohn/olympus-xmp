@@ -2,9 +2,22 @@
 # Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/lemonrock/olympus-xmp/master/COPYRIGHT.
 
 
-[workspace]
-members = [
-	"ietf-bcp-47-language-tag",
-	"iso-3166-1-country",
-	"olympus-xmp",
-]
+[package]
+name = "iso-3166-1-country"
+description = "ISO 3166-1 country database"
+keywords = ["iso", "3166", "country", "database"]
+categories = []
+license = "MIT"
+authors = ["Raphael Cohn <raphael.cohn@stormmq.com>"]
+homepage = "https://github.com/lemonrock/olympus-xmp"
+repository = "https://github.com/lemonrock/olympus-xmp.git"
+exclude = ["*"]
+include = ["README.md", "LICENSE", "COPYRIGHT", "src/**/*.rs", "Cargo.toml", "rustfmt.toml", "clippy.toml"]
+readme = "README.md"
+publish = false
+edition = '2021'
+version = "0.0.0"
+
+[dependencies]
+memchr = "2.4.1"
+swiss-army-knife = "^0.0.32"

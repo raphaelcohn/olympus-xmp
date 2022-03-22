@@ -51,10 +51,6 @@ pub mod exif;
 pub mod iptc;
 
 
-/// ISO country and country code domain types.
-pub mod iso_country;
-
-
 /// Namespace definitions.
 pub mod namespaces;
 

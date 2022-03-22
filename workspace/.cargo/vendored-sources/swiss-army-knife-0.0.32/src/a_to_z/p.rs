@@ -2,15 +2,5 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use std::error;
-use std::fmt;
-use std::fmt::Debug;
-use std::fmt::Display;
-use std::fmt::Formatter;
-use std::num::ParseIntError;
-use swiss_army_knife::get_unchecked::GetUnchecked;
-
-
-include!("I8ParseError.rs");
-include!("U8ParseError.rs");
-include!("U16ParseError.rs");
+#[allow(missing_docs)]
+pub const p: u8 = b'p';

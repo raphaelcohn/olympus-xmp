@@ -89,3 +89,55 @@ impl<'a> XmpAttributeValue<'a> for bool
 		XmpAttributeValueParseError::Boolean(error)
 	}
 }
+
+impl<'a> XmpAttributeValue<'a> for Iso3166Dash1Country
+{
+	type Error = UnknownStringVariantParseError;
+
+	#[inline(always)]
+	fn parse(raw: &'a str) -> Result<Self, Self::Error>
+	{
+		Self::from_str(raw)
+	}
+
+	#[inline(always)]
+	fn into_xmp_attribute_value_parse_error(error: Self::Error) -> XmpAttributeValueParseError
+	{
+		XmpAttributeValueParseError::Iso3166Dash1Country(error)
+	}
+}
+
+impl<'a> XmpAttributeValue<'a> for Iso3166Dash1AlphaCountryCode
+{
+	type Error = Iso3166Dash1AlphaCountryCodeParseError;
+
+	#[inline(always)]
+	fn parse(raw: &'a str) -> Result<Self, Self::Error>
+	{
+		use Iso3166Dash1AlphaCountryCodeParseError::*;
+		
+		let bytes = raw.as_bytes();
+		match bytes.len()
+		{
+			2 =>
+			{
+				let token = Self::letter_to_number::<0>(bytes)? + Self::letter_to_number::<1>(bytes)?;
+				Ok(Alpha2(unsafe { transmute(token) }))
+			},
+
+			3 =>
+			{
+				let token = Self::letter_to_number::<0>(bytes)? + Self::letter_to_number::<1>(bytes)? + Self::letter_to_number::<2>(bytes)?;
+				Ok(Alpha3(unsafe { transmute(token) }))
+			},
+
+			_ => Err(LengthIsNot2Or3(raw.to_string()))
+		}
+	}
+
+	#[inline(always)]
+	fn into_xmp_attribute_value_parse_error(error: Self::Error) -> XmpAttributeValueParseError
+	{
+		XmpAttributeValueParseError::Iso3166Dash1AlphaCountryCode(error)
+	}
+}

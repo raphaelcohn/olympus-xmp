@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/workspace/ietf-bcp-47-language-tag/ietf-bcp-47-language-tag.iml" filepath="$PROJECT_DIR$/workspace/ietf-bcp-47-language-tagietf-bcp-47-language-tag.iml" />
+      <module fileurl="file://$PROJECT_DIR$/workspace/iso-3166-1-country/iso-3166-1-country.iml" filepath="$PROJECT_DIR$/workspace/iso-3166-1-country/iso-3166-1-country.iml" />
       <module fileurl="file://$PROJECT_DIR$/workspace/olympus-xmp/olympus-xmp.iml" filepath="$PROJECT_DIR$/workspace/olympus-xmp/olympus-xmp.iml" />
     </modules>
   </component>
