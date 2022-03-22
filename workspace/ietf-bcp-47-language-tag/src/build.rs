@@ -24,5 +24,4 @@ fn main()
 	println!("cargo:rerun-if-changed=src/build");
 	
 	let records = language_subtag_registry().unwrap();
-	panic!("FAIL")
 }

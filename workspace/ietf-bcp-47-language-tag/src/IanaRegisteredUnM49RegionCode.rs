@@ -23,3 +23,12 @@ impl const From<[u8; 3]> for IanaRegisteredUnM49RegionCode
 		Self(unsafe { transmute(value) })
 	}
 }
+
+impl const From<[Digit; 3]> for IanaRegisteredUnM49RegionCode
+{
+	#[inline(always)]
+	fn from(value: [Digit; 3]) -> Self
+	{
+		IanaRegisteredUnM49RegionCode(value)
+	}
+}

@@ -23,3 +23,12 @@ impl const From<[u8; 2]> for IanaRegisteredIso3166Dash1Alpha2CountryCode
 		Self(unsafe { transmute(value) })
 	}
 }
+
+impl const From<[UpperCaseAlpha; 2]> for IanaRegisteredIso3166Dash1Alpha2CountryCode
+{
+	#[inline(always)]
+	fn from(value: [UpperCaseAlpha; 2]) -> Self
+	{
+		IanaRegisteredIso3166Dash1Alpha2CountryCode(value)
+	}
+}

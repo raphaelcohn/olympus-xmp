@@ -10,9 +10,11 @@ pub enum RegionParseError
 	
 	InvalidSubtagLength(InvalidSubtagLengthError),
 	
-	InvalidUpperCaseAlpha(InvalidUpperCaseAlphaError),
+	InvalidAlphanumeric(InvalidAlphanumericError),
 	
 	InvalidDigit(InvalidDigitError),
+	
+	InvalidUpperCaseAlpha(InvalidUpperCaseAlphaError),
 }
 
 impl Display for RegionParseError
@@ -35,9 +37,11 @@ impl error::Error for RegionParseError
 		{
 			InvalidSubtagLength(cause) => Some(cause),
 			
-			InvalidUpperCaseAlpha(cause) => Some(cause),
+			InvalidAlphanumeric(cause) => Some(cause),
 			
 			InvalidDigit(cause) => Some(cause),
+			
+			InvalidUpperCaseAlpha(cause) => Some(cause),
 			
 			_ => None,
 		}

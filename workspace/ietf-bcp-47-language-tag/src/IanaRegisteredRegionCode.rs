@@ -19,7 +19,7 @@ impl<'a> const From<&'a [u8; 2]> for IanaRegisteredRegionCode
 	#[inline(always)]
 	fn from(value: &'a [u8; 2]) -> Self
 	{
-		IanaRegisteredRegionCode::IanaRegisteredIso3166Dash1Alpha2CountryCode(IanaRegisteredIso3166Dash1Alpha2CountryCode::from(value))
+		IanaRegisteredRegionCode::from(IanaRegisteredIso3166Dash1Alpha2CountryCode::from(value))
 	}
 }
 
@@ -28,7 +28,7 @@ impl const From<[u8; 2]> for IanaRegisteredRegionCode
 	#[inline(always)]
 	fn from(value: [u8; 2]) -> Self
 	{
-		IanaRegisteredRegionCode::IanaRegisteredIso3166Dash1Alpha2CountryCode(IanaRegisteredIso3166Dash1Alpha2CountryCode::from(value))
+		IanaRegisteredRegionCode::from(IanaRegisteredIso3166Dash1Alpha2CountryCode::from(value))
 	}
 }
 
@@ -37,7 +37,7 @@ impl<'a> const From<&'a [u8; 3]> for IanaRegisteredRegionCode
 	#[inline(always)]
 	fn from(value: &'a [u8; 3]) -> Self
 	{
-		IanaRegisteredRegionCode::IanaRegisteredUnM49RegionCode(IanaRegisteredUnM49RegionCode::from(value))
+		IanaRegisteredRegionCode::from(IanaRegisteredUnM49RegionCode::from(value))
 	}
 }
 
@@ -46,7 +46,25 @@ impl const From<[u8; 3]> for IanaRegisteredRegionCode
 	#[inline(always)]
 	fn from(value: [u8; 3]) -> Self
 	{
-		IanaRegisteredRegionCode::IanaRegisteredUnM49RegionCode(IanaRegisteredUnM49RegionCode::from(value))
+		IanaRegisteredRegionCode::from(IanaRegisteredUnM49RegionCode::from(value))
+	}
+}
+
+impl const From<[UpperCaseAlpha; 2]> for IanaRegisteredRegionCode
+{
+	#[inline(always)]
+	fn from(value: [UpperCaseAlpha; 2]) -> Self
+	{
+		IanaRegisteredRegionCode::from(IanaRegisteredIso3166Dash1Alpha2CountryCode::from(value))
+	}
+}
+
+impl const From<[Digit; 3]> for IanaRegisteredRegionCode
+{
+	#[inline(always)]
+	fn from(value: [Digit; 3]) -> Self
+	{
+		IanaRegisteredRegionCode::from(IanaRegisteredUnM49RegionCode::from(value))
 	}
 }
 

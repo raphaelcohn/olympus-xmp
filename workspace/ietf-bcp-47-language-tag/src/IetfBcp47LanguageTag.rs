@@ -123,7 +123,7 @@ impl IetfBcp47LanguageTag
 			
 			match subtag.byte_0()
 			{
-				digit @ _0 ..= _9 => Self::parse_from_variant_4_first_digit(subtag, subtags, language, None, None, Digit::construct(digit)),
+				digit @ _0 ..= _9 => Self::parse_from_variant_4(subtag, subtags, language, None, None, Digit::construct(digit)),
 				
 				alpha @ (A ..= Z | a ..= z) =>
 				{
@@ -176,47 +176,43 @@ impl IetfBcp47LanguageTag
 		
 		let subtag = return_next!(subtags, Self::from_script_ok(language, script));
 		
-		fn parse_x_or_extension() -> !
+		#[inline(always)]
+		fn parse_region<RB: RestrictedByte, Error: Copy + FnOnce(RB::Error) -> RegionParseError, const length: usize>(subtags: Subtags, language: Language, script: Option<IanaRegisteredIso15924ScriptCode>, subtag: &[u8], error: Error) -> Result<IetfBcp47LanguageTag, IetfBcp47LanguageTagParseError>
+		where IanaRegisteredRegionCode: From<[RB; length]>
 		{
-			unimplemented!();
-			panic!()
-		}
-		
-		fn parse(_count: usize) -> !
-		{
-			unimplemented!();
-			panic!()
+			let region = RB::validate_and_convert_array::<_, _, _, _, length>(subtag, |array| IanaRegisteredRegionCode::from(array), error)?;
+			IetfBcp47LanguageTag::parse_from_variant(subtags, language, script, Some(region))
 		}
 		
 		match_subtag_length!
 		{
 			subtag,
-			_validated_extension_code,
+			validated_extension_code,
 			
-			parse_x_or_extension(),
+			Self::parse_from_private_use(subtags, language, script, None, Default::default(), Default::default()),
 			
-			parse_x_or_extension(),
+			Self::parse_from_extension(validated_extension_code, subtags, language, script, None, Default::default()),
 			
-			parse(2),
+			parse_region::<UpperCaseAlpha, _, 2>(subtags, language, script, subtag, InvalidUpperCaseAlpha),
 			
-			parse(3),
+			parse_region::<Digit, _, 3>(subtags, language, script, subtag, InvalidDigit),
 			
-			parse(4),
+			match subtag.byte_0()
+			{
+				digit @ _0 ..= _9 => Self::parse_from_variant_4(subtag, subtags, language, script, None, Digit::construct(digit)),
+				
+				byte @ _ => return_error!(InvalidAlphanumeric(Alphanumeric::error::<4>(0, byte))),
+			},
 			
-			parse(5),
+			Self::parse_from_variant_5(subtag, subtags, language, script, None),
 			
-			parse(6),
+			Self::parse_from_variant_6(subtag, subtags, language, script, None),
 			
-			parse(7),
+			Self::parse_from_variant_7(subtag, subtags, language, script, None),
 			
-			parse(8)
+			Self::parse_from_variant_8(subtag, subtags, language, script, None)
 		}
 		
-		/*
-			TODO Remember regular & irregular variants
-		 */
-		unimplemented!();
-		panic!("FINISH ME")
 	}
 	
 	#[inline(always)]
@@ -241,7 +237,7 @@ impl IetfBcp47LanguageTag
 			
 			match subtag.byte_0()
 			{
-				digit @ _0 ..= _9 => Self::parse_from_variant_4_first_digit(subtag, subtags, language, None, None, Digit::construct(digit)),
+				digit @ _0 ..= _9 => Self::parse_from_variant_4(subtag, subtags, language, None, None, Digit::construct(digit)),
 				
 				byte @ _ => return_error!(InvalidDigit(Digit::error::<4>(0, byte))),
 			},
@@ -320,7 +316,7 @@ impl IetfBcp47LanguageTag
 	}
 	
 	#[inline(always)]
-	fn parse_from_variant_4_first_digit<'a>(subtag: &'a [u8], subtags: Subtags<'a>, language: Language, script: Option<IanaRegisteredIso15924ScriptCode>, region: Option<IanaRegisteredRegionCode>, first_digit: Digit) -> Result<Self, IetfBcp47LanguageTagParseError>
+	fn parse_from_variant_4<'a>(subtag: &'a [u8], subtags: Subtags<'a>, language: Language, script: Option<IanaRegisteredIso15924ScriptCode>, region: Option<IanaRegisteredRegionCode>, first_digit: Digit) -> Result<Self, IetfBcp47LanguageTagParseError>
 	{
 		const length: usize = 4;
 		const NumberOfDigits: usize = 1;
