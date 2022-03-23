@@ -53,7 +53,7 @@ use olympus_xmp::xmp::exif::ExifSceneCaptureType;
 use olympus_xmp::xmp::exif::version::ExifVersion;
 use olympus_xmp::xmp::iptc::{IimCategoryCode, IimSupplementalCategories, IptcDigitalSourceType};
 use olympus_xmp::xmp::iptc::urgency::Urgency;
-use olympus_xmp::xmp::plus::PlusModelReleaseStatus;
+use olympus_xmp::xmp::plus::{PlusMinorModelAgeDisclosure, PlusModelReleaseStatus};
 use olympus_xmp::xmp::plus::PlusPropertyReleaseStatus;
 use olympus_xmp::xmp::XmpElement;
 use olympus_xmp::xmp::XmpValidationError;
@@ -80,7 +80,7 @@ use olympus_xmp::xmp::tiff_rational::UnsignedTiffRational;
 use olympus_xmp::xmp::xmp::XmpLabel;
 use olympus_xmp::xmp::xmp::XmpRating;
 use olympus_xmp::xmp::xmp::date_time::XmpDateTime;
-use olympus_xmp::xmp::xmp::universally_unique_identifier::XmpUniversallyUniqueIdentifier;
+use olympus_xmp::xmp::xmp::universally_unique_identifier::{XmpInstanceIdentifier, XmpUniversallyUniqueIdentifier};
 use crate::binary::lens_model;
 use crate::binary::lens_focal_length_and_aperture;
 use crate::binary::width_or_height;
@@ -200,7 +200,8 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
 	let _ = collated.validate(Description.get_attribute::<ExifFileSource>(xml_name!(exif, "FileSource"))).unwrap_or_default();
 	let _ = collated.validate(Description.get_attribute::<ExifGainControl>(xml_name!(exif, "GainControl"))).unwrap_or_default();
 	let _ = collated.validate(Description.get_attribute::<ExifResolutionUnit>(xml_name!(exif, "FocalPlaneResolutionUnit"))).unwrap_or_default();
-	collated.check(xmpmeta.has_attribute_with_any_value::<NonEmptyStr>(xml_name!(x, "xmptk"))); // TODO: Parse this value?
+	collated.check(xmpmeta.has_attribute_with_any_value::<NonEmptyStr>(xml_name!(x, "xmptk")));
+	collated.check(Description.has_attribute_with_any_value::<XmpInstanceIdentifier>(xml_name!(xmpMM, "InstanceID")));
 	collated.check(Description.has_attribute_with_any_value::<ExifCustomRendered>(xml_name!(exif, "CustomRendered")));
 	collated.check(Description.has_attribute_with_any_value::<NonZeroUnsignedTiffRational>(xml_name!(exif, "FocalPlaneXResolution")));
 	collated.check(Description.has_attribute_with_any_value::<NonZeroUnsignedTiffRational>(xml_name!(exif, "FocalPlaneYResolution")));
@@ -247,8 +248,8 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
 		collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(photoshop, "Credit"), PhotographerProperName));
 		collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(photoshop, "Source"), PhotographerProperName));
 		collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(photoshop, "CaptionWriter"), PhotographerProperName));
+		let _ = collated.validate(Description.get_attribute::<PlusMinorModelAgeDisclosure>(xml_name!(plus, "MinorModelAgeDisclosure")));
 		
-		// TODO: Create this from make and model?
 		collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(photoshop, "Instructions"), NonEmptyStr("Original RAW capture Olympus E-PL8")));
 		
 		if let Some(CreatorContactInfo) = collated.validate(Description.child(xml_name!(Iptc4xmpCore, "CreatorContactInfo")))
@@ -268,10 +269,14 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
 	// TODO: Alt + xml:lang with text
 	// TODO: Bag + li with properties but no text
 	// TODO: Should not be present photoshop:TextLayers
+	// TODO: Should not be present photoshop:DocumentAncestors
+	// TODO: ?Should not be present photoshop:History
+	
+	// TODO: xmpMM:InstanceID
 	
    /*
    
-   xmptk
+   TODO: Parse xmptk
    "Adobe XMP Core 7.0-c000 1.000000, 0000/00/00-00:00:00        "
    - seems to be a name, a version number, a revision, another version number, a date time stamp and a lot of spaces...
    
@@ -282,19 +287,15 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
    
    "Adobe XMP Core 5.6-c017 91.164464, 2020/06/15-10:20:05 "
    
-   // TODO: Default this.
-   photoshop:ICCProfile=""
    
-   // TODO: Verify this is a lower-case hyphen separated UUID.
-   xmpMM:InstanceID="xmp.iid:22b0d4af-ade9-4d85-a82d-80f0048494fa"
-   
-   TODO: Overwrite this using LocationShown's first entry.
-   Iptc4xmpCore:Location="Addingham Churchyard"
-   photoshop:City="Addingham"
-   photoshop:State="North Yorkshire"
-   photoshop:Country="United Kingdom of Great Britain and Northern Ireland (the)" #TODO: Use the official ISO name here
-   Iptc4xmpCore:CountryCode="GBR"
-   
+   TODO: DICOM validators
+   DICOM:PatientName="Cohn^Raphael James^^Mr^M.Sc. B.A."
+   DICOM:PatientID="Raphael James Cohn"
+   DICOM:PatientDOB="1977/02/23"
+   DICOM:PatientSex="M"
+   DICOM:StudyPhysician="Cohn^Raphael James^^Mr^M.Sc. B.A."
+   DICOM:SeriesModality="XC"
+   DICOM:EquipmentManufacturer="OLYMPUS CORPORATION"
 	
 	// TODO: To do the comparison, round to two decimal places; consider expressing f-number roundings to 1 dp if above 1 and 2 dp if below 1 (eg f/0.95).
 	// This is similar to the 'normal' accuracy used in Exif.
@@ -326,7 +327,7 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
    TODO: Validate this
    <tiff:BitsPerSample>
     <rdf:Seq>
-     <rdf:li>16</rdf:li>
+     <rdf:li>16</rdf:li>	TOOD: What is the valid range of values?
      <rdf:li>16</rdf:li>
      <rdf:li>16</rdf:li>
     </rdf:Seq>
@@ -335,25 +336,18 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
    TODO: Validate this
    <exif:ISOSpeedRatings>
     <rdf:Seq>
-     <rdf:li>200</rdf:li>
+     <rdf:li>200</rdf:li>	TOOD: What is the valid range of values?
     </rdf:Seq>
    </exif:ISOSpeedRatings>
-    
-   TODO: Validate this
-   <dc:creator>
-   <rdf:Seq>
-   <rdf:li>Raphael James Cohn</rdf:li>
-   </rdf:Seq>
-   </dc:creator>
    
-   TODO: Validate this
+   TODO: Validate this	- parse languages
    <dc:rights>
    <rdf:Alt>
    <rdf:li xml:lang="x-default">Copyright © 2021 Raphael James Cohn, all rights reserved</rdf:li>
    </rdf:Alt>
    </dc:rights>
    
-   TODO: Validate this
+   TODO: Validate this - must match the hierachial subject!
    <dc:subject>
     <rdf:Bag>
      <rdf:li>Runswick Bay</rdf:li>
@@ -398,29 +392,6 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
       Iptc4xmpExt:City="Addingham"/>
     </rdf:Bag>
    </Iptc4xmpExt:LocationCreated>
-   
-   TODO on Description:  plus:MinorModelAgeDisclosure="http://ns.useplus.org/ldf/vocab/AG-A25"
-      DICOM:PatientName="Cohn^Raphael James^^Mr^M.Sc. B.A."
-   DICOM:PatientID="Raphael James Cohn"
-   DICOM:PatientDOB="1977/02/23"
-   DICOM:PatientSex="M"
-   DICOM:StudyPhysician="Cohn^Raphael James^^Mr^M.Sc. B.A."
-   DICOM:SeriesModality="XC"
-   DICOM:EquipmentManufacturer="OLYMPUS CORPORATION"
-   
-   <tiff:BitsPerSample>
-    <rdf:Seq>
-     <rdf:li>16</rdf:li>
-     <rdf:li>16</rdf:li>
-     <rdf:li>16</rdf:li>
-    </rdf:Seq>
-   </tiff:BitsPerSample>
-   
-   <exif:ISOSpeedRatings>
-    <rdf:Seq>
-     <rdf:li>100</rdf:li>
-    </rdf:Seq>
-   </exif:ISOSpeedRatings>
    
    TODO: Validate this
    <Iptc4xmpExt:LocationShown>
@@ -493,25 +464,12 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
    TODO: Validate this; overlaps with dc:subject
    <lr:hierarchicalSubject>
     <rdf:Bag>
-     <rdf:li>Places|United Kingdom|England|Yorkshire|Runswick Bay</rdf:li>	TODO: hierarchicalSubject parser.
+     <rdf:li>Places|United Kingdom|England|Yorkshire|Runswick Bay</rdf:li>	Done hierarchicalSubject parser.
      <rdf:li>Buildings|Old|Boat Houses</rdf:li>
     </rdf:Bag>
    </lr:hierarchicalSubject>
    
    
-    http://ns.useplus.org/ldf/vocab/AG-UNK (Age Unknown)
-    http://ns.useplus.org/ldf/vocab/AG-A25 (Age 25 or Over)
-    http://ns.useplus.org/ldf/vocab/AG-A24 (Age 24)
-    http://ns.useplus.org/ldf/vocab/AG-A23 (Age 23)
-    http://ns.useplus.org/ldf/vocab/AG-A22 (Age 22)
-    http://ns.useplus.org/ldf/vocab/AG-A21 (Age 21)
-    http://ns.useplus.org/ldf/vocab/AG-A20 (Age 20)
-    http://ns.useplus.org/ldf/vocab/AG-A19 (Age 19)
-    http://ns.useplus.org/ldf/vocab/AG-A18 (Age 18)
-    http://ns.useplus.org/ldf/vocab/AG-A17 (Age 17)
-    http://ns.useplus.org/ldf/vocab/AG-A16 (Age 16)
-    http://ns.useplus.org/ldf/vocab/AG-A15 (Age 15)
-    http://ns.useplus.org/ldf/vocab/AG-U14 (Age 14 or Under)
 
 
 	 */

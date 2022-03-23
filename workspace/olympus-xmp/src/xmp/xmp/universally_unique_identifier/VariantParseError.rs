@@ -2,12 +2,26 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use iso_3166_1_country::UnknownStringVariantParseError;
-use super::XmpAttributeValue;
-use super::XmpAttributeValueParseError;
+/// A variant parse error.
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+pub enum VariantParseError
+{
+	#[allow(missing_docs)]
+	ReservedApolloNetworkComputingSystem,
+	
+	#[allow(missing_docs)]
+	Reserved,
+}
 
+impl Display for VariantParseError
+{
+	#[inline(always)]
+	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
+	{
+		Debug::fmt(self, formatter)
+	}
+}
 
-include!("PlusLicensorTelephoneType.rs");
-include!("PlusMinorModelAgeDisclosure.rs");
-include!("PlusModelReleaseStatus.rs");
-include!("PlusPropertyReleaseStatus.rs");
+impl error::Error for VariantParseError
+{
+}

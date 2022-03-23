@@ -70,6 +70,9 @@ pub enum XmpAttributeValueParseError
 	IimSupplementalCategories(IimSupplementalCategoriesParseError),
 	
 	#[allow(missing_docs)]
+	InstanceIdentifier(XmpInstanceIdentifierParseError),
+	
+	#[allow(missing_docs)]
 	IptcDigitalSourceType(UnknownStringVariantParseError),
 	
 	#[allow(missing_docs)]
@@ -83,6 +86,9 @@ pub enum XmpAttributeValueParseError
 	
 	#[allow(missing_docs)]
 	LensInformation(LensInformationParseError),
+	
+	#[allow(missing_docs)]
+	LightroomHierarchialSubject(LightroomHierarchialSubjectParseError),
 	
 	#[allow(missing_docs)]
 	PhotoshopColorMode(U8ParseError),
@@ -106,10 +112,16 @@ pub enum XmpAttributeValueParseError
 	PlusLicensorTelephoneType(UnknownStringVariantParseError),
 	
 	#[allow(missing_docs)]
+	PlusMinorModelAgeDisclosure(UnknownStringVariantParseError),
+	
+	#[allow(missing_docs)]
 	PlusModelReleaseStatus(UnknownStringVariantParseError),
 	
 	#[allow(missing_docs)]
 	PlusPropertyReleaseStatus(UnknownStringVariantParseError),
+	
+	#[allow(missing_docs)]
+	Subject(NonEmptyStrParseError),
 	
 	#[allow(missing_docs)]
 	UniversallyUniqueIdentifier(XmpUniversallyUniqueIdentifierParseError),
@@ -189,6 +201,8 @@ impl error::Error for XmpAttributeValueParseError
 			
 			IimSupplementalCategories(cause) => Some(cause),
 			
+			InstanceIdentifier(cause) => Some(cause),
+			
 			IptcDigitalSourceType(cause) => Some(cause),
 			
 			IptcWorldRegion(cause) => Some(cause),
@@ -198,6 +212,8 @@ impl error::Error for XmpAttributeValueParseError
 			Iso3166Dash1Country(cause) => Some(cause),
 			
 			LensInformation(cause) => Some(cause),
+			
+			LightroomHierarchialSubject(cause) => Some(cause),
 			
 			NonEmptyStr(cause) => Some(cause),
 			
@@ -213,9 +229,13 @@ impl error::Error for XmpAttributeValueParseError
 			
 			PlusLicensorTelephoneType(cause) => Some(cause),
 			
+			PlusMinorModelAgeDisclosure(cause) => Some(cause),
+			
 			PlusModelReleaseStatus(cause) => Some(cause),
 			
 			PlusPropertyReleaseStatus(cause) => Some(cause),
+			
+			Subject(cause) => Some(cause),
 			
 			UniversallyUniqueIdentifier(cause) => Some(cause),
 			

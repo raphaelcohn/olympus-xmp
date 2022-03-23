@@ -493,7 +493,7 @@ impl IetfBcp47LanguageTag
 		#[inline(always)]
 		fn extension_entry_first(extensions: &mut HashMap<Singleton, Extension>, validated_extension_code: u8) -> Result<VacantEntry<Singleton, Extension>, ExtensionParseError>
 		{
-			extension_entry(extensions, validated_extension_code, |_| unreachable_code(format_args!("Empty HashMap")))
+			extension_entry(extensions, validated_extension_code, |_| unreachable_code_const("Empty HashMap"))
 		}
 		
 		#[inline(always)]

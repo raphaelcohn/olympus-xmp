@@ -19,14 +19,18 @@ impl<'a> XmpAttributeValue<'a> for XmpUniversallyUniqueIdentifier
 		use XmpUniversallyUniqueIdentifierParseError::*;
 		
 		const Length: usize = 32;
-		let length = value.len();
-		if length != Length
+		
+		let bytes =
 		{
-			return Err(Not32CharactersLong(length))
-		}
+			let length = value.len();
+			if length != Length
+			{
+				return Err(Not32CharactersLong(length))
+			}
+			as_u8_array::<Length>(value)
+		};
 		
 		let mut result: u128 = 0;
-		let bytes = value.as_bytes();
 		for index in 0 .. Length
 		{
 			let byte = bytes.get_unchecked_value_safe(index);
@@ -41,7 +45,7 @@ impl<'a> XmpAttributeValue<'a> for XmpUniversallyUniqueIdentifier
 			result = (result << 4) + ((byte as u128) - correction);
 		}
 		
-		Ok(XmpUniversallyUniqueIdentifier(result))
+		Ok(Self(result))
 	}
 	
 	#[inline(always)]

@@ -2,12 +2,11 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use iso_3166_1_country::UnknownStringVariantParseError;
-use super::XmpAttributeValue;
-use super::XmpAttributeValueParseError;
-
-
-include!("PlusLicensorTelephoneType.rs");
-include!("PlusMinorModelAgeDisclosure.rs");
-include!("PlusModelReleaseStatus.rs");
-include!("PlusPropertyReleaseStatus.rs");
+#[inline(always)]
+fn as_u8_array<const length: usize>(string: &str) -> &[u8; length]
+{
+	debug_assert_eq!(length, string.len());
+	
+	let pointer = string.as_ptr().cast::<[u8; length]>();
+	unsafe { & * pointer }
+}

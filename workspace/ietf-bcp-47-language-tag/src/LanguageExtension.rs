@@ -94,7 +94,7 @@ impl LanguageExtension
 		#[inline(always)]
 		fn unreachable_code_because_pending_impossible() -> !
 		{
-			unreachable_code(format_args!("{}", PendingImpossibleMessage))
+			unreachable_code_const(PendingImpossibleMessage)
 		}
 		
 		macro_rules! parse_extended_language_subtag

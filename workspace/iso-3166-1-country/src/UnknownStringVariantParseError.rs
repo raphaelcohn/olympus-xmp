@@ -32,28 +32,63 @@ impl UnknownStringVariantParseError
 {
 	#[allow(missing_docs)]
 	#[inline(always)]
-	pub fn parse_prefixed_value_returning_suffix<const prefix: &'static str>(raw: &str) -> Result<&str, Self>
+	pub fn parse_prefixed_value_returning_suffix<const prefix_suffixed_with_needle: &'static str>(raw: &str) -> Result<&str, Self>
 	{
-		let needle =
+		#[inline(always)]
+		fn error(raw: &str) -> Result<&str, UnknownStringVariantParseError>
 		{
-			let length = prefix.len();
-			debug_assert_ne!(length, 0);
-			let prefix_ = prefix.as_bytes();
-			prefix_.get_unchecked_value_safe(length - 1)
-		};
-		
-		let bytes = raw.as_bytes();
-		let index = memrchr(needle, bytes).ok_or(Self::from(raw))?;
-		
-		{
-			let actual_prefix = bytes.get_unchecked_range_safe(..index);
-			if unsafe { from_utf8_unchecked(actual_prefix) } != prefix
-			{
-				return Err(Self::from(raw))
-			}
+			Err(UnknownStringVariantParseError::from(raw))
 		}
 		
-		let actual_suffix = bytes.get_unchecked_range_safe((index + 1) .. );
-		Ok(unsafe { from_utf8_unchecked(actual_suffix) })
+		// These variables should be inlined as constant values by the compiler.
+		let (expected_index, expected_prefix, needle) = Self::expected_prefix_and_needle(prefix_suffixed_with_needle);
+		
+		let bytes = raw.as_bytes();
+		match memrchr(needle, bytes)
+		{
+			Some(actual_index) =>
+			{
+				if actual_index == expected_index
+				{
+					// Use `expected_index` as this will be an inlined constant value by the compiler.
+					let actual_prefix = bytes.get_unchecked_range_safe(.. expected_index);
+					if actual_prefix == expected_prefix
+					{
+						let actual_suffix = bytes.get_unchecked_range_safe((expected_index + 1) .. );
+						Ok(unsafe { from_utf8_unchecked(actual_suffix) })
+					}
+					else
+					{
+						error(raw)
+					}
+				}
+				else
+				{
+					error(raw)
+				}
+			}
+			
+			None => error(raw),
+		}
+	}
+	
+	#[inline(always)]
+	fn expected_prefix_and_needle(prefix_suffixed_with_needle: &str) -> (usize, &[u8], u8)
+	{
+		let prefix_suffixed_with_needle = prefix_suffixed_with_needle.as_bytes();
+		let length = prefix_suffixed_with_needle.len();
+		if cfg!(debug_assertions)
+		{
+			if length != 0
+			{
+				panic!("Zero length prefix")
+			}
+		}
+		let length_of_prefix_without_suffixed_needle = length - 1;
+		(
+			length_of_prefix_without_suffixed_needle,
+			prefix_suffixed_with_needle.get_unchecked_range_safe(.. length_of_prefix_without_suffixed_needle),
+			prefix_suffixed_with_needle.get_unchecked_value_safe(length_of_prefix_without_suffixed_needle)
+		)
 	}
 }

@@ -2,31 +2,23 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-/// Obsolete as of IIM version 4.
+/// Parse error.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub enum IimSupplementalCategoriesParseError
+pub enum LightroomHierarchialSubjectParseError
 {
 	#[allow(missing_docs)]
-	InvalidSupplementalCategory
-	{
-		index: u8,
-		
-		cause: IimCategoryCodeParseError,
-	},
+	NoSubjects,
 	
 	#[allow(missing_docs)]
-	DuplicateSupplementalCategory
+	EmptySubject
 	{
-		index: u8,
+		index: usize,
 		
-		category_code: IimCategoryCode,
+		cause: NonEmptyStrParseError,
 	},
-	
-	#[allow(missing_docs)]
-	MoreThanEightSupplementalCategories,
 }
 
-impl Display for IimSupplementalCategoriesParseError
+impl Display for LightroomHierarchialSubjectParseError
 {
 	#[inline(always)]
 	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
@@ -35,17 +27,17 @@ impl Display for IimSupplementalCategoriesParseError
 	}
 }
 
-impl error::Error for IimSupplementalCategoriesParseError
+impl error::Error for LightroomHierarchialSubjectParseError
 {
 	#[inline(always)]
 	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		use IimSupplementalCategoriesParseError::*;
+		use LightroomHierarchialSubjectParseError::*;
 		match self
 		{
-			InvalidSupplementalCategory { cause, .. } => Some(cause),
+			NoSubjects => None,
 			
-			_ => None,
+			EmptySubject { cause, .. } => Some(cause),
 		}
 	}
 }

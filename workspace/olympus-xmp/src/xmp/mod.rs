@@ -17,6 +17,7 @@ use email_address_parser::EmailAddress;
 use email_address_parser::ParsingOptions;
 use exif::version::ExifVersionParseError;
 use exif::lens_information::LensInformationParseError;
+use lightroom::LightroomHierarchialSubjectParseError;
 use iptc::IimCategoryCodeParseError;
 use iptc::IimSupplementalCategoriesParseError;
 use iptc::urgency::UrgencyParseError;
@@ -46,6 +47,7 @@ use tiff_rational::UnsignedTiffRationalParseError;
 use url::ParseError as UrlParseError;
 use url::Url;
 use xmp::date_time::XmpDateTimeParseError;
+use xmp::universally_unique_identifier::XmpInstanceIdentifierParseError;
 use xmp::universally_unique_identifier::XmpUniversallyUniqueIdentifier;
 use xmp::universally_unique_identifier::XmpUniversallyUniqueIdentifierParseError;
 
@@ -67,6 +69,10 @@ pub mod exif;
 
 /// International Press Telecommunications Council [IPTC](https://iptc.org/) domain types.
 pub mod iptc;
+
+
+/// Lightroom domain types.
+pub mod lightroom;
 
 
 /// Namespace definitions.

@@ -3,8 +3,19 @@
 
 
 /// Obsolete as of IIM version 4.
-#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub struct IimSupplementalCategories(ArrayVec<IimCategoryCode, {IimSupplementalCategories::Maximum}>);
+#[derive(Debug, Clone, Eq, PartialEq)]
+pub struct IimSupplementalCategories(HashSet<IimCategoryCode>);
+
+impl const Deref for IimSupplementalCategories
+{
+	type Target = HashSet<IimCategoryCode>;
+	
+	#[inline(always)]
+	fn deref(&self) -> &Self::Target
+	{
+		&self.0
+	}
+}
 
 impl<'a> XmpAttributeValue<'a> for IimSupplementalCategories
 {
@@ -16,18 +27,21 @@ impl<'a> XmpAttributeValue<'a> for IimSupplementalCategories
 		use IimSupplementalCategoriesParseError::*;
 		
 		const Space: char = ' ';
-		let mut array_vec = ArrayVec::new_const();
+		let mut set = HashSet::with_capacity(Self::Maximum as usize);
 		let mut iterator = raw.split(Space);
 		for index in 0 .. Self::Maximum
 		{
 			match iterator.next()
 			{
-				None => return Ok(Self(array_vec)),
+				None => return Ok(Self(set)),
 				
 				Some(potential) =>
 				{
 					let category_code = IimCategoryCode::parse(potential).map_err(|cause| InvalidSupplementalCategory { index, cause })?;
-					unsafe { array_vec.push_unchecked(category_code) };
+					if !set.insert(category_code)
+					{
+						return Err(DuplicateSupplementalCategory { category_code, index })
+					}
 				}
 			}
 		}
@@ -38,7 +52,7 @@ impl<'a> XmpAttributeValue<'a> for IimSupplementalCategories
 		}
 		else
 		{
-			Ok(Self(array_vec))
+			Ok(Self(set))
 		}
 	}
 	
@@ -51,5 +65,5 @@ impl<'a> XmpAttributeValue<'a> for IimSupplementalCategories
 
 impl IimSupplementalCategories
 {
-	const Maximum: usize = 8;
+	const Maximum: u8 = 8;
 }

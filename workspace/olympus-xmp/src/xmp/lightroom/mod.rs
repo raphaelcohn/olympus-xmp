@@ -2,12 +2,20 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use iso_3166_1_country::UnknownStringVariantParseError;
+use std::borrow::Borrow;
+use std::error;
+use std::fmt;
+use std::fmt::Debug;
+use std::fmt::Display;
+use std::fmt::Formatter;
+use std::ops::Deref;
+use super::non_empty_str::NonEmptyStr;
+use super::non_empty_str::NonEmptyStrParseError;
 use super::XmpAttributeValue;
 use super::XmpAttributeValueParseError;
+use swiss_army_knife::vec::VecExt;
 
 
-include!("PlusLicensorTelephoneType.rs");
-include!("PlusMinorModelAgeDisclosure.rs");
-include!("PlusModelReleaseStatus.rs");
-include!("PlusPropertyReleaseStatus.rs");
+include!("LightroomHierarchialSubject.rs");
+include!("LightroomHierarchialSubjectParseError.rs");
+include!("Subject.rs");

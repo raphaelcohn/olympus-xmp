@@ -73,7 +73,6 @@ use std::collections::hash_map::OccupiedEntry;
 use std::collections::hash_map::VacantEntry;
 use std::mem::transmute;
 use std::mem::transmute_copy;
-use swiss_army_knife::unreachable_code;
 use swiss_army_knife::a_to_z::_0;
 use swiss_army_knife::a_to_z::_9;
 use swiss_army_knife::a_to_z::A;
@@ -97,6 +96,7 @@ use swiss_army_knife::a_to_z::x;
 use swiss_army_knife::a_to_z::y;
 use swiss_army_knife::a_to_z::z;
 use swiss_army_knife::get_unchecked::GetUnchecked;
+use swiss_army_knife::unreachable_code_const;
 use unroll::unroll_for_loops;
 
 
