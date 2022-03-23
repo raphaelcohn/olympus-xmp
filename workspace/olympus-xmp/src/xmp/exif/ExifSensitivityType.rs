@@ -34,27 +34,4 @@ pub enum ExifSensitivityType
 	StandardOutputSensitivityAndRecommendedExposureIndexAndIsoSpeed = 7,
 }
 
-impl<'a> XmpAttributeValue<'a> for ExifSensitivityType
-{
-	type Error = U16ParseError;
-	
-	#[inline(always)]
-	fn parse(value: &'a str) -> Result<Self, Self::Error>
-	{
-		use U16ParseError::*;
-		
-		let value = u16::from_str(value).map_err(InvalidU16)?;
-		match value
-		{
-			0 ..= 7 => Ok(unsafe { transmute(value) }),
-			
-			_ => Err(InvalidValue(value)),
-		}
-	}
-	
-	#[inline(always)]
-	fn into_xmp_attribute_value_parse_error(error: Self::Error) -> XmpAttributeValueParseError
-	{
-		XmpAttributeValueParseError::ExifSensitivityType(error)
-	}
-}
+impl_xmp_attribute_value_parse_transmute_u16!(ExifSensitivityType, ExifSensitivityType, 0 ..= 7);

@@ -29,27 +29,4 @@ impl const Default for ExifFileSource
 	}
 }
 
-impl<'a> XmpAttributeValue<'a> for ExifFileSource
-{
-	type Error = U8ParseError;
-	
-	#[inline(always)]
-	fn parse(value: &'a str) -> Result<Self, Self::Error>
-	{
-		use U8ParseError::*;
-		
-		let value = u8::from_str(value).map_err(InvalidU8)?;
-		match value
-		{
-			0 ..= 3 => Ok(unsafe { transmute(value) }),
-			
-			_ => Err(InvalidValue(value)),
-		}
-	}
-	
-	#[inline(always)]
-	fn into_xmp_attribute_value_parse_error(error: Self::Error) -> XmpAttributeValueParseError
-	{
-		XmpAttributeValueParseError::ExifFileSource(error)
-	}
-}
+impl_xmp_attribute_value_parse_transmute_u8!(ExifFileSource, ExifFileSource, 0 ..= 3);

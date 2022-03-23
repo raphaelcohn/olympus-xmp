@@ -13,6 +13,15 @@ pub enum U16ParseError
 	InvalidValue(u16),
 }
 
+impl const From<ParseIntError> for U16ParseError
+{
+	#[inline(always)]
+	fn from(cause: ParseIntError) -> Self
+	{
+		U16ParseError::InvalidU16(cause)
+	}
+}
+
 impl Display for U16ParseError
 {
 	#[inline(always)]

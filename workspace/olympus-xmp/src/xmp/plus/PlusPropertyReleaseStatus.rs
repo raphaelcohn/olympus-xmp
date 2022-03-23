@@ -4,6 +4,7 @@
 
 /// PLUS property release status.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[repr(u8)]
 pub enum PlusPropertyReleaseStatus
 {
 	/// None.
@@ -27,32 +28,15 @@ pub enum PlusPropertyReleaseStatus
 	LimitedOrIncomplete,
 }
 
-impl<'a> XmpAttributeValue<'a> for PlusPropertyReleaseStatus
-{
-	type Error = UnknownStringVariantParseError;
+impl_xmp_attribute_value_parse_str_prefix!
+(
+	PlusPropertyReleaseStatus, PlusPropertyReleaseStatus, "http://ns.useplus.org/ldf/vocab/PR-",
 	
-	#[inline(always)]
-	fn parse(raw: &'a str) -> Result<Self, Self::Error>
-	{
-		let suffix = UnknownStringVariantParseError::parse_prefixed_value_returning_suffix::<"http://ns.useplus.org/ldf/vocab/PR-">(raw)?;
-		use PlusPropertyReleaseStatus::*;
-		match suffix
-		{
-			"NON" => Ok(NoReleases),
-			
-			"NAP" => Ok(NotApplicable),
-			
-			"UPR" => Ok(Unlimited),
-			
-			"LPR" => Ok(LimitedOrIncomplete),
-			
-			_ => Err(UnknownStringVariantParseError::from(raw)),
-		}
-	}
+	"NON" => NoReleases,
 	
-	#[inline(always)]
-	fn into_xmp_attribute_value_parse_error(error: Self::Error) -> XmpAttributeValueParseError
-	{
-		XmpAttributeValueParseError::PlusPropertyReleaseStatus(error)
-	}
-}
+	"NAP" => NotApplicable,
+	
+	"UPR" => Unlimited,
+	
+	"LPR" => LimitedOrIncomplete,
+);

@@ -29,27 +29,4 @@ pub enum XmpRating
 	_5 = 5,
 }
 
-impl<'a> XmpAttributeValue<'a> for XmpRating
-{
-	type Error = I8ParseError;
-	
-	#[inline(always)]
-	fn parse(value: &'a str) -> Result<Self, Self::Error>
-	{
-		use I8ParseError::*;
-		
-		let value = i8::from_str(value).map_err(InvalidI8)?;
-		match value
-		{
-			-1 ..= 5 => Ok(unsafe { transmute(value) }),
-			
-			_ => Err(InvalidValue(value)),
-		}
-	}
-	
-	#[inline(always)]
-	fn into_xmp_attribute_value_parse_error(error: Self::Error) -> XmpAttributeValueParseError
-	{
-		XmpAttributeValueParseError::XmpRating(error)
-	}
-}
+impl_xmp_attribute_value_parse_transmute_i8!(XmpRating, XmpRating, -1 ..= 5);

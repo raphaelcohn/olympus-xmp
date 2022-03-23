@@ -13,7 +13,7 @@ pub enum PrivateUseSubtagsParseError
 	InvalidAlphanumeric(InvalidAlphanumericError),
 }
 
-impl From<InvalidSubtagLengthError> for PrivateUseSubtagsParseError
+impl const From<InvalidSubtagLengthError> for PrivateUseSubtagsParseError
 {
 	#[inline(always)]
 	fn from(cause: InvalidSubtagLengthError) -> Self

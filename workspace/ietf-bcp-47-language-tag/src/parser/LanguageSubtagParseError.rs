@@ -15,7 +15,7 @@ pub enum LanguageSubtagParseError
 	LanguageExtensionSubtag(LanguageExtensionSubtagParseError)
 }
 
-impl From<InvalidSubtagLengthError> for LanguageSubtagParseError
+impl const From<InvalidSubtagLengthError> for LanguageSubtagParseError
 {
 	#[inline(always)]
 	fn from(cause: InvalidSubtagLengthError) -> Self
@@ -24,7 +24,7 @@ impl From<InvalidSubtagLengthError> for LanguageSubtagParseError
 	}
 }
 
-impl From<LanguageExtensionSubtagParseError> for LanguageSubtagParseError
+impl const From<LanguageExtensionSubtagParseError> for LanguageSubtagParseError
 {
 	#[inline(always)]
 	fn from(cause: LanguageExtensionSubtagParseError) -> Self

@@ -43,7 +43,7 @@ pub enum KeyParseError
 	DuplicateRecord,
 }
 
-impl From<TagOrSubtagRangeError> for KeyParseError
+impl const From<TagOrSubtagRangeError> for KeyParseError
 {
 	#[inline(always)]
 	fn from(cause: TagOrSubtagRangeError) -> Self

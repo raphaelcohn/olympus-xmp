@@ -43,7 +43,7 @@ impl<'a> XmpAttributeValue<'a> for Urgency
 	{
 		use UrgencyParseError::*;
 		
-		let value = u8::from_str(value).map_err(InvalidU8)?;
+		let value = u8::from_str(value)?;
 		match value
 		{
 			0 => Err(ZeroIsReserved),

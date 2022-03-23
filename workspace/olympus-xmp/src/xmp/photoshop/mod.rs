@@ -4,7 +4,6 @@
 
 use std::mem::transmute;
 use std::str::FromStr;
-use super::attribute_parse_errors::U8ParseError;
 use super::XmpAttributeValue;
 use super::XmpAttributeValueParseError;
 

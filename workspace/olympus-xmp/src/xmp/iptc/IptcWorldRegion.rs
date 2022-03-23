@@ -6,6 +6,7 @@
 ///
 /// One of the values listed in <https://cv.iptc.org/newscodes/worldregion/>.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[repr(u8)]
 pub enum IptcWorldRegion
 {
 	#[allow(missing_docs)]
@@ -33,40 +34,23 @@ pub enum IptcWorldRegion
 	Antarctica,
 }
 
-impl<'a> XmpAttributeValue<'a> for IptcWorldRegion
-{
-	type Error = UnknownStringVariantParseError;
+impl_xmp_attribute_value_parse_str!
+(
+	IptcWorldRegion, IptcWorldRegion,
+
+	"World" => World,
 	
-	#[inline(always)]
-	fn parse(raw: &'a str) -> Result<Self, Self::Error>
-	{
-		use IptcWorldRegion::*;
-		
-		match raw
-		{
-			"World" => Ok(World),
-			
-			"Africa" => Ok(Africa),
-			
-			"South America" => Ok(SouthAmerica),
-			
-			"Oceania" => Ok(Oceania),
-			
-			"North America" => Ok(NorthAmerica),
-			
-			"Asia" => Ok(Asia),
-			
-			"Europe" => Ok(Europe),
-			
-			"Antarctica" => Ok(Antarctica),
-			
-			_ => Err(UnknownStringVariantParseError::from(raw)),
-		}
-	}
+	"Africa" => Africa,
 	
-	#[inline(always)]
-	fn into_xmp_attribute_value_parse_error(error: Self::Error) -> XmpAttributeValueParseError
-	{
-		XmpAttributeValueParseError::IptcWorldRegion(error)
-	}
-}
+	"South America" => SouthAmerica,
+	
+	"Oceania" => Oceania,
+	
+	"North America" => NorthAmerica,
+	
+	"Asia" => Asia,
+	
+	"Europe" => Europe,
+	
+	"Antarctica" => Antarctica,
+);

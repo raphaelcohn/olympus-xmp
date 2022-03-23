@@ -2,38 +2,5 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-/// A label.
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-#[repr(u8)]
-pub enum XmpLabel
-{
-	#[allow(missing_docs)]
-	Select,
-
-	#[allow(missing_docs)]
-	Second,
-
-	#[allow(missing_docs)]
-	Approved,
-
-	#[allow(missing_docs)]
-	Review,
-
-	#[allow(missing_docs)]
-	To_Do,
-}
-
-impl_xmp_attribute_value_parse_str!
-(
-	XmpLabel, XmpLabel,
-
-	"Select" => Select,
-	
-	"Second" => Second,
-	
-	"Approved" => Approved,
-	
-	"Review" => Review,
-	
-	"To Do" => To_Do,
-);
+#[allow(missing_docs)]
+pub const DICOM: &'static str = "http://ns.adobe.com/DICOM/";

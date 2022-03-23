@@ -17,7 +17,7 @@ pub enum LanguageSubtagRegistryFileContentsParseError
 	Record(Type, RecordParseError),
 }
 
-impl From<PullEventParserError> for LanguageSubtagRegistryFileContentsParseError
+impl const From<PullEventParserError> for LanguageSubtagRegistryFileContentsParseError
 {
 	#[inline(always)]
 	fn from(cause: PullEventParserError) -> Self
@@ -26,7 +26,7 @@ impl From<PullEventParserError> for LanguageSubtagRegistryFileContentsParseError
 	}
 }
 
-impl From<RecordsFileHeaderParseError> for LanguageSubtagRegistryFileContentsParseError
+impl const From<RecordsFileHeaderParseError> for LanguageSubtagRegistryFileContentsParseError
 {
 	#[inline(always)]
 	fn from(cause: RecordsFileHeaderParseError) -> Self
@@ -35,7 +35,7 @@ impl From<RecordsFileHeaderParseError> for LanguageSubtagRegistryFileContentsPar
 	}
 }
 
-impl From<FieldError> for LanguageSubtagRegistryFileContentsParseError
+impl const From<FieldError> for LanguageSubtagRegistryFileContentsParseError
 {
 	#[inline(always)]
 	fn from(cause: FieldError) -> Self

@@ -19,6 +19,15 @@ pub enum UrgencyParseError
 	InvalidValue(u8),
 }
 
+impl const From<ParseIntError> for UrgencyParseError
+{
+	#[inline(always)]
+	fn from(cause: ParseIntError) -> Self
+	{
+		UrgencyParseError::InvalidU8(cause)
+	}
+}
+
 impl Display for UrgencyParseError
 {
 	#[inline(always)]

@@ -32,9 +32,9 @@ impl From<Language> for Normal
 			
 			region: None,
 		
-			variants: HashSet::new(),
+			variants: HashSet::default(),
 		
-			extensions: HashMap::new(),
+			extensions: HashMap::default(),
 		
 			private_use: None,
 		}

@@ -2,38 +2,10 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-/// A label.
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-#[repr(u8)]
-pub enum XmpLabel
+macro_rules! impl_xmp_attribute_value_parse_transmute_u8
 {
-	#[allow(missing_docs)]
-	Select,
-
-	#[allow(missing_docs)]
-	Second,
-
-	#[allow(missing_docs)]
-	Approved,
-
-	#[allow(missing_docs)]
-	Review,
-
-	#[allow(missing_docs)]
-	To_Do,
+	($attribute: ty, $error_enum: ident, $range: pat) =>
+	{
+		impl_xmp_attribute_value_parse_transmute!($attribute, $error_enum, U8ParseError, u8, $range);
+	}
 }
-
-impl_xmp_attribute_value_parse_str!
-(
-	XmpLabel, XmpLabel,
-
-	"Select" => Select,
-	
-	"Second" => Second,
-	
-	"Approved" => Approved,
-	
-	"Review" => Review,
-	
-	"To Do" => To_Do,
-);

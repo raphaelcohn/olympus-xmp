@@ -8,7 +8,9 @@ use crate::xml::XmlDocument;
 use crate::xml::XmlDocumentOrXmlElement;
 use crate::xml::XmlElement;
 use crate::xml::XmlName;
+use attribute_parse_errors::EmailAddressParseError;
 use attribute_parse_errors::I8ParseError;
+use attribute_parse_errors::PhoneNumberParseError;
 use attribute_parse_errors::U8ParseError;
 use attribute_parse_errors::U16ParseError;
 use email_address_parser::EmailAddress;
@@ -51,6 +53,10 @@ use xmp::universally_unique_identifier::XmpUniversallyUniqueIdentifierParseError
 include!("xml_name.rs");
 
 
+#[macro_use]
+mod macros;
+
+
 /// Attribute parse errors.
 pub mod attribute_parse_errors;
 
@@ -87,8 +93,6 @@ pub mod tiff_rational;
 pub mod xmp;
 
 
-include!("EmailAddressParseError.rs");
-include!("PhoneNumberParseError.rs");
 include!("XmpAttributeValue.rs");
 include!("XmpAttributeValueParseError.rs");
 include!("XmpElement.rs");

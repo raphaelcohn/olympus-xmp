@@ -4,6 +4,7 @@
 
 /// PLUS licensor telephone type.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[repr(u8)]
 pub enum PlusLicensorTelephoneType
 {
 	/// Work.
@@ -32,34 +33,17 @@ pub enum PlusLicensorTelephoneType
 	pager,
 }
 
-impl<'a> XmpAttributeValue<'a> for PlusLicensorTelephoneType
-{
-	type Error = UnknownStringVariantParseError;
+impl_xmp_attribute_value_parse_str_prefix!
+(
+	PlusLicensorTelephoneType, PlusLicensorTelephoneType, "http://ns.useplus.org/ldf/vocab/",
 	
-	#[inline(always)]
-	fn parse(raw: &'a str) -> Result<Self, Self::Error>
-	{
-		let suffix = UnknownStringVariantParseError::parse_prefixed_value_returning_suffix::<"http://ns.useplus.org/ldf/vocab/">(raw)?;
-		use PlusLicensorTelephoneType::*;
-		match suffix
-		{
-			"work" => Ok(work),
-			
-			"cell" => Ok(cell),
-			
-			"fax" => Ok(fax),
-			
-			"home" => Ok(home),
-			
-			"pager" => Ok(pager),
-			
-			_ => Err(UnknownStringVariantParseError::from(raw)),
-		}
-	}
+	"work" => work,
 	
-	#[inline(always)]
-	fn into_xmp_attribute_value_parse_error(error: Self::Error) -> XmpAttributeValueParseError
-	{
-		XmpAttributeValueParseError::PlusLicensorTelephoneType(error)
-	}
-}
+	"cell" => cell,
+	
+	"fax" => fax,
+	
+	"home" => home,
+	
+	"pager" => pager,
+);

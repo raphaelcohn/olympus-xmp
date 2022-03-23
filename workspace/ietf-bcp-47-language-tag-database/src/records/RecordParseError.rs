@@ -17,7 +17,7 @@ pub enum RecordParseError
 	Key(KeyParseError),
 }
 
-impl From<FieldNotPermittedError> for RecordParseError
+impl const From<FieldNotPermittedError> for RecordParseError
 {
 	#[inline(always)]
 	fn from(cause: FieldNotPermittedError) -> Self
@@ -26,7 +26,7 @@ impl From<FieldNotPermittedError> for RecordParseError
 	}
 }
 
-impl From<KeyParseError> for RecordParseError
+impl const From<KeyParseError> for RecordParseError
 {
 	#[inline(always)]
 	fn from(cause: KeyParseError) -> Self

@@ -10,6 +10,7 @@ include!("aux.rs");
 include!("crd.rs");
 include!("crs.rs");
 include!("dc.rs");
+include!("DICOM.rs");
 include!("exif.rs");
 include!("exifEX.rs");
 include!("Iptc4xmpCore.rs");

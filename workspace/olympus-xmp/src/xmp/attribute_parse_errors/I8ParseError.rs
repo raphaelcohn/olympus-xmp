@@ -13,6 +13,15 @@ pub enum I8ParseError
 	InvalidValue(i8),
 }
 
+impl const From<ParseIntError> for I8ParseError
+{
+	#[inline(always)]
+	fn from(cause: ParseIntError) -> Self
+	{
+		I8ParseError::InvalidI8(cause)
+	}
+}
+
 impl Display for I8ParseError
 {
 	#[inline(always)]

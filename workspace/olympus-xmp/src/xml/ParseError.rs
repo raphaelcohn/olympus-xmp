@@ -31,7 +31,7 @@ pub enum ParseError
 	DuplicateAttribute(TextPosition),
 }
 
-impl From<XmlReadError> for ParseError
+impl const From<XmlReadError> for ParseError
 {
 	#[inline(always)]
 	fn from(error: XmlReadError) -> Self

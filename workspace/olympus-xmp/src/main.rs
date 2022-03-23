@@ -88,6 +88,8 @@ use crate::binary::document_identifier;
 use crate::binary::Collated;
 use crate::binary::XmpOutcomeOfValidationError;
 use swiss_army_knife::non_zero::new_non_zero_u32;
+use olympus_xmp::transformation::Description;
+use olympus_xmp::xmp::exif::flash::{ExifFlashMode, ExifFlashStatusOfStrobeReturnedLight};
 
 
 mod binary;
@@ -219,6 +221,14 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
 	collated.check(Description.has_attribute_with_expected_value::<bool>(xml_name!(xmpRights, "Marked"), true));
 	collated.check(Description.has_attribute_with_expected_value::<IptcDigitalSourceType>(xml_name!(Iptc4xmpExt, "DigitalSourceType"), IptcDigitalSourceType::OriginalDigitalCapture));
 
+	if let Some(Flash) = collated.validate(Description.child(xml_name!(exif, "Flash")))
+	{
+		collated.check(Flash.has_attribute_with_any_value::<bool>(xml_name!(exif, "Fired")));
+		collated.check(Flash.has_attribute_with_any_value::<bool>(xml_name!(exif, "Function")));
+		collated.check(Flash.has_attribute_with_any_value::<ExifFlashStatusOfStrobeReturnedLight>(xml_name!(exif, "Return")));
+		collated.check(Flash.has_attribute_with_any_value::<ExifFlashMode>(xml_name!(exif, "Mode")));
+	}
+	
 	// TODO: Overwrite with location shown data.
 	{
 		collated.check(Description.has_attribute_with_any_value::<NonEmptyStr>(xml_name!(Iptc4xmpCore, "Location")));
@@ -328,14 +338,6 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
      <rdf:li>200</rdf:li>
     </rdf:Seq>
    </exif:ISOSpeedRatings>
-   
-   TODO: Validate this
-   <exif:Flash
-    exif:Fired="False"
-    exif:Return="0"
-    exif:Mode="1"
-    exif:Function="False"
-    exif:RedEyeMode="False"/>
     
    TODO: Validate this
    <dc:creator>
@@ -396,6 +398,29 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
       Iptc4xmpExt:City="Addingham"/>
     </rdf:Bag>
    </Iptc4xmpExt:LocationCreated>
+   
+   TODO on Description:  plus:MinorModelAgeDisclosure="http://ns.useplus.org/ldf/vocab/AG-A25"
+      DICOM:PatientName="Cohn^Raphael James^^Mr^M.Sc. B.A."
+   DICOM:PatientID="Raphael James Cohn"
+   DICOM:PatientDOB="1977/02/23"
+   DICOM:PatientSex="M"
+   DICOM:StudyPhysician="Cohn^Raphael James^^Mr^M.Sc. B.A."
+   DICOM:SeriesModality="XC"
+   DICOM:EquipmentManufacturer="OLYMPUS CORPORATION"
+   
+   <tiff:BitsPerSample>
+    <rdf:Seq>
+     <rdf:li>16</rdf:li>
+     <rdf:li>16</rdf:li>
+     <rdf:li>16</rdf:li>
+    </rdf:Seq>
+   </tiff:BitsPerSample>
+   
+   <exif:ISOSpeedRatings>
+    <rdf:Seq>
+     <rdf:li>100</rdf:li>
+    </rdf:Seq>
+   </exif:ISOSpeedRatings>
    
    TODO: Validate this
    <Iptc4xmpExt:LocationShown>

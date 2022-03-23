@@ -31,6 +31,12 @@ pub enum XmpAttributeValueParseError
 	ExifFileSource(U8ParseError),
 	
 	#[allow(missing_docs)]
+	ExifFlashMode(U8ParseError),
+	
+	#[allow(missing_docs)]
+	ExifFlashStatusOfStrobeReturnedLight(U8ParseError),
+	
+	#[allow(missing_docs)]
 	ExifGainControl(U16ParseError),
 	
 	#[allow(missing_docs)]
@@ -156,6 +162,10 @@ impl error::Error for XmpAttributeValueParseError
 			ExifExposureProgram(cause) => Some(cause),
 			
 			ExifFileSource(cause) => Some(cause),
+			
+			ExifFlashMode(cause) => Some(cause),
+			
+			ExifFlashStatusOfStrobeReturnedLight(cause) => Some(cause),
 			
 			ExifGainControl(cause) => Some(cause),
 			

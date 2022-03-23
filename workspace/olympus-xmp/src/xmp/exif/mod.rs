@@ -4,10 +4,14 @@
 
 use std::mem::transmute;
 use std::str::FromStr;
-use super::attribute_parse_errors::U8ParseError;
-use super::attribute_parse_errors::U16ParseError;
 use super::XmpAttributeValue;
 use super::XmpAttributeValueParseError;
+
+
+/// Flash bit fields.
+///
+/// In XMP, the EXIF 'Flash' tag's various bits are actually modelled as attributes.
+pub mod flash;
 
 
 /// Lens information.

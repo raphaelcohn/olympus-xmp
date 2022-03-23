@@ -21,7 +21,7 @@ pub enum RecordsFileHeaderParseError
 	FileDate(DateParseError),
 }
 
-impl From<PullEventParserError> for RecordsFileHeaderParseError
+impl const From<PullEventParserError> for RecordsFileHeaderParseError
 {
 	#[inline(always)]
 	fn from(cause: PullEventParserError) -> Self
@@ -30,7 +30,7 @@ impl From<PullEventParserError> for RecordsFileHeaderParseError
 	}
 }
 
-impl From<DateParseError> for RecordsFileHeaderParseError
+impl const From<DateParseError> for RecordsFileHeaderParseError
 {
 	#[inline(always)]
 	fn from(cause: DateParseError) -> Self

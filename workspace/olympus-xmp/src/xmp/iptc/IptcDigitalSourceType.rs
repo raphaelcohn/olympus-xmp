@@ -4,6 +4,7 @@
 
 /// IPTC digital source type.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[repr(u8)]
 pub enum IptcDigitalSourceType
 {
 	/// Original digital capture of a real life scene.
@@ -32,34 +33,17 @@ pub enum IptcDigitalSourceType
 	CreatedBySoftware,
 }
 
-impl<'a> XmpAttributeValue<'a> for IptcDigitalSourceType
-{
-	type Error = UnknownStringVariantParseError;
+impl_xmp_attribute_value_parse_str_prefix!
+(
+	IptcDigitalSourceType, IptcDigitalSourceType, "http://ns.useplus.org/ldf/vocab/PR-",
 	
-	#[inline(always)]
-	fn parse(raw: &'a str) -> Result<Self, Self::Error>
-	{
-		let suffix = UnknownStringVariantParseError::parse_prefixed_value_returning_suffix::<"http://ns.useplus.org/ldf/vocab/PR-">(raw)?;
-		use IptcDigitalSourceType::*;
-		match suffix
-		{
-			"digitalCapture" => Ok(OriginalDigitalCapture),
-			
-			"negativeFilm" => Ok(DigitisedFromANegative),
-			
-			"positiveFilm" => Ok(DigitisedFromAPositive),
-			
-			"print" => Ok(DigitisedFromAPrint),
-			
-			"softwareImage" => Ok(CreatedBySoftware),
-			
-			_ => Err(UnknownStringVariantParseError::from(raw)),
-		}
-	}
+	"digitalCapture" => OriginalDigitalCapture,
 	
-	#[inline(always)]
-	fn into_xmp_attribute_value_parse_error(error: Self::Error) -> XmpAttributeValueParseError
-	{
-		XmpAttributeValueParseError::IptcDigitalSourceType(error)
-	}
-}
+	"negativeFilm" => DigitisedFromANegative,
+	
+	"positiveFilm" => DigitisedFromAPositive,
+	
+	"print" => DigitisedFromAPrint,
+	
+	"softwareImage" => CreatedBySoftware,
+);

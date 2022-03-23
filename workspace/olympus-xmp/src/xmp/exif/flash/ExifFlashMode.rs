@@ -2,38 +2,22 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-/// A label.
+/// Values are 0 to 3 inclusive as they represent a 2-bit value.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 #[repr(u8)]
-pub enum XmpLabel
+pub enum ExifFlashMode
 {
 	#[allow(missing_docs)]
-	Select,
-
+	Unknown = 0b00,
+	
 	#[allow(missing_docs)]
-	Second,
-
+	CompulsoryFlashFiring = 0b01,
+	
 	#[allow(missing_docs)]
-	Approved,
-
+	CompulsoryFlashSuppression = 0b10,
+	
 	#[allow(missing_docs)]
-	Review,
-
-	#[allow(missing_docs)]
-	To_Do,
+	Automatic = 0b11,
 }
 
-impl_xmp_attribute_value_parse_str!
-(
-	XmpLabel, XmpLabel,
-
-	"Select" => Select,
-	
-	"Second" => Second,
-	
-	"Approved" => Approved,
-	
-	"Review" => Review,
-	
-	"To Do" => To_Do,
-);
+impl_xmp_attribute_value_parse_transmute_u8!(ExifFlashMode, ExifFlashMode, 0 ..= 3);

@@ -21,7 +21,7 @@ pub enum IetfBcp47LanguageTagParseError
 	Extension(ExtensionParseError),
 }
 
-impl From<LanguageSubtagParseError> for IetfBcp47LanguageTagParseError
+impl const From<LanguageSubtagParseError> for IetfBcp47LanguageTagParseError
 {
 	#[inline(always)]
 	fn from(cause: LanguageSubtagParseError) -> Self
@@ -30,7 +30,7 @@ impl From<LanguageSubtagParseError> for IetfBcp47LanguageTagParseError
 	}
 }
 
-impl From<GrandfatheredIrregularISubtagParseError> for IetfBcp47LanguageTagParseError
+impl const From<GrandfatheredIrregularISubtagParseError> for IetfBcp47LanguageTagParseError
 {
 	#[inline(always)]
 	fn from(cause: GrandfatheredIrregularISubtagParseError) -> Self
@@ -39,7 +39,7 @@ impl From<GrandfatheredIrregularISubtagParseError> for IetfBcp47LanguageTagParse
 	}
 }
 
-impl From<PrivateUseSubtagsParseError> for IetfBcp47LanguageTagParseError
+impl const From<PrivateUseSubtagsParseError> for IetfBcp47LanguageTagParseError
 {
 	#[inline(always)]
 	fn from(cause: PrivateUseSubtagsParseError) -> Self
@@ -48,7 +48,7 @@ impl From<PrivateUseSubtagsParseError> for IetfBcp47LanguageTagParseError
 	}
 }
 
-impl From<RegionParseError> for IetfBcp47LanguageTagParseError
+impl const From<RegionParseError> for IetfBcp47LanguageTagParseError
 {
 	#[inline(always)]
 	fn from(cause: RegionParseError) -> Self
@@ -57,7 +57,7 @@ impl From<RegionParseError> for IetfBcp47LanguageTagParseError
 	}
 }
 
-impl From<ScriptParseError> for IetfBcp47LanguageTagParseError
+impl const From<ScriptParseError> for IetfBcp47LanguageTagParseError
 {
 	#[inline(always)]
 	fn from(cause: ScriptParseError) -> Self
@@ -66,7 +66,7 @@ impl From<ScriptParseError> for IetfBcp47LanguageTagParseError
 	}
 }
 
-impl From<VariantParseError> for IetfBcp47LanguageTagParseError
+impl const From<VariantParseError> for IetfBcp47LanguageTagParseError
 {
 	#[inline(always)]
 	fn from(cause: VariantParseError) -> Self
@@ -75,7 +75,7 @@ impl From<VariantParseError> for IetfBcp47LanguageTagParseError
 	}
 }
 
-impl From<ExtensionParseError> for IetfBcp47LanguageTagParseError
+impl const From<ExtensionParseError> for IetfBcp47LanguageTagParseError
 {
 	#[inline(always)]
 	fn from(cause: ExtensionParseError) -> Self
