@@ -52,6 +52,8 @@ use swiss_army_knife::a_to_z::Z;
 use swiss_army_knife::get_unchecked::GetUnchecked;
 
 
+include!("letter_to_number_scaled.rs");
+include!("letter_to_number_unchecked.rs");
 include!("Iso3166Dash1Country.rs");
 include!("Iso3166Dash1Alpha2CountryCode.rs");
 include!("Iso3166Dash1Alpha3CountryCode.rs");

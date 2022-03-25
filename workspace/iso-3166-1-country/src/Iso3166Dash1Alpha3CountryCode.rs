@@ -52825,6 +52825,6 @@ impl Iso3166Dash1Alpha3CountryCode
 	#[inline(always)]
 	const fn letters_to_token(letters: &[u8; 3]) -> u16
 	{
-		Iso3166Dash1AlphaCountryCode::letter_to_number_unchecked::<0, _>(letters) + Iso3166Dash1AlphaCountryCode::letter_to_number_unchecked::<1, _>(letters) + Iso3166Dash1AlphaCountryCode::letter_to_number_unchecked::<2, _>(letters)
+		letter_to_number_unchecked::<0, _>(letters) + letter_to_number_unchecked::<1, _>(letters) + letter_to_number_unchecked::<2, _>(letters)
 	}
 }

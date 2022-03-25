@@ -28,16 +28,22 @@
 //! This is a rust binary
 
 
+use std::num::NonZeroU32;
+use std::str::FromStr;
 use arrayvec as _;
 use gcd as _;
 use memchr as _;
 use xml as _;
 
 
-use iso_3166_1_country::Iso3166Dash1AlphaCountryCode;
-use iso_3166_1_country::Iso3166Dash1Country;
 use olympus_xmp::xml_name;
 use olympus_xmp::xml::XmlDocument;
+use olympus_xmp::xmp::EmailAddress;
+use olympus_xmp::xmp::Iso3166Dash1Country;
+use olympus_xmp::xmp::Iso3166Dash1AlphaCountryCode;
+use olympus_xmp::xmp::PhoneNumber;
+use olympus_xmp::xmp::phone_number_parse;
+use olympus_xmp::xmp::Url;
 use olympus_xmp::xmp::exif::ExifGainControl;
 use olympus_xmp::xmp::exif::ExifResolutionUnit;
 use olympus_xmp::xmp::exif::ExifSaturation;
@@ -51,9 +57,12 @@ use olympus_xmp::xmp::exif::ExifSensitivityType;
 use olympus_xmp::xmp::exif::ExifFileSource;
 use olympus_xmp::xmp::exif::ExifSceneCaptureType;
 use olympus_xmp::xmp::exif::version::ExifVersion;
-use olympus_xmp::xmp::iptc::{IimCategoryCode, IimSupplementalCategories, IptcDigitalSourceType};
+use olympus_xmp::xmp::iptc::IptcDigitalSourceType;
+use olympus_xmp::xmp::iptc::iim_categories::IimCategoryCode;
+use olympus_xmp::xmp::iptc::iim_categories::IimSupplementalCategories;
 use olympus_xmp::xmp::iptc::urgency::Urgency;
-use olympus_xmp::xmp::plus::{PlusMinorModelAgeDisclosure, PlusModelReleaseStatus};
+use olympus_xmp::xmp::plus::PlusMinorModelAgeDisclosure;
+use olympus_xmp::xmp::plus::PlusModelReleaseStatus;
 use olympus_xmp::xmp::plus::PlusPropertyReleaseStatus;
 use olympus_xmp::xmp::XmpElement;
 use olympus_xmp::xmp::XmpValidationError;
@@ -89,6 +98,7 @@ use crate::binary::Collated;
 use crate::binary::XmpOutcomeOfValidationError;
 use swiss_army_knife::non_zero::new_non_zero_u32;
 use olympus_xmp::transformation::Description;
+use olympus_xmp::xmp::dicom::{DicomModality, DicomSex};
 use olympus_xmp::xmp::exif::flash::{ExifFlashMode, ExifFlashStatusOfStrobeReturnedLight};
 
 
@@ -201,6 +211,12 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
 	let _ = collated.validate(Description.get_attribute::<ExifGainControl>(xml_name!(exif, "GainControl"))).unwrap_or_default();
 	let _ = collated.validate(Description.get_attribute::<ExifResolutionUnit>(xml_name!(exif, "FocalPlaneResolutionUnit"))).unwrap_or_default();
 	collated.check(xmpmeta.has_attribute_with_any_value::<NonEmptyStr>(xml_name!(x, "xmptk")));
+	
+	{
+		collated.check(Description.has_attribute_with_any_value::<NonZeroU32>(xml_name!(Iptc4xmpExt, "MaxAvailHeight")));
+		collated.check(Description.has_attribute_with_any_value::<NonZeroU32>(xml_name!(Iptc4xmpExt, "MaxAvailWidth")));
+	}
+	
 	collated.check(Description.has_attribute_with_any_value::<XmpInstanceIdentifier>(xml_name!(xmpMM, "InstanceID")));
 	collated.check(Description.has_attribute_with_any_value::<ExifCustomRendered>(xml_name!(exif, "CustomRendered")));
 	collated.check(Description.has_attribute_with_any_value::<NonZeroUnsignedTiffRational>(xml_name!(exif, "FocalPlaneXResolution")));
@@ -230,6 +246,23 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
 		collated.check(Flash.has_attribute_with_any_value::<ExifFlashMode>(xml_name!(exif, "Mode")));
 	}
 	
+	{
+		collated.check(Description.has_attribute_with_any_value::<NonEmptyStr>(xml_name!(DICOM, "PatientID")));
+		collated.check(Description.has_attribute_with_any_value::<NonEmptyStr>(xml_name!(DICOM, "StudyID")));
+		collated.check(Description.has_attribute_with_any_value::<NonEmptyStr>(xml_name!(DICOM, "SeriesDescription")));
+		collated.check(Description.has_attribute_with_any_value::<NonEmptyStr>(xml_name!(DICOM, "StudyDescription")));
+		collated.check(Description.has_attribute_with_any_value::<NonEmptyStr>(xml_name!(DICOM, "PatientName"))); // TODO: Should this be in DICOM caret format? (Person Name (DN))
+		collated.check(Description.has_attribute_with_any_value::<NonEmptyStr>(xml_name!(DICOM, "StudyPhysician"))); // TODO: Should this be in DICOM caret format?
+		collated.check(Description.has_attribute_with_any_value::<XmpDateTime>(xml_name!(DICOM, "PatientDOB")));
+		collated.check(Description.has_attribute_with_any_value::<XmpDateTime>(xml_name!(DICOM, "StudyDateTime")));
+		collated.check(Description.has_attribute_with_any_value::<XmpDateTime>(xml_name!(DICOM, "SeriesDateTime")));
+		collated.check(Description.has_attribute_with_any_value::<DicomSex>(xml_name!(DICOM, "PatientSex")));
+		collated.check(Description.has_attribute_with_any_value::<DicomModality>(xml_name!(DICOM, "SeriesModality")));
+		collated.check(Description.has_attribute_with_any_value::<NonEmptyStr>(xml_name!(DICOM, "EquipmentInstitution")));	// TODO: Set this to the address of the location created.
+		collated.check(Description.has_attribute_with_any_value::<NonEmptyStr>(xml_name!(DICOM, "EquipmentManufacturer")));
+		collated.check(Description.has_attribute_with_any_value::<i32>(xml_name!(DICOM, "SeriesNumber")));
+	}
+	
 	// TODO: Overwrite with location shown data.
 	{
 		collated.check(Description.has_attribute_with_any_value::<NonEmptyStr>(xml_name!(Iptc4xmpCore, "Location")));
@@ -254,14 +287,18 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
 		
 		if let Some(CreatorContactInfo) = collated.validate(Description.child(xml_name!(Iptc4xmpCore, "CreatorContactInfo")))
 		{
+			let telephone_number = phone_number_parse(None, "+44 7590 675 756").unwrap();
+			let url = Url::parse("https://photos.stormmq.com/").unwrap();
+			let email = EmailAddress::from_str("raphael.cohn@stormmq.com").unwrap();
+			
 			collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(Iptc4xmpCore, "CiAdrExtadr"), NonEmptyStr("6 Eller Mews")));
 			collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(Iptc4xmpCore, "CiAdrCity"), NonEmptyStr("Skipton")));
 			collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(Iptc4xmpCore, "CiAdrRegion"), NonEmptyStr("North Yorkshire")));
 			collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(Iptc4xmpCore, "CiAdrPcode"), NonEmptyStr("BD23 2TG")));
 			collated.check(Description.has_attribute_with_expected_value::<Iso3166Dash1Country>(xml_name!(Iptc4xmpCore, "CiAdrCtry"), Iso3166Dash1Country::UNITED_KINGDOM_OF_GREAT_BRITAIN_AND_NORTHERN_IRELAND));
-			collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(Iptc4xmpCore, "CiTelWork"), NonEmptyStr("+44 7590 675 756"))); // TODO: Normalise this without spaces.
-			collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(Iptc4xmpCore, "CiEmailWork"), NonEmptyStr("raphael.cohn@stormmq.com")));
-			collated.check(Description.has_attribute_with_expected_value::<NonEmptyStr>(xml_name!(Iptc4xmpCore, "CiUrlWork"), NonEmptyStr("https://photos.stormmq.com/")));
+			collated.check(Description.has_attribute_with_expected_value::<PhoneNumber>(xml_name!(Iptc4xmpCore, "CiTelWork"), telephone_number));
+			collated.check(Description.has_attribute_with_expected_value::<EmailAddress>(xml_name!(Iptc4xmpCore, "CiEmailWork"), email));
+			collated.check(Description.has_attribute_with_expected_value::<Url>(xml_name!(Iptc4xmpCore, "CiUrlWork"), url));
 		}
 	}
 	
@@ -272,7 +309,7 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
 	// TODO: Should not be present photoshop:DocumentAncestors
 	// TODO: ?Should not be present photoshop:History
 	
-	// TODO: xmpMM:InstanceID
+	// TODO: Url: pub fn cannot_be_a_base(&self) -> bool for BaseURL...
 	
    /*
    
@@ -287,16 +324,18 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
    
    "Adobe XMP Core 5.6-c017 91.164464, 2020/06/15-10:20:05 "
    
-   
-   TODO: DICOM validators
-   DICOM:PatientName="Cohn^Raphael James^^Mr^M.Sc. B.A."
-   DICOM:PatientID="Raphael James Cohn"
-   DICOM:PatientDOB="1977/02/23"
-   DICOM:PatientSex="M"
-   DICOM:StudyPhysician="Cohn^Raphael James^^Mr^M.Sc. B.A."
-   DICOM:SeriesModality="XC"
-   DICOM:EquipmentManufacturer="OLYMPUS CORPORATION"
+ 
+
+TOD: PRISM: https://idealliance.org/specifications/prism-metadata/
+
+TODO: IptcLastEdited
 	
+TODO: CiAdrPcode - is there a global post code validator?
+	https://ideal-postcodes.co.uk/guides/uk-postcode-format (very good information)
+	https://randommer.io/zip-validator => A library in .NET to validate all common post codes if the country is known: https://github.com/anghelvalentin/CountryValidator
+OpenCage address formatter: https://crates.io/crates/address-formatter
+
+ 
 	// TODO: To do the comparison, round to two decimal places; consider expressing f-number roundings to 1 dp if above 1 and 2 dp if below 1 (eg f/0.95).
 	// This is similar to the 'normal' accuracy used in Exif.
 	
@@ -380,6 +419,18 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
     </rdf:Alt>
    </xmpRights:UsageTerms>
    
+   
+     <rdf:li
+      Iptc4xmpExt:Sublocation="Addingham Churchyard"
+      Iptc4xmpExt:City="Addingham"
+      Iptc4xmpExt:ProvinceState="North Yorkshire"	TODO: UK province validator?
+      Iptc4xmpExt:CountryName="United Kingdom of Great Britain and Northern Ireland (the)"	DONE ISO 3166 parser
+      Iptc4xmpExt:CountryCode="GBR" DONE: ISO 3166 parser
+      Iptc4xmpExt:WorldRegion="Europe"/>	DONE: region parser
+   fn iptc_address(xmp_element: &XmpElement)
+   {
+   }
+   
    TODO: Validate this
    <Iptc4xmpExt:LocationCreated>
     <rdf:Bag>
@@ -387,7 +438,7 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
       Iptc4xmpExt:ProvinceState="North Yorkshire"
       Iptc4xmpExt:CountryName="United Kingdom of Great Britain and Northern Ireland (the)"
       Iptc4xmpExt:CountryCode="GBR"
-      Iptc4xmpExt:WorldRegion="Europe"
+      Iptc4xmpExt:WorldRegion="Europe"	DONE
       Iptc4xmpExt:Sublocation="Addingham Churchyard"
       Iptc4xmpExt:City="Addingham"/>
     </rdf:Bag>
@@ -468,10 +519,6 @@ fn validate(xml_document: &XmlDocument) -> Result<(), XmpOutcomeOfValidationErro
      <rdf:li>Buildings|Old|Boat Houses</rdf:li>
     </rdf:Bag>
    </lr:hierarchicalSubject>
-   
-   
-
-
 	 */
 	
 	Ok(())

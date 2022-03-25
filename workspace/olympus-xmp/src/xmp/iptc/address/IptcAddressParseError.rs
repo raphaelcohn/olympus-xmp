@@ -2,29 +2,26 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-/// Either an ISO 3166-1 Alpha-2 country code or an ISO 3166-1 Alpha-3 country code.
+/// An address parse error.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub enum Iso3166Dash1AlphaCountryCode
-{
-	/// An ISO 3166-1 Alpha-2 country code.
-	Alpha2(Iso3166Dash1Alpha2CountryCode),
-	
-	/// An ISO 3166-1 Alpha-3 country code.
-	Alpha3(Iso3166Dash1Alpha3CountryCode),
-}
-
-impl Iso3166Dash1AlphaCountryCode
+pub enum IptcAddressParseError<'name, 'namespace, 'local_name>
 {
 	#[allow(missing_docs)]
+	IsNotLiXmlElement,
+
+	#[allow(missing_docs)]
+	AttributeParseFailures(IptcAddressAttributeParseFailures<'name, 'namespace, 'local_name>),
+}
+
+impl Display for IptcAddressParseError
+{
 	#[inline(always)]
-	pub fn letter_to_number<const index: u8>(bytes: &[u8]) -> Result<u16, Iso3166Dash1AlphaCountryCodeParseError>
+	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
 	{
-		let letter = bytes.get_unchecked_value_safe(index);
-		match letter
-		{
-			A ..= Z => Ok(letter_to_number_scaled::<index>(letter)),
-			
-			_ => return Err(Iso3166Dash1AlphaCountryCodeParseError::InvalidAsciiLetter { letter, index })
-		}
+		Debug::fmt(self, formatter)
 	}
+}
+
+impl error::Error for IptcAddressParseError
+{
 }

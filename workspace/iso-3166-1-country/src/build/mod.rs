@@ -2,25 +2,16 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use iso_3166_1_country::Iso3166Dash1AlphaCountryCode;
-use iso_3166_1_country::Iso3166Dash1Alpha2CountryCode;
-use iso_3166_1_country::Iso3166Dash1Alpha3CountryCode;
-use iso_3166_1_country::UnknownStringVariantParseError;
-use super::XmpAttributeValue;
-use super::XmpAttributeValueParseError;
+pub(super) mod un_m49;
 
 
-/// IPTC address structure.
-pub mod address;
-
-
-/// Legacy IIM categories support.
-pub mod iim_categories;
-
-
-/// Legacy urgency support.
-pub mod urgency;
-
-
-include!("IptcDigitalSourceType.rs");
-include!("IptcWorldRegion.rs");
+pub(super) fn mapping()
+{
+	let mapping = un_m49::Mapping::mapping();
+	
+	for (key, value) in mapping
+	{
+		eprintln!("{:?} => {:?}", key, value)
+	}
+	panic!("Do stuff");
+}

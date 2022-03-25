@@ -2,25 +2,33 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use iso_3166_1_country::Iso3166Dash1AlphaCountryCode;
-use iso_3166_1_country::Iso3166Dash1Alpha2CountryCode;
-use iso_3166_1_country::Iso3166Dash1Alpha3CountryCode;
-use iso_3166_1_country::UnknownStringVariantParseError;
-use super::XmpAttributeValue;
-use super::XmpAttributeValueParseError;
+#[derive(Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+pub(super) struct M49Code([u8; 3]);
 
+impl Debug for M49Code
+{
+	#[inline(always)]
+	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	{
+		let array = self.0;
+		write!(f, "{}{}{}", array[0] as char, array[1] as char, array[2] as char)
+	}
+}
 
-/// IPTC address structure.
-pub mod address;
+impl Display for M49Code
+{
+	#[inline(always)]
+	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	{
+		Debug::fmt(self, f)
+	}
+}
 
-
-/// Legacy IIM categories support.
-pub mod iim_categories;
-
-
-/// Legacy urgency support.
-pub mod urgency;
-
-
-include!("IptcDigitalSourceType.rs");
-include!("IptcWorldRegion.rs");
+impl M49Code
+{
+	#[inline(always)]
+	fn is_sark(self) -> bool
+	{
+		self.0 == [b'6', b'8', b'0']
+	}
+}

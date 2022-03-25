@@ -27,6 +27,20 @@ impl<'local_name> const From<&'local_name str> for XmlName<'static, 'local_name>
 	}
 }
 
+impl<'namespace, 'local_name> Display for XmlName<'namespace, 'local_name>
+{
+	#[inline(always)]
+	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	{
+		match self.namespace_uniform_resource_identifier
+		{
+			None => write!(f, "{}", self.local_name.as_ref()),
+			
+			Some(ref namespace_uniform_resource_identifier) => write!(f, "{}:{}", namespace_uniform_resource_identifier.as_ref(), self.local_name.as_ref())
+		}
+	}
+}
+
 impl<'namespace, 'local_name> XmlName<'namespace, 'local_name>
 {
 	/// Construct a namespaced instance.

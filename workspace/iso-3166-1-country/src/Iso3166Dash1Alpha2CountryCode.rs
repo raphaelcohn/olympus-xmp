@@ -1387,7 +1387,7 @@ pub enum Iso3166Dash1Alpha2CountryCode
 	
 	/// User assigned.
 	///
-	/// Used by the World Intellectual Property Organization (WIPO) as an indicator for the Community Plant Variety Office.
+	/// Used by the World Intellectual Property Organization (WIPO) as an indicator for the Community Plant Variety Office, an EU institution.
 	QZ = Self::letters_to_token(b"QZ"),
 	
 	/// TODO.
@@ -1833,7 +1833,7 @@ pub enum Iso3166Dash1Alpha2CountryCode
 	
 	/// Unassigned for use by World Intellectual Property Organisation Standard ST.3.
 	///
-	///  	World Intellectual Property Organization (WIPO).
+	/// World Intellectual Property Organization (WIPO).
 	WO = Self::letters_to_token(b"WO"),
 	
 	/// TODO.
@@ -2119,7 +2119,7 @@ pub enum Iso3166Dash1Alpha2CountryCode
 	
 	/// User assigned.
 	///
-	/// Used by the International Standard Recording Code (ISRC)for some registrants.
+	/// Used by the International Standard Recording Code (ISRC) for some registrants.
 	/// Used by the Unicode Common Locale Data Repository (CLDR) to represent "Unknown or Invalid Territory".
 	ZZ = Self::letters_to_token(b"ZZ"),
 }
@@ -2316,6 +2316,6 @@ impl Iso3166Dash1Alpha2CountryCode
 	#[inline(always)]
 	const fn letters_to_token(letters: &[u8; 2]) -> u16
 	{
-		Iso3166Dash1AlphaCountryCode::letter_to_number_unchecked::<0, _>(letters) + Iso3166Dash1AlphaCountryCode::letter_to_number_unchecked::<1, _>(letters)
+		letter_to_number_unchecked::<0, _>(letters) + letter_to_number_unchecked::<1, _>(letters)
 	}
 }

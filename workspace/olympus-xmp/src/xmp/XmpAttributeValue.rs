@@ -32,6 +32,23 @@ impl<'a> XmpAttributeValue<'a> for &'a str
 	}
 }
 
+impl<'a> XmpAttributeValue<'a> for i32
+{
+	type Error = ParseIntError;
+	
+	#[inline(always)]
+	fn parse(raw: &'a str) -> Result<Self, Self::Error>
+	{
+		i32::from_str(raw)
+	}
+	
+	#[inline(always)]
+	fn into_xmp_attribute_value_parse_error(error: Self::Error) -> XmpAttributeValueParseError
+	{
+		XmpAttributeValueParseError::I32(error)
+	}
+}
+
 impl<'a> XmpAttributeValue<'a> for NonZeroU32
 {
 	type Error = ParseIntError;
@@ -167,7 +184,7 @@ impl<'a> XmpAttributeValue<'a> for EmailAddress
 	#[inline(always)]
 	fn parse(raw: &'a str) -> Result<Self, Self::Error>
 	{
-		EmailAddress::parse(raw, Some(ParsingOptions { is_lax: false })).ok_or(EmailAddressParseError)
+		EmailAddress::from_str(raw)
 	}
 	
 	#[inline(always)]
@@ -187,7 +204,7 @@ impl<'a> XmpAttributeValue<'a> for PhoneNumber
 		use PhoneNumberParseError::*;
 		
 		let phone_number = phone_number_parse(None, raw).map_err(Parse)?;
-		if phone_number_is_valid(&phone_number)
+		if phone_number.is_valid()
 		{
 			Ok(phone_number)
 		}

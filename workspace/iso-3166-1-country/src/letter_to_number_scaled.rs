@@ -2,25 +2,9 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use iso_3166_1_country::Iso3166Dash1AlphaCountryCode;
-use iso_3166_1_country::Iso3166Dash1Alpha2CountryCode;
-use iso_3166_1_country::Iso3166Dash1Alpha3CountryCode;
-use iso_3166_1_country::UnknownStringVariantParseError;
-use super::XmpAttributeValue;
-use super::XmpAttributeValueParseError;
-
-
-/// IPTC address structure.
-pub mod address;
-
-
-/// Legacy IIM categories support.
-pub mod iim_categories;
-
-
-/// Legacy urgency support.
-pub mod urgency;
-
-
-include!("IptcDigitalSourceType.rs");
-include!("IptcWorldRegion.rs");
+#[inline(always)]
+const fn letter_to_number_scaled<const index: u8>(letter: u8) -> u16
+{
+	const Scalar: u8 = Z - A + 1;
+	((letter - A) as u16) * (Scalar as u16).pow(index as u32)
+}

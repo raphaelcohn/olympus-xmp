@@ -66,6 +66,26 @@ impl<'a, 'name, 'namespace, 'local_name> XmpElement<'a, 'name, 'namespace, 'loca
 		}
 	}
 	
+	// <rdf:li
+	// Iptc4xmpExt:Sublocation="Addingham Churchyard"
+	// Iptc4xmpExt:City="Addingham"
+	// Iptc4xmpExt:ProvinceState="North Yorkshire"	TODO: UK province validator?
+	// Iptc4xmpExt:CountryName="United Kingdom of Great Britain and Northern Ireland (the)"	DONE ISO 3166 parser
+	// Iptc4xmpExt:CountryCode="GBR" DONE: ISO 3166 parser
+	// Iptc4xmpExt:WorldRegion="Europe"/>	DONE: region parser
+	pub fn iptc_address(&self) -> Result<IptcAddress, IptcAddressError>
+	{
+		if !self.xml_element.has_name(xml_name!(Iptc4xmpExt, "li"))
+		{
+			return Err(IsNotLiXmlElement)
+		}
+	
+		enum IptcAddressError
+		{
+	
+		}
+	}
+	
 	#[allow(missing_docs)]
 	#[inline(always)]
 	pub fn has_attribute_with_expected_value<XAV: XmpAttributeValue<'a> + Eq>(&self, attribute_name: &'name XmlName<'namespace, 'local_name>, expected: XAV) -> Result<(), XmpValidationError<'name, 'namespace, 'local_name>>

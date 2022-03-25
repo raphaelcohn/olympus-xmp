@@ -2,25 +2,33 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use iso_3166_1_country::Iso3166Dash1AlphaCountryCode;
-use iso_3166_1_country::Iso3166Dash1Alpha2CountryCode;
-use iso_3166_1_country::Iso3166Dash1Alpha3CountryCode;
-use iso_3166_1_country::UnknownStringVariantParseError;
-use super::XmpAttributeValue;
-use super::XmpAttributeValueParseError;
-
-
-/// IPTC address structure.
-pub mod address;
-
-
-/// Legacy IIM categories support.
-pub mod iim_categories;
-
-
-/// Legacy urgency support.
-pub mod urgency;
-
-
-include!("IptcDigitalSourceType.rs");
-include!("IptcWorldRegion.rs");
+#[inline(always)]
+const fn letter_to_number_unchecked<const index: u8, const length: usize>(bytes: &[u8; length]) -> u16
+{
+	if cfg!(debug_assertions)
+	{
+		if index as usize >= length
+		{
+			panic!("index must be less than length")
+		}
+	}
+	
+	if cfg!(debug_assertions)
+	{
+		if length != 2 && length != 3
+		{
+			panic!("length must be 2 or 3")
+		}
+	}
+	
+	let letter = bytes[index as usize];
+	if cfg!(debug_assertions)
+	{
+		if letter < A || letter > Z
+		{
+			panic!("letter must be A to Z inclusive")
+		}
+	}
+	
+	letter_to_number_scaled::<index>(letter)
+}

@@ -53,6 +53,6 @@ impl<'a> LightroomHierarchialSubject<'a>
 	#[inline(always)]
 	fn parse_raw_subject(raw_subject: &'a str, index: usize) -> Result<Subject<'a>, LightroomHierarchialSubjectParseError>
 	{
-		Subject::parse(raw_subject).map_err(|cause| LightroomHierarchialSubjectParseError::EmptySubject { index: 0, cause })
+		Subject::parse(raw_subject).map_err(|cause| LightroomHierarchialSubjectParseError::EmptySubject { index, cause })
 	}
 }

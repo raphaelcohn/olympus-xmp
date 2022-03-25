@@ -2,25 +2,27 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use iso_3166_1_country::Iso3166Dash1AlphaCountryCode;
-use iso_3166_1_country::Iso3166Dash1Alpha2CountryCode;
-use iso_3166_1_country::Iso3166Dash1Alpha3CountryCode;
-use iso_3166_1_country::UnknownStringVariantParseError;
-use super::XmpAttributeValue;
-use super::XmpAttributeValueParseError;
+#[derive(Default, Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+pub(super) struct Names
+{
+	arabic: Option<&'static str>,
+	
+	chinese: Option<&'static str>,
+	
+	english: Option<&'static str>,
+	
+	french: Option<&'static str>,
+	
+	russian: Option<&'static str>,
+	
+	spanish: Option<&'static str>,
+}
 
-
-/// IPTC address structure.
-pub mod address;
-
-
-/// Legacy IIM categories support.
-pub mod iim_categories;
-
-
-/// Legacy urgency support.
-pub mod urgency;
-
-
-include!("IptcDigitalSourceType.rs");
-include!("IptcWorldRegion.rs");
+impl AsMut<Names> for Names
+{
+	#[inline(always)]
+	fn as_mut(&mut self) -> &mut Self
+	{
+		self
+	}
+}

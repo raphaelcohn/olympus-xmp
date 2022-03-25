@@ -13,6 +13,12 @@ pub enum XmpAttributeValueParseError
 	DateTime(XmpDateTimeParseError),
 	
 	#[allow(missing_docs)]
+	DicomModality(UnknownStringVariantParseError),
+	
+	#[allow(missing_docs)]
+	DicomSex(UnknownStringVariantParseError),
+	
+	#[allow(missing_docs)]
 	EmailAddress(EmailAddressParseError),
 	
 	#[allow(missing_docs)]
@@ -62,6 +68,9 @@ pub enum XmpAttributeValueParseError
 	
 	#[allow(missing_docs)]
 	ExifWhiteBalanceMode(U16ParseError),
+	
+	#[allow(missing_docs)]
+	I32(ParseIntError),
 	
 	#[allow(missing_docs)]
 	IimCategoryCode(IimCategoryCodeParseError),
@@ -163,6 +172,10 @@ impl error::Error for XmpAttributeValueParseError
 			
 			DateTime(cause) => Some(cause),
 			
+			DicomModality(cause) => Some(cause),
+			
+			DicomSex(cause) => Some(cause),
+			
 			EmailAddress(cause) => Some(cause),
 			
 			ExifContrastOrSharpness(cause) => Some(cause),
@@ -196,6 +209,8 @@ impl error::Error for XmpAttributeValueParseError
 			ExifVersion(cause) => Some(cause),
 			
 			ExifWhiteBalanceMode(cause) => Some(cause),
+			
+			I32(cause) => Some(cause),
 			
 			IimCategoryCode(cause) => Some(cause),
 			
