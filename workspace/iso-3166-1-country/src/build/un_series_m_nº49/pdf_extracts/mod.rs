@@ -10,13 +10,22 @@ use super::abbreviations::LegacyFourCharacterAbbreviation;
 use super::abbreviations::TwelveCharacterAbbreviation;
 
 
-include!("Revision0English.rs");
-include!("Revision0French.rs");
-include!("Revision1.rs");
-include!("Revision2.rs");
+include!("constituents.rs");
+
+
+include!("customs_areas.rs");
+
+include!("CommunitiesEnglish.rs");
+include!("RegionOrGroupingNotElsewhereSpecified.rs");
+include!("CustomsAreasRevision0.rs");
+include!("Revision0Abbreviations.rs");
+include!("Revision1Abbreviations.rs");
+include!("Revision1CustomsAreas.rs");
+include!("Revision2Abbreviations.rs");
+include!("Revision2CustomsAreas.rs");
+include!("Revision2RegionsAndGroupings.rs");
+include!("Revision3CustomsAreas.rs");
 include!("Revision3English.rs");
-include!("Revision4.rs");
-include!("revision_0.rs");
-include!("revision_1_or_2.rs");
-include!("revision_3_english.rs");
-include!("revision_4.rs");
+include!("Revision3EnglishReplacementRegions.rs");
+include!("Revision4Abbreviations.rs");
+include!("Revision4CustomsAreas.rs");

@@ -3,7 +3,7 @@
 
 
 #[inline(always)]
-const fn revision_0(code: &'static [u8; 3], name: &'static str, legacy_four_character_abbreviation: &'static [u8], legacy_eight_character_abbreviation: &'static [u8], twelve_character_abbreviation: &'static [u8]) -> (M49Code, &'static str, (LegacyFourCharacterAbbreviation, LegacyEightCharacterAbbreviation, TwelveCharacterAbbreviation))
+const fn revision_3_or_4_customs_areas(code: &[u8; 3], english_name: &'static str, constituents: &'static [M49Code]) -> (M49Code, &'static str, &'static [M49Code])
 {
-	(M49Code::from(m49_code), name, (LegacyFourCharacterAbbreviation::new(legacy_four_character_abbreviation), LegacyEightCharacterAbbreviation::new(legacy_eight_character_abbreviation), TwelveCharacterAbbreviation::new(twelve_character_abbreviation)))
+	(M49Code::from(code), english_name, constituents)
 }

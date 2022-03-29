@@ -47,7 +47,8 @@ impl Parser
 				{
 					const Replacements: &'static [M49Code] = &[M49Code::from($first)$(, M49Code::from($subsequent))*];
 					Replacements
-			}	}
+				}
+			}
 		}
 		
 		const MadeUpAbbreviationForBonaire: &'static [u8] = b"BONAIRE";
@@ -210,44 +211,13 @@ impl Parser
 		self.add_country_subdivison(b"836", "", "", "Zanzibar and Pemba Island", TODO_FRENCH, "", "", b"834");
 		self.add_country_subdivison(b"835", "", "", "Tanganyika", TODO_FRENCH, "", "", b"834");
 		
-		
-		// TODO: Some economic blocks had 12 and 8 character abbreviations in 1982 (eg ECOWAS) as did regions (eg Africa).
-		/* TODO Rev 4 new codes.
-New Code, Name
-063", "Andean Common Market (ANCOM)
-066", "Asia-Pacific Economic Cooperation (APEC)
-069", "Mercado Comun Sudamericano (MERCOSUR)
-071", "North American Free Trade Agreement (NAFTA)
-073", "Association of Southeast Asian Nations (ASEAN)
-130", "Caribbean Community and Common Market (CARICOM)
-171", "Common Market for Eastern and Southern Africa (COMESA)
-172", "Commonwealth of Independent States (CIS)
-395", "Central American Common Market (CACM)
-053", "Southern African Customs union (SACU)
-This list is not the same as the historic economic groups like ECOWAS
-What about 711 Southern African Customs Union (SACU??
+		/*
 
-b The continent of North America comprises Northern America (021), Caribbean (029) and Central America (013).
+
+TODO The continent of North America comprises Northern America (021), Caribbean (029) and Central America (013).
 See Revision 2 for actual definition!
 
-TODO Rev 4 no longer in use.
-Old Code, Name, New Code
-006", "Asia, b"142"
-007", "Europe, b"150"
-033", "Southern Asia, "Part of 062"
-037", "Western Asia, b"145"
-038", "Western Europe, b"155"
-041", "Eastern Europe, b"151"
-042", "Northern Europe, b"154"
-043", "Australia and New Zealand, b"053"
-045", "Melanesia, b"054"
-046", "Micronesia-Polynesia, b"055"
-047", "Micronesia, b"057"
-049", "Polynesia, b"061"
-143", "Central Asia, "Part of 062"
 
-
-879 Western Asia not elsewhere specified
 		 */
 		
 		/*
@@ -258,42 +228,14 @@ Old Code, Name, New Code
 			eg Sabah
 		
 		##    code                            name
-## 1   200                  Czechoslovakia
-## 2   230                    Fmr Ethiopia
-## 3   251                          France
-## 4   278        Fmr Dem. Rep. of Germany
-## 5   280        Fmr Fed. Rep. of Germany
-## 6   381                           Italy
 ## 7   457                         Sarawak
 ## 8   459              Peninsula Malaysia
 ## 9   461                           Sabah
 ## 10  490                 Other Asia, nes
-## 11  530                  Neth. Antilles
-## 12  532        Neth. Antilles and Aruba
-## 13  579                          Norway
-## 14   58              Belgium-Luxembourg
-## 15  582                Fmr Pacific Isds
-## 16  588          East and West Pakistan
-## 17  590     Fmr Panama, excl.Canal Zone
-## 18  592           Fmr Panama-Canal-Zone
-## 19  647                      Ryukyu Isd
-## 20  658 Saint Kitts, Nevis and Anguilla
-## 21  699                           India
-## 22  711       So. African Customs Union
 ## 23  717               Fmr Rhodesia Nyas
-## 24  720                  Fmr Dem. Yemen
-## 25  729                           Sudan
-## 26  736                       Fmr Sudan
-## 27  757                     Switzerland
-## 28  810                        Fmr USSR
-## 29  835                  Fmr Tanganyika
 ## 30  836      Fmr Zanzibar and Pemba Isd
 ## 31  841               USA (before 1981)
 ## 32  842                             USA
-## 33  866        Fmr Dem. Rep. of Vietnam
-## 34  868             Fmr Rep. of Vietnam
-## 35  886          Fmr Arab Rep. of Yemen
-## 36  890                  Fmr Yugoslavia
 ## 37  891           Serbia and Montenegro
 ## 38   97                           EU-28
 		 */
@@ -305,15 +247,6 @@ Old Code, Name, New Code
 		// (ie also 926 - includes channel islands and Isle of Man)
 		
 		// TODO: Within the developed regions, Europe is sometimes defined with the exception of Transition countries, numerical code 778.
-		
-		// TODO: Economic small collated
-		// 58	<NA>	<NA>	Belgium-Luxembourg
-		// 251	<NA>	<NA>	France-Monaco
-		// 381	<NA>	<NA>	Italy-San Marino-Holy See
-		// 579	<NA>	<NA>	Norway incl. Svalbard and Jan Mayen Is.
-		// 757	<NA>	<NA>	Switzerland-Liechtenstein	(438, 756)
-		// 841	<NA>	<NA>
-		// 842	<NA>	<NA>	USA incl. Puerto Rico, US Virgin Is.
 		
 		// TODO: Other weird
 		// 842: United States of America
@@ -333,10 +266,7 @@ Old Code, Name, New Code
 		
 		// TODO: Smaller subdivisions of countries; this isn't definitive:-
 		
-		// TODO: Old continent codes
-		
 		// TODO: 829 unofficial scotland code
-		
 		// Also (827, 828, 829) to be promoted to official: https://www.alvestrand.no/pipermail/ietf-languages/2007-August/006904.html
 		/*
 		o recap:  Currently, UNSD is internally (and informally) using the M.49
@@ -503,9 +433,9 @@ have ccTLD implications.
 		let m49_code = name_and_m49_code.m49_code;
 		let non_empty_name = name_and_m49_code.non_empty_name();
 		
-		let twelve_character_abbreviation = match Revision4.binary_search_by(|element| element.0.cmp(&m49_code))
+		let twelve_character_abbreviation = match Revision4Abbreviations.binary_search_by(|element| element.0.cmp(&m49_code))
 		{
-			Ok(index) => Revision4.get_unchecked_value_safe(index).1,
+			Ok(index) => Revision4Abbreviations.get_unchecked_value_safe(index).1,
 			
 			Err(_) => panic!("Missing country {}: {}", m49_code, english),
 		};

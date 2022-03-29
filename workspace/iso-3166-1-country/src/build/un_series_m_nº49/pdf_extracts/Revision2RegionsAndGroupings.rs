@@ -1,0 +1,45 @@
+// This file is part of olympus-xmp. It is subject to the license terms in the COPYRIGHT file found in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT. No part of olympus-xmp, including this file, may be copied, modified, propagated, or distributed except according to the terms contained in the COPYRIGHT file.
+// Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
+
+
+/// Must be kept in ascending sort order.
+pub(super) const Revision2RegionsAndGroupings: [(M49Code, &'static str, (LegacyEightCharacterAbbreviation, TwelveCharacterAbbreviation)); 37] =
+[
+	revision_2_regions_and_groupings_abbreviations(b"002", "Africa", b"AFRICA", b"AFRICA"),
+	revision_2_regions_and_groupings_abbreviations(b"003", "North America", b"N.AMRCA", b"NTH.AMERICA"),
+	revision_2_regions_and_groupings_abbreviations(b"005", "South America", b"S.AMRCA", b"STH.AMERICA"),
+	revision_2_regions_and_groupings_abbreviations(b"006", "Asia", b"ASIA", b"ASIA"),
+	revision_2_regions_and_groupings_abbreviations(b"007", "Europe", b"EUROPE", b"EUROPE"),
+	revision_2_regions_and_groupings_abbreviations(b"009", "Oceania", b"OCEANIA", b"OCEANIA"),
+	revision_2_regions_and_groupings_abbreviations(b"014", "Western Africa", b"WN.AFRCA", b"WSTN.AFRICA"),
+	revision_2_regions_and_groupings_abbreviations(b"013", "Central America", b"CN.AMRCA", b"CNTL.AMERICA"),
+	revision_2_regions_and_groupings_abbreviations(b"014", "Eastern Africa", b"EN.AFRCA", b"ESTN.AFRICA"),
+	revision_2_regions_and_groupings_abbreviations(b"015", "Northern Africa", b"NN.AFRCA", b"NTHN.AFRICA"),
+	revision_2_regions_and_groupings_abbreviations(b"017", "Middle Africa", b"MD.AFRCA", b"MDLE.AFRICA"),
+	revision_2_regions_and_groupings_abbreviations(b"018", "Southern Africa", b"SN.AFRCA", b"STHN.AFRICA"),
+	revision_2_regions_and_groupings_abbreviations(b"019", "Americas", b"AMERICAS", b"AMERICAS"),
+	revision_2_regions_and_groupings_abbreviations(b"021", "Northern America", b"NN.AMRCA", b"NTHN.AMERICA"),
+	revision_2_regions_and_groupings_abbreviations(b"029", "Caribbean", b"CARBBEAN", b"CARIBBEAN"),
+	revision_2_regions_and_groupings_abbreviations(b"030", "Eastern Asia", b"EN.ASIA", b"EASTERN.ASIA"),
+	revision_2_regions_and_groupings_abbreviations(b"033", "Southern Asia", b"SN.ASIA", b"STHN.ASIA"),
+	revision_2_regions_and_groupings_abbreviations(b"035", "Southeastern Asia", b"S.EN.ASA", b"ST.ESTN.ASIA"),
+	revision_2_regions_and_groupings_abbreviations(b"037", "Western Asia", b"WN.ASIA", b"WESTERN.ASIA"),
+	revision_2_regions_and_groupings_abbreviations(b"038", "Western Europe", b"WN.EUR.", b"WSTN.EUROPE"),
+	revision_2_regions_and_groupings_abbreviations(b"039", "Southern Europe", b"SN.EUR.", b"STHN.EUROPE"),
+	revision_2_regions_and_groupings_abbreviations(b"041", "Eastern Europe", b"EN.EUR.", b"ESTN.EUROPE"),
+	revision_2_regions_and_groupings_abbreviations(b"042", "Northern Europe", b"NN.EUR.", b"NTHN.EUROPE"),
+	revision_2_regions_and_groupings_abbreviations(b"043", "Australia and New Zealand", b"AUS.N.Z.", b"AUS.N.Z."),
+	revision_2_regions_and_groupings_abbreviations(b"045", "Melanesia", b"MELNESIA", b"MELANESIA"),
+	revision_2_regions_and_groupings_abbreviations(b"046", "Micronesia-Polynesia", b"MCNSA.P", b"MCRNSA.POLYN"),
+	revision_2_regions_and_groupings_abbreviations(b"047", "Micronesia", b"MICRNSIA", b"MICRONESIA"),
+	revision_2_regions_and_groupings_abbreviations(b"049", "Polynesia", b"POLNESIA", b"POLYNESIA"),
+	revision_2_regions_and_groupings_abbreviations(b"095", "Latin American Integration Association", b"LAIA", b"LAIA"),
+	revision_2_regions_and_groupings_abbreviations(b"097", "European Economic Community", b"EEC", b"EEC"),
+	revision_2_regions_and_groupings_abbreviations(b"197", "European Free Trade Association", b"EFTA", b"EFTA"),
+	revision_2_regions_and_groupings_abbreviations(b"199", "Least Developed Countries", b"LDC", b"LDC"),
+	revision_2_regions_and_groupings_abbreviations(b"393", "Centrai American Common Market", b"CACM", b"CACM"),
+	revision_2_regions_and_groupings_abbreviations(b"399", "Organization of Petroleum Exporting Countries", b"OPEC", b"OPEC"),
+	revision_2_regions_and_groupings_abbreviations(b"692", "Customs and Economic Union of Central Africa", b"CEUCA", b"CEUCA"),
+	revision_2_regions_and_groupings_abbreviations(b"830", "Channel Islands", b"CHNL IS.", b"CHANNL ISLDS"),
+	revision_2_regions_and_groupings_abbreviations(b"892", "Economic Community of West African States", b"ECOWAS", b"ECOWAS"),
+];

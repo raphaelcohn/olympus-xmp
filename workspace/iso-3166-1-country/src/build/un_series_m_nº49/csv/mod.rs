@@ -17,7 +17,7 @@ use super::Language;
 use super::M49Code;
 use super::M49CodeType;
 use super::Names;
-use super::pdf_extracts::Revision4;
+use super::pdf_extracts::Revision4Abbreviations;
 use swiss_army_knife::get_unchecked::GetUnchecked;
 
 
