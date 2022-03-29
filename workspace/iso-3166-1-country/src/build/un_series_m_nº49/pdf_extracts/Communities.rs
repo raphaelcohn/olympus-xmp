@@ -3,7 +3,7 @@
 
 
 /// Must be kept in ascending sort order.
-pub(super) const CommunitiesEnglish: [(M49Code, u8, &'static str, &'static [&'static str]); 18] =
+pub(super) const Communities: [(M49Code, u8, &'static str, &'static [&'static str]); 18] =
 {
 	const NoHistoricNames: &'static [&'static str] = &[];
 	

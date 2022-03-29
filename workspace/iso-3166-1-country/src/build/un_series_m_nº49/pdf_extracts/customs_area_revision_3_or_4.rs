@@ -3,7 +3,7 @@
 
 
 #[inline(always)]
-const fn revision_3_english(code: &'static [u8; 3], name: &'static str, english_twelve_character_abbreviation: Option<&'static [u8]>, iso_3166_alpha_3_code: Option<(&'static [u8; 3])>) -> (M49Code, &'static str, Option<TwelveCharacterAbbreviation>, Option<Iso3166Dash1Alpha3Code>)
+const fn customs_area_revision_3_or_4(code: &[u8; 3], english_name: &'static str, constituents: &'static [M49Code]) -> (M49Code, &'static str, &'static [M49Code])
 {
-	(M49Code::from(m49_code), name, english_twelve_character_abbreviation.map(TwelveCharacterAbbreviation::new), iso_3166_alpha_3_code.map(Iso3166Dash1Alpha3Code::from))
+	(M49Code::from(code), english_name, constituents)
 }

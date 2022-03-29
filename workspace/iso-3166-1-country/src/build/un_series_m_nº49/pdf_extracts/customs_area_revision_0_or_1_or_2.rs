@@ -2,5 +2,15 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-/// Must be kept in ascending sort order.
-pub(super) const Revision2CustomsAreas: [(M49Code, &'static str, &'static [M49Code]); 7] = Revision1CustomsAreas;
+#[inline(always)]
+const fn customs_area_revision_0_or_1_or_2(code: &'static [u8; 3], english_name: &'static str, constitutents: &'static [M49Code]) -> (M49Code, &'static str, &'static [M49Code])
+{
+	let code = M49Code::from(m49_code);
+	
+	// Weird but official!
+	if code != constitutents[0]
+	{
+		panic!("First constituent must be the customs code")
+	}
+	(code, name, constitutents)
+}

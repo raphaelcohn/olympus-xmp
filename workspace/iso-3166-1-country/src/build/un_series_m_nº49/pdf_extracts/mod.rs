@@ -13,19 +13,19 @@ use super::abbreviations::TwelveCharacterAbbreviation;
 include!("constituents.rs");
 
 
-include!("customs_areas.rs");
-
-include!("CommunitiesEnglish.rs");
-include!("RegionOrGroupingNotElsewhereSpecified.rs");
+include!("NamesAndAbbreviationsForRegionsAndGroupingsRevision2.rs");
+include!("NamesAndAbbreviationsForCountriesRevision0.rs");
+include!("NamesAndAbbreviationsForCountriesRevision1.rs");
+include!("NamesAndAbbreviationsForCountriesRevision2.rs");
+include!("NamesAndAbbreviationsForCountriesRevision3.MissingNonEnglish.rs");
+include!("NamesAndAbbreviationsForCountriesRevision4.MissingNonEnglish.rs");
+include!("Communities.rs");
 include!("CustomsAreasRevision0.rs");
-include!("Revision0Abbreviations.rs");
-include!("Revision1Abbreviations.rs");
-include!("Revision1CustomsAreas.rs");
-include!("Revision2Abbreviations.rs");
-include!("Revision2CustomsAreas.rs");
-include!("Revision2RegionsAndGroupings.rs");
-include!("Revision3CustomsAreas.rs");
-include!("Revision3English.rs");
-include!("Revision3EnglishReplacementRegions.rs");
-include!("Revision4Abbreviations.rs");
-include!("Revision4CustomsAreas.rs");
+include!("CustomsAreasRevision1.rs");
+include!("CustomsAreasRevision2.rs");
+include!("CustomsAreasRevision3.rs");
+include!("CustomsAreasRevision4.rs");
+include!("ObsoleteRegionsRevision3Onwards.MissingNonEnglish.rs");
+include!("RegionOrGroupingNotElsewhereSpecifiedRevision3Onwards.MissingNonEnglish.rs");
+include!("customs_area_revision_0_or_1_or_2.rs");
+include!("customs_area_revision_3_or_4.rs");
