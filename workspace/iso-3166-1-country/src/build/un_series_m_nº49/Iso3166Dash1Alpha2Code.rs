@@ -24,6 +24,15 @@ impl Display for Iso3166Dash1Alpha2Code
 	}
 }
 
+impl<'a> const From<&'a [u8; 2]> for Iso3166Dash1Alpha2Code
+{
+	#[inline(always)]
+	fn from(value: &'a [u8; 2]) -> Self
+	{
+		Self(*value)
+	}
+}
+
 impl Iso3166Dash1Alpha2Code
 {
 	#[inline(always)]

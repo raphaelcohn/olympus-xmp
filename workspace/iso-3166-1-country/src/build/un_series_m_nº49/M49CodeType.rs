@@ -17,13 +17,6 @@ pub(super) enum M49CodeType
 	Country(Country),
 
 	PrivateUse,
-
-	ObsoleteCountry
-	{
-		names: Names,
-		
-		replacements: &'static [M49Code],
-	},
 	
 	ObsoleteSubRegion
 	{

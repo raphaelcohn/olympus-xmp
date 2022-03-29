@@ -2,9 +2,7 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use crate::build::un_series_m_nº49::pdf_extracts::validate_twelve_character_abbreviation;
-
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Default, Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub(super) struct Names
 {
 	arabic: &'static str,
@@ -18,8 +16,6 @@ pub(super) struct Names
 	russian: &'static str,
 	
 	spanish: &'static str,
-	
-	twelve_character_abbreviation: &'static [u8],
 }
 
 impl AsMut<Names> for Names
@@ -34,9 +30,8 @@ impl AsMut<Names> for Names
 impl Names
 {
 	#[inline(always)]
-	fn english_and_french_only(english: &'static str, french: &'static str, twelve_character_abbreviation: &'static [u8]) -> Self
+	fn english_and_french_only(english: &'static str, french: &'static str) -> Self
 	{
-		validate_twelve_character_abbreviation(twelve_character_abbreviation);
 		assert!(!english.is_empty(), "english is empty");
 		assert!(!french.is_empty(), "french is empty");
 		
@@ -48,14 +43,12 @@ impl Names
 			french,
 			russian: "",
 			spanish: "",
-			twelve_character_abbreviation,
 		}
 	}
 	
 	#[inline(always)]
-	fn new(arabic: &'static str, chinese: &'static str, english: &'static str, french: &'static str, russian: &'static str, spanish: &'static str, twelve_character_abbreviation: &'static [u8]) -> Self
+	fn new(arabic: &'static str, chinese: &'static str, english: &'static str, french: &'static str, russian: &'static str, spanish: &'static str) -> Self
 	{
-		validate_twelve_character_abbreviation(twelve_character_abbreviation);
 		assert!(!arabic.is_empty(), "arabic is empty");
 		assert!(!chinese.is_empty(), "chinese is empty");
 		assert!(!english.is_empty(), "english is empty");
@@ -71,7 +64,6 @@ impl Names
 			french,
 			russian,
 			spanish,
-			twelve_character_abbreviation,
 		}
 	}
 }

@@ -3,14 +3,16 @@
 
 
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub(super) struct TwelveCharacterAbbreviation(&'static [u8]);
-
-impl TwelveCharacterAbbreviation
+enum Iso3166Dash1AlphaCode
 {
-	#[inline(always)]
-	const fn new(abbreviation: &'static [u8]) -> Self
+	PredatesOrNotApplicable,
+	
+	Alpha2Only(Iso3166Dash1Alpha2Code),
+	
+	Both
 	{
-		validate_abbreviation::<12>(abbreviation);
-		Self(abbreviation)
+		alpha2: Iso3166Dash1Alpha2Code,
+		
+		alpha3: Iso3166Dash1Alpha3Code,
 	}
 }

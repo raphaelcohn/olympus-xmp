@@ -2,6 +2,8 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+use abbreviations::TwelveCharacterAbbreviation;
+use abbreviations::Abbreviations;
 use std::fmt;
 use std::fmt::Debug;
 use std::fmt::Display;
@@ -10,6 +12,9 @@ use swiss_army_knife::a_to_z::_0;
 use swiss_army_knife::a_to_z::_9;
 use swiss_army_knife::a_to_z::A;
 use swiss_army_knife::a_to_z::Z;
+
+
+mod abbreviations;
 
 
 pub(super) mod csv;
@@ -27,6 +32,8 @@ include!("Country.rs");
 include!("Developing.rs");
 include!("Iso3166Dash1Alpha2Code.rs");
 include!("Iso3166Dash1Alpha3Code.rs");
+include!("Iso3166Dash1AlphaCode.rs");
 include!("M49Code.rs");
 include!("M49CodeType.rs");
+include!("Language.rs");
 include!("Names.rs");

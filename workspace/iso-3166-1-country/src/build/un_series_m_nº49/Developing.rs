@@ -2,7 +2,7 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[derive(Default, Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub(super) struct Developing
 {
 	least_developed_countries: bool,
@@ -10,4 +10,18 @@ pub(super) struct Developing
 	land_locked_developing_countries: bool,
 	
 	small_island_developing_states: bool,
+}
+
+impl const Default for Developing
+{
+	#[inline(always)]
+	fn default() -> Self
+	{
+		Self
+		{
+			least_developed_countries: false,
+			land_locked_developing_countries: false,
+			small_island_developing_states: false
+		}
+	}
 }

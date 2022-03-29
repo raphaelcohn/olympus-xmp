@@ -3,14 +3,51 @@
 
 
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-struct LegacyFourCharacterAbbreviation(&'static [u8]);
+enum Language
+{
+	Arabic,
+	
+	Chinese,
+	
+	English,
 
-impl LegacyFourCharacterAbbreviation
+	French,
+
+	Russian,
+
+	Spanish,
+}
+
+impl Language
 {
 	#[inline(always)]
-	const fn new(abbreviation: &'static [u8]) -> Self
+	fn initial(self, names: &mut Names, non_empty_name: &'static str)
 	{
-		validate_abbreviation::<4>(abbreviation);
-		Self(abbreviation)
+		use Language::*;
+		
+		let field = match self
+		{
+			Arabic => &mut names.arabic,
+			
+			Chinese => &mut names.arabic,
+			
+			English => &mut names.arabic,
+			
+			French => &mut names.arabic,
+			
+			Russian => &mut names.arabic,
+			
+			Spanish => &mut names.arabic,
+		};
+		
+		let was = *field;
+		assert!(was.is_empty(), "Name was not previously empty but was {}", was);
+		*field = non_empty_name;
+	}
+	
+	#[inline(always)]
+	fn older(self, names: &mut Names)
+	{
+	
 	}
 }

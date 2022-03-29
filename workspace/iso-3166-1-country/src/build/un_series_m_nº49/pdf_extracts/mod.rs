@@ -3,13 +3,11 @@
 
 
 use super::M49Code;
-use swiss_army_knife::a_to_z::A;
-use swiss_army_knife::a_to_z::Z;
-use swiss_army_knife::a_to_z::Space;
-use swiss_army_knife::a_to_z::Hyphen;
-use swiss_army_knife::a_to_z::Period;
+use super::abbreviations::LegacyEightCharacterAbbreviation;
+use super::abbreviations::LegacyFourCharacterAbbreviation;
+use super::abbreviations::TwelveCharacterAbbreviation;
+
 
 
 include!("Series_M_Nº49_TwelveCharacterAbbreviations.rs");
 include!("mapping.rs");
-include!("validate_twelve_character_abbreviation.rs");

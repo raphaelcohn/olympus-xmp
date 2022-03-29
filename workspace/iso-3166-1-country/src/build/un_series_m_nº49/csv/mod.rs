@@ -3,7 +3,7 @@
 
 
 use std::collections::BTreeMap;
-use domain::LegacyFrenchAbbreviations;
+use domain::Legacy1970Abbreviations;
 use domain::NameAndM49Code;
 use domain::Record;
 use parser::inefficient_csv_records;
@@ -13,10 +13,11 @@ use super::Country;
 use super::Developing;
 use super::Iso3166Dash1Alpha2Code;
 use super::Iso3166Dash1Alpha3Code;
+use super::Language;
 use super::M49Code;
 use super::M49CodeType;
 use super::Names;
-use super::pdf_extracts::Series_M_Nº49_TwelveCharacterAbbreviations;
+use super::pdf_extracts::Revision4;
 use swiss_army_knife::get_unchecked::GetUnchecked;
 
 

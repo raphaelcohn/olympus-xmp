@@ -6,20 +6,16 @@ use super::super::Country;
 use super::super::Developing;
 use super::super::Iso3166Dash1Alpha2Code;
 use super::super::Iso3166Dash1Alpha3Code;
+use super::super::LegacyFourCharacterAbbreviation;
+use super::super::Legacy1970Abbreviations;
+use super::super::LegacyEightCharacterAbbreviation;
+use super::super::Language;
 use super::super::Names;
 use super::super::M49Code;
-use swiss_army_knife::a_to_z::A;
-use swiss_army_knife::a_to_z::Z;
-use swiss_army_knife::a_to_z::Space;
-use swiss_army_knife::a_to_z::Hyphen;
+use super::super::TwelveCharacterAbbreviation;
 
 
-include!("LegacyEightCharacterAbbreviation.rs");
-include!("LegacyFourCharacterAbbreviation.rs");
-include!("LegacyFrenchAbbreviations.rs");
 include!("NameAndM49Code.rs");
 include!("Record.rs");
 include!("Region.rs");
 include!("SubRegion.rs");
-include!("TwelveCharacterAbbreviation.rs");
-include!("validate_abbreviation.rs");
