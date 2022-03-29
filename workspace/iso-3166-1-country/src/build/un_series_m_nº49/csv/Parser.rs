@@ -254,6 +254,8 @@ Old Code, Name, New Code
 		Codes from Comtrade M49 which are absent in Official M49.
 		
 		https://comtrade.un.org/data/cache/reporterAreas.json
+			eg Penisula Malaysia
+			eg Sabah
 		
 		##    code                            name
 ## 1   200                  Czechoslovakia

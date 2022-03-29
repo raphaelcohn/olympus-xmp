@@ -3,7 +3,7 @@
 
 
 #[inline(always)]
-const fn revision4(m49_code: &'static [u8; 3], twelve_character_abbreviation: &'static [u8]) -> (M49Code, TwelveCharacterAbbreviation)
+const fn revision_4(m49_code: &'static [u8; 3], twelve_character_abbreviation: &'static [u8]) -> (M49Code, TwelveCharacterAbbreviation)
 {
 	(M49Code::from(m49_code), TwelveCharacterAbbreviation::new(twelve_character_abbreviation))
 }

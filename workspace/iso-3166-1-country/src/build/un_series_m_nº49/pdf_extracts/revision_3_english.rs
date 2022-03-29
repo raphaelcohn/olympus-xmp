@@ -2,21 +2,8 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use super::M49Code;
-use super::Iso3166Dash1Alpha2Code;
-use super::Iso3166Dash1Alpha3Code;
-use super::abbreviations::LegacyEightCharacterAbbreviation;
-use super::abbreviations::LegacyFourCharacterAbbreviation;
-use super::abbreviations::TwelveCharacterAbbreviation;
-
-
-include!("Revision0English.rs");
-include!("Revision0French.rs");
-include!("Revision1.rs");
-include!("Revision2.rs");
-include!("Revision3English.rs");
-include!("Revision4.rs");
-include!("revision_0.rs");
-include!("revision_1_or_2.rs");
-include!("revision_3_english.rs");
-include!("revision_4.rs");
+#[inline(always)]
+const fn revision_3_english(code: &'static [u8; 3], name: &'static str, english_twelve_character_abbreviation: Option<&'static [u8]>, iso_3166_alpha_3_code: Option<(&'static [u8; 3])>) -> (M49Code, &'static str, Option<TwelveCharacterAbbreviation>, Option<Iso3166Dash1Alpha3Code>)
+{
+	(M49Code::from(m49_code), name, english_twelve_character_abbreviation.map(TwelveCharacterAbbreviation::new), iso_3166_alpha_3_code.map(Iso3166Dash1Alpha3Code::from))
+}
