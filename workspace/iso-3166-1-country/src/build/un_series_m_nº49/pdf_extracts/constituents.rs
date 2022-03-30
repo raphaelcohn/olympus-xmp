@@ -6,7 +6,9 @@ macro_rules! constituents
 {
 	($first: literal$(, $subsequent: literal)*) =>
 	{
-		const Constituents: &'static [M49Code] = &[M49Code::from($first)$(, M49Code::from($subsequent))*];
-		Constituents
+		{
+			const Constituents: &'static [M49Code] = &[M49Code::from($first)$(, M49Code::from($subsequent))*];
+			Constituents
+		}
 	}
 }

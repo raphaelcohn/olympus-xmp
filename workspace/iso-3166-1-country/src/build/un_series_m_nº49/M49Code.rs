@@ -14,6 +14,15 @@ impl<'a> const From<&'a [u8; 3]> for M49Code
 	}
 }
 
+impl const From<[u8; 3]> for M49Code
+{
+	#[inline(always)]
+	fn from(value: [u8; 3]) -> Self
+	{
+		Self(value)
+	}
+}
+
 impl Debug for M49Code
 {
 	#[inline(always)]

@@ -3,7 +3,7 @@
 
 
 #[inline(always)]
-const fn customs_area_revision_3_or_4(code: &[u8; 3], english_name: &'static str, constituents: &'static [M49Code]) -> (M49Code, &'static str, &'static [M49Code])
+const fn customs_area_revision_3_or_4(m49_code: &[u8; 3], english_name: &'static str, constituents: &'static [M49Code]) -> (M49Code, &'static str, &'static [M49Code])
 {
-	(M49Code::from(code), english_name, constituents)
+	(M49Code::from(m49_code), english_name, constituents)
 }

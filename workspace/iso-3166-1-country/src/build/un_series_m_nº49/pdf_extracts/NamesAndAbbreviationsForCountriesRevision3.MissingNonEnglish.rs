@@ -4,7 +4,7 @@
 
 /// Must be kept in ascending sort order.
 ///
-/// Extracted from the PDF for UN, Series M, Nº49 Revision 3 (1996).
+/// Extracted from the PDF for UNSD Series M, Nº49 Revision 3 (1996).
 ///
 /// TODO: Non-English names.
 /// There are no French abbreviations.
@@ -13,9 +13,20 @@
 pub(super) const NamesAndAbbreviationsForCountriesRevision3: [(M49Code, &'static str, Option<TwelveCharacterAbbreviation>, Option<Iso3166Dash1Alpha3Code>); 233] =
 {
 	#[inline(always)]
-	const fn names_and_abbreviations_for_country_revision_3(code: &'static [u8; 3], english_name: &'static str, english_twelve_character_abbreviation: Option<&'static [u8]>, iso_3166_alpha_3_code: Option<(&'static [u8; 3])>) -> (M49Code, &'static str, Option<TwelveCharacterAbbreviation>, Option<Iso3166Dash1Alpha3Code>)
+	const fn names_and_abbreviations_for_country_revision_3(m49_code: &'static [u8; 3], english_name: &'static str, english_twelve_character_abbreviation: Option<&'static [u8]>, iso_3166_alpha_3_code: Option<&'static [u8; 3]>) -> (M49Code, &'static str, Option<TwelveCharacterAbbreviation>, Option<Iso3166Dash1Alpha3Code>)
 	{
-		(M49Code::from(m49_code), english_name, english_twelve_character_abbreviation.map(TwelveCharacterAbbreviation::new), iso_3166_alpha_3_code.map(Iso3166Dash1Alpha3Code::from))
+		#[inline(always)]
+		const fn map(iso_3166_alpha_3_code: &'static [u8; 3]) -> Iso3166Dash1Alpha3Code
+		{
+			Iso3166Dash1Alpha3Code::from(iso_3166_alpha_3_code)
+		}
+		
+		(
+			M49Code::from(m49_code),
+			english_name,
+			english_twelve_character_abbreviation.map(TwelveCharacterAbbreviation::new),
+			iso_3166_alpha_3_code.map(map)
+		)
 	}
 	
 	[
@@ -250,7 +261,7 @@ pub(super) const NamesAndAbbreviationsForCountriesRevision3: [(M49Code, &'static
 		names_and_abbreviations_for_country_revision_3(b"887", "Yemen", Some(b"YEMEN"), Some(b"YEM")),
 		names_and_abbreviations_for_country_revision_3(b"891", "Yugoslavia", Some(b"YUGOSLAVIA"), Some(b"YUG")),
 		names_and_abbreviations_for_country_revision_3(b"894", "Zambia", Some(b"ZAMBIA"), Some(b"ZMB")),
-		names_and_abbreviations_for_country_revision_3(b"896", "Areas not elsewhere specified", Some(b"N.E.S.", None)),
-		names_and_abbreviations_for_country_revision_3(b"898", "Areas not specified", Some(b"N.S.", None)),
+		names_and_abbreviations_for_country_revision_3(b"896", "Areas not elsewhere specified", Some(b"N.E.S."), None),
+		names_and_abbreviations_for_country_revision_3(b"898", "Areas not specified", Some(b"N.S."), None),
 	]
 };

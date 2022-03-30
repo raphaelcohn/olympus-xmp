@@ -5,10 +5,12 @@
 /// Must be kept in ascending sort order.
 ///
 /// This listing was not produced for any other Revision, oddly.
+///
+/// Non-English names were not officially published.
 pub(super) const NamesAndAbbreviationsForRegionsAndGroupingsRevision2: [(M49Code, &'static str, (LegacyEightCharacterAbbreviation, TwelveCharacterAbbreviation)); 37] =
 {
 	#[inline(always)]
-	const fn names_and_abbreviations_for_region_and_grouping_revision_2(code: &'static [u8; 3], english_name: &'static str, legacy_english_eight_character_abbreviation: &'static [u8], english_twelve_character_abbreviation: &'static [u8]) -> (M49Code, &'static str, (LegacyEightCharacterAbbreviation, TwelveCharacterAbbreviation))
+	const fn names_and_abbreviations_for_region_and_grouping_revision_2(m49_code: &'static [u8; 3], english_name: &'static str, legacy_english_eight_character_abbreviation: &'static [u8], english_twelve_character_abbreviation: &'static [u8]) -> (M49Code, &'static str, (LegacyEightCharacterAbbreviation, TwelveCharacterAbbreviation))
 	{
 		(M49Code::from(m49_code), english_name, (LegacyEightCharacterAbbreviation::new(legacy_english_eight_character_abbreviation), TwelveCharacterAbbreviation::new(english_twelve_character_abbreviation)))
 	}
@@ -42,14 +44,15 @@ pub(super) const NamesAndAbbreviationsForRegionsAndGroupingsRevision2: [(M49Code
 		names_and_abbreviations_for_region_and_grouping_revision_2(b"046", "Micronesia-Polynesia", b"MCNSA.P", b"MCRNSA.POLYN"),
 		names_and_abbreviations_for_region_and_grouping_revision_2(b"047", "Micronesia", b"MICRNSIA", b"MICRONESIA"),
 		names_and_abbreviations_for_region_and_grouping_revision_2(b"049", "Polynesia", b"POLNESIA", b"POLYNESIA"),
+		
 		names_and_abbreviations_for_region_and_grouping_revision_2(b"095", "Latin American Integration Association", b"LAIA", b"LAIA"),
 		names_and_abbreviations_for_region_and_grouping_revision_2(b"097", "European Economic Community", b"EEC", b"EEC"),
 		names_and_abbreviations_for_region_and_grouping_revision_2(b"197", "European Free Trade Association", b"EFTA", b"EFTA"),
 		names_and_abbreviations_for_region_and_grouping_revision_2(b"199", "Least Developed Countries", b"LDC", b"LDC"),
-		names_and_abbreviations_for_region_and_grouping_revision_2(b"393", "Centrai American Common Market", b"CACM", b"CACM"),
+		names_and_abbreviations_for_region_and_grouping_revision_2(b"393", "Central American Common Market", b"CACM", b"CACM"),
 		names_and_abbreviations_for_region_and_grouping_revision_2(b"399", "Organization of Petroleum Exporting Countries", b"OPEC", b"OPEC"),
 		names_and_abbreviations_for_region_and_grouping_revision_2(b"692", "Customs and Economic Union of Central Africa", b"CEUCA", b"CEUCA"),
 		names_and_abbreviations_for_region_and_grouping_revision_2(b"830", "Channel Islands", b"CHNL IS.", b"CHANNL ISLDS"),
 		names_and_abbreviations_for_region_and_grouping_revision_2(b"892", "Economic Community of West African States", b"ECOWAS", b"ECOWAS"),
 	]
-}
+};

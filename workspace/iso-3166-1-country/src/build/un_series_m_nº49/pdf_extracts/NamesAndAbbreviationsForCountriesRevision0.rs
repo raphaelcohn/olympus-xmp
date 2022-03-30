@@ -4,13 +4,13 @@
 
 /// Must be kept in ascending sort order.
 ///
-/// Extracted from the PDF for UN, Series M, Nº49 (1970).
+/// Extracted from the PDF for UNSD Series M, Nº49 (1970).
 ///
 /// This is the only revision of the standard that includes French abbreviations.
 pub(super) const NamesAndAbbreviationsForCountriesRevision0: [(M49Code, &'static str, (LegacyFourCharacterAbbreviation, LegacyEightCharacterAbbreviation, TwelveCharacterAbbreviation), &'static str, (LegacyFourCharacterAbbreviation, LegacyEightCharacterAbbreviation, TwelveCharacterAbbreviation)); 227] =
 {
 	#[inline(always)]
-	const fn names_and_abbreviations_for_country_revision_0(code: &'static [u8; 3], english_name: &'static str, english_legacy_four_character_abbreviation: &'static [u8], english_legacy_eight_character_abbreviation: &'static [u8], english_twelve_character_abbreviation: &'static [u8], french_name: &'static str, french_legacy_four_character_abbreviation: &'static [u8], french_legacy_eight_character_abbreviation: &'static [u8], french_twelve_character_abbreviation: &'static [u8]) -> (M49Code, &'static str, (LegacyFourCharacterAbbreviation, LegacyEightCharacterAbbreviation, TwelveCharacterAbbreviation), &'static str, (LegacyFourCharacterAbbreviation, LegacyEightCharacterAbbreviation, TwelveCharacterAbbreviation))
+	const fn names_and_abbreviations_for_country_revision_0(m49_code: &'static [u8; 3], english_name: &'static str, english_legacy_four_character_abbreviation: &'static [u8], english_legacy_eight_character_abbreviation: &'static [u8], english_twelve_character_abbreviation: &'static [u8], french_name: &'static str, french_legacy_four_character_abbreviation: &'static [u8], french_legacy_eight_character_abbreviation: &'static [u8], french_twelve_character_abbreviation: &'static [u8]) -> (M49Code, &'static str, (LegacyFourCharacterAbbreviation, LegacyEightCharacterAbbreviation, TwelveCharacterAbbreviation), &'static str, (LegacyFourCharacterAbbreviation, LegacyEightCharacterAbbreviation, TwelveCharacterAbbreviation))
 	{
 		(M49Code::from(m49_code), english_name, (LegacyFourCharacterAbbreviation::new(english_legacy_four_character_abbreviation), LegacyEightCharacterAbbreviation::new(english_legacy_eight_character_abbreviation), TwelveCharacterAbbreviation::new(english_twelve_character_abbreviation)), french_name, (LegacyFourCharacterAbbreviation::new(french_legacy_four_character_abbreviation), LegacyEightCharacterAbbreviation::new(french_legacy_eight_character_abbreviation), TwelveCharacterAbbreviation::new(french_twelve_character_abbreviation)))
 	}
@@ -57,7 +57,7 @@ pub(super) const NamesAndAbbreviationsForCountriesRevision0: [(M49Code, &'static
 		names_and_abbreviations_for_country_revision_0(b"148", "Chad", b"CHAD", b"CHAD", b"CHAD", "Tchad", b"TCHD", b"TCHAD", b"TCHAD"),
 		names_and_abbreviations_for_country_revision_0(b"152", "Chile", b"CHIL", b"CHILE", b"CHILE", "Chile", b"CHIL", b"CHILI", b"CHILI"),
 		names_and_abbreviations_for_country_revision_0(b"156", "China (mainland)", b"CHNM", b"CHINA MN", b"CHINA MNLAND", "Chine (continentale)", b"CH.C", b"CHINA C.", b"CHINE CONT."),
-		names_and_abbreviations_for_country_revision_0(b"158", "China (Taiwan)", b"CHNT", b"CHINA TW", b"CHINA TAIWAN", "Chine (Tafwan)", b"CH.T", b"CHINE TW", b"CHINE TAIWAN"),
+		names_and_abbreviations_for_country_revision_0(b"158", "China (Taiwan)", b"CHNT", b"CHINA TW", b"CHINA TAIWAN", "Chine (Taïwan)", b"CH.T", b"CHINE TW", b"CHINE TAIWAN"),
 		names_and_abbreviations_for_country_revision_0(b"162", "Christmas Island (Aust.)", b"CHRS", b"CHRIS.IS", b"CHRISTMAS IS", "Ile Christmas (Aust.)", b"I.CH", b"I.CHRIST", b"I. CHRISTMAS"),
 		names_and_abbreviations_for_country_revision_0(b"166", "Cocos (Keeling) Islands", b"COCO", b"COCOS IS", b"COCOS ISLNDS", "Tles des Cocos (Keeling)", b"COCO", b"I.COCOS", b"I.COCOS KEEL"),
 		names_and_abbreviations_for_country_revision_0(b"170", "Colombia", b"COLM", b"COLOMBIA", b"COLOMBIA", "Colombie", b"COLM", b"COLOMBIE", b"COLOMBIE"),

@@ -21,6 +21,7 @@ build = "src/build.rs"
 
 [build-dependencies]
 calamine = "0.18.0"
+json = "0.12.4"
 memchr = "2.4.1"
 swiss-army-knife = "^0.0.32"
 

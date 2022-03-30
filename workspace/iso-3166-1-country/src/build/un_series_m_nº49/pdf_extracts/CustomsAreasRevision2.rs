@@ -5,4 +5,4 @@
 /// Must be kept in ascending sort order.
 ///
 /// Identical to Revision 1.
-pub(super) const CustomsAreasRevision2: [(M49Code, &'static str, &'static [M49Code]); 7] = Revision1CustomsAreas;
+pub(super) const CustomsAreasRevision2: [(M49Code, &'static str, &'static [M49Code]); 7] = CustomsAreasRevision1;

@@ -4,7 +4,7 @@
 
 /// Must be kept in ascending sort order.
 ///
-/// Extracted from the PDF for UN, Series M, Nº49 Revision 2 (1982).
+/// Extracted from the PDF for UNSD Series M, Nº49 Revision 2 (1982).
 ///
 /// Non-English names were not officially published.
 /// There are no French abbreviations.
@@ -12,9 +12,22 @@
 pub(super) const NamesAndAbbreviationsForCountriesRevision2: [(M49Code, &'static str, (LegacyEightCharacterAbbreviation, TwelveCharacterAbbreviation), Option<(Iso3166Dash1Alpha2Code, Iso3166Dash1Alpha3Code)>); 217] =
 {
 	#[inline(always)]
-	const fn names_and_abbreviations_for_country_revision_2(code: &'static [u8; 3], english_name: &'static str, legacy_english_eight_character_abbreviation: &'static [u8], english_twelve_character_abbreviation: &'static [u8], iso_3166_alpha_codes: Option<(&'static [u8; 2], &'static [u8; 3])>) -> (M49Code, &'static str, (LegacyEightCharacterAbbreviation, TwelveCharacterAbbreviation), Option<(Iso3166Dash1Alpha2Code, Iso3166Dash1Alpha3Code)>)
+	const fn names_and_abbreviations_for_country_revision_2(m49_code: &'static [u8; 3], english_name: &'static str, legacy_english_eight_character_abbreviation: &'static [u8], english_twelve_character_abbreviation: &'static [u8], iso_3166_alpha_codes: Option<(&'static [u8; 2], &'static [u8; 3])>) -> (M49Code, &'static str, (LegacyEightCharacterAbbreviation, TwelveCharacterAbbreviation), Option<(Iso3166Dash1Alpha2Code, Iso3166Dash1Alpha3Code)>)
 	{
-		(M49Code::from(m49_code), english_name, (LegacyEightCharacterAbbreviation::new(legacy_english_eight_character_abbreviation), TwelveCharacterAbbreviation::new(english_twelve_character_abbreviation)), iso_3166_alpha_codes.map(|(iso_3166_alpha_2_code, iso_3166_alpha_3_code)| (Iso3166Dash1Alpha2Code::from(iso_3166_alpha_2_code), Iso3166Dash1Alpha3Code::from(iso_3166_alpha_3_code))))
+		#[inline(always)]
+		const fn map((iso_3166_alpha_2_code, iso_3166_alpha_3_code): (&'static [u8; 2], &'static [u8; 3])) -> (Iso3166Dash1Alpha2Code, Iso3166Dash1Alpha3Code)
+		{
+			(Iso3166Dash1Alpha2Code::from(iso_3166_alpha_2_code), Iso3166Dash1Alpha3Code::from(iso_3166_alpha_3_code))
+		}
+		
+		(
+			M49Code::from(m49_code),
+			english_name,
+			(
+				LegacyEightCharacterAbbreviation::new(legacy_english_eight_character_abbreviation),
+				TwelveCharacterAbbreviation::new(english_twelve_character_abbreviation)
+			),
+			iso_3166_alpha_codes.map(map))
 	}
 	
 	[
@@ -56,7 +69,7 @@ pub(super) const NamesAndAbbreviationsForCountriesRevision2: [(M49Code, &'static
 		names_and_abbreviations_for_country_revision_2(b"198", "Burundi", b"BURUNDI", b"BURUNDI", Some((b"BI", b"BDI"))),
 		names_and_abbreviations_for_country_revision_2(b"199", "Bulgaria", b"BULGARIA", b"BULGARIA", Some((b"BG", b"BGR"))),
 		names_and_abbreviations_for_country_revision_2(b"200", "Czechoslovakia", b"CZCHSLVK", b"CZECHOSLOVAK", Some((b"CS", b"CSK"))),
-		names_and_abbreviations_for_country_revision_2(b"204", "Benin", b"BENIN BENIN", b"BJN", b"BE"),
+		names_and_abbreviations_for_country_revision_2(b"204", "Benin", b"BENIN", b"BENIN", Some((b"BJ", b"BEN"))),
 		names_and_abbreviations_for_country_revision_2(b"208", "Denmark", b"DENMARK", b"DENMARK", Some((b"DK", b"DNK"))),
 		names_and_abbreviations_for_country_revision_2(b"212", "Dominica", b"DOMINICA", b"DOMINICA", Some((b"DM", b"DMA"))),
 		names_and_abbreviations_for_country_revision_2(b"214", "Dominican Republic", b"DOMIN.RP DOMINICAN", b"RP.", Some((b"DO", b"DOM"))),
@@ -221,7 +234,7 @@ pub(super) const NamesAndAbbreviationsForCountriesRevision2: [(M49Code, &'static
 		names_and_abbreviations_for_country_revision_2(b"882", "Samoa", b"SAMOA", b"SAMOA", Some((b"WS", b"WSM"))),
 		names_and_abbreviations_for_country_revision_2(b"886", "Yemen", b"YEMEN", b"YEMEN", Some((b"YE", b"YEM"))),
 		names_and_abbreviations_for_country_revision_2(b"894", "Zambia", b"ZAMBIA", b"ZAMBIA", Some((b"ZM", b"ZMB"))),
-		names_and_abbreviations_for_country_revision_2(b"899", "Yugoslavia", b"YUGOSLAV", b"YUGOSLAVIA", Some((b"YU", b"YUG"))),
+		names_and_abbreviations_for_country_revision_2(b"890", "Yugoslavia", b"YUGOSLAV", b"YUGOSLAVIA", Some((b"YU", b"YUG"))),
 		names_and_abbreviations_for_country_revision_2(b"912", "Algeria", b"ALGERIA", b"ALGERIA", Some((b"DZ", b"DZA"))),
 		names_and_abbreviations_for_country_revision_2(b"929", "Andorra", b"ANDORRA", b"ANDORRA", Some((b"AD", b"AND"))),
 		names_and_abbreviations_for_country_revision_2(b"932", "Argentina", b"ARGNTINA", b"ARGENTINA", Some((b"AR", b"ARG"))),

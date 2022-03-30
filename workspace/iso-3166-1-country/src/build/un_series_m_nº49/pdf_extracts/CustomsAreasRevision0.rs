@@ -11,8 +11,8 @@ pub(super) const CustomsAreasRevision0: [(M49Code, &'static str, &'static [M49Co
 	customs_area_revision_0_or_1_or_2(b"250", "France", constituents![b"250", b"492"]),
 	customs_area_revision_0_or_1_or_2(b"380", "Italy", constituents![b"380", b"674"]),
 	customs_area_revision_0_or_1_or_2(b"578", "Norway", constituents![b"578", b"744"]),
-	customs_area_revision_0_or_1_or_2(b"710", "South Africa", constituents![b"710", b"072", b"426", b"516", b"748"]),
+	customs_area_revision_0_or_1_or_2(b"710", "South Africa", constituents![b"072", b"710", b"426", b"516", b"748"]),
 	customs_area_revision_0_or_1_or_2(b"724", "Spain", constituents![b"724", b"728"]),
-	customs_area_revision_0_or_1_or_2(b"756", "Switzerland", constituents![b"756", b"438"]),
-	customs_area_revision_0_or_1_or_2(b"840", "United States", constituents![b"840", b"630", b"850"]),
+	customs_area_revision_0_or_1_or_2(b"756", "Switzerland", constituents![b"438", b"756"]),
+	customs_area_revision_0_or_1_or_2(b"840", "United States", constituents![b"630", b"840", b"850"]),
 ];

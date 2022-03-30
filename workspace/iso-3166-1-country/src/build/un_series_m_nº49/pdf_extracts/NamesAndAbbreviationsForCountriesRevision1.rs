@@ -4,7 +4,7 @@
 
 /// Must be kept in ascending sort order.
 ///
-/// Extracted from the PDF for UN, Series M, Nº49 Revision 1 (1975).
+/// Extracted from the PDF for UNSD Series M, Nº49 Revision 1 (1975).
 ///
 /// Non-English names were not officially published.
 /// There are no French abbreviations.
@@ -12,9 +12,22 @@
 pub(super) const NamesAndAbbreviationsForCountriesRevision1: [(M49Code, &'static str, (LegacyEightCharacterAbbreviation, TwelveCharacterAbbreviation), Option<(Iso3166Dash1Alpha2Code, Iso3166Dash1Alpha3Code)>); 225] =
 {
 	#[inline(always)]
-	const fn names_and_abbreviations_for_country_revision_1(code: &'static [u8; 3], english_name: &'static str, legacy_english_eight_character_abbreviation: &'static [u8], english_twelve_character_abbreviation: &'static [u8], iso_3166_alpha_codes: Option<(&'static [u8; 2], &'static [u8; 3])>) -> (M49Code, &'static str, (LegacyEightCharacterAbbreviation, TwelveCharacterAbbreviation), Option<(Iso3166Dash1Alpha2Code, Iso3166Dash1Alpha3Code)>)
+	const fn names_and_abbreviations_for_country_revision_1(m49_code: &'static [u8; 3], english_name: &'static str, legacy_english_eight_character_abbreviation: &'static [u8], english_twelve_character_abbreviation: &'static [u8], iso_3166_alpha_codes: Option<(&'static [u8; 2], &'static [u8; 3])>) -> (M49Code, &'static str, (LegacyEightCharacterAbbreviation, TwelveCharacterAbbreviation), Option<(Iso3166Dash1Alpha2Code, Iso3166Dash1Alpha3Code)>)
 	{
-		(M49Code::from(m49_code), english_name, (LegacyEightCharacterAbbreviation::new(legacy_english_eight_character_abbreviation), TwelveCharacterAbbreviation::new(english_twelve_character_abbreviation)), iso_3166_alpha_codes.map(|(iso_3166_alpha_2_code, iso_3166_alpha_3_code)| (Iso3166Dash1Alpha2Code::from(iso_3166_alpha_2_code), Iso3166Dash1Alpha3Code::from(iso_3166_alpha_3_code))))
+		#[inline(always)]
+		const fn map((iso_3166_alpha_2_code, iso_3166_alpha_3_code): (&'static [u8; 2], &'static [u8; 3])) -> (Iso3166Dash1Alpha2Code, Iso3166Dash1Alpha3Code)
+		{
+			(Iso3166Dash1Alpha2Code::from(iso_3166_alpha_2_code), Iso3166Dash1Alpha3Code::from(iso_3166_alpha_3_code))
+		}
+		
+		(
+			M49Code::from(m49_code),
+			english_name,
+			(
+				LegacyEightCharacterAbbreviation::new(legacy_english_eight_character_abbreviation),
+				TwelveCharacterAbbreviation::new(english_twelve_character_abbreviation)
+			),
+			iso_3166_alpha_codes.map(map))
 	}
 	
 	[
@@ -104,7 +117,7 @@ pub(super) const NamesAndAbbreviationsForCountriesRevision1: [(M49Code, &'static
 		names_and_abbreviations_for_country_revision_1(b"308", "Grenada", b"GRENADA", b"GRENADA", Some((b"GD", b"GRD"))),
 		names_and_abbreviations_for_country_revision_1(b"312", "Guadeloupe", b"GUADLOUP", b"GUADELOUPE", Some((b"GP", b"GLP"))),
 		names_and_abbreviations_for_country_revision_1(b"316", "Guam", b"GUAM", b"GUAM", Some((b"GU", b"GUM"))),
-		names_and_abbreviations_for_country_revision_1(b"320", "Guatemala", b"GUATMALA", b"GUATEMALA", Some((b"GT", b"GT™"))),
+		names_and_abbreviations_for_country_revision_1(b"320", "Guatemala", b"GUATMALA", b"GUATEMALA", Some((b"GT", b"GTM"))),
 		names_and_abbreviations_for_country_revision_1(b"324", "Guinea", b"GUINEA", b"GUINEA", Some((b"GN", b"GIN"))),
 		names_and_abbreviations_for_country_revision_1(b"328", "Guyana", b"GUYANA", b"GUYANA", Some((b"GY", b"GUY"))),
 		names_and_abbreviations_for_country_revision_1(b"332", "Haiti", b"HAITI", b"HAITI", Some((b"HT", b"HTI"))),
@@ -244,4 +257,4 @@ pub(super) const NamesAndAbbreviationsForCountriesRevision1: [(M49Code, &'static
 		names_and_abbreviations_for_country_revision_1(b"896", "Areas not elsewhere specified", b"AREA NES", b"AREAS N.E.S.", None),
 		names_and_abbreviations_for_country_revision_1(b"898", "Not specified", b"NOT SPEC", b"NOT SPEC.", None),
 	]
-}
+};

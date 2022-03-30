@@ -6,6 +6,7 @@ use swiss_army_knife::a_to_z::A;
 use swiss_army_knife::a_to_z::Z;
 use swiss_army_knife::a_to_z::Space;
 use swiss_army_knife::a_to_z::Hyphen;
+use swiss_army_knife::a_to_z::Period;
 
 
 include!("Abbreviations.rs");

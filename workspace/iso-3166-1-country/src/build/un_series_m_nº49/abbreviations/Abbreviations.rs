@@ -5,14 +5,14 @@
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub(super) enum Abbreviations
 {
-	AbsentRevision2Onwards,
+	AbsentRevision3Onwards,
 	
-	Revision2Onwards
+	Revision3Onwards
 	{
 		english_twelve_character_abbreviation: TwelveCharacterAbbreviation,
 	},
 	
-	// Present in Revision 1 (1975) and Revision 2 (1982).
+	/// Present in Revision 1 (1975) and Revision 2 (1982).
 	Revision1AndRevision2
 	{
 		english_twelve_character_abbreviation: TwelveCharacterAbbreviation,
@@ -20,7 +20,7 @@ pub(super) enum Abbreviations
 		legacy: LegacyEightCharacterAbbreviation,
 	},
 	
-	// Present only in the original (1970).
+	/// Present only in the original (1970).
 	Revision0
 	{
 		english_twelve_character_abbreviation: TwelveCharacterAbbreviation,

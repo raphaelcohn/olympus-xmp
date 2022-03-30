@@ -23,17 +23,15 @@ impl Record
 	#[inline(always)]
 	pub(super) fn extant_country(&self, m49_code: M49Code, names: Names) -> Country
 	{
-		Country
+		let m49_code = &m49_code;
+		
+		let abbreviations = match NamesAndAbbreviationsForCountriesRevision4.binary_search_by(|element| element.0.cmp(m49_code))
 		{
-			names,
-		
-			iso_3166_1_alpha2_code: self.iso_3166_1_alpha2_code,
+			Ok(index) => Some(NamesAndAbbreviationsForCountriesRevision4.get_unchecked_value_safe(index).1),
 			
-			iso_3166_1_alpha3_code: self.iso_3166_1_alpha3_code,
+			Err(_) => None,
+		};
 		
-			developing: self.developing,
-		
-			replacements: Country::NoReplacements,
-		}
+		Country::extant(names, abbreviations, self.iso_3166_1_alpha2_code, self.iso_3166_1_alpha3_code, self.developing)
 	}
 }

@@ -3,7 +3,7 @@
 
 
 #[inline(always)]
-const fn customs_area_revision_0_or_1_or_2(code: &'static [u8; 3], english_name: &'static str, constitutents: &'static [M49Code]) -> (M49Code, &'static str, &'static [M49Code])
+const fn customs_area_revision_0_or_1_or_2(m49_code: &'static [u8; 3], english_name: &'static str, constitutents: &'static [M49Code]) -> (M49Code, &'static str, &'static [M49Code])
 {
 	let code = M49Code::from(m49_code);
 	
@@ -12,5 +12,5 @@ const fn customs_area_revision_0_or_1_or_2(code: &'static [u8; 3], english_name:
 	{
 		panic!("First constituent must be the customs code")
 	}
-	(code, name, constitutents)
+	(code, english_name, constitutents)
 }

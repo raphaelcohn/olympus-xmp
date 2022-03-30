@@ -5,9 +5,15 @@
 use un_series_m_nº49::csv::Parser;
 
 
+pub(super) mod un_comtrade;
+
+
 //noinspection NonAsciiCharacters
 #[path = "un_series_m_nº49/mod.rs"]
 pub(super) mod un_series_m_nº49;
+
+
+pub(super) mod unterm;
 
 
 pub(super) fn mapping()

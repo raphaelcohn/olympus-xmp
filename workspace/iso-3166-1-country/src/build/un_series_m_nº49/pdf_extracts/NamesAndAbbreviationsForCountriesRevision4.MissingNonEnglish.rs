@@ -4,13 +4,14 @@
 
 /// Must be kept in ascending sort order.
 ///
-/// Extracted from the PDF for UN, Series M, Nº49 Revision 4 (1999).
+/// Extracted from the PDF for UNSD Series M, Nº49 Revision 4 (1999).
 ///
 /// TODO: English names.
 /// TODO: Non-English names.
 /// There are no French abbreviations.
 /// There are no 4 character abbreviations.
 /// There are no 8 character abbreviations.
+/// The Channel Islands have been excluded.
 pub(super) const NamesAndAbbreviationsForCountriesRevision4: [(M49Code, TwelveCharacterAbbreviation); 232] =
 {
 	#[inline(always)]
@@ -19,6 +20,8 @@ pub(super) const NamesAndAbbreviationsForCountriesRevision4: [(M49Code, TwelveCh
 		(M49Code::from(m49_code), TwelveCharacterAbbreviation::new(twelve_character_abbreviation))
 	}
 	
+	
+	// TODO: Need revision 4 names in abbreviations.
 	[
 		names_and_abbreviation_for_country_revision_4(b"004", b"AFGHANISTAN"),
 		names_and_abbreviation_for_country_revision_4(b"008", b"ALBANIA"),

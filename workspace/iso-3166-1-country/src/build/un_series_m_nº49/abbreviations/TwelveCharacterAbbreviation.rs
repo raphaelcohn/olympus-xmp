@@ -3,7 +3,7 @@
 
 
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub(super) struct TwelveCharacterAbbreviation(&'static [u8]);
+pub(crate) struct TwelveCharacterAbbreviation(&'static [u8]);
 
 impl TwelveCharacterAbbreviation
 {
