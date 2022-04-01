@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/030> .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/030> .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "4039" .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Japan" .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "110" .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "126" .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "JP" .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "JPN" .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "392" .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "JPN" .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/030> .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0627\u0644\u064A\u0627\u0628\u0627\u0646" .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Japan" .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Jap\u00F3n" .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Japon" .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u042F\u043F\u043E\u043D\u0438\u044F" .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u65E5 \u672C" .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0627\u0644\u064A\u0627\u0628\u0627\u0646"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/2004/02/skos/core#altLabel> "\u65E5 \u672C"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/2004/02/skos/core#altLabel> "Japan"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/2004/02/skos/core#altLabel> "Japon"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/2004/02/skos/core#altLabel> "\u042F\u043F\u043E\u043D\u0438\u044F"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/2004/02/skos/core#altLabel> "Jap\u00F3n"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/030> .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_4039> .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Japan> .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/2004/02/skos/core#notation> "392" .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u65E5 \u672C"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/2004/02/skos/core#prefLabel> "el Jap\u00F3n"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/2004/02/skos/core#prefLabel> "le Japon"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/2004/02/skos/core#prefLabel> "Japan"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0627\u0644\u064A\u0627\u0628\u0627\u0646"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/392> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u042F\u043F\u043E\u043D\u0438\u044F"@ru .

@@ -1,0 +1,26 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#geographical_region> .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/021> .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "030" .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "AQ" .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "ATA" .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "010" .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/021> .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Antarctica others" .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Antartida otros" .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Antarctique autres" .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://www.w3.org/2004/02/skos/core#altLabel> "Antartida otros"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://www.w3.org/2004/02/skos/core#altLabel> "Antarctica others"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://www.w3.org/2004/02/skos/core#altLabel> "Antarctique autres"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/021> .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://www.w3.org/2004/02/skos/core#notation> "010" .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://www.w3.org/2004/02/skos/core#prefLabel> "Antarctique"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://www.w3.org/2004/02/skos/core#prefLabel> "Antarctica"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/010> <http://www.w3.org/2004/02/skos/core#prefLabel> "Ant\u00E1rtida"@es .

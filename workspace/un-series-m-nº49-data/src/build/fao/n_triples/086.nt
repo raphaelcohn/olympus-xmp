@@ -1,0 +1,35 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/014> .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "024" .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "IO" .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "IOT" .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "086" .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/014> .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0627\u0644\u0647\u0646\u062F\u064A \u0627\u0644\u0645\u062D\u064A\u0637 \u0641\u064A \u0627\u0644\u0628\u0631\u064A\u0637\u0627\u0646\u064A\u0629 \u0627\u0644\u0645\u0646\u0627\u0637\u0642" .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "British Indian Ocean Ter" .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Ter. Brit. Oc\u00E9ano \u00CDndico" .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Terr. brit. Oc\u00E9an Indien" .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0411\u0440\u0438\u0442\u0430\u043D\u0441\u043A\u0430\u044F \u0442\u0435\u0440\u0440\u0438\u0442\u043E\u0440\u0438\u044F \u0432 \u0418\u043D\u0434\u0438\u0439\u0441\u043A\u043E\u043C \u043E\u043A\u0435\u0430\u043D\u0435" .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u82F1\u8F96\u5370\u5EA6\u6D0B\u6D77\u57DF" .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0411\u0440\u0438\u0442\u0430\u043D\u0441\u043A\u0430\u044F \u0442\u0435\u0440\u0440\u0438\u0442\u043E\u0440\u0438\u044F \u0432 \u0418\u043D\u0434\u0438\u0439\u0441\u043A\u043E\u043C \u043E\u043A\u0435\u0430\u043D\u0435"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://www.w3.org/2004/02/skos/core#altLabel> "Terr. brit. Oc\u00E9an Indien"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0627\u0644\u0647\u0646\u062F\u064A \u0627\u0644\u0645\u062D\u064A\u0637 \u0641\u064A \u0627\u0644\u0628\u0631\u064A\u0637\u0627\u0646\u064A\u0629 \u0627\u0644\u0645\u0646\u0627\u0637\u0642"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://www.w3.org/2004/02/skos/core#altLabel> "British Indian Ocean Ter"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://www.w3.org/2004/02/skos/core#altLabel> "\u82F1\u8F96\u5370\u5EA6\u6D0B\u6D77\u57DF"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://www.w3.org/2004/02/skos/core#altLabel> "Ter. Brit. Oc\u00E9ano \u00CDndico"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/014> .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://www.w3.org/2004/02/skos/core#notation> "086" .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://www.w3.org/2004/02/skos/core#prefLabel> "Territoire britanique de l'Oc\u00E9an Indien"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://www.w3.org/2004/02/skos/core#prefLabel> "Territorio Brit\u00E1nico del Oc\u00E9ano Indico"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u82F1\u8F96\u5370\u5EA6\u6D0B\u6D77\u57DF"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0411\u0440\u0438\u0442\u0430\u043D\u0441\u043A\u0430\u044F \u0442\u0435\u0440\u0440\u0438\u0442\u043E\u0440\u0438\u044F \u0432 \u0418\u043D\u0434\u0438\u0439\u0441\u043A\u043E\u043C \u043E\u043A\u0435\u0430\u043D\u0435"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0627\u0644\u0647\u0646\u062F\u064A \u0627\u0644\u0645\u062D\u064A\u0637 \u0641\u064A \u0627\u0644\u0628\u0631\u064A\u0637\u0627\u0646\u064A\u0629 \u0627\u0644\u0645\u0646\u0627\u0637\u0642"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/086> <http://www.w3.org/2004/02/skos/core#prefLabel> "British Indian Ocean Territory"@en .

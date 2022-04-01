@@ -1,0 +1,26 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/154> .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "260" .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "SJ" .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "SJM" .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "744" .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/154> .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Svalbard and Jan Mayen" .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Islas Svalbard/Jan Mayen" .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "\u00CEles Svalbard/Jan Mayen" .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://www.w3.org/2004/02/skos/core#altLabel> "Islas Svalbard/Jan Mayen"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://www.w3.org/2004/02/skos/core#altLabel> "\u00CEles Svalbard/Jan Mayen"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://www.w3.org/2004/02/skos/core#altLabel> "Svalbard and Jan Mayen"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/154> .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://www.w3.org/2004/02/skos/core#notation> "744" .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u00CEles Svalbard et Jan Mayen"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://www.w3.org/2004/02/skos/core#prefLabel> "Svalbard and Jan Mayen Islands"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/744> <http://www.w3.org/2004/02/skos/core#prefLabel> "Islas Svalbard y Jan Mayen"@es .

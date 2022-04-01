@@ -1,0 +1,42 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/143> .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/143> .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "15121" .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Uzbekistan" .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "235" .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "261" .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "UZ" .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "UZB" .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "860" .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/143> .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0623\u0648\u0632\u0628\u0643\u0633\u062A\u0627\u0646" .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Uzbekistan" .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Uzbekist\u00E1n" .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Ouzb\u00E9kistan" .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0423\u0437\u0431\u0435\u043A\u0438\u0441\u0442\u0430\u043D" .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u4E4C\u5179\u522B\u514B\u65AF\u5766" .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1992"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/2004/02/skos/core#altLabel> "\u4E4C\u5179\u522B\u514B\u65AF\u5766"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0423\u0437\u0431\u0435\u043A\u0438\u0441\u0442\u0430\u043D"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/2004/02/skos/core#altLabel> "Uzbekist\u00E1n"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/2004/02/skos/core#altLabel> "Uzbekistan"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/2004/02/skos/core#altLabel> "\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0623\u0648\u0632\u0628\u0643\u0633\u062A\u0627\u0646"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/2004/02/skos/core#altLabel> "Ouzb\u00E9kistan"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/143> .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_15121> .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Uzbekistan> .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/2004/02/skos/core#notation> "860" .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Rep\u00FAblica de Uzbekist\u00E1n"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/2004/02/skos/core#prefLabel> "la R\u00E9publique d'Ouzb\u00E9kistan"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u4E4C\u5179\u522B\u514B\u65AF\u5766"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/2004/02/skos/core#prefLabel> "Uzbekistan"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0423\u0437\u0431\u0435\u043A\u0438\u0441\u0442\u0430\u043D"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/860> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0623\u0648\u0632\u0628\u0643\u0633\u062A\u0627\u0646"@ar .

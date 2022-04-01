@@ -1,0 +1,35 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/830> .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "092" .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "GG" .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "GGY" .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "831" .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/830> .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0644\u063A\u0648\u064A\u0631\u0646\u0633\u064A \u0627\u0644\u062A\u0627\u0628\u0639\u0629 \u0628\u064A\u0644\u0648\u064A\u0643" .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Guernsey" .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Isla de Guernesey" .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Guernesey" .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0413\u0435\u0440\u043D\u0441\u0438" .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u683C\u6069\u897F\u5C9B(\u6D77\u5CE1\u7FA4\u5C9B)" .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "2005"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://www.w3.org/2004/02/skos/core#altLabel> "Guernesey"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0644\u063A\u0648\u064A\u0631\u0646\u0633\u064A \u0627\u0644\u062A\u0627\u0628\u0639\u0629 \u0628\u064A\u0644\u0648\u064A\u0643"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://www.w3.org/2004/02/skos/core#altLabel> "\u683C\u6069\u897F\u5C9B(\u6D77\u5CE1\u7FA4\u5C9B)"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://www.w3.org/2004/02/skos/core#altLabel> "Isla de Guernesey"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0413\u0435\u0440\u043D\u0441\u0438"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://www.w3.org/2004/02/skos/core#altLabel> "Guernsey"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/830> .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://www.w3.org/2004/02/skos/core#notation> "831" .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0413\u0435\u0440\u043D\u0441\u0438"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://www.w3.org/2004/02/skos/core#prefLabel> "Guernesey"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0644\u063A\u0648\u064A\u0631\u0646\u0633\u064A \u0627\u0644\u062A\u0627\u0628\u0639\u0629 \u0628\u064A\u0644\u0648\u064A\u0643"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u683C\u6069\u897F\u5C9B(\u6D77\u5CE1\u7FA4\u5C9B)"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://www.w3.org/2004/02/skos/core#prefLabel> "Isla de Guernesey"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/831> <http://www.w3.org/2004/02/skos/core#prefLabel> "Guernsey"@en .

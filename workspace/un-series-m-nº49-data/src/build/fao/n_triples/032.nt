@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/005> .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/005> .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "603" .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Argentina" .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "009" .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "12" .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "AR" .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "ARG" .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "032" .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "ARG" .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/005> .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0627\u0644\u0623\u0631\u062C\u0646\u062A\u064A\u0646" .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Argentina" .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Argentina" .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Argentine" .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0410\u0440\u0433\u0435\u043D\u0442\u0438\u043D\u0441\u043A\u0430\u044F \u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430" .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u963F\u6839\u5EF7" .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/2004/02/skos/core#altLabel> "Argentine"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/2004/02/skos/core#altLabel> "\u963F\u6839\u5EF7"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/2004/02/skos/core#altLabel> "Argentina"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/2004/02/skos/core#altLabel> "Argentina"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0627\u0644\u0623\u0631\u062C\u0646\u062A\u064A\u0646"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0410\u0440\u0433\u0435\u043D\u0442\u0438\u043D\u0441\u043A\u0430\u044F \u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/005> .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_603> .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Argentina> .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/2004/02/skos/core#notation> "032" .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0627\u0644\u0623\u0631\u062C\u0646\u062A\u064A\u0646"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/2004/02/skos/core#prefLabel> "Argentina"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u963F\u6839\u5EF7"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0410\u0440\u0433\u0435\u043D\u0442\u0438\u043D\u0441\u043A\u0430\u044F \u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/2004/02/skos/core#prefLabel> "la R\u00E9publique argentine"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/032> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Rep\u00FAblica Argentina"@es .

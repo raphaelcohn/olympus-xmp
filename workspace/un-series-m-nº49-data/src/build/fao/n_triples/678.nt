@@ -1,0 +1,44 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/017> .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/202> .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "6790" .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Sao_Tome_and_Principe" .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "193" .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "214" .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "ST" .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "STP" .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "678" .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "STP" .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/017> .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0633\u0627\u0646 \u062A\u0648\u0645\u064A \u0648\u0628\u0631\u0646\u0633\u064A\u0628\u064A" .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Sao Tome and Principe" .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Santo Tom\u00E9 y Pr\u00EDncipe" .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Sao Tom\u00E9-et-Principe" .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0421\u0430\u043D-\u0422\u043E\u043C\u0435 \u0438 \u041F\u0440\u0438\u043D\u0441\u0438\u043F\u0438" .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u5723\u591A\u7F8E\u548C\u666E\u6797\u897F\u6BD4" .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0633\u0627\u0646 \u062A\u0648\u0645\u064A \u0648\u0628\u0631\u0646\u0633\u064A\u0628\u064A"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2004/02/skos/core#altLabel> "Sao Tome and Principe"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0421\u0430\u043D-\u0422\u043E\u043C\u0435 \u0438 \u041F\u0440\u0438\u043D\u0441\u0438\u043F\u0438"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2004/02/skos/core#altLabel> "\u5723\u591A\u7F8E\u548C\u666E\u6797\u897F\u6BD4"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2004/02/skos/core#altLabel> "Santo Tom\u00E9 y Pr\u00EDncipe"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2004/02/skos/core#altLabel> "Sao Tom\u00E9-et-Principe"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/017> .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/202> .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_6790> .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Sao_Tome_and_Principe> .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2004/02/skos/core#notation> "678" .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0633\u0627\u0646 \u062A\u0648\u0645\u064A \u0648\u0628\u0631\u0646\u0633\u064A\u0628\u064A"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0421\u0430\u043D-\u0422\u043E\u043C\u0435 \u0438 \u041F\u0440\u0438\u043D\u0441\u0438\u043F\u0438"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2004/02/skos/core#prefLabel> "la R\u00E9publique d\u00E9mocratique de Sao Tom\u00E9-et-Principe"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Rep\u00FAblica Democr\u00E1tica de Santo Tom\u00E9 y Pr\u00EDncipe"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2004/02/skos/core#prefLabel> "Sao Tome and Principe"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/678> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u5723\u591A\u7F8E\u548C\u666E\u6797\u897F\u6BD4"@zh .

@@ -1,0 +1,37 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/015> .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/015> .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "205" .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "EH" .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "ESH" .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "732" .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/015> .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0627\u0644\u063A\u0631\u0628\u064A\u0629 \u0627\u0644\u0635\u062D\u0631\u0627\u0621" .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Western Sahara" .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Sahara Occidental" .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Sahara occidental" .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0417\u0430\u043F\u0430\u0434\u043D\u0430\u044F \u0421\u0430\u0445\u0430\u0440\u0430" .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u897F\u6492\u54C8\u62C9" .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0417\u0430\u043F\u0430\u0434\u043D\u0430\u044F \u0421\u0430\u0445\u0430\u0440\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://www.w3.org/2004/02/skos/core#altLabel> "Sahara Occidental"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://www.w3.org/2004/02/skos/core#altLabel> "Sahara occidental"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://www.w3.org/2004/02/skos/core#altLabel> "\u897F\u6492\u54C8\u62C9"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://www.w3.org/2004/02/skos/core#altLabel> "Western Sahara"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0627\u0644\u063A\u0631\u0628\u064A\u0629 \u0627\u0644\u0635\u062D\u0631\u0627\u0621"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/015> .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://www.w3.org/2004/02/skos/core#notation> "732" .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://www.w3.org/2004/02/skos/core#prefLabel> "S\u00E1hara occidental"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://www.w3.org/2004/02/skos/core#prefLabel> "Sahara occidental"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://www.w3.org/2004/02/skos/core#prefLabel> "Western Sahara"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0417\u0430\u043F\u0430\u0434\u043D\u0430\u044F \u0421\u0430\u0445\u0430\u0440\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0627\u0644\u063A\u0631\u0628\u064A\u0629 \u0627\u0644\u0635\u062D\u0631\u0627\u0621"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/732> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u897F\u6492\u54C8\u62C9"@zh .

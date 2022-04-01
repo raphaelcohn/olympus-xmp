@@ -1,0 +1,37 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/005> .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/005> .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "271" .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "GS" .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "SGS" .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "239" .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/005> .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0648\u0633\u0627\u0646\u062F\u0648\u064A\u062A\u0634 \u062C\u0648\u0631\u062C\u064A\u0627 \u062C\u0646\u0648\u0628 \u062C\u0632\u0631" .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "SouthGeorgia/Sandwich Is" .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Georgia S.-Is.Sandw.Sur" .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "G\u00E9orgie Sud-\u00CEles Sand.S." .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u043E\u0441\u0442\u0440\u043E\u0432 \u042E\u0436\u043D\u0430\u044F \u0413\u0435\u043E\u0440\u0433\u0438\u044F \u0438 \u042E\u0436\u043D\u044B\u0435 \u0421\u0430\u043D\u0434\u0432\u0438\u0447\u0435\u0432\u044B \u043E\u0441\u0442\u0440\u043E\u0432\u0430" .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u5357\u4E54\u6CBB\u4E9A\u5C9B\u548C\u5357\u6851\u5A01\u5947\u7FA4\u5C9B\uFF08\u82F1\u56FD\uFF09" .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://www.w3.org/2004/02/skos/core#altLabel> "\u5357\u4E54\u6CBB\u4E9A\u5C9B\u548C\u5357\u6851\u5A01\u5947\u7FA4\u5C9B\uFF08\u82F1\u56FD\uFF09"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0648\u0633\u0627\u0646\u062F\u0648\u064A\u062A\u0634 \u062C\u0648\u0631\u062C\u064A\u0627 \u062C\u0646\u0648\u0628 \u062C\u0632\u0631"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://www.w3.org/2004/02/skos/core#altLabel> "Georgia S.-Is.Sandw.Sur"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://www.w3.org/2004/02/skos/core#altLabel> "\u043E\u0441\u0442\u0440\u043E\u0432 \u042E\u0436\u043D\u0430\u044F \u0413\u0435\u043E\u0440\u0433\u0438\u044F \u0438 \u042E\u0436\u043D\u044B\u0435 \u0421\u0430\u043D\u0434\u0432\u0438\u0447\u0435\u0432\u044B \u043E\u0441\u0442\u0440\u043E\u0432\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://www.w3.org/2004/02/skos/core#altLabel> "SouthGeorgia/Sandwich Is"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://www.w3.org/2004/02/skos/core#altLabel> "G\u00E9orgie Sud-\u00CEles Sand.S."@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/005> .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://www.w3.org/2004/02/skos/core#notation> "239" .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u043E\u0441\u0442\u0440\u043E\u0432 \u042E\u0436\u043D\u0430\u044F \u0413\u0435\u043E\u0440\u0433\u0438\u044F \u0438 \u042E\u0436\u043D\u044B\u0435 \u0421\u0430\u043D\u0434\u0432\u0438\u0447\u0435\u0432\u044B \u043E\u0441\u0442\u0440\u043E\u0432\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u00CEles G\u00E9orgie du Sud et Sandwich du Sud"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u5357\u4E54\u6CBB\u4E9A\u5C9B\u548C\u5357\u6851\u5A01\u5947\u7FA4\u5C9B\uFF08\u82F1\u56FD\uFF09"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0648\u0633\u0627\u0646\u062F\u0648\u064A\u062A\u0634 \u062C\u0648\u0631\u062C\u064A\u0627 \u062C\u0646\u0648\u0628 \u062C\u0632\u0631"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://www.w3.org/2004/02/skos/core#prefLabel> "Islas Georgias del Sur y Sandwich del Sur"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/239> <http://www.w3.org/2004/02/skos/core#prefLabel> "South Georgia and the South Sandwich Islands"@en .

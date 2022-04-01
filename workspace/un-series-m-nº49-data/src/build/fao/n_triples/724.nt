@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/039> .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/039> .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "7273" .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Spain" .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "203" .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "229" .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "ES" .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "ESP" .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "724" .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "SPA" .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/039> .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0645\u0645\u0644\u0643\u0629 \u0625\u0633\u0628\u0627\u0646\u064A\u0627" .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Spain" .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Espa\u00F1a" .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Espagne" .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u0442\u0432\u043E \u0418\u0441\u043F\u0430\u043D\u0438\u044F" .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u897F\u73ED\u7259" .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/2004/02/skos/core#altLabel> "\u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u0442\u0432\u043E \u0418\u0441\u043F\u0430\u043D\u0438\u044F"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/2004/02/skos/core#altLabel> "Espa\u00F1a"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/2004/02/skos/core#altLabel> "\u897F\u73ED\u7259"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/2004/02/skos/core#altLabel> "Spain"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0645\u0645\u0644\u0643\u0629 \u0625\u0633\u0628\u0627\u0646\u064A\u0627"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/2004/02/skos/core#altLabel> "Espagne"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/039> .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_7273> .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Spain> .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/2004/02/skos/core#notation> "724" .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0645\u0645\u0644\u0643\u0629 \u0625\u0633\u0628\u0627\u0646\u064A\u0627"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/2004/02/skos/core#prefLabel> "le Royaume d'Espagne"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u897F\u73ED\u7259"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u0442\u0432\u043E \u0418\u0441\u043F\u0430\u043D\u0438\u044F"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/2004/02/skos/core#prefLabel> "el Reino de Espa\u00F1a"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/724> <http://www.w3.org/2004/02/skos/core#prefLabel> "Spain"@en .

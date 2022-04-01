@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/151> .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/151> .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "1145" .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Bulgaria" .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "027" .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "41" .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "BG" .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "BGR" .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "100" .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "BUL" .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/151> .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0628\u0644\u063A\u0627\u0631\u064A\u0627" .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Bulgaria" .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Bulgaria" .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Bulgarie" .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0411\u043E\u043B\u0433\u0430\u0440\u0438\u044F" .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u4FDD\u52A0\u5229\u4E9A" .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/2004/02/skos/core#altLabel> "\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0628\u0644\u063A\u0627\u0631\u064A\u0627"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/2004/02/skos/core#altLabel> "Bulgaria"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/2004/02/skos/core#altLabel> "Bulgaria"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/2004/02/skos/core#altLabel> "Bulgarie"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0411\u043E\u043B\u0433\u0430\u0440\u0438\u044F"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/2004/02/skos/core#altLabel> "\u4FDD\u52A0\u5229\u4E9A"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/151> .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Bulgaria> .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_1145> .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/2004/02/skos/core#notation> "100" .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u4FDD\u52A0\u5229\u4E9A"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/2004/02/skos/core#prefLabel> "Bulgaria"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0411\u043E\u043B\u0433\u0430\u0440\u0438\u044F"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0628\u0644\u063A\u0627\u0631\u064A\u0627"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Rep\u00FAblica de Bulgaria"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/100> <http://www.w3.org/2004/02/skos/core#prefLabel> "la R\u00E9publique de Bulgarie"@fr .

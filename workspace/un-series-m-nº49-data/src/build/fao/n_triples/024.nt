@@ -1,0 +1,44 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/017> .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/202> .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "417" .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Angola" .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "007" .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "8" .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "AO" .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "AGO" .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "024" .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "ANG" .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/017> .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0623\u0646\u063A\u0648\u0644\u0627" .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Angola" .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Angola" .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Angola" .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430 \u0410\u043D\u0433\u043E\u043B\u0430" .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u5B89\u54E5\u62C9" .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2004/02/skos/core#altLabel> "\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0623\u0646\u063A\u0648\u0644\u0627"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430 \u0410\u043D\u0433\u043E\u043B\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2004/02/skos/core#altLabel> "Angola"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2004/02/skos/core#altLabel> "Angola"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2004/02/skos/core#altLabel> "Angola"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2004/02/skos/core#altLabel> "\u5B89\u54E5\u62C9"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/017> .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/202> .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_417> .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Angola> .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2004/02/skos/core#notation> "024" .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430 \u0410\u043D\u0433\u043E\u043B\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u5B89\u54E5\u62C9"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2004/02/skos/core#prefLabel> "la R\u00E9publique d'Angola"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Rep\u00FAblica de Angola"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2004/02/skos/core#prefLabel> "Angola"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/024> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0623\u0646\u063A\u0648\u0644\u0627"@ar .

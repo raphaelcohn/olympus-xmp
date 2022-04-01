@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/035> .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/035> .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "7077" .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Singapore" .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "200" .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "222" .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "SG" .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "SGP" .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "702" .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "SIN" .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/035> .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0633\u0646\u063A\u0627\u0641\u0648\u0631\u0629" .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Singapore" .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Singapur" .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Singapour" .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0421\u0438\u043D\u0433\u0430\u043F\u0443\u0440" .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u65B0\u52A0\u5761" .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0633\u0646\u063A\u0627\u0641\u0648\u0631\u0629"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/2004/02/skos/core#altLabel> "\u65B0\u52A0\u5761"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0421\u0438\u043D\u0433\u0430\u043F\u0443\u0440"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/2004/02/skos/core#altLabel> "Singapour"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/2004/02/skos/core#altLabel> "Singapore"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/2004/02/skos/core#altLabel> "Singapur"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/035> .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Singapore> .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_7077> .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/2004/02/skos/core#notation> "702" .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0633\u0646\u063A\u0627\u0641\u0648\u0631\u0629 \u062C\u0645\u0647\u0648\u0631\u064A\u0629"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u65B0\u52A0\u5761\u5171\u548C\u56FD"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/2004/02/skos/core#prefLabel> "Singapore"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/2004/02/skos/core#prefLabel> "la R\u00E9publique de Singapour"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Rep\u00FAblica de Singapur"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/702> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430 \u0421\u0438\u043D\u0433\u0430\u043F\u0443\u0440"@ru .

@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/154> .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/154> .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "8068" .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "United_Kingdom" .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "229" .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "256" .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "GB" .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "GBR" .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "826" .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "UK" .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/154> .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0627\u0644\u0645\u0645\u0644\u0643\u0629 \u0627\u0644\u0645\u062A\u062D\u062F\u0629" .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "United Kingdom" .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Reino Unido" .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Royaume-Uni" .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0421\u043E\u0435\u0434\u0438\u043D\u0435\u043D\u043D\u043E\u0435 \u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u0442\u0432\u043E (\u0412\u0435\u043B\u0438\u043A\u043E\u0431\u0440\u0438\u0442\u0430\u043D\u0438\u0438 \u0438 \u0421\u0435\u0432\u0435\u0440\u043D\u043E\u0439 \u0418\u0440\u043B\u0430\u043D\u0434\u0438\u0438)" .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u5927\u4E0D\u5217\u98A0\u53CA\u5317\u7231\u5C14\u5170\u8054\u5408\u738B\u56FD" .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/2004/02/skos/core#altLabel> "Royaume-Uni"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/2004/02/skos/core#altLabel> "United Kingdom"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0627\u0644\u0645\u0645\u0644\u0643\u0629 \u0627\u0644\u0645\u062A\u062D\u062F\u0629"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0421\u043E\u0435\u0434\u0438\u043D\u0435\u043D\u043D\u043E\u0435 \u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u0442\u0432\u043E (\u0412\u0435\u043B\u0438\u043A\u043E\u0431\u0440\u0438\u0442\u0430\u043D\u0438\u0438 \u0438 \u0421\u0435\u0432\u0435\u0440\u043D\u043E\u0439 \u0418\u0440\u043B\u0430\u043D\u0434\u0438\u0438)"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/2004/02/skos/core#altLabel> "Reino Unido"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/2004/02/skos/core#altLabel> "\u5927\u4E0D\u5217\u98A0\u53CA\u5317\u7231\u5C14\u5170\u8054\u5408\u738B\u56FD"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/154> .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/United_Kingdom> .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_8068> .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/2004/02/skos/core#notation> "826" .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/2004/02/skos/core#prefLabel> "United Kingdom of Great Britain and Northern Ireland"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u5927\u4E0D\u5217\u98A0\u53CA\u5317\u7231\u5C14\u5170\u8054\u5408\u738B\u56FD"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0421\u043E\u0435\u0434\u0438\u043D\u0435\u043D\u043D\u043E\u0435 \u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u0442\u0432\u043E (\u0412\u0435\u043B\u0438\u043A\u043E\u0431\u0440\u0438\u0442\u0430\u043D\u0438\u0438 \u0438 \u0421\u0435\u0432\u0435\u0440\u043D\u043E\u0439 \u0418\u0440\u043B\u0430\u043D\u0434\u0438\u0438)"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/2004/02/skos/core#prefLabel> "el Reino Unido de Gran Breta\u00F1a e Irlanda del Norte"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/2004/02/skos/core#prefLabel> "le Royaume-Uni de Grande-Bretagne et d'Irlande du Nord"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/826> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0627\u0644\u0645\u0645\u0644\u0643\u0629 \u0627\u0644\u0645\u062A\u062D\u062F\u0629"@ar .

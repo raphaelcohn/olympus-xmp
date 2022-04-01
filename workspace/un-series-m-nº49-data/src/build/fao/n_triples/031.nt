@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/145> .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/145> .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "9026" .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Azerbaijan" .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "052" .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "19" .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "AZ" .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "AZE" .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "031" .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "AZE" .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/145> .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0627\u0644\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0627\u0644\u0623\u0630\u0631\u0628\u064A\u062C\u0627\u0646\u064A\u0629" .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Azerbaijan" .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Azerbaiy\u00E1n" .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Azerba\u00EFdjan" .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0410\u0437\u0435\u0440\u0431\u0430\u0439\u0434\u0436\u0430\u043D" .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u963F\u585E\u62DC\u7586\u5171\u548C\u56FD" .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1992"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/2004/02/skos/core#altLabel> "Azerbaiy\u00E1n"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/2004/02/skos/core#altLabel> "Azerbaijan"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/2004/02/skos/core#altLabel> "\u963F\u585E\u62DC\u7586\u5171\u548C\u56FD"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/2004/02/skos/core#altLabel> "Azerba\u00EFdjan"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0627\u0644\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0627\u0644\u0623\u0630\u0631\u0628\u064A\u062C\u0627\u0646\u064A\u0629"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0410\u0437\u0435\u0440\u0431\u0430\u0439\u0434\u0436\u0430\u043D"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/145> .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Azerbaijan> .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_9026> .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/2004/02/skos/core#notation> "031" .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Rep\u00FAblica de Azerbaiy\u00E1n"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u963F\u585E\u62DC\u7586\u5171\u548C\u56FD"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0410\u0437\u0435\u0440\u0431\u0430\u0439\u0434\u0436\u0430\u043D"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0627\u0644\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0627\u0644\u0623\u0630\u0631\u0628\u064A\u062C\u0627\u0646\u064A\u0629"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/2004/02/skos/core#prefLabel> "Azerbaijan"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/031> <http://www.w3.org/2004/02/skos/core#prefLabel> "la R\u00E9publique d'Azerba\u00EFdjan"@fr .

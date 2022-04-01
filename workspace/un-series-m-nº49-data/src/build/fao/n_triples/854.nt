@@ -1,0 +1,44 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/011> .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/202> .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "8081" .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Burkina_Faso" .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "233" .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "42" .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "BF" .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "BFA" .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "854" .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "BKF" .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/011> .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0628\u0648\u0631\u0643\u064A\u0646\u0627 \u0641\u0627\u0633\u0648" .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Burkina Faso" .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Burkina Faso" .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Burkina Faso" .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0411\u0443\u0440\u043A\u0438\u043D\u0430-\u0424\u0430\u0441\u043E" .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u5E03\u57FA\u7EB3\u6CD5\u7D22" .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0628\u0648\u0631\u0643\u064A\u0646\u0627 \u0641\u0627\u0633\u0648"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0411\u0443\u0440\u043A\u0438\u043D\u0430-\u0424\u0430\u0441\u043E"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2004/02/skos/core#altLabel> "Burkina Faso"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2004/02/skos/core#altLabel> "Burkina Faso"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2004/02/skos/core#altLabel> "Burkina Faso"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2004/02/skos/core#altLabel> "\u5E03\u57FA\u7EB3\u6CD5\u7D22"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/202> .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/011> .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_8081> .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Burkina_Faso> .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2004/02/skos/core#notation> "854" .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u5E03\u57FA\u7EB3\u6CD5\u7D22"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0628\u0648\u0631\u0643\u064A\u0646\u0627 \u0641\u0627\u0633\u0648"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2004/02/skos/core#prefLabel> "Burkina Faso"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2004/02/skos/core#prefLabel> "Burkina Faso"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2004/02/skos/core#prefLabel> "le Burkina Faso"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/854> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0411\u0443\u0440\u043A\u0438\u043D\u0430-\u0424\u0430\u0441\u043E"@ru .

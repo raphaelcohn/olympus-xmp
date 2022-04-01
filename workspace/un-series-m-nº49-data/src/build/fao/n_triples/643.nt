@@ -1,0 +1,44 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/151> .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/151> .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "33240" .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Russia" .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "185" .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "204" .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "RU" .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "RUS" .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "643" .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "USR" .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/151> .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0627\u0644\u0627\u062A\u062D\u0627\u062F \u0627\u0644\u0631\u0648\u0633\u064A" .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Russian Federation" .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Federaci\u00F3n de Rusia" .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "F\u00E9d\u00E9ration de Russie" .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0420\u043E\u0441\u0441\u0438\u0439\u0441\u043A\u0430\u044F \u0424\u0435\u0434\u0435\u0440\u0430\u0446\u0438\u044F" .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u4FC4\u7F57\u65AF\u8054\u90A6" .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1992"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2004/02/skos/core#altLabel> "F\u00E9d\u00E9ration de Russie"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2004/02/skos/core#altLabel> "Russian Federation"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2004/02/skos/core#altLabel> "\u4FC4\u7F57\u65AF\u8054\u90A6"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0627\u0644\u0627\u062A\u062D\u0627\u062F \u0627\u0644\u0631\u0648\u0633\u064A"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0420\u043E\u0441\u0441\u0438\u0439\u0441\u043A\u0430\u044F \u0424\u0435\u0434\u0435\u0440\u0430\u0446\u0438\u044F"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2004/02/skos/core#altLabel> "Federaci\u00F3n de Rusia"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/151> .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_33240> .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Russia> .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2004/02/skos/core#notation> "643" .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2004/02/skos/core#note> "According to the resolution 73/263 adopted by the UN General Assembly, if data submitted by the Russian\nFederation include Crimea, the following footnote is suggested: \u201CInformation provided by the Russian\nFederation. Includes statistical data for the Autonomous Republic of Crimea and the city of Sevastopol,\nUkraine, temporarily occupied by the Russian Federation\u201D"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2004/02/skos/core#prefLabel> "la F\u00E9d\u00E9ration de Russie"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0420\u043E\u0441\u0441\u0438\u0439\u0441\u043A\u0430\u044F \u0424\u0435\u0434\u0435\u0440\u0430\u0446\u0438\u044F"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2004/02/skos/core#prefLabel> "Russian Federation"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u4FC4\u7F57\u65AF\u8054\u90A6"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0627\u0644\u0627\u062A\u062D\u0627\u062F \u0627\u0644\u0631\u0648\u0633\u064A"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/643> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Federaci\u00F3n de Rusia"@es .

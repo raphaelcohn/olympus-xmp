@@ -1,0 +1,37 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/061> .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/061> .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "172" .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "PN" .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "PCN" .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "612" .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/061> .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0628\u064A\u062A\u0643\u064A\u0631\u0646 \u062C\u0632\u0631" .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Pitcairn Islands" .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Islas Pitcairn" .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "\u00CEles Pitcairn" .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u041F\u0438\u0442\u043A\u044D\u0440\u043D" .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u76AE\u7279\u514B\u6069\u5C9B" .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://www.w3.org/2004/02/skos/core#altLabel> "\u041F\u0438\u0442\u043A\u044D\u0440\u043D"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://www.w3.org/2004/02/skos/core#altLabel> "Pitcairn Islands"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://www.w3.org/2004/02/skos/core#altLabel> "\u00CEles Pitcairn"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://www.w3.org/2004/02/skos/core#altLabel> "\u76AE\u7279\u514B\u6069\u5C9B"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0628\u064A\u062A\u0643\u064A\u0631\u0646 \u062C\u0632\u0631"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://www.w3.org/2004/02/skos/core#altLabel> "Islas Pitcairn"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/061> .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://www.w3.org/2004/02/skos/core#notation> "612" .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u76AE\u7279\u514B\u6069\u5C9B"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://www.w3.org/2004/02/skos/core#prefLabel> "Islas Pitcairn"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u00CEles Pitcairn"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0628\u064A\u062A\u0643\u064A\u0631\u0646 \u062C\u0632\u0631"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://www.w3.org/2004/02/skos/core#prefLabel> "Pitcairn"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/612> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u041F\u0438\u0442\u043A\u044D\u0440\u043D"@ru .

@@ -1,0 +1,35 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/057> .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "232" .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "UM" .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "UMI" .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "581" .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/057> .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0627\u0644\u0635\u063A\u0631\u0649 \u0627\u0644\u0645\u062A\u062D\u062F\u0629 \u0627\u0644\u0648\u0644\u0627\u064A\u0627\u062A \u062C\u0632\u0631" .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "US Minor Outlying Is." .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Is Menores Perif\u00E9ricasEU" .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "\u00CEles Mineures Eloign\u00E9sEU" .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u043C\u0430\u043B\u044B\u0435 \u043E\u0442\u0434\u0430\u043B\u0435\u043D\u043D\u044B\u0435 \u043E\u0441\u0442\u0440\u043E\u0432\u0430 \u0421\u043E\u0435\u0434\u0438\u043D\u0435\u043D\u043D\u044B\u0445 \u0428\u0442\u0430\u0442\u043E\u0432 \u0410\u043C\u0435\u0440\u0438\u043A\u0438" .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u7F8E\u56FD\u5C0F\u79BB\u5C9B" .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1986"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://www.w3.org/2004/02/skos/core#altLabel> "US Minor Outlying Is."@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0627\u0644\u0635\u063A\u0631\u0649 \u0627\u0644\u0645\u062A\u062D\u062F\u0629 \u0627\u0644\u0648\u0644\u0627\u064A\u0627\u062A \u062C\u0632\u0631"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://www.w3.org/2004/02/skos/core#altLabel> "Is Menores Perif\u00E9ricasEU"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://www.w3.org/2004/02/skos/core#altLabel> "\u043C\u0430\u043B\u044B\u0435 \u043E\u0442\u0434\u0430\u043B\u0435\u043D\u043D\u044B\u0435 \u043E\u0441\u0442\u0440\u043E\u0432\u0430 \u0421\u043E\u0435\u0434\u0438\u043D\u0435\u043D\u043D\u044B\u0445 \u0428\u0442\u0430\u0442\u043E\u0432 \u0410\u043C\u0435\u0440\u0438\u043A\u0438"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://www.w3.org/2004/02/skos/core#altLabel> "\u00CEles Mineures Eloign\u00E9sEU"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://www.w3.org/2004/02/skos/core#altLabel> "\u7F8E\u56FD\u5C0F\u79BB\u5C9B"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/057> .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://www.w3.org/2004/02/skos/core#notation> "581" .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u7F8E\u56FD\u5C0F\u79BB\u5C9B"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://www.w3.org/2004/02/skos/core#prefLabel> "Islas Menores Perif\u00E9ricas de los Estados Unidos"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u00CEles mineures \u00E9loign\u00E9es des \u00C9tats-Unis"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0627\u0644\u0635\u063A\u0631\u0649 \u0627\u0644\u0645\u062A\u062D\u062F\u0629 \u0627\u0644\u0648\u0644\u0627\u064A\u0627\u062A \u062C\u0632\u0631"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://www.w3.org/2004/02/skos/core#prefLabel> "United States Minor Outlying Islands"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/581> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u043C\u0430\u043B\u044B\u0435 \u043E\u0442\u0434\u0430\u043B\u0435\u043D\u043D\u044B\u0435 \u043E\u0441\u0442\u0440\u043E\u0432\u0430 \u0421\u043E\u0435\u0434\u0438\u043D\u0435\u043D\u043D\u044B\u0445 \u0428\u0442\u0430\u0442\u043E\u0432 \u0410\u043C\u0435\u0440\u0438\u043A\u0438"@ru .

@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/061> .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/061> .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "7808" .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Tonga" .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "219" .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "245" .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "TO" .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "TON" .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "776" .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "TON" .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/061> .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u062A\u0648\u0646\u063A\u0627" .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Tonga" .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Tonga" .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Tonga" .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0422\u043E\u043D\u0433\u0430" .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u6C64 \u52A0" .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/2004/02/skos/core#altLabel> "\u062A\u0648\u0646\u063A\u0627"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0422\u043E\u043D\u0433\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/2004/02/skos/core#altLabel> "\u6C64 \u52A0"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/2004/02/skos/core#altLabel> "Tonga"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/2004/02/skos/core#altLabel> "Tonga"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/2004/02/skos/core#altLabel> "Tonga"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/061> .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Tonga> .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_7808> .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/2004/02/skos/core#notation> "776" .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0422\u043E\u043D\u0433\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/2004/02/skos/core#prefLabel> "le Royaume des Tonga"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u6C64 \u52A0"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/2004/02/skos/core#prefLabel> "el Reino de Tonga"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/2004/02/skos/core#prefLabel> "Tonga"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/776> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u062A\u0648\u0646\u063A\u0627"@ar .

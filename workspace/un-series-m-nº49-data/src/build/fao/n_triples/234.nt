@@ -1,0 +1,42 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/154> .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/154> .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "2811" .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Faroe_Islands" .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "064" .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "82" .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "FO" .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "FRO" .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "234" .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/154> .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u062C\u0632\u0631 \u0641\u064A\u0631\u0648\u064A\u0647(Associate Member)" .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Faroe Islands" .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Islas Feroe" .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "\u00CEles F\u00E9ro\u00E9" .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0424\u0430\u0440\u0435\u0440\u0441\u043A\u0438\u0435 \u041E\u0441\u0442\u0440\u043E\u0432\u0430" .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u6CD5\u7F57\u7FA4\u5C9B" .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/2004/02/skos/core#altLabel> "Islas Feroe"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/2004/02/skos/core#altLabel> "\u6CD5\u7F57\u7FA4\u5C9B"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/2004/02/skos/core#altLabel> "\u00CEles F\u00E9ro\u00E9"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0424\u0430\u0440\u0435\u0440\u0441\u043A\u0438\u0435 \u041E\u0441\u0442\u0440\u043E\u0432\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/2004/02/skos/core#altLabel> "\u062C\u0632\u0631 \u0641\u064A\u0631\u0648\u064A\u0647(Associate Member)"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/2004/02/skos/core#altLabel> "Faroe Islands"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/154> .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_2811> .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Faroe_Islands> .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/2004/02/skos/core#notation> "234" .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0424\u0430\u0440\u0435\u0440\u0441\u043A\u0438\u0435 \u041E\u0441\u0442\u0440\u043E\u0432\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/2004/02/skos/core#prefLabel> "les \u00CEles F\u00E9ro\u00E9"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u062C\u0632\u0631 \u0641\u064A\u0631\u0648\u064A\u0647(Associate Member)"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/2004/02/skos/core#prefLabel> "las Islas Feroe"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u6CD5\u7F57\u7FA4\u5C9B"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/234> <http://www.w3.org/2004/02/skos/core#prefLabel> "Faroe Islands"@en .

@@ -1,0 +1,32 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/039> .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "3645" .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Holy_See_(Vatican_City)" .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "094" .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "110" .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "VA" .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "VAT" .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "336" .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "HLS" .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/039> .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Holy See" .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Santa Sede" .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Saint-Si\u00E8ge" .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://www.w3.org/2004/02/skos/core#altLabel> "Santa Sede"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://www.w3.org/2004/02/skos/core#altLabel> "Holy See"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://www.w3.org/2004/02/skos/core#altLabel> "Saint-Si\u00E8ge"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/039> .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_3645> .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Holy_See_(Vatican_City)> .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://www.w3.org/2004/02/skos/core#notation> "336" .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Santa Sede"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://www.w3.org/2004/02/skos/core#prefLabel> "Holy See"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/336> <http://www.w3.org/2004/02/skos/core#prefLabel> "le Saint-Si\u00E8ge"@fr .

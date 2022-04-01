@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/145> .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/145> .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "7576" .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Syria" .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "212" .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "238" .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "SY" .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "SYR" .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "760" .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "SYR" .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/145> .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0627\u0644\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0627\u0644\u0639\u0631\u0628\u064A\u0629 \u0627\u0644\u0633\u0648\u0631\u064A\u0629" .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Syrian Arab Republic" .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Rep\u00FAblica \u00C1rabe Siria" .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "R\u00E9p. arabe syrienne" .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0421\u0438\u0440\u0438\u0439\u0441\u043A\u0430\u044F \u0410\u0440\u0430\u0431\u0441\u043A\u0430\u044F \u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430" .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u963F\u62C9\u4F2F\u53D9\u5229\u4E9A\u5171\u548C\u56FD" .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0627\u0644\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0627\u0644\u0639\u0631\u0628\u064A\u0629 \u0627\u0644\u0633\u0648\u0631\u064A\u0629"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0421\u0438\u0440\u0438\u0439\u0441\u043A\u0430\u044F \u0410\u0440\u0430\u0431\u0441\u043A\u0430\u044F \u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/2004/02/skos/core#altLabel> "\u963F\u62C9\u4F2F\u53D9\u5229\u4E9A\u5171\u548C\u56FD"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/2004/02/skos/core#altLabel> "Rep\u00FAblica \u00C1rabe Siria"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/2004/02/skos/core#altLabel> "R\u00E9p. arabe syrienne"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/2004/02/skos/core#altLabel> "Syrian Arab Republic"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/145> .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_7576> .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Syria> .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/2004/02/skos/core#notation> "760" .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/2004/02/skos/core#prefLabel> "la R\u00E9publique arabe syrienne"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0421\u0438\u0440\u0438\u0439\u0441\u043A\u0430\u044F \u0410\u0440\u0430\u0431\u0441\u043A\u0430\u044F \u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u963F\u62C9\u4F2F\u53D9\u5229\u4E9A\u5171\u548C\u56FD"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Rep\u00FAblica \u00C1rabe Siria"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0627\u0644\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0627\u0644\u0639\u0631\u0628\u064A\u0629 \u0627\u0644\u0633\u0648\u0631\u064A\u0629"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/760> <http://www.w3.org/2004/02/skos/core#prefLabel> "Syrian Arab Republic"@en .

@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/005> .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/005> .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "1767" .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Colombia" .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "044" .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "57" .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "CO" .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "COL" .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "170" .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "COL" .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/005> .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0643\u0648\u0644\u0648\u0645\u0628\u064A\u0627" .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Colombia" .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Colombia" .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Colombie" .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u041A\u043E\u043B\u0443\u043C\u0431\u0438\u044F" .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u54E5\u4F26\u6BD4\u4E9A" .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/2004/02/skos/core#altLabel> "Colombia"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/2004/02/skos/core#altLabel> "Colombia"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/2004/02/skos/core#altLabel> "\u041A\u043E\u043B\u0443\u043C\u0431\u0438\u044F"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/2004/02/skos/core#altLabel> "\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0643\u0648\u0644\u0648\u0645\u0628\u064A\u0627"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/2004/02/skos/core#altLabel> "Colombie"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/2004/02/skos/core#altLabel> "\u54E5\u4F26\u6BD4\u4E9A"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/005> .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Colombia> .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_1767> .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/2004/02/skos/core#notation> "170" .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u54E5\u4F26\u6BD4\u4E9A"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/2004/02/skos/core#prefLabel> "Colombia"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u041A\u043E\u043B\u0443\u043C\u0431\u0438\u044F"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/2004/02/skos/core#prefLabel> "la R\u00E9publique de Colombie"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Rep\u00FAblica de Colombia"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/170> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0643\u0648\u0644\u0648\u0645\u0628\u064A\u0627"@ar .

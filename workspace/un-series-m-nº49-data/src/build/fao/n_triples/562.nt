@@ -1,0 +1,44 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/011> .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/202> .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "5181" .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Niger" .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "158" .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "181" .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "NE" .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "NER" .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "562" .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "NER" .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/011> .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0627\u0644\u0646\u064A\u062C\u0631" .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Niger" .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "N\u00EDger" .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Niger" .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430 \u041D\u0438\u0433\u0435\u0440" .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u5C3C\u65E5\u5C14" .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430 \u041D\u0438\u0433\u0435\u0440"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2004/02/skos/core#altLabel> "N\u00EDger"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2004/02/skos/core#altLabel> "\u5C3C\u65E5\u5C14"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2004/02/skos/core#altLabel> "Niger"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2004/02/skos/core#altLabel> "Niger"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0627\u0644\u0646\u064A\u062C\u0631"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/202> .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/011> .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Niger> .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_5181> .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2004/02/skos/core#notation> "562" .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2004/02/skos/core#prefLabel> "Niger"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0627\u0644\u0646\u064A\u062C\u0631"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2004/02/skos/core#prefLabel> "la R\u00E9publique du Niger"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u5C3C\u65E5\u5C14"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Rep\u00FAblica del N\u00EDger"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/562> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430 \u041D\u0438\u0433\u0435\u0440"@ru .

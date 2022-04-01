@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/155> .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/155> .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "4315" .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Liechtenstein" .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "125" .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "146" .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "LI" .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "LIE" .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "438" .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "LIE" .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/155> .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0644\u062E\u062A\u0646\u0634\u062A\u0627\u064A\u0646" .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Liechtenstein" .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Liechtenstein" .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Liechtenstein" .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u041B\u0438\u0445\u0442\u0435\u043D\u0448\u0442\u0435\u0439\u043D" .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u5217\u652F\u6566\u58EB\u767B" .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0644\u062E\u062A\u0646\u0634\u062A\u0627\u064A\u0646"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/2004/02/skos/core#altLabel> "Liechtenstein"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/2004/02/skos/core#altLabel> "Liechtenstein"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/2004/02/skos/core#altLabel> "Liechtenstein"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/2004/02/skos/core#altLabel> "\u041B\u0438\u0445\u0442\u0435\u043D\u0448\u0442\u0435\u0439\u043D"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/2004/02/skos/core#altLabel> "\u5217\u652F\u6566\u58EB\u767B"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/155> .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_4315> .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Liechtenstein> .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/2004/02/skos/core#notation> "438" .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/2004/02/skos/core#prefLabel> "el Principado de Liechtenstein"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Principaut\u00E9 du Liechtenstein"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/2004/02/skos/core#prefLabel> "Liechtenstein"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u041A\u043D\u044F\u0436\u0435\u0441\u0442\u0432\u043E \u041B\u0438\u0445\u0442\u0435\u043D\u0448\u0442\u0435\u0439\u043D"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0644\u062E\u062A\u0646\u0634\u062A\u0627\u064A\u0646 \u0625\u0645\u0627\u0631\u0629"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/438> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u5217\u652F\u6566\u58EB\u767B\u516C\u56FD"@zh .

@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/021> .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/021> .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "884" .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Bermuda" .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "017" .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "30" .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "BM" .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "BMU" .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "060" .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "BER" .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/021> .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0628\u0631\u0645\u0648\u062F\u0627" .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Bermuda" .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Bermudas" .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Bermudes" .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0411\u0435\u0440\u043C\u0443\u0434\u0441\u043A\u0438\u0435 \u043E\u0441\u0442\u0440\u043E\u0432\u0430" .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u767E\u6155\u5927" .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/2004/02/skos/core#altLabel> "Bermuda"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/2004/02/skos/core#altLabel> "Bermudas"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/2004/02/skos/core#altLabel> "Bermudes"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0411\u0435\u0440\u043C\u0443\u0434\u0441\u043A\u0438\u0435 \u043E\u0441\u0442\u0440\u043E\u0432\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0628\u0631\u0645\u0648\u062F\u0627"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/2004/02/skos/core#altLabel> "\u767E\u6155\u5927"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/021> .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Bermuda> .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_884> .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/2004/02/skos/core#notation> "060" .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/2004/02/skos/core#prefLabel> "les Bermudes"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0411\u0435\u0440\u043C\u0443\u0434\u0441\u043A\u0438\u0435 \u043E\u0441\u0442\u0440\u043E\u0432\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/2004/02/skos/core#prefLabel> "Bermuda"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0628\u0631\u0645\u0648\u062F\u0627"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/2004/02/skos/core#prefLabel> "Bermudas"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/060> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u767E\u6155\u5927"@zh .

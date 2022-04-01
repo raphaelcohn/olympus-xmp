@@ -1,0 +1,44 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/011> .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/202> .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "3177" .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Gambia_The" .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "075" .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "90" .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "GM" .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "GMB" .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "270" .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "GAM" .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/011> .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u063A\u0627\u0645\u0628\u064A\u0627" .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Gambia" .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Gambia" .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Gambia" .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0413\u0430\u043C\u0431\u0438\u044F" .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u5188\u6BD4\u4E9A" .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2004/02/skos/core#altLabel> "\u5188\u6BD4\u4E9A"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2004/02/skos/core#altLabel> "\u063A\u0627\u0645\u0628\u064A\u0627"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0413\u0430\u043C\u0431\u0438\u044F"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2004/02/skos/core#altLabel> "Gambia"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2004/02/skos/core#altLabel> "Gambia"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2004/02/skos/core#altLabel> "Gambia"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/011> .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/202> .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_3177> .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Gambia_The> .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2004/02/skos/core#notation> "270" .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430 \u0413\u0430\u043C\u0431\u0438\u044F"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u063A\u0627\u0645\u0628\u064A\u0627 \u062C\u0645\u0647\u0648\u0631\u064A\u0651\u0629"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2004/02/skos/core#prefLabel> "Gambia"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u5188\u6BD4\u4E9A\u5171\u548C\u56FD"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2004/02/skos/core#prefLabel> "la R\u00E9publique de Gambie"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/270> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Rep\u00FAblica de Gambia"@es .

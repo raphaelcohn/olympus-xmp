@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/005> .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/005> .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "3445" .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Guyana" .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "091" .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "107" .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "GY" .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "GUY" .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "328" .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "GUY" .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/005> .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u063A\u064A\u0627\u0646\u0627" .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Guyana" .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Guyana" .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Guyana" .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0413\u0430\u0439\u0430\u043D\u0430" .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u572D\u4E9A\u90A3" .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/2004/02/skos/core#altLabel> "\u572D\u4E9A\u90A3"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/2004/02/skos/core#altLabel> "Guyana"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/2004/02/skos/core#altLabel> "Guyana"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/2004/02/skos/core#altLabel> "Guyana"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/2004/02/skos/core#altLabel> "\u063A\u064A\u0627\u0646\u0627"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0413\u0430\u0439\u0430\u043D\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/005> .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Guyana> .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_3445> .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/2004/02/skos/core#notation> "328" .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Rep\u00FAblica Cooperativa de Guyana"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u041A\u043E\u043E\u043F\u0435\u0440\u0430\u0442\u0438\u0432\u043D\u0430\u044F \u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430 \u0413\u0430\u0439\u0430\u043D\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u572D\u4E9A\u90A3\u5408\u4F5C\u5171\u548C\u56FD"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0627\u0644\u062A\u0639\u0627\u0648\u0646\u064A\u0651\u0629 \u063A\u064A\u0627\u0646\u0627 \u062C\u0645\u0647\u0648\u0631\u064A\u0651\u0629"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/2004/02/skos/core#prefLabel> "la R\u00E9publique coop\u00E9rative du Guyana"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/328> <http://www.w3.org/2004/02/skos/core#prefLabel> "Guyana"@en .

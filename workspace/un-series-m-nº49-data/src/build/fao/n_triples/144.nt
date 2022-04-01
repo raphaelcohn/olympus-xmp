@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/034> .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/034> .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "7345" .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Sri_Lanka" .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "038" .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "231" .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "LK" .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "LKA" .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "144" .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "SRL" .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/034> .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0633\u0631\u064A \u0644\u0627\u0646\u0643\u0627" .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Sri Lanka" .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Sri Lanka" .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Sri Lanka" .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0428\u0440\u0438-\u041B\u0430\u043D\u043A\u0430" .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u65AF\u91CC\u5170\u5361" .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0428\u0440\u0438-\u041B\u0430\u043D\u043A\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0633\u0631\u064A \u0644\u0627\u0646\u0643\u0627"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/2004/02/skos/core#altLabel> "Sri Lanka"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/2004/02/skos/core#altLabel> "Sri Lanka"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/2004/02/skos/core#altLabel> "Sri Lanka"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/2004/02/skos/core#altLabel> "\u65AF\u91CC\u5170\u5361"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/034> .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Sri_Lanka> .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_7345> .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/2004/02/skos/core#notation> "144" .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u65AF\u91CC\u5170\u5361"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0633\u0631\u064A \u0644\u0627\u0646\u0643\u0627"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Rep\u00FAblica Socialista Democr\u00E1tica de Sri Lanka"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/2004/02/skos/core#prefLabel> "Sri Lanka"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/2004/02/skos/core#prefLabel> "la R\u00E9publique socialiste d\u00E9mocratique de Sri Lanka"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/144> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0428\u0440\u0438-\u041B\u0430\u043D\u043A\u0430"@ru .

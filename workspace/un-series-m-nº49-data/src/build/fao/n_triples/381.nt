@@ -1,0 +1,12 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/381> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/381> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#other> .
+<http://stats-class.fao.uniroma2.it/geo/m49/381> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/039> .
+<http://stats-class.fao.uniroma2.it/geo/m49/381> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/039> .
+<http://stats-class.fao.uniroma2.it/geo/m49/381> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/381> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/381> <http://www.w3.org/2004/02/skos/core#notation> "381" .
+<http://stats-class.fao.uniroma2.it/geo/m49/381> <http://www.w3.org/2004/02/skos/core#note> "For internal processing, currently not available in the Statistical Standard Series \u201CStandard Country or Area Codes for Statistical Use\u201D (July 2019 revision). Relevant for FAO ESS time series to be consistent, available in code lists used at the international level (e.g. UN Comtrade). Available in SWS only, not intended for dissemination purposes. Note written in 21.11.2019"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/381> <http://www.w3.org/2004/02/skos/core#prefLabel> "Italy - San Marino - Holy See"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/381> <http://www.w3.org/2004/02/skos/core#prefLabel> "Italie - Saint-Marin - le Saint-Si\u00E8ge"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/381> <http://www.w3.org/2004/02/skos/core#prefLabel> "Italia - San Marino - la Santa Sede"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/381> <http://www.w3.org/2004/02/skos/core#scopeNote> "For internal processing, currently not available in the Statistical Standard Series \u201CStandard Country or Area Codes for Statistical Use\u201D (July 2019 revision). Relevant for FAO ESS time series to be consistent, available in code lists used at the international level (e.g. UN Comtrade). Available in SWS only, not intended for dissemination purposes. Note written in 21.11.2019"@en .

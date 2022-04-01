@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/145> .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/145> .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "3972" .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Israel" .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "105" .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "121" .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "IL" .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "ISR" .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "376" .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "ISR" .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/145> .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u062F\u0648\u0644\u0629 \u0625\u0633\u0631\u0627\u0626\u064A\u0644" .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Israel" .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Israel" .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Isra\u00EBl" .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0418\u0437\u0440\u0430\u0438\u043B\u044C" .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u4EE5\u8272\u5217" .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/2004/02/skos/core#altLabel> "Israel"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/2004/02/skos/core#altLabel> "Israel"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0418\u0437\u0440\u0430\u0438\u043B\u044C"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/2004/02/skos/core#altLabel> "Isra\u00EBl"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/2004/02/skos/core#altLabel> "\u4EE5\u8272\u5217"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/2004/02/skos/core#altLabel> "\u062F\u0648\u0644\u0629 \u0625\u0633\u0631\u0627\u0626\u064A\u0644"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/145> .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_3972> .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Israel> .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/2004/02/skos/core#notation> "376" .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0418\u0437\u0440\u0430\u0438\u043B\u044C"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u062F\u0648\u0644\u0629 \u0625\u0633\u0631\u0627\u0626\u064A\u0644"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/2004/02/skos/core#prefLabel> "el Estado de Israel"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/2004/02/skos/core#prefLabel> "Israel"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u4EE5\u8272\u5217"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/376> <http://www.w3.org/2004/02/skos/core#prefLabel> "l'\u00C9tat d'Isra\u00EBl"@fr .

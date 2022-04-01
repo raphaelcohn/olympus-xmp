@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://purl.org/dc/terms/modified> "2020-06-09T18:58:29.044+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/015> .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/015> .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "7497" .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Sudan" .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "276" .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "6" .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "SD" .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "SDN" .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "729" .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/015> .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0627\u0644\u0633\u0648\u062F\u0627\u0646" .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Sudan" .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Sud\u00E1n" .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Soudan" .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0421\u0443\u0434\u0430\u043D" .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u82CF\u4E39" .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "2011"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/2004/02/skos/core#altLabel> "Sudan"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/2004/02/skos/core#altLabel> "Sud\u00E1n"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0627\u0644\u0633\u0648\u062F\u0627\u0646"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/2004/02/skos/core#altLabel> "\u82CF\u4E39"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0421\u0443\u0434\u0430\u043D"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/2004/02/skos/core#altLabel> "Soudan"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/015> .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_7497> .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Sudan> .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/2004/02/skos/core#notation> "729" .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/2004/02/skos/core#prefLabel> "la R\u00E9publique du Soudan"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Rep\u00FAblica del Sud\u00E1n"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/2004/02/skos/core#prefLabel> "Sudan"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0627\u0644\u0633\u0648\u062F\u0627\u0646 \u062C\u0645\u0647\u0648\u0631\u064A\u0629"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u82CF\u4E39\u5171\u548C\u56FD"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/729> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430 \u0421\u0443\u0434\u0430\u043D"@ru .

@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/029> .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/029> .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "7349" .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Saint_Lucia" .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "189" .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "209" .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "LC" .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "LCA" .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "662" .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "STL" .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/029> .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0633\u0627\u0646\u062A \u0644\u0648\u0633\u064A\u0627" .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Saint Lucia" .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Santa Luc\u00EDa" .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Sainte-Lucie" .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0421\u0435\u043D\u0442-\u041B\u044E\u0441\u0438\u044F" .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u5723\u5362\u897F\u4E9A" .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/2004/02/skos/core#altLabel> "\u5723\u5362\u897F\u4E9A"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/2004/02/skos/core#altLabel> "Sainte-Lucie"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/2004/02/skos/core#altLabel> "Saint Lucia"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0421\u0435\u043D\u0442-\u041B\u044E\u0441\u0438\u044F"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/2004/02/skos/core#altLabel> "Santa Luc\u00EDa"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0633\u0627\u0646\u062A \u0644\u0648\u0633\u064A\u0627"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/029> .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_7349> .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Saint_Lucia> .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/2004/02/skos/core#notation> "662" .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0421\u0435\u043D\u0442-\u041B\u044E\u0441\u0438\u044F"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/2004/02/skos/core#prefLabel> "Saint Lucia"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u5723\u5362\u897F\u4E9A"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0633\u0627\u0646\u062A \u0644\u0648\u0633\u064A\u0627"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/2004/02/skos/core#prefLabel> "Sainte-Lucie"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/662> <http://www.w3.org/2004/02/skos/core#prefLabel> "Santa Luc\u00EDa"@es .

@@ -1,0 +1,37 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/057> .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/057> .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "163" .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "MP" .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "MNP" .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "580" .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/057> .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0627\u0644\u0634\u0645\u0627\u0644\u064A\u0629 \u0645\u0627\u0631\u064A\u0627\u0646\u0627 \u062C\u0632\u0631" .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Northern Mariana Is." .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Islas Marianas septent." .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "\u00CEles Mariannes du Nord" .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0421\u0435\u0432\u0435\u0440\u043D\u044B\u0435 \u041C\u0430\u0440\u0438\u0430\u043D\u0441\u043A\u0438\u0435 \u043E\u0441\u0442\u0440\u043E\u0432\u0430" .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u5317\u9A6C\u91CC\u4E9A\u7EB3\u7FA4\u5C9B" .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1991"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0421\u0435\u0432\u0435\u0440\u043D\u044B\u0435 \u041C\u0430\u0440\u0438\u0430\u043D\u0441\u043A\u0438\u0435 \u043E\u0441\u0442\u0440\u043E\u0432\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://www.w3.org/2004/02/skos/core#altLabel> "Northern Mariana Is."@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://www.w3.org/2004/02/skos/core#altLabel> "\u00CEles Mariannes du Nord"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://www.w3.org/2004/02/skos/core#altLabel> "Islas Marianas septent."@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://www.w3.org/2004/02/skos/core#altLabel> "\u5317\u9A6C\u91CC\u4E9A\u7EB3\u7FA4\u5C9B"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0627\u0644\u0634\u0645\u0627\u0644\u064A\u0629 \u0645\u0627\u0631\u064A\u0627\u0646\u0627 \u062C\u0632\u0631"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/057> .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://www.w3.org/2004/02/skos/core#notation> "580" .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0421\u043E\u0434\u0440\u0443\u0436\u0435\u0441\u0442\u0432\u043E \u0421\u0435\u0432\u0435\u0440\u043D\u044B\u0445 \u041C\u0430\u0440\u0438\u0430\u043D\u0441\u043A\u0438\u0445 \u043E\u0441\u0442\u0440\u043E\u0432\u043E\u0432"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0627\u0644\u0634\u0645\u0627\u0644\u064A\u0629 \u0645\u0627\u0631\u064A\u0627\u0646\u0627 \u062C\u0632\u0631"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://www.w3.org/2004/02/skos/core#prefLabel> "Northern Mariana Islands"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://www.w3.org/2004/02/skos/core#prefLabel> "Islas Marianas septentrionales"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u5317\u9A6C\u91CC\u4E9A\u7EB3\u7FA4\u5C9B"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/580> <http://www.w3.org/2004/02/skos/core#prefLabel> "Commonwealth des Mariannes du Nord"@fr .

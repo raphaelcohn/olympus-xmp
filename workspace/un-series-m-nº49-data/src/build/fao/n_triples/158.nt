@@ -1,0 +1,28 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://purl.org/dc/terms/modified> "2020-02-14T18:12:20.775+01:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/030> .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "214" .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "TW" .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "TWN" .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "158" .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "TWN" .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/030> .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Taiwan Province of China" .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Prov. china de Taiw\u00E1n" .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Prov. chinoise de Ta\u00EFwan" .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://www.w3.org/2004/02/skos/core#altLabel> "Prov. china de Taiw\u00E1n"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://www.w3.org/2004/02/skos/core#altLabel> "Prov. chinoise de Ta\u00EFwan"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://www.w3.org/2004/02/skos/core#altLabel> "Taiwan Province of China"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/030> .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://www.w3.org/2004/02/skos/core#notation> "158" .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://www.w3.org/2004/02/skos/core#note> "\u00A0FAO code and descriptor; descriptor as in NOCS"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://www.w3.org/2004/02/skos/core#prefLabel> "Provincia china de Taiw\u00E1n"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://www.w3.org/2004/02/skos/core#prefLabel> "Taiwan, Province of China"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/158> <http://www.w3.org/2004/02/skos/core#prefLabel> "Province chinoise de Ta\u00EFwan"@fr .

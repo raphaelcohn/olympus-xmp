@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/154> .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/154> .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "7549" .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Sweden" .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "210" .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "236" .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "SE" .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "SWE" .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "752" .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "SWE" .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/154> .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0627\u0644\u0633\u0648\u064A\u062F" .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Sweden" .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Suecia" .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Su\u00E8de" .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u0442\u0432\u043E \u0428\u0432\u0435\u0446\u0438\u044F" .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u745E \u5178" .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0627\u0644\u0633\u0648\u064A\u062F"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/2004/02/skos/core#altLabel> "\u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u0442\u0432\u043E \u0428\u0432\u0435\u0446\u0438\u044F"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/2004/02/skos/core#altLabel> "\u745E \u5178"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/2004/02/skos/core#altLabel> "Su\u00E8de"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/2004/02/skos/core#altLabel> "Suecia"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/2004/02/skos/core#altLabel> "Sweden"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/154> .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Sweden> .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_7549> .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/2004/02/skos/core#notation> "752" .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u0442\u0432\u043E \u0428\u0432\u0435\u0446\u0438\u044F"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u745E \u5178"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/2004/02/skos/core#prefLabel> "le Royaume de Su\u00E8de"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/2004/02/skos/core#prefLabel> "Sweden"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0627\u0644\u0633\u0648\u064A\u062F"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/752> <http://www.w3.org/2004/02/skos/core#prefLabel> "el Reino de Suecia"@es .

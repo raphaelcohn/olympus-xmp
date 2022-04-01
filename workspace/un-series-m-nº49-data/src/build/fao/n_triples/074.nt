@@ -1,0 +1,35 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/005> .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "031" .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "BV" .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "BVT" .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "074" .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/005> .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0628\u0648\u0641\u064A\u0647 \u062C\u0632\u0631" .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Bouvet Island" .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Isla Bouvet" .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "\u00CEle Bouvet" .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u043E\u0441\u0442\u0440\u043E\u0432 \u0411\u0443\u0432\u0435" .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u535A\u7EF4\u7279\u5C9B" .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://www.w3.org/2004/02/skos/core#altLabel> "Isla Bouvet"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://www.w3.org/2004/02/skos/core#altLabel> "\u043E\u0441\u0442\u0440\u043E\u0432 \u0411\u0443\u0432\u0435"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://www.w3.org/2004/02/skos/core#altLabel> "\u00CEle Bouvet"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://www.w3.org/2004/02/skos/core#altLabel> "Bouvet Island"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0628\u0648\u0641\u064A\u0647 \u062C\u0632\u0631"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://www.w3.org/2004/02/skos/core#altLabel> "\u535A\u7EF4\u7279\u5C9B"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/005> .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://www.w3.org/2004/02/skos/core#notation> "074" .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u043E\u0441\u0442\u0440\u043E\u0432 \u0411\u0443\u0432\u0435"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u00CEle Bouvet"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://www.w3.org/2004/02/skos/core#prefLabel> "Isla Bouvet"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://www.w3.org/2004/02/skos/core#prefLabel> "Bouvet Island"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0628\u0648\u0641\u064A\u0647 \u062C\u0632\u0631"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/074> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u535A\u7EF4\u7279\u5C9B"@zh .

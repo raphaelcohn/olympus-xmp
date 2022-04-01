@@ -1,0 +1,44 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/018> .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/202> .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "7252" .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "South_Africa" .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "202" .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "227" .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "ZA" .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "ZAF" .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "710" .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "SAF" .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/018> .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u062C\u0646\u0648\u0628 \u0623\u0641\u0631\u064A\u0642\u064A\u0627" .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "South Africa" .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Sud\u00E1frica" .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Afrique du Sud" .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u042E\u0436\u043D\u0430\u044F \u0410\u0444\u0440\u0438\u043A\u0430" .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u5357 \u975E" .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2004/02/skos/core#altLabel> "Afrique du Sud"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2004/02/skos/core#altLabel> "\u5357 \u975E"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2004/02/skos/core#altLabel> "South Africa"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2004/02/skos/core#altLabel> "\u042E\u0436\u043D\u0430\u044F \u0410\u0444\u0440\u0438\u043A\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2004/02/skos/core#altLabel> "Sud\u00E1frica"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2004/02/skos/core#altLabel> "\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u062C\u0646\u0648\u0628 \u0623\u0641\u0631\u064A\u0642\u064A\u0627"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/018> .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/202> .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_7252> .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/South_Africa> .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2004/02/skos/core#notation> "710" .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u042E\u0436\u043D\u0430\u044F \u0410\u0444\u0440\u0438\u043A\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Rep\u00FAblica de Sud\u00E1frica"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u062C\u0646\u0648\u0628 \u0623\u0641\u0631\u064A\u0642\u064A\u0627"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2004/02/skos/core#prefLabel> "la R\u00E9publique sud-africaine"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u5357 \u975E"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/710> <http://www.w3.org/2004/02/skos/core#prefLabel> "South Africa"@en .

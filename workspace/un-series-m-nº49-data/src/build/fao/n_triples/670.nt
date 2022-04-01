@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/029> .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/029> .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "7352" .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Saint_Vincent_and_the_Grenadines" .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "191" .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "211" .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "VC" .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "VCT" .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "670" .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "STV" .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/029> .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0633\u0627\u0646\u062A \u0641\u0646\u0633\u0646\u062A \u0648\u062C\u0632\u0631 \u063A\u0631\u064A\u0646\u0627\u062F\u064A\u0646" .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Saint Vincent/Grenadines" .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "San Vicente/Grenadinas" .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Saint-Vincent/Grenadines" .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0421\u0435\u043D\u0442-\u0412\u0438\u043D\u0441\u0435\u043D\u0442 \u0438 \u0413\u0440\u0435\u043D\u0430\u0434\u0438\u043D\u044B" .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u5723\u6587\u68EE\u7279\u548C\u683C\u6797\u7EB3\u4E01\u65AF" .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/2004/02/skos/core#altLabel> "San Vicente/Grenadinas"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0633\u0627\u0646\u062A \u0641\u0646\u0633\u0646\u062A \u0648\u062C\u0632\u0631 \u063A\u0631\u064A\u0646\u0627\u062F\u064A\u0646"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/2004/02/skos/core#altLabel> "Saint Vincent/Grenadines"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/2004/02/skos/core#altLabel> "\u5723\u6587\u68EE\u7279\u548C\u683C\u6797\u7EB3\u4E01\u65AF"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0421\u0435\u043D\u0442-\u0412\u0438\u043D\u0441\u0435\u043D\u0442 \u0438 \u0413\u0440\u0435\u043D\u0430\u0434\u0438\u043D\u044B"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/2004/02/skos/core#altLabel> "Saint-Vincent/Grenadines"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/029> .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Saint_Vincent_and_the_Grenadines> .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_7352> .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/2004/02/skos/core#notation> "670" .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u5723\u6587\u68EE\u7279\u548C\u683C\u6797\u7EB3\u4E01\u65AF"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/2004/02/skos/core#prefLabel> "Saint-Vincent-et-les Grenadines"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0633\u0627\u0646\u062A \u0641\u0646\u0633\u0646\u062A \u0648\u062C\u0632\u0631 \u063A\u0631\u064A\u0646\u0627\u062F\u064A\u0646"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/2004/02/skos/core#prefLabel> "Saint Vincent and the Grenadines"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0421\u0435\u043D\u0442-\u0412\u0438\u043D\u0441\u0435\u043D\u0442 \u0438 \u0413\u0440\u0435\u043D\u0430\u0434\u0438\u043D\u044B"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/670> <http://www.w3.org/2004/02/skos/core#prefLabel> "San Vicente y las Granadinas"@es .

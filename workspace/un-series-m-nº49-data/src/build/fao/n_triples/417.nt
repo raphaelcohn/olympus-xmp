@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/143> .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/143> .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "33243" .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Kyrgyzstan" .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "113" .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "138" .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "KG" .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "KGZ" .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "417" .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "KYR" .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/143> .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0627\u0644\u0642\u064A\u0631\u063A\u064A\u0632" .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Kyrgyzstan" .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Kirguist\u00E1n" .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Kirghizistan" .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u041A\u044B\u0440\u0433\u044B\u0437\u0441\u0442\u0430\u043D" .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u5409\u5C14\u5409\u65AF\u65AF\u5766" .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1992"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/2004/02/skos/core#altLabel> "Kirguist\u00E1n"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/2004/02/skos/core#altLabel> "\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0627\u0644\u0642\u064A\u0631\u063A\u064A\u0632"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/2004/02/skos/core#altLabel> "\u041A\u044B\u0440\u0433\u044B\u0437\u0441\u0442\u0430\u043D"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/2004/02/skos/core#altLabel> "\u5409\u5C14\u5409\u65AF\u65AF\u5766"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/2004/02/skos/core#altLabel> "Kyrgyzstan"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/2004/02/skos/core#altLabel> "Kirghizistan"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/143> .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Kyrgyzstan> .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_33243> .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/2004/02/skos/core#notation> "417" .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0627\u0644\u0642\u064A\u0631\u063A\u064A\u0632"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/2004/02/skos/core#prefLabel> "la R\u00E9publique kirghize"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/2004/02/skos/core#prefLabel> "Kyrgyzstan"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u5409\u5C14\u5409\u65AF\u65AF\u5766"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Rep\u00FAblica Kirguisa"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/417> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u041A\u044B\u0440\u0433\u044B\u0437\u0441\u0442\u0430\u043D"@ru .

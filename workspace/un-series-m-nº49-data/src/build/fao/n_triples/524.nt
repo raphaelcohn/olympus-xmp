@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/034> .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/034> .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "5124" .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Nepal" .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "149" .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "175" .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "NP" .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "NPL" .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "524" .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "NEP" .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/034> .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0646\u064A\u0628\u0627\u0644" .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Nepal" .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Nepal" .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "N\u00E9pal" .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0424\u0435\u0434\u0435\u0440\u0430\u0442\u0438\u0432\u043D\u0430\u044F \u0414\u0435\u043C\u043E\u043A\u0440\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0430\u044F \u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430 \u041D\u0435\u043F\u0430\u043B" .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u5C3C\u6CCA\u5C14" .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/2004/02/skos/core#altLabel> "\u5C3C\u6CCA\u5C14"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/2004/02/skos/core#altLabel> "N\u00E9pal"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/2004/02/skos/core#altLabel> "Nepal"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/2004/02/skos/core#altLabel> "Nepal"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0424\u0435\u0434\u0435\u0440\u0430\u0442\u0438\u0432\u043D\u0430\u044F \u0414\u0435\u043C\u043E\u043A\u0440\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0430\u044F \u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430 \u041D\u0435\u043F\u0430\u043B"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0646\u064A\u0628\u0627\u0644"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/034> .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Nepal> .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_5124> .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/2004/02/skos/core#notation> "524" .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/2004/02/skos/core#prefLabel> "R\u00E9publique d\u00E9mocratique f\u00E9d\u00E9rale du Nepal"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0424\u0435\u0434\u0435\u0440\u0430\u0442\u0438\u0432\u043D\u0430\u044F \u0414\u0435\u043C\u043E\u043A\u0440\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0430\u044F \u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430 \u041D\u0435\u043F\u0430\u043B"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/2004/02/skos/core#prefLabel> "Nepal"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0646\u064A\u0628\u0627\u0644"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/2004/02/skos/core#prefLabel> "Rep\u00FAblica Federal Democr\u00E1tica de Nepal"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/524> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u5C3C\u6CCA\u5C14"@zh .

@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/029> .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/029> .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "778" .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Bahamas_The" .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "012" .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "20" .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "BS" .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "BHS" .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "044" .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "BHA" .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/029> .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u062C\u0632\u0631 \u0627\u0644\u0628\u0647\u0627\u0645\u0627" .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Bahamas" .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Bahamas" .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Bahamas" .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0411\u0430\u0433\u0430\u043C\u0441\u043A\u0438\u0435 \u041E\u0441\u0442\u0440\u043E\u0432\u0430" .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u5DF4\u54C8\u9A6C" .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/2004/02/skos/core#altLabel> "Bahamas"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/2004/02/skos/core#altLabel> "Bahamas"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/2004/02/skos/core#altLabel> "Bahamas"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/2004/02/skos/core#altLabel> "\u5DF4\u54C8\u9A6C"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0411\u0430\u0433\u0430\u043C\u0441\u043A\u0438\u0435 \u041E\u0441\u0442\u0440\u043E\u0432\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/2004/02/skos/core#altLabel> "\u062C\u0632\u0631 \u0627\u0644\u0628\u0647\u0627\u0645\u0627"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/029> .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Bahamas_The> .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_778> .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/2004/02/skos/core#notation> "044" .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/2004/02/skos/core#prefLabel> "el Commonwealth de las Bahamas"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/2004/02/skos/core#prefLabel> "Bahamas"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u062C\u0632\u0631 \u0627\u0644\u0628\u0647\u0627\u0645\u0627"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0411\u0430\u0433\u0430\u043C\u0441\u043A\u0438\u0435 \u041E\u0441\u0442\u0440\u043E\u0432\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/2004/02/skos/core#prefLabel> "le Commonwealth des Bahamas"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/044> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u5DF4\u54C8\u9A6C"@zh .

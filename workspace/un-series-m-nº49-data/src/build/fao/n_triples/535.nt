@@ -1,0 +1,37 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://purl.org/dc/terms/modified> "2020-05-28T15:27:55.175+02:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/029> .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/029> .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "BQ" .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "BES" .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "535" .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/029> .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0648\u0633\u0627\u0628\u0627 \u064A\u0648\u0633\u062A\u0627\u062A\u064A\u0648\u0633 \u0648\u0633\u0627\u0646 \u0628\u0648\u0646\u064A\u0631" .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Bonaire/S.Eustatius/Saba" .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Bonaire/S.Eustatius/Saba" .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Bonaire/S.Eustatius/Saba" .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0411\u043E\u043D\u0430\u0439\u0440\u0435, \u0421\u0438\u043D\u0442-\u042D\u0441\u0442\u0430\u0442\u0438\u0443\u0441 \u0438 \u0421\u0430\u0431\u0430" .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u535A\u7EB3\u5C14\u3001\u5723\u4FC4\u65AF\u5854\u4F11\u65AF\u548C\u8428\u5DF4" .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "2010"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0411\u043E\u043D\u0430\u0439\u0440\u0435, \u0421\u0438\u043D\u0442-\u042D\u0441\u0442\u0430\u0442\u0438\u0443\u0441 \u0438 \u0421\u0430\u0431\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://www.w3.org/2004/02/skos/core#altLabel> "\u535A\u7EB3\u5C14\u3001\u5723\u4FC4\u65AF\u5854\u4F11\u65AF\u548C\u8428\u5DF4"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://www.w3.org/2004/02/skos/core#altLabel> "Bonaire/S.Eustatius/Saba"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://www.w3.org/2004/02/skos/core#altLabel> "Bonaire/S.Eustatius/Saba"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://www.w3.org/2004/02/skos/core#altLabel> "Bonaire/S.Eustatius/Saba"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0648\u0633\u0627\u0628\u0627 \u064A\u0648\u0633\u062A\u0627\u062A\u064A\u0648\u0633 \u0648\u0633\u0627\u0646 \u0628\u0648\u0646\u064A\u0631"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/029> .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://www.w3.org/2004/02/skos/core#notation> "535" .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0648\u0633\u0627\u0628\u0627 \u064A\u0648\u0633\u062A\u0627\u062A\u064A\u0648\u0633 \u0648\u0633\u0627\u0646 \u0628\u0648\u0646\u064A\u0631"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://www.w3.org/2004/02/skos/core#prefLabel> "Bonaire, Sint Eustatius et Saba"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u535A\u7EB3\u5C14\u3001\u5723\u4FC4\u65AF\u5854\u4F11\u65AF\u548C\u8428\u5DF4"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://www.w3.org/2004/02/skos/core#prefLabel> "Bonaire, Sint Eustatius y Saba"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://www.w3.org/2004/02/skos/core#prefLabel> "Bonaire, Sint Eustatius and Saba"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/535> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0411\u043E\u043D\u0430\u0439\u0440\u0435, \u0421\u0438\u043D\u0442-\u042D\u0441\u0442\u0430\u0442\u0438\u0443\u0441 \u0438 \u0421\u0430\u0431\u0430"@ru .

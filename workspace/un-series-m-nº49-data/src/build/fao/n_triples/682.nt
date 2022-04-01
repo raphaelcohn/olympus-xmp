@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/145> .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/145> .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "6822" .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Saudi_Arabia" .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "194" .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "215" .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "SA" .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "SAU" .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "682" .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "SAU" .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/145> .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0627\u0644\u0645\u0645\u0644\u0643\u0629 \u0627\u0644\u0639\u0631\u0628\u064A\u0629 \u0627\u0644\u0633\u0639\u0648\u062F\u064A\u0629" .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Saudi Arabia" .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Arabia Saudita" .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Arabie saoudite" .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u0442\u0432\u043E \u0421\u0430\u0443\u0434\u043E\u0432\u0441\u043A\u0430\u044F \u0410\u0440\u0430\u0432\u0438\u044F" .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u6C99\u7279\u963F\u62C9\u4F2F" .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/2004/02/skos/core#altLabel> "Arabia Saudita"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/2004/02/skos/core#altLabel> "\u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u0442\u0432\u043E \u0421\u0430\u0443\u0434\u043E\u0432\u0441\u043A\u0430\u044F \u0410\u0440\u0430\u0432\u0438\u044F"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/2004/02/skos/core#altLabel> "Arabie saoudite"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/2004/02/skos/core#altLabel> "Saudi Arabia"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/2004/02/skos/core#altLabel> "\u6C99\u7279\u963F\u62C9\u4F2F"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0627\u0644\u0645\u0645\u0644\u0643\u0629 \u0627\u0644\u0639\u0631\u0628\u064A\u0629 \u0627\u0644\u0633\u0639\u0648\u062F\u064A\u0629"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/145> .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Saudi_Arabia> .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_6822> .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/2004/02/skos/core#notation> "682" .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/2004/02/skos/core#prefLabel> "Saudi Arabia"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/2004/02/skos/core#prefLabel> "el Reino de Arabia Saudita"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/2004/02/skos/core#prefLabel> "le Royaume d'Arabie saoudite"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0627\u0644\u0645\u0645\u0644\u0643\u0629 \u0627\u0644\u0639\u0631\u0628\u064A\u0629 \u0627\u0644\u0633\u0639\u0648\u062F\u064A\u0629"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u0442\u0432\u043E \u0421\u0430\u0443\u0434\u043E\u0432\u0441\u043A\u0430\u044F \u0410\u0440\u0430\u0432\u0438\u044F"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/682> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u6C99\u7279\u963F\u62C9\u4F2F"@zh .

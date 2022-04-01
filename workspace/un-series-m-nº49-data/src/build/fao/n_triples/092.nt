@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/029> .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/029> .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "1097" .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "British_Virgin_Islands" .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "239" .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "39" .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "VG" .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "VGB" .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "092" .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "BVI" .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/029> .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0627\u0644\u0628\u0631\u064A\u0637\u0627\u0646\u064A\u0629 \u0641\u064A\u0631\u062C\u064A\u0646 \u062C\u0632\u0631" .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "British Virgin Islands" .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Islas V\u00EDrgenes Brit\u00E1n." .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "\u00CEles Vierges britanniq." .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0411\u0440\u0438\u0442\u0430\u043D\u0441\u043A\u0438\u0435 \u0412\u0438\u0440\u0433\u0438\u043D\u0441\u043A\u0438\u0435 \u043E\u0441\u0442\u0440\u043E\u0432\u0430" .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u82F1\u5C5E\u7EF4\u5C14\u4EAC\u7FA4\u5C9B" .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/2004/02/skos/core#altLabel> "\u82F1\u5C5E\u7EF4\u5C14\u4EAC\u7FA4\u5C9B"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/2004/02/skos/core#altLabel> "\u00CEles Vierges britanniq."@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/2004/02/skos/core#altLabel> "British Virgin Islands"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0627\u0644\u0628\u0631\u064A\u0637\u0627\u0646\u064A\u0629 \u0641\u064A\u0631\u062C\u064A\u0646 \u062C\u0632\u0631"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0411\u0440\u0438\u0442\u0430\u043D\u0441\u043A\u0438\u0435 \u0412\u0438\u0440\u0433\u0438\u043D\u0441\u043A\u0438\u0435 \u043E\u0441\u0442\u0440\u043E\u0432\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/2004/02/skos/core#altLabel> "Islas V\u00EDrgenes Brit\u00E1n."@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/029> .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_1097> .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/British_Virgin_Islands> .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/2004/02/skos/core#notation> "092" .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/2004/02/skos/core#prefLabel> "British Virgin Islands"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0411\u0440\u0438\u0442\u0430\u043D\u0441\u043A\u0438\u0435 \u0412\u0438\u0440\u0433\u0438\u043D\u0441\u043A\u0438\u0435 \u043E\u0441\u0442\u0440\u043E\u0432\u0430"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u00CEles Vierges britanniques"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u82F1\u5C5E\u7EF4\u5C14\u4EAC\u7FA4\u5C9B"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/2004/02/skos/core#prefLabel> "Islas V\u00EDrgenes Brit\u00E1nicas"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/092> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0627\u0644\u0628\u0631\u064A\u0637\u0627\u0646\u064A\u0629 \u0641\u064A\u0631\u062C\u064A\u0646 \u062C\u0632\u0631"@ar .

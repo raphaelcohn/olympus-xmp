@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/035> .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/035> .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "7701" .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Thailand" .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "216" .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "240" .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "TH" .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "THA" .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "764" .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "THA" .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/035> .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0645\u0645\u0644\u0643\u0629 \u062A\u0627\u064A\u0644\u0646\u062F" .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Thailand" .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Tailandia" .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Tha\u00EFlande" .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u0442\u0432\u043E \u0422\u0430\u0438\u043B\u0430\u043D\u0434" .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u6CF0 \u56FD" .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/2004/02/skos/core#altLabel> "\u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u0442\u0432\u043E \u0422\u0430\u0438\u043B\u0430\u043D\u0434"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/2004/02/skos/core#altLabel> "Tailandia"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0645\u0645\u0644\u0643\u0629 \u062A\u0627\u064A\u0644\u0646\u062F"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/2004/02/skos/core#altLabel> "\u6CF0 \u56FD"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/2004/02/skos/core#altLabel> "Thailand"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/2004/02/skos/core#altLabel> "Tha\u00EFlande"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/035> .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_7701> .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Thailand> .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/2004/02/skos/core#notation> "764" .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u0442\u0432\u043E \u0422\u0430\u0438\u043B\u0430\u043D\u0434"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/2004/02/skos/core#prefLabel> "el Reino de Tailandia"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u6CF0 \u56FD"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0645\u0645\u0644\u0643\u0629 \u062A\u0627\u064A\u0644\u0646\u062F"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/2004/02/skos/core#prefLabel> "Thailand"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/764> <http://www.w3.org/2004/02/skos/core#prefLabel> "le Royaume de Tha\u00EFlande"@fr .

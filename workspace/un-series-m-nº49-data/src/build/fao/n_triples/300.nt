@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/039> .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/039> .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "3373" .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Greece" .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "084" .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "97" .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "GR" .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "GRC" .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "300" .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "GRE" .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/039> .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0627\u0644\u064A\u0648\u0646\u0627\u0646" .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Greece" .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Grecia" .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Gr\u00E8ce" .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0413\u0440\u0435\u0446\u0438\u044F" .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u5E0C \u814A" .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/2004/02/skos/core#altLabel> "Greece"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0413\u0440\u0435\u0446\u0438\u044F"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0627\u0644\u064A\u0648\u0646\u0627\u0646"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/2004/02/skos/core#altLabel> "\u5E0C \u814A"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/2004/02/skos/core#altLabel> "Grecia"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/2004/02/skos/core#altLabel> "Gr\u00E8ce"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/039> .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_3373> .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Greece> .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/2004/02/skos/core#notation> "300" .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0413\u0440\u0435\u0446\u0438\u044F"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/2004/02/skos/core#prefLabel> "Greece"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u5E0C \u814A"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0627\u0644\u064A\u0648\u0646\u0627\u0646"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Rep\u00FAblica Hel\u00E9nica"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/300> <http://www.w3.org/2004/02/skos/core#prefLabel> "la R\u00E9publique hell\u00E9nique"@fr .

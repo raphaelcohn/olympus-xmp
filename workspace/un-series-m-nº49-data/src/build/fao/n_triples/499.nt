@@ -1,0 +1,42 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/039> .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/039> .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "49907" .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Montenegro" .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "273" .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "2647" .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "ME" .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "MNE" .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "499" .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/039> .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0627\u0644\u062C\u0628\u0644 \u0627\u0644\u0623\u0633\u0648\u062F" .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Montenegro" .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Montenegro" .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Mont\u00E9n\u00E9gro" .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0427\u0435\u0440\u043D\u043E\u0433\u043E\u0440\u0438\u044F" .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u9ED1\u5C71" .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "2006"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/2004/02/skos/core#altLabel> "\u9ED1\u5C71"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/2004/02/skos/core#altLabel> "Mont\u00E9n\u00E9gro"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0627\u0644\u062C\u0628\u0644 \u0627\u0644\u0623\u0633\u0648\u062F"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0427\u0435\u0440\u043D\u043E\u0433\u043E\u0440\u0438\u044F"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/2004/02/skos/core#altLabel> "Montenegro"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/2004/02/skos/core#altLabel> "Montenegro"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/039> .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Montenegro> .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_49907> .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/2004/02/skos/core#notation> "499" .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/2004/02/skos/core#prefLabel> "le Mont\u00E9n\u00E9gro"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/2004/02/skos/core#prefLabel> "Montenegro"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/2004/02/skos/core#prefLabel> "Montenegro"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u9ED1\u5C71"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0627\u0644\u062C\u0628\u0644 \u0627\u0644\u0623\u0633\u0648\u062F"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/499> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0427\u0435\u0440\u043D\u043E\u0433\u043E\u0440\u0438\u044F"@ru .

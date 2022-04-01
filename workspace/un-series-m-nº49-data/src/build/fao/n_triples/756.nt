@@ -1,0 +1,43 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/155> .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/155> .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "7558" .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Switzerland" .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "211" .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "237" .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "CH" .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "CHE" .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "756" .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "SWI" .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/155> .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u0627\u0644\u0627\u062A\u062D\u0627\u062F \u0627\u0644\u0633\u0648\u064A\u0633\u0631\u064A" .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Switzerland" .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Suiza" .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Suisse" .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0428\u0432\u0435\u0439\u0446\u0430\u0440\u0438\u044F" .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u745E \u58EB" .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/2004/02/skos/core#altLabel> "Suiza"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0428\u0432\u0435\u0439\u0446\u0430\u0440\u0438\u044F"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/2004/02/skos/core#altLabel> "\u745E \u58EB"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/2004/02/skos/core#altLabel> "Switzerland"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/2004/02/skos/core#altLabel> "Suisse"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0627\u0644\u0627\u062A\u062D\u0627\u062F \u0627\u0644\u0633\u0648\u064A\u0633\u0631\u064A"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/155> .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Switzerland> .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_7558> .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/2004/02/skos/core#notation> "756" .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0428\u0432\u0435\u0439\u0446\u0430\u0440\u0438\u044F"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/2004/02/skos/core#prefLabel> "Switzerland"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Conf\u00E9d\u00E9ration suisse"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Confederaci\u00F3n Suiza"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0627\u0644\u0627\u062A\u062D\u0627\u062F \u0627\u0644\u0633\u0648\u064A\u0633\u0631\u064A"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/756> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u745E \u58EB"@zh .

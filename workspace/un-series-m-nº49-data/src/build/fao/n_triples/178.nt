@@ -1,0 +1,44 @@
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#self_governing> .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoM49> <http://stats-class.fao.uniroma2.it/geo/m49/017> .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#broader-geoSDG> <http://stats-class.fao.uniroma2.it/geo/m49/202> .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeAGROVOC> "1811" .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeDBPediaID> "Congo_Republic_of_the" .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "046" .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeGAUL> "59" .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO2> "CG" .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeISO3> "COG" .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "178" .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUNDP> "PRC" .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#inGroup> <http://stats-class.fao.uniroma2.it/geo/m49/017> .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortAR> "\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0627\u0644\u0643\u0648\u0646\u063A\u0648" .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "Congo" .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortES> "Congo" .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortFR> "Congo" .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortRU> "\u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430 \u041A\u043E\u043D\u0433\u043E" .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortZH> "\u521A \u679C" .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validSince> "1900"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#validUntil> "9999"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2004/02/skos/core#altLabel> "\u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430 \u041A\u043E\u043D\u0433\u043E"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2004/02/skos/core#altLabel> "\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0627\u0644\u0643\u0648\u0646\u063A\u0648"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2004/02/skos/core#altLabel> "Congo"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2004/02/skos/core#altLabel> "\u521A \u679C"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2004/02/skos/core#altLabel> "Congo"@fr .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2004/02/skos/core#altLabel> "Congo"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/202> .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2004/02/skos/core#broader> <http://stats-class.fao.uniroma2.it/geo/m49/017> .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://aims.fao.org/aos/agrovoc/c_1811> .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2004/02/skos/core#exactMatch> <http://dbpedia.org/resource/Congo_Republic_of_the> .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12> .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/current> .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups> .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07> .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2004/02/skos/core#inScheme> <http://stats-class.fao.uniroma2.it/geo/M49> .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2004/02/skos/core#notation> "178" .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2004/02/skos/core#prefLabel> "Congo"@en .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u521A \u679C"@zh .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u062C\u0645\u0647\u0648\u0631\u064A\u0629 \u0627\u0644\u0643\u0648\u0646\u063A\u0648"@ar .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2004/02/skos/core#prefLabel> "la Rep\u00FAblica del Congo"@es .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2004/02/skos/core#prefLabel> "\u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430 \u041A\u043E\u043D\u0433\u043E"@ru .
+<http://stats-class.fao.uniroma2.it/geo/m49/178> <http://www.w3.org/2004/02/skos/core#prefLabel> "la R\u00E9publique du Congo"@fr .
