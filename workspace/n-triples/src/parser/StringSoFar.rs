@@ -85,7 +85,7 @@ impl<'a> StringSoFar<'a>
 			
 			Stack { from, slice_length } =>
 			{
-				let mut string = Self::from_stack_to_heap(*from, *slice_length, character)?;
+				let string = Self::from_stack_to_heap(*from, *slice_length, character)?;
 				*self = Heap(string);
 				Ok(())
 			}
@@ -129,7 +129,7 @@ impl<'a> StringSoFar<'a>
 				}
 				else
 				{
-					let mut string = Self::from_stack_to_heap(*from, old_slice_length, character)?;
+					let string = Self::from_stack_to_heap(*from, old_slice_length, character)?;
 					*self = Heap(string);
 				}
 				Ok(())

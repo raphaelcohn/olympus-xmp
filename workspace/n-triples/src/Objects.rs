@@ -2,8 +2,9 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+/// Objects.
 #[derive(Default, Debug, Clone, Eq, PartialEq)]
-struct Objects<'a>
+pub struct Objects<'a>
 {
 	iri: Vec<IRI<'a>>,
 
@@ -17,19 +18,43 @@ struct Objects<'a>
 impl<'a> Objects<'a>
 {
 	#[inline(always)]
-	fn push(&mut self, object: Object<'a>)
+	fn push(&mut self, object: Object<'a>) -> Result<(), TryReserveError>
 	{
+		#[inline(always)]
+		fn vec_push_one<T>(vec: &mut Vec<T>, one: T) -> Result<(), TryReserveError>
+		{
+			vec.try_reserve(1)?;
+			vec.push_unchecked(one);
+			Ok(())
+		}
+		
 		use LiteralTag::*;
 		use Object::*;
 		match object
 		{
-			IRI(iri) => self.iri.push(iri),
+			IRI(iri) =>
+			{
+				let vec = &mut self.iri;
+				vec_push_one(vec, iri)
+			}
 			
-			BlankNode(blank_node_label) => self.blank_node.push(blank_node_label),
+			BlankNode(blank_node_label) =>
+			{
+				let vec = &mut self.blank_node;
+				vec_push_one(vec, blank_node_label)
+			}
 			
-			Literal(StringLiteral { literal_value, literal_tag: Language(raw_ietf_bcp_47_language_tag) }) => self.string_literals_by_language.entry(raw_ietf_bcp_47_language_tag).or_default().push(literal_value),
+			Literal(StringLiteral { literal_value, literal_tag: Language(raw_ietf_bcp_47_language_tag) }) =>
+			{
+				let vec = self.string_literals_by_language.entry(raw_ietf_bcp_47_language_tag).or_default();
+				vec_push_one(vec, literal_value)
+			}
 			
-			Literal(StringLiteral { literal_value, literal_tag: Datatype(iri) }) => self.string_literals_by_iri.entry(iri).or_default().push(literal_value),
+			Literal(StringLiteral { literal_value, literal_tag: Datatype(iri) }) =>
+			{
+				let vec = self.string_literals_by_iri.entry(iri).or_default();
+				vec_push_one(vec, literal_value)
+			}
 		}
 	}
 }

@@ -2,7 +2,19 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-const x22: char = char::from(0x22);
-const x5C: char = char::from(0x5C);
-const xA: char = char::from(0xA);
-const xD: char = char::from(0xD);
+/// Parse error; value is the invalid character encountered.
+#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+pub struct CommentParseError(u8);
+
+impl Display for CommentParseError
+{
+	#[inline(always)]
+	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
+	{
+		Debug::fmt(self, formatter)
+	}
+}
+
+impl error::Error for CommentParseError
+{
+}

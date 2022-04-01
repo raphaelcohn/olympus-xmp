@@ -27,7 +27,7 @@ impl<'a> NTriple<'a>
 		
 		Self::parse_period(&mut remaining_bytes).map_err(PeriodParse)?;
 		
-		let option_remaining_bytes = Self::parse_comment_and_end_of_line(remaining_bytes);
+		let option_remaining_bytes = Self::parse_comment_and_end_of_line(remaining_bytes).map_err(CommentParse)?;
 		
 		Ok
 		(
@@ -66,9 +66,9 @@ impl<'a> NTriple<'a>
 		use PredicateParseError::*;
 		loop
 		{
-			match get_0(&mut remaining_bytes)
+			match get_0(remaining_bytes)
 			{
-				Some(OpenAngleBracket) => return Predicate::parse(&mut remaining_bytes, |predicate| predicate).map_err(PredicateParse),
+				Some(OpenAngleBracket) => return Predicate::parse(remaining_bytes, |predicate| predicate).map_err(PredicateParse),
 				
 				Some(Space | Tab) => continue,
 				
@@ -109,7 +109,7 @@ impl<'a> NTriple<'a>
 		loop
 		{
 			use PeriodParseError::*;
-			match get_0(&mut remaining_bytes)
+			match get_0(remaining_bytes)
 			{
 				Some(Period) => return Ok(()),
 				
@@ -123,17 +123,21 @@ impl<'a> NTriple<'a>
 	}
 	
 	#[inline(always)]
-	fn parse_comment_and_end_of_line(mut remaining_bytes: &'a [u8]) -> Option<&'a [u8]>
+	fn parse_comment_and_end_of_line(mut remaining_bytes: &'a [u8]) -> Result<Option<&'a [u8]>, CommentParseError>
 	{
 		loop
 		{
 			match get_0(&mut remaining_bytes)
 			{
-				Some(Hash) => return memchr(LineFeed, remaining_bytes).map(|index| remaining_bytes.get_unchecked_range_safe((index + 1) .. )),
+				Some(Hash) => return Ok(memchr(LineFeed, remaining_bytes).map(|index| remaining_bytes.get_unchecked_range_safe((index + 1) .. ))),
 				
-				Some(LineFeed) => return Some(remaining_bytes),
+				Some(LineFeed) => return Ok(Some(remaining_bytes)),
 				
 				Some(Space | Tab) => continue,
+				
+				Some(invalid) => return Err(CommentParseError(invalid)),
+				
+				None => return Ok(None),
 			}
 		}
 	}

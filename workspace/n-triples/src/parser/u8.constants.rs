@@ -2,8 +2,6 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use swiss_army_knife::a_to_z::Colon;
-use swiss_army_knife::a_to_z::Period;
 const DoubleQuote: u8 = b'"';
 const OpenAngleBracket: u8 = b'<';
 const Underscore: u8 = b'_';

@@ -31,6 +31,7 @@ use swiss_army_knife::a_to_z::n;
 use swiss_army_knife::a_to_z::r;
 use swiss_army_knife::a_to_z::t;
 use swiss_army_knife::a_to_z::u;
+use swiss_army_knife::a_to_z::Period;
 use swiss_army_knife::get_unchecked::GetUnchecked;
 use swiss_army_knife::vec::VecExt;
 use utf8::decode_next_utf8;
@@ -44,7 +45,8 @@ pub(super) mod utf8;
 
 
 include!("BlankNodeLabelParseError.rs");
-include!("char.constants.rs");
+include!("u8.constants.rs");
+include!("CommentParseError.rs");
 include!("get_0.rs");
 include!("Hash.rs");
 include!("InvalidUtf8ParseError.rs");
@@ -52,6 +54,7 @@ include!("IRIParseError.rs");
 include!("LiteralTag.rs");
 include!("NTriple.rs");
 include!("NTripleParseError.rs");
+include!("NTriplesParseError.rs");
 include!("Object.rs");
 include!("ObjectParseError.rs");
 include!("PeriodParseError.rs");

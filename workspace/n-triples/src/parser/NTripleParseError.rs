@@ -17,6 +17,9 @@ pub enum NTripleParseError
 	
 	#[allow(missing_docs)]
 	PeriodParse(PeriodParseError),
+	
+	#[allow(missing_docs)]
+	CommentParse(CommentParseError),
 }
 
 impl Display for NTripleParseError
@@ -45,7 +48,7 @@ impl error::Error for NTripleParseError
 			
 			PeriodParse(cause) => Some(cause),
 			
-			_ => None,
+			CommentParse(cause) => Some(cause),
 		}
 	}
 }

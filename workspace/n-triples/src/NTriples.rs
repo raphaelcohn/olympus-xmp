@@ -2,10 +2,9 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use crate::parser::NTripleParseError;
-
+/// N-Triples.
 #[derive(Default, Debug, Clone, Eq, PartialEq)]
-struct NTriples<'a>(BTreeMap<Subject<'a>, BTreeMap<Predicate<'a>, Objects<'a>>>);
+pub struct NTriples<'a>(BTreeMap<Subject<'a>, BTreeMap<Predicate<'a>, Objects<'a>>>);
 
 impl<'a> NTriples<'a>
 {
@@ -53,24 +52,25 @@ Constitutents (fugly).
 	// 	Some(&x.string_literals_by_language)
 	// }
 	
+	/// Predicates.
 	#[inline(always)]
-	fn predicates(&self, subject: &Subject<'a>) -> Option<&BTreeMap<Predicate<'a>, Objects<'a>>>
+	pub fn predicates(&self, subject: &Subject<'a>) -> Option<&BTreeMap<Predicate<'a>, Objects<'a>>>
 	{
 		self.0.get(subject)
 	}
 	
 	/// Parses using the official specification at <https://www.w3.org/TR/n-triples/>.
 	#[inline(always)]
-	fn parse(n_triples_string: &'a str) -> Result<Self, NTripleParseError>
+	pub fn parse(n_triples_string: &'a str) -> Result<Self, NTriplesParseError>
 	{
 		let mut this = Self::default();
 		
 		let mut remaining_bytes = n_triples_string.as_bytes();
 		while !remaining_bytes.is_empty()
 		{
-			let (n_triple, option_remaining_bytes) = NTriple::parse(remaining_bytes)?;
+			let (n_triple, option_remaining_bytes) = NTriple::parse(remaining_bytes).map_err(NTriplesParseError::NTripleParse)?;
 			
-			this.push(n_triple);
+			this.push(n_triple)?;
 			
 			match option_remaining_bytes
 			{
@@ -84,13 +84,13 @@ Constitutents (fugly).
 	}
 	
 	#[inline(always)]
-	fn push(&mut self, n_triple: NTriple<'a>)
+	fn push(&mut self, n_triple: NTriple<'a>) -> Result<(), NTriplesParseError>
 	{
-		// TODO: Out of memory!
 		let NTriple { subject, predicate, object } = n_triple;
 		
+		// TODO: Out of memory!
 		let predicates = self.0.entry(subject).or_default();
-		let discriminated_objects = predicates.entry(predicate).or_default();
-		objects.push(object)
+		let objects = predicates.entry(predicate).or_default();
+		objects.push(object).map_err(NTriplesParseError::OutOfMemory)
 	}
 }

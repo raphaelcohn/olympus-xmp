@@ -4,7 +4,7 @@
 
 /// Represents an `IRIREF`.
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-struct IRI<'a>(Cow<'a, str>);
+pub struct IRI<'a>(Cow<'a, str>);
 
 impl<'a> const From<String> for IRI<'a>
 {
@@ -50,7 +50,7 @@ impl<'a> IRI<'a>
 				{
 					u => string.push_forcing_heap_UCHAR4(remaining_bytes).map_err(InvalidUCHAR4EscapeSequence)?,
 					
-					U => string.push_forcing_heap_UCHAR4(remaining_bytes).map_err(InvalidUCHAR8EscapeSequence)?,
+					U => string.push_forcing_heap_UCHAR8(remaining_bytes).map_err(InvalidUCHAR8EscapeSequence)?,
 					
 					invalid => return Err(InvalidEscapeSequence(invalid)),
 				}

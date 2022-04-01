@@ -2,18 +2,38 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[inline(always)]
-pub(super) fn get_0(remaining_bytes: &mut &[u8]) -> Option<u8>
+/// Parse error.
+#[derive(Debug, Clone, Eq, PartialEq)]
+pub enum NTriplesParseError
 {
-	let bytes = *remaining_bytes;
-	if bytes.is_empty()
+	#[allow(missing_docs)]
+	NTripleParse(NTripleParseError),
+	
+	#[allow(missing_docs)]
+	OutOfMemory(TryReserveError),
+}
+
+impl Display for NTriplesParseError
+{
+	#[inline(always)]
+	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
 	{
-		None
+		Debug::fmt(self, formatter)
 	}
-	else
+}
+
+impl error::Error for NTriplesParseError
+{
+	#[inline(always)]
+	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		let value = bytes.get_unchecked_value_safe(0);
-		*remaining_bytes = bytes.get_unchecked_range_safe(1 .. );
-		Some(value)
+		use NTriplesParseError::*;
+		
+		match self
+		{
+			NTripleParse(cause) => Some(cause),
+			
+			OutOfMemory(cause) => Some(cause),
+		}
 	}
 }

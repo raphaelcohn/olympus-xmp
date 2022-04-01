@@ -34,20 +34,26 @@
 //! Domain model and parser for RDF N-triples [version 1.1](https://www.w3.org/TR/n-triples/).
 
 
+use std::collections::TryReserveError;
 use parser::BlankNodeLabelParseError;
 use parser::get_0;
 use parser::IRIParseError;
 use parser::LiteralTag;
 use parser::NTriple;
+use parser::NTriplesParseError;
 use parser::Object;
 use parser::StringLiteral;
 use parser::StringSoFar;
 use parser::utf8::decode_next_utf8;
 use std::borrow::Cow;
 use std::collections::BTreeMap;
-use swiss_army_knife::get_unchecked::GetUnchecked;
+use std::ops::Deref;
 use swiss_army_knife::a_to_z::u;
 use swiss_army_knife::a_to_z::U;
+use swiss_army_knife::a_to_z::Colon;
+use swiss_army_knife::a_to_z::Period;
+use swiss_army_knife::get_unchecked::GetUnchecked;
+use swiss_army_knife::vec::VecExt;
 
 
 /// Parser.
@@ -55,7 +61,6 @@ pub mod parser;
 
 
 include!("char.constants.rs");
-include!("u8.constants.rs");
 include!("BlankNodeLabel.rs");
 include!("IRI.rs");
 include!("NTriples.rs");

@@ -22,11 +22,12 @@ impl<'a> StringLiteral<'a>
 		
 		loop
 		{
+			const xA: char = 0xA as char;
+			const xD: char = 0xD as char;
+			
 			match decode_next_utf8(remaining_bytes)?.ok_or(DidNotExpectEndParsingBody)?
 			{
 				'"' => break,
-				
-				invalid @ (x22 | x5C | xA | xD) => return Err(InvalidCharacter(invalid)),
 				
 				'\\' => match get_0(remaining_bytes).ok_or(EndOfFileParsingEscapeSequence)?
 				{
@@ -46,10 +47,12 @@ impl<'a> StringLiteral<'a>
 					
 					u => string.push_forcing_heap_UCHAR4(remaining_bytes).map_err(InvalidUCHAR4EscapeSequence)?,
 					
-					U => string.push_forcing_heap_UCHAR4(remaining_bytes).map_err(InvalidUCHAR8EscapeSequence)?,
+					U => string.push_forcing_heap_UCHAR8(remaining_bytes).map_err(InvalidUCHAR8EscapeSequence)?,
 					
 					invalid => return Err(InvalidEscapeSequence(invalid)),
-				}
+				},
+				
+				invalid @ (xA | xD) => return Err(InvalidCharacter(invalid)),
 				
 				character @ _ => string.push(character)?,
 			}

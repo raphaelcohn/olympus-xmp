@@ -2,11 +2,14 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+/// Subject.
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-enum Subject<'a>
+pub enum Subject<'a>
 {
+	#[allow(missing_docs)]
 	IRI(IRI<'a>),
 	
+	#[allow(missing_docs)]
 	BlankNode(BlankNodeLabel<'a>),
 }
 
