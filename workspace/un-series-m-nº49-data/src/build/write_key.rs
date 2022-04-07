@@ -5,11 +5,5 @@
 #[inline(always)]
 fn write_key(file: &mut File, key: M49CodeArray) -> io::Result<()>
 {
-	#[inline(always)]
-	fn key_byte_as_char<const index: u8>(key: M49CodeArray) -> char
-	{
-		key.get_unchecked_value_safe(index) as char
-	}
-	
-	write!(file, "b\"{}{}{}\"", key_byte_as_char::<0>(key), key_byte_as_char::<1>(key), key_byte_as_char::<2>(key))
+	write!(file, "b\"{}\"", m49_code_string(key))
 }

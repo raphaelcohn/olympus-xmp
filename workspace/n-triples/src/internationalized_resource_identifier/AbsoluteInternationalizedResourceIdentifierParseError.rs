@@ -4,10 +4,10 @@
 
 /// A parse error.
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub enum IRIParseError
+pub enum AbsoluteInternationalizedResourceIdentifierParseError
 {
 	#[allow(missing_docs)]
-	InvalidUtf8Parse(InvalidUtf8ParseError),
+	InvalidUtf8Parse(InvalidUtf8ParseError<Infallible>),
 	
 	#[allow(missing_docs)]
 	DidNotExpectEndParsingBody,
@@ -22,34 +22,34 @@ pub enum IRIParseError
 	EndOfFileParsingEscapeSequence,
 	
 	#[allow(missing_docs)]
-	InvalidUCHAR4EscapeSequence(UCHARParseError),
+	InvalidUCHAR4EscapeSequence(OutOfMemoryOrUCHARParseError),
 	
 	#[allow(missing_docs)]
-	InvalidUCHAR8EscapeSequence(UCHARParseError),
+	InvalidUCHAR8EscapeSequence(OutOfMemoryOrUCHARParseError),
 	
 	#[allow(missing_docs)]
 	InvalidEscapeSequence(u8),
 }
 
-impl const From<InvalidUtf8ParseError> for IRIParseError
+impl const From<InvalidUtf8ParseError<Infallible>> for AbsoluteInternationalizedResourceIdentifierParseError
 {
 	#[inline(always)]
-	fn from(cause: InvalidUtf8ParseError) -> Self
+	fn from(cause: InvalidUtf8ParseError<Infallible>) -> Self
 	{
-		IRIParseError::InvalidUtf8Parse(cause)
+		AbsoluteInternationalizedResourceIdentifierParseError::InvalidUtf8Parse(cause)
 	}
 }
 
-impl const From<TryReserveError> for IRIParseError
+impl const From<TryReserveError> for AbsoluteInternationalizedResourceIdentifierParseError
 {
 	#[inline(always)]
 	fn from(cause: TryReserveError) -> Self
 	{
-		IRIParseError::OutOfMemory(cause)
+		AbsoluteInternationalizedResourceIdentifierParseError::OutOfMemory(cause)
 	}
 }
 
-impl Display for IRIParseError
+impl Display for AbsoluteInternationalizedResourceIdentifierParseError
 {
 	#[inline(always)]
 	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
@@ -58,12 +58,12 @@ impl Display for IRIParseError
 	}
 }
 
-impl error::Error for IRIParseError
+impl error::Error for AbsoluteInternationalizedResourceIdentifierParseError
 {
 	#[inline(always)]
 	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		use IRIParseError::*;
+		use AbsoluteInternationalizedResourceIdentifierParseError::*;
 		
 		match self
 		{

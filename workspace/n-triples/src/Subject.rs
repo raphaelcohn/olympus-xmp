@@ -7,22 +7,53 @@
 pub enum Subject<'a>
 {
 	#[allow(missing_docs)]
-	IRI(IRI<'a>),
+	AbsoluteInternationalizedResourceIdentifier(AbsoluteInternationalizedResourceIdentifier<'a>),
 	
 	#[allow(missing_docs)]
 	BlankNode(BlankNodeLabel<'a>),
 }
 
-impl<'a> Subject<'a>
+impl<'a> TryToOwnInPlace for Subject<'a>
 {
-	// #[inline(always)]
-	// fn m49(m49_code: StaticM49Code)
-	// {
-	// 	const SubjectPrefix: &'static str = "http://stats-class.fao.uniroma2.it/geo/m49/";
-	// 	let mut string = String::with_capacity(SubjectPrefix.len() + 3);
-	// 	string.push_str(SubjectPrefix);
-	// 	(unsafe { string.as_mut_vec() }).extend_from_slice(m49_code);
-	//
-	// 	Subject::IRI(IRIREF::from(string));
-	// }
+	#[inline(always)]
+	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
+	{
+		use Subject::*;
+		
+		match self
+		{
+			AbsoluteInternationalizedResourceIdentifier(absolute_internationalized_resource_identifier) => absolute_internationalized_resource_identifier.try_to_own_in_place(),
+			
+			BlankNode(blank_node_label) => blank_node_label.try_to_own_in_place(),
+		}
+	}
+}
+
+impl<'a> TryToOwn for Subject<'a>
+{
+	type TryToOwned = Subject<'static>;
+	
+	#[inline(always)]
+	fn try_to_own(mut self) -> Result<Subject<'static>, TryReserveError>
+	{
+		self.try_to_own_in_place()?;
+		Ok(unsafe { transmute(self) })
+	}
+}
+
+impl Subject<'static>
+{
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub const fn from_absolute_internationalized_resource_identifier_string(absolute_internationalized_resource_identifier: String) -> Self
+	{
+		Subject::AbsoluteInternationalizedResourceIdentifier(AbsoluteInternationalizedResourceIdentifier::from(absolute_internationalized_resource_identifier))
+	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub const fn from_blank_label_node_string(blank_label_node: String) -> Self
+	{
+		Subject::BlankNode(BlankNodeLabel::from(blank_label_node))
+	}
 }

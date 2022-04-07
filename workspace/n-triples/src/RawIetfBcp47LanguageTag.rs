@@ -3,4 +3,4 @@
 
 
 /// Raw language tag.
-pub type RawIetfBcp47LanguageTag<'a> = &'a [u8];
+pub type RawIetfBcp47LanguageTag<'a> = Cow<'a, str>;

@@ -5,7 +5,7 @@
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub(super) enum Object<'a>
 {
-	IRI(IRI<'a>),
+	AbsoluteInternationalizedResourceIdentifier(AbsoluteInternationalizedResourceIdentifier<'a>),
 	
 	BlankNode(BlankNodeLabel<'a>),
 	

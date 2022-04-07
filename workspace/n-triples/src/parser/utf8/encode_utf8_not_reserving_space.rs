@@ -6,27 +6,5 @@
 #[inline(always)]
 pub(super) unsafe fn encode_utf8_not_reserving_space(buffer_with_capacity_but_length_zero: &mut Vec<u8>, character: char, offset: usize)
 {
-	debug_assert!(buffer_with_capacity_but_length_zero.is_empty());
-	debug_assert!(buffer_with_capacity_but_length_zero.capacity() >= (offset + size_of::<char>()));
 	UnreservedEncodeUtf8::encode_utf8(buffer_with_capacity_but_length_zero, character, offset)
-}
-
-#[derive(Default, Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-struct UnreservedEncodeUtf8;
-
-impl EncodeUtf8 for UnreservedEncodeUtf8
-{
-	type R = ();
-	
-	#[inline(always)]
-	fn push_unchecked<const length: usize>(buffer: &mut Vec<u8>, offset: usize, encoded_utf8_bytes: [u8; length]) -> Self::R
-	{
-		let from_pointer = encoded_utf8_bytes.as_ptr();
-		let to_pointer = buffer.as_mut_ptr();
-		unsafe
-		{
-			to_pointer.add(offset).copy_from_nonoverlapping(from_pointer, length);
-			buffer.set_len(offset + length)
-		}
-	}
 }

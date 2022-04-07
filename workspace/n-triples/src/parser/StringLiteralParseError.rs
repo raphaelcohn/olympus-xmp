@@ -7,7 +7,7 @@
 pub enum StringLiteralParseError
 {
 	#[allow(missing_docs)]
-	InvalidUtf8Parse(InvalidUtf8ParseError),
+	InvalidUtf8Parse(InvalidUtf8ParseError<Infallible>),
 	
 	#[allow(missing_docs)]
 	DidNotExpectEndParsingBody,
@@ -17,6 +17,12 @@ pub enum StringLiteralParseError
 	
 	#[allow(missing_docs)]
 	DidNotExpectEndParsingSecondCaret,
+	
+	#[allow(missing_docs)]
+	DidNotExpectEndParsingOpenAngleBracket,
+	
+	#[allow(missing_docs)]
+	LiteralTagSecondCaretNotFollowedByOpenAngleBracket(u8),
 	
 	#[allow(missing_docs)]
 	DidNotExpectEndParsingLanguageTag,
@@ -31,10 +37,10 @@ pub enum StringLiteralParseError
 	EndOfFileParsingEscapeSequence,
 	
 	#[allow(missing_docs)]
-	InvalidUCHAR4EscapeSequence(UCHARParseError),
+	InvalidUCHAR4EscapeSequence(OutOfMemoryOrUCHARParseError),
 	
 	#[allow(missing_docs)]
-	InvalidUCHAR8EscapeSequence(UCHARParseError),
+	InvalidUCHAR8EscapeSequence(OutOfMemoryOrUCHARParseError),
 	
 	#[allow(missing_docs)]
 	InvalidEscapeSequence(u8),
@@ -46,13 +52,16 @@ pub enum StringLiteralParseError
 	LiteralTagCaretNotFollowedByCaret(u8),
 	
 	#[allow(missing_docs)]
-	IRILiteralTagParse(IRIParseError),
+	InternationalizedResourceIdentifierParseLiteralTagParse(AbsoluteInternationalizedResourceIdentifierParseError),
+	
+	#[allow(missing_docs)]
+	InvalidLanguageTag(Utf8Error),
 }
 
-impl const From<InvalidUtf8ParseError> for StringLiteralParseError
+impl const From<InvalidUtf8ParseError<Infallible>> for StringLiteralParseError
 {
 	#[inline(always)]
-	fn from(cause: InvalidUtf8ParseError) -> Self
+	fn from(cause: InvalidUtf8ParseError<Infallible>) -> Self
 	{
 		StringLiteralParseError::InvalidUtf8Parse(cause)
 	}
@@ -93,7 +102,9 @@ impl error::Error for StringLiteralParseError
 			
 			InvalidUCHAR8EscapeSequence(cause) => Some(cause),
 			
-			IRILiteralTagParse(cause) => Some(cause),
+			InternationalizedResourceIdentifierParseLiteralTagParse(cause) => Some(cause),
+			
+			InvalidLanguageTag(cause) => Some(cause),
 			
 			_ => None,
 		}

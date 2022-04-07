@@ -7,7 +7,7 @@
 pub enum SubjectParseError
 {
 	#[allow(missing_docs)]
-	IRIParse(IRIParseError),
+	InternationalizedResourceIdentifierParse(AbsoluteInternationalizedResourceIdentifierParseError),
 	
 	#[allow(missing_docs)]
 	BlankNodeLabelParse(BlankNodeLabelParseError),
@@ -37,7 +37,7 @@ impl error::Error for SubjectParseError
 		
 		match self
 		{
-			IRIParse(cause) => Some(cause),
+			InternationalizedResourceIdentifierParse(cause) => Some(cause),
 			
 			BlankNodeLabelParse(cause) => Some(cause),
 			

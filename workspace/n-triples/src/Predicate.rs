@@ -3,4 +3,4 @@
 
 
 /// A predicate.
-pub type Predicate<'a> = IRI<'a>;
+pub type Predicate<'a> = AbsoluteInternationalizedResourceIdentifier<'a>;

@@ -7,7 +7,7 @@
 pub enum PredicateParseError
 {
 	#[allow(missing_docs)]
-	PredicateParse(IRIParseError),
+	PredicateParse(AbsoluteInternationalizedResourceIdentifierParseError),
 	
 	#[allow(missing_docs)]
 	CanNotStartWith(u8),

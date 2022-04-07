@@ -4,68 +4,31 @@
 
 /// N-Triples.
 #[derive(Default, Debug, Clone, Eq, PartialEq)]
-pub struct NTriples<'a>(BTreeMap<Subject<'a>, BTreeMap<Predicate<'a>, Objects<'a>>>);
+pub struct NTriples<'a>(HashMap<Subject<'a>, HashMap<Predicate<'a>, Objects<'a>>>);
 
 impl<'a> NTriples<'a>
 {
-	/*
-FAOSTAT
-<http://stats-class.fao.uniroma2.it/geo/m49/001> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT> "953" .
-
-?M49
-<http://stats-class.fao.uniroma2.it/geo/m49/001> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN> "001" .
-
-?Constitutents?
-<http://stats-class.fao.uniroma2.it/geo/m49/001> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#hasMember> <http://stats-class.fao.uniroma2.it/geo/m49/142> .
-<http://stats-class.fao.uniroma2.it/geo/m49/001> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#hasMember> <http://stats-class.fao.uniroma2.it/geo/m49/019> .
-<http://stats-class.fao.uniroma2.it/geo/m49/001> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#hasMember> <http://stats-class.fao.uniroma2.it/geo/m49/150> .
-<http://stats-class.fao.uniroma2.it/geo/m49/001> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#hasMember> <http://stats-class.fao.uniroma2.it/geo/m49/002> .
-<http://stats-class.fao.uniroma2.it/geo/m49/001> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#hasMember> <http://stats-class.fao.uniroma2.it/geo/m49/009> .
-
-Name (again, but without language).
-<http://stats-class.fao.uniroma2.it/geo/m49/001> <http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN> "World" .
-
-Deprecated
-<http://stats-class.fao.uniroma2.it/geo/m49/001> <http://www.w3.org/2002/07/owl#deprecated> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
-
-Notation
-<http://stats-class.fao.uniroma2.it/geo/m49/001> <http://www.w3.org/2004/02/skos/core#notation> "001" .
-
-Constitutents (fugly).
-<http://stats-class.fao.uniroma2.it/geo/m49/001> <http://www.w3.org/2004/02/skos/core#narrower> <http://stats-class.fao.uniroma2.it/geo/m49/202> .
-<http://stats-class.fao.uniroma2.it/geo/m49/001> <http://www.w3.org/2004/02/skos/core#narrower> <http://stats-class.fao.uniroma2.it/geo/m49/142> .
-<http://stats-class.fao.uniroma2.it/geo/m49/001> <http://www.w3.org/2004/02/skos/core#narrower> <http://stats-class.fao.uniroma2.it/geo/m49/747> .
-<http://stats-class.fao.uniroma2.it/geo/m49/001> <http://www.w3.org/2004/02/skos/core#narrower> <http://stats-class.fao.uniroma2.it/geo/m49/062> .
-<http://stats-class.fao.uniroma2.it/geo/m49/001> <http://www.w3.org/2004/02/skos/core#narrower> <http://stats-class.fao.uniroma2.it/geo/m49/150> .
-<http://stats-class.fao.uniroma2.it/geo/m49/001> <http://www.w3.org/2004/02/skos/core#narrower> <http://stats-class.fao.uniroma2.it/geo/m49/419> .
-<http://stats-class.fao.uniroma2.it/geo/m49/001> <http://www.w3.org/2004/02/skos/core#narrower> <http://stats-class.fao.uniroma2.it/geo/m49/753> .
-<http://stats-class.fao.uniroma2.it/geo/m49/001> <http://www.w3.org/2004/02/skos/core#narrower> <http://stats-class.fao.uniroma2.it/geo/m49/002> .
-<http://stats-class.fao.uniroma2.it/geo/m49/001> <http://www.w3.org/2004/02/skos/core#narrower> <http://stats-class.fao.uniroma2.it/geo/m49/513> .
-<http://stats-class.fao.uniroma2.it/geo/m49/001> <http://www.w3.org/2004/02/skos/core#narrower> <http://stats-class.fao.uniroma2.it/geo/m49/009> .
-<http://stats-class.fao.uniroma2.it/geo/m49/001> <http://www.w3.org/2004/02/skos/core#narrower> <http://stats-class.fao.uniroma2.it/geo/m49/019> .
-	 */
-	// <http://stats-class.fao.uniroma2.it/geo/m49/001> <http://www.w3.org/2004/02/skos/core#prefLabel> "World"@en .
-	// fn prefLabel(&self, subject: &Subject<'a>) -> Option<&BTreeMap<&'a [u8], Cow<'a, str>>>
-	// {
-	// 	let m = self.predicates(subject)?;
-	// 	let x = m.get(&Predicate::from("http://www.w3.org/2004/02/skos/core#prefLabel"))?;
-	// 	Some(&x.string_literals_by_language)
-	// }
+	/// Objects.
+	#[inline(always)]
+	pub fn objects(&self, subject: &Subject<'a>, predicate: &Predicate<'a>) -> Option<&Objects<'a>>
+	{
+		self.predicates(subject)?.get(predicate)
+	}
 	
 	/// Predicates.
 	#[inline(always)]
-	pub fn predicates(&self, subject: &Subject<'a>) -> Option<&BTreeMap<Predicate<'a>, Objects<'a>>>
+	pub fn predicates(&self, subject: &Subject<'a>) -> Option<&HashMap<Predicate<'a>, Objects<'a>>>
 	{
 		self.0.get(subject)
 	}
 	
 	/// Parses using the official specification at <https://www.w3.org/TR/n-triples/>.
 	#[inline(always)]
-	pub fn parse(n_triples_string: &'a str) -> Result<Self, NTriplesParseError>
+	pub fn parse(n_triples_file_bytes: &'a [u8]) -> Result<Self, NTriplesParseError>
 	{
 		let mut this = Self::default();
 		
-		let mut remaining_bytes = n_triples_string.as_bytes();
+		let mut remaining_bytes = n_triples_file_bytes;
 		while !remaining_bytes.is_empty()
 		{
 			let (n_triple, option_remaining_bytes) = NTriple::parse(remaining_bytes).map_err(NTriplesParseError::NTripleParse)?;
@@ -88,7 +51,6 @@ Constitutents (fugly).
 	{
 		let NTriple { subject, predicate, object } = n_triple;
 		
-		// TODO: Out of memory!
 		let predicates = self.0.entry(subject).or_default();
 		let objects = predicates.entry(predicate).or_default();
 		objects.push(object).map_err(NTriplesParseError::OutOfMemory)

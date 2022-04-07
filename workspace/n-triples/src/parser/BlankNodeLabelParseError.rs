@@ -7,7 +7,7 @@
 pub enum BlankNodeLabelParseError
 {
 	#[allow(missing_docs)]
-	InvalidUtf8Parse(InvalidUtf8ParseError),
+	InvalidUtf8Parse(InvalidUtf8ParseError<Infallible>),
 	
 	#[allow(missing_docs)]
 	DidNotExpectEndParsingColon,
@@ -31,10 +31,10 @@ pub enum BlankNodeLabelParseError
 	PeriodIsNotAllowedAsTheFinalCharacterOfABlankNodeLabel,
 }
 
-impl const From<InvalidUtf8ParseError> for BlankNodeLabelParseError
+impl const From<InvalidUtf8ParseError<Infallible>> for BlankNodeLabelParseError
 {
 	#[inline(always)]
-	fn from(cause: InvalidUtf8ParseError) -> Self
+	fn from(cause: InvalidUtf8ParseError<Infallible>) -> Self
 	{
 		BlankNodeLabelParseError::InvalidUtf8Parse(cause)
 	}

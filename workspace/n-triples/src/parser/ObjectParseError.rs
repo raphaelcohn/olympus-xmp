@@ -7,7 +7,7 @@
 pub enum ObjectParseError
 {
 	#[allow(missing_docs)]
-	IRIParse(IRIParseError),
+	InternationalizedResourceIdentifierParse(AbsoluteInternationalizedResourceIdentifierParseError),
 	
 	#[allow(missing_docs)]
 	BlankNodeLabelParse(BlankNodeLabelParseError),
@@ -40,7 +40,7 @@ impl error::Error for ObjectParseError
 		
 		match self
 		{
-			IRIParse(cause) => Some(cause),
+			InternationalizedResourceIdentifierParse(cause) => Some(cause),
 			
 			BlankNodeLabelParse(cause) => Some(cause),
 			

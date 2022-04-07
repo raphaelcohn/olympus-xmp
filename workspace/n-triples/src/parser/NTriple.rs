@@ -50,7 +50,7 @@ impl<'a> NTriple<'a>
 		use SubjectParseError::*;
 		match get_0(remaining_bytes)
 		{
-			Some(OpenAngleBracket) => self::IRI::parse(remaining_bytes, IRI).map_err(IRIParse),
+			Some(OpenAngleBracket) => self::AbsoluteInternationalizedResourceIdentifier::parse(remaining_bytes, AbsoluteInternationalizedResourceIdentifier).map_err(InternationalizedResourceIdentifierParse),
 			
 			Some(Underscore) => BlankNodeLabel::parse(remaining_bytes, BlankNode).map_err(BlankNodeLabelParse),
 			
@@ -88,7 +88,7 @@ impl<'a> NTriple<'a>
 		{
 			match get_0(remaining_bytes)
 			{
-				Some(OpenAngleBracket) => return self::IRI::parse(remaining_bytes, IRI).map_err(IRIParse),
+				Some(OpenAngleBracket) => return self::AbsoluteInternationalizedResourceIdentifier::parse(remaining_bytes, AbsoluteInternationalizedResourceIdentifier).map_err(InternationalizedResourceIdentifierParse),
 				
 				Some(Underscore) => return BlankNodeLabel::parse(remaining_bytes, BlankNode).map_err(BlankNodeLabelParse),
 				
@@ -129,7 +129,7 @@ impl<'a> NTriple<'a>
 		{
 			match get_0(&mut remaining_bytes)
 			{
-				Some(Hash) => return Ok(memchr(LineFeed, remaining_bytes).map(|index| remaining_bytes.get_unchecked_range_safe((index + 1) .. ))),
+				Some(Hash) => return Ok(memchr(LineFeed, remaining_bytes).map(|index| remaining_bytes.after_index(index))),
 				
 				Some(LineFeed) => return Ok(Some(remaining_bytes)),
 				

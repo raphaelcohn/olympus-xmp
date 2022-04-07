@@ -19,9 +19,6 @@ pub enum UCHARParseError
 	
 	#[allow(missing_docs)]
 	InvalidHexDigit(u8),
-	
-	#[allow(missing_docs)]
-	OutOfMemory(TryReserveError),
 }
 
 impl const From<CharTryFromError> for UCHARParseError
@@ -30,15 +27,6 @@ impl const From<CharTryFromError> for UCHARParseError
 	fn from(cause: CharTryFromError) -> Self
 	{
 		UCHARParseError::InvalidUtf8CodePoint(cause)
-	}
-}
-
-impl const From<TryReserveError> for UCHARParseError
-{
-	#[inline(always)]
-	fn from(cause: TryReserveError) -> Self
-	{
-		UCHARParseError::OutOfMemory(cause)
 	}
 }
 
@@ -61,8 +49,6 @@ impl error::Error for UCHARParseError
 		match self
 		{
 			InvalidUtf8CodePoint(cause) => Some(cause),
-			
-			OutOfMemory(cause) => Some(cause),
 			
 			_ => None,
 		}
