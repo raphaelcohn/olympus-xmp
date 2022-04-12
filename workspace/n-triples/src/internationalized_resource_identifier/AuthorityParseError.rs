@@ -3,7 +3,7 @@
 
 
 /// A parse error.
-#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Debug, Clone, Eq, PartialEq)]
 pub enum AuthorityParseError
 {
 	#[allow(missing_docs)]

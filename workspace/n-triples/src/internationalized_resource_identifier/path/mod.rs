@@ -26,7 +26,6 @@ use crate::parser::utf8::Utf8CharacterLength;
 use swiss_army_knife::a_to_z::Slash;
 use swiss_army_knife::get_unchecked::GetUnchecked;
 use swiss_army_knife::unreachable_code_const;
-use swiss_army_knife::vec::VecExt;
 
 
 /// A `SmallVec`-like structure which can be constructed at build time (i.e. has `const` constructors).
