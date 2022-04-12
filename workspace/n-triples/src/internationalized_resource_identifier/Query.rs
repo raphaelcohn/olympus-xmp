@@ -32,7 +32,7 @@ impl<'a> TryToOwn for Option<Query<'a>>
 	type TryToOwned = Option<Query<'static>>;
 	
 	#[inline(always)]
-	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
+	fn try_to_own(self) -> Result<Self::TryToOwned, TryReserveError>
 	{
 		if let Some(value) = self
 		{
@@ -54,7 +54,7 @@ impl<'a> const FromUnchecked<Cow<'a, str>> for Query<'a>
 	}
 }
 
-impl<'a> const Into<Cow<'a, str>> for Query<'a>
+impl<'a> Into<Cow<'a, str>> for Query<'a>
 {
 	#[inline(always)]
 	fn into(self) -> Cow<'a, str>
@@ -97,7 +97,7 @@ impl<'a> Query<'a>
 	/// `iquery   = *( ipchar / iprivate / "/" / "?" )`.
 	/// `iprivate = %xE000-F8FF / %xF0000-FFFFD / %x100000-10FFFD`.
 	#[inline(always)]
-	fn parse(remaining_utf8_bytes: &'a [u8]) -> Result<(Self, Option<&'a [u8]>), QueryParseError>
+	fn parse(mut remaining_utf8_bytes: &'a [u8]) -> Result<(Self, Option<&'a [u8]>), QueryParseError>
 	{
 		use QueryParseError::InvalidCharacterInQuery;
 		

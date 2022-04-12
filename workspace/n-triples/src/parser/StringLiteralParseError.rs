@@ -55,7 +55,7 @@ pub enum StringLiteralParseError
 	InternationalizedResourceIdentifierParseLiteralTagParse(AbsoluteInternationalizedResourceIdentifierParseError),
 	
 	#[allow(missing_docs)]
-	InvalidLanguageTag(Utf8Error),
+	NaiveIetfBcp47LanguageTagParse(NaiveIetfBcp47LanguageTagParseError),
 }
 
 impl const From<InvalidUtf8ParseError<Infallible>> for StringLiteralParseError
@@ -104,7 +104,7 @@ impl error::Error for StringLiteralParseError
 			
 			InternationalizedResourceIdentifierParseLiteralTagParse(cause) => Some(cause),
 			
-			InvalidLanguageTag(cause) => Some(cause),
+			NaiveIetfBcp47LanguageTagParse(cause) => Some(cause),
 			
 			_ => None,
 		}

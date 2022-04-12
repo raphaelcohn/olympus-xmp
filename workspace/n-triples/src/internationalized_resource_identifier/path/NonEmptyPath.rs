@@ -28,17 +28,23 @@ impl<'a, const PathDepth: usize> TryToOwn for NonEmptyPath<'a, PathDepth>
 	type TryToOwned = NonEmptyPath<'static, PathDepth>;
 	
 	#[inline(always)]
-	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
+	fn try_to_own(self) -> Result<Self::TryToOwned, TryReserveError>
 	{
-		self.try_to_own_in_place()?;
-		Ok(unsafe { transmute(self) })
+		Ok
+		(
+			NonEmptyPath
+			{
+				first_non_empty_path_segment: self.first_non_empty_path_segment.try_to_own()?,
+				remaining_path_segments: self.remaining_path_segments.try_to_own()?
+			}
+		)
 	}
 }
 
 impl<'a, const PathDepth: usize> NonEmptyPath<'a, PathDepth>
 {
 	#[inline(always)]
-	pub(super) fn parse(constructor: impl FnOnce(Self) -> Hierarchy<'a, PathDepth>, error: impl FnOnce(NonEmptyPathParseError) -> HierarchyParseError, first_character_of_first_path_segment: (bool, char, Utf8CharacterLength), mut remaining_utf8_bytes: &'a [u8]) -> Result<(Hierarchy<'a, PathDepth>, ParseNextAfterHierarchy<'a>), HierarchyParseError>
+	pub(super) fn parse(constructor: impl FnOnce(Self) -> Hierarchy<'a, PathDepth>, error: impl FnOnce(NonEmptyPathParseError) -> HierarchyParseError, first_character_of_first_path_segment: (bool, char, Utf8CharacterLength), remaining_utf8_bytes: &'a [u8]) -> Result<(Hierarchy<'a, PathDepth>, ParseNextAfterHierarchy<'a>), HierarchyParseError>
 	{
 		NonEmptyPathParseState::new(constructor).parse(first_character_of_first_path_segment, remaining_utf8_bytes).map_err(error)
 	}

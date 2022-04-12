@@ -27,13 +27,14 @@
 
 #![feature(adt_const_params)]
 #![feature(allocator_api)]
+#![feature(const_convert)]
+#![feature(const_deref)]
 #![feature(const_trait_impl)]
 #![feature(const_try)]
 #![feature(generic_arg_infer)]
 #![feature(nonnull_slice_from_raw_parts)]
 #![feature(slice_ptr_get)]
 #![feature(slice_ptr_len)]
-#![feature(min_specialization)]
 #![feature(try_reserve_kind)]
 #![feature(untagged_unions)]
 
@@ -47,6 +48,7 @@ use internationalized_resource_identifier::AbsoluteInternationalizedResourceIden
 use parser::BlankNodeLabelParseError;
 use parser::get_0;
 use parser::LiteralTag;
+use parser::NaiveIetfBcp47LanguageTagParseError;
 use parser::NTriple;
 use parser::NTriplesParseError;
 use parser::Object;
@@ -72,10 +74,14 @@ use try_to_own::try_to_own_in_place_cow;
 use try_to_own::TryToOwn;
 use try_to_own::TryToOwnInPlace;
 use swiss_army_knife::a_to_z::Colon;
+use swiss_army_knife::a_to_z::Hyphen;
 use swiss_army_knife::a_to_z::Period;
-use swiss_army_knife::a_to_z::_1;
-use swiss_army_knife::a_to_z::_4;
-use swiss_army_knife::a_to_z::_5;
+use swiss_army_knife::a_to_z::_0;
+use swiss_army_knife::a_to_z::_9;
+use swiss_army_knife::a_to_z::a;
+use swiss_army_knife::a_to_z::z;
+use swiss_army_knife::a_to_z::A;
+use swiss_army_knife::a_to_z::Z;
 use swiss_army_knife::a_to_z::AtSign;
 use swiss_army_knife::a_to_z::Caret;
 use swiss_army_knife::a_to_z::DoubleQuote;
@@ -88,6 +94,7 @@ use swiss_army_knife::a_to_z::Tab;
 use swiss_army_knife::a_to_z::Underscore;
 use swiss_army_knife::a_to_z::OpenSquareBracket;
 use swiss_army_knife::a_to_z::CloseSquareBracket;
+use swiss_army_knife::const_small_vec::ConstSmallVec;
 use swiss_army_knife::get_unchecked::GetUnchecked;
 use swiss_army_knife::vec::VecExt;
 
@@ -108,12 +115,12 @@ pub mod try_to_own;
 include!("BlankNodeLabel.rs");
 include!("FromUnchecked.rs");
 include!("GetStringPredicateError.rs");
+include!("NaiveIetfBcp47LanguageTag.rs");
 include!("NTriples.rs");
 include!("Objects.rs");
 include!("PathDepth.rs");
 include!("Predicate.rs");
 include!("Predicates.rs");
-include!("RawIetfBcp47LanguageTag.rs");
 include!("Subject.rs");
 
 include!("char.constants.rs");

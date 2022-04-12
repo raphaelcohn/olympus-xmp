@@ -12,6 +12,8 @@ pub enum InternetProtocolVersion4AddressParseError
 		cause: InternetProtocolVersion4AddressOctetParseError,
 	
 		octet_number: InternetProtocolVersion4AddressOctetNumber,
+		
+		invalid: u8,
 	},
 	
 	#[allow(missing_docs)]

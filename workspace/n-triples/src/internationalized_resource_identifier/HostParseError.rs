@@ -55,6 +55,8 @@ impl error::Error for HostParseError
 			InternetProtocolVersion4AddressParse(cause) => Some(cause),
 			
 			HostNameParse(cause) => Some(cause),
+			
+			_ => None,
 		}
 	}
 }

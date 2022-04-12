@@ -4,31 +4,31 @@
 
 /// A parse error.
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub enum AbsoluteInternationalizedResourceIdentifierComponentsParseError
+pub enum NaiveIetfBcp47LanguageTagParseError
 {
 	#[allow(missing_docs)]
-	SchemeParse(SchemeParseError),
+	EmptyComponent
+	{
+		component_index: usize,
+	},
 	
 	#[allow(missing_docs)]
-	HierarchyParse(HierarchyParseError),
+	InvalidCharacter(u8),
 	
 	#[allow(missing_docs)]
-	QueryParse(QueryParseError),
-	
-	#[allow(missing_docs)]
-	HashFragmentParse(HashFragmentParseError),
+	OutOfMemory(TryReserveError)
 }
 
-impl const From<HashFragmentParseError> for AbsoluteInternationalizedResourceIdentifierComponentsParseError
+impl const From<TryReserveError> for NaiveIetfBcp47LanguageTagParseError
 {
 	#[inline(always)]
-	fn from(cause: HashFragmentParseError) -> Self
+	fn from(cause: TryReserveError) -> Self
 	{
-		AbsoluteInternationalizedResourceIdentifierComponentsParseError::HashFragmentParse(cause)
+		NaiveIetfBcp47LanguageTagParseError::OutOfMemory(cause)
 	}
 }
 
-impl Display for AbsoluteInternationalizedResourceIdentifierComponentsParseError
+impl Display for NaiveIetfBcp47LanguageTagParseError
 {
 	#[inline(always)]
 	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
@@ -37,22 +37,18 @@ impl Display for AbsoluteInternationalizedResourceIdentifierComponentsParseError
 	}
 }
 
-impl error::Error for AbsoluteInternationalizedResourceIdentifierComponentsParseError
+impl error::Error for NaiveIetfBcp47LanguageTagParseError
 {
 	#[inline(always)]
 	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		use AbsoluteInternationalizedResourceIdentifierComponentsParseError::*;
+		use NaiveIetfBcp47LanguageTagParseError::*;
 		
 		match self
 		{
-			SchemeParse(cause) => Some(cause),
+			OutOfMemory(cause) => Some(cause),
 			
-			HierarchyParse(cause) => Some(cause),
-			
-			QueryParse(cause) => Some(cause),
-			
-			HashFragmentParse(cause) => Some(cause),
+			_ => None,
 		}
 	}
 }

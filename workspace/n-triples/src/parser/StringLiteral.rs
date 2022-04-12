@@ -62,7 +62,7 @@ impl<'a> StringLiteral<'a>
 		use LiteralTag::*;
 		let literal_tag = match get_0(remaining_bytes).ok_or(DidNotExpectEndParsingLiteralTag)?
 		{
-			Space | Tab => Datatype(AbsoluteInternationalizedResourceIdentifier::Simple),
+			Space | Tab => Datatype(AbsoluteInternationalizedResourceIdentifier::xml_schema_2001("string")),
 			
 			Caret =>
 			{
@@ -84,14 +84,13 @@ impl<'a> StringLiteral<'a>
 				let haystack = *remaining_bytes;
 				let index = memchr2(Space, Tab, haystack).ok_or(DidNotExpectEndParsingLanguageTag)?;
 				
-				// TODO: Parse the raw language tag...
-				// `LANGTAG ::= '@' [a-zA-Z]+ ('-' [a-zA-Z0-9]+)*`.
-				let raw_ietf_bcp_47_language_tag_bytes = haystack.get_unchecked_range_safe( .. index);
+				let raw_ietf_bcp_47_language_tag_bytes = haystack.before_index(index);
 				*remaining_bytes = haystack.after_index(index);
 				
-				// TODO: Replace with simdutf8
-				xxxx;
-				Language(Cow::Borrowed(from_utf8(raw_ietf_bcp_47_language_tag_bytes).map_err(InvalidLanguageTag)?))
+				NaiveIetfBcp47LanguageTag::parse(raw_ietf_bcp_47_language_tag_bytes).map_err(NaiveIetfBcp47LanguageTagParse)?;
+				
+				// 	let language_tag = NaiveIetfBcp47LanguageTag::parse(haystack.after_index(index)).map_err(NaiveIetfBcp47LanguageTagParse)?;
+				Language(NaiveIetfBcp47LanguageTag::parse(raw_ietf_bcp_47_language_tag_bytes).map_err(NaiveIetfBcp47LanguageTagParse)?)
 			}
 			
 			invalid @ _ => return Err(InvalidByteStartsLiteralTag(invalid)),

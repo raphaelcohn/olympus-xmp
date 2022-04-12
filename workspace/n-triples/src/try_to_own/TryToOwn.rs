@@ -20,6 +20,8 @@ impl<T: TryToOwn + TryToOwnInPlace, const N: usize> TryToOwn for ConstSmallVec<T
 	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
 	{
 		self.try_to_own_in_place()?;
-		Ok(unsafe { transmute(self) })
+		let copy = unsafe { transmute_copy(&mut self) };
+		let _ = ManuallyDrop::new(self);
+		Ok(copy)
 	}
 }

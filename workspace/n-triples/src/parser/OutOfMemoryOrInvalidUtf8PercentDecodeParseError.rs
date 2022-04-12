@@ -52,8 +52,6 @@ impl error::Error for OutOfMemoryOrInvalidUtf8PercentDecodeParseError
 			OutOfMemory(cause) => Some(cause),
 			
 			InvalidPercentEncodedUtf8Parse(cause) => Some(cause),
-			
-			_ => None,
 		}
 	}
 }

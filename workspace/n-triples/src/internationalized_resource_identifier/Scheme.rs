@@ -49,7 +49,7 @@ impl<'a> Scheme<'a>
 	/// `IRI = scheme ":" ihier-part [ "?" iquery ] [ "#" ifragment ]`.
 	/// `scheme = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )`.
 	#[inline(always)]
-	fn parse(bytes: &'a [u8]) -> Result<(Self, &'a [u8]), SchemeParseError>
+	fn parse(mut bytes: &'a [u8]) -> Result<(Self, &'a [u8]), SchemeParseError>
 	{
 		let remaining_bytes = &mut bytes;
 		let string = Self::parse_first_character(remaining_bytes)?;
@@ -88,7 +88,7 @@ impl<'a> Scheme<'a>
 	}
 	
 	#[inline(always)]
-	fn parse_subequent_characters(remaining_bytes: &mut &'a [u8], string: StringSoFar<'a>) -> Result<Cow<'a, str>, SchemeParseError>
+	fn parse_subequent_characters(remaining_bytes: &mut &'a [u8], mut string: StringSoFar<'a>) -> Result<Cow<'a, str>, SchemeParseError>
 	{
 		use SchemeParseError::*;
 		loop

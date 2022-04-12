@@ -5,7 +5,7 @@
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub(super) enum LiteralTag<'a>
 {
-	Language(RawIetfBcp47LanguageTag<'a>),
+	Language(NaiveIetfBcp47LanguageTag<'a>),
 	
 	Datatype(AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>),
 }

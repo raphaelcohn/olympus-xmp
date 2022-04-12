@@ -38,7 +38,7 @@ impl<'a> const FromUnchecked<Cow<'a, str>> for HostName<'a>
 	}
 }
 
-impl<'a> const Into<Cow<'a, str>> for HostName<'a>
+impl<'a> Into<Cow<'a, str>> for HostName<'a>
 {
 	#[inline(always)]
 	fn into(self) -> Cow<'a, str>

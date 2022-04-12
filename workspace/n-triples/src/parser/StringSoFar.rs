@@ -22,13 +22,13 @@ impl<'a> StringSoFar<'a>
 	#[inline(always)]
 	pub(super) fn decode_next_utf8_validity_already_checked_mandatory<E: error::Error>(remaining_utf8_bytes: &mut &'a [u8], error: E) -> Result<char, E>
 	{
-		StringSoFar::decode_next_utf8_validity_already_checked(&mut remaining_utf8_bytes).ok_or(error)
+		StringSoFar::decode_next_utf8_validity_already_checked(remaining_utf8_bytes).ok_or(error)
 	}
 	
 	#[inline(always)]
 	pub(super) fn decode_next_utf8_validity_already_checked(remaining_utf8_bytes: &mut &[u8]) -> Option<char>
 	{
-		decode_next_utf8_validity_already_checked(remaining_utf8_bytes).map(|(character, utf8_character_length)| character)
+		decode_next_utf8_validity_already_checked(remaining_utf8_bytes).map(|(character, _utf8_character_length)| character)
 	}
 	
 	#[inline(always)]
@@ -46,7 +46,7 @@ impl<'a> StringSoFar<'a>
 	}
 	
 	#[inline(always)]
-	pub(super) const fn new_stack_rewind_buffer(remaining_utf8_bytes: &[u8], utf8_character_length: Utf8CharacterLength) -> Self
+	pub(super) fn new_stack_rewind_buffer(remaining_utf8_bytes: &[u8], utf8_character_length: Utf8CharacterLength) -> Self
 	{
 		let rewound_buffer = remaining_utf8_bytes.rewind_buffer(utf8_character_length);
 		
@@ -169,7 +169,7 @@ impl<'a> StringSoFar<'a>
 		fn from_stack_to_heap(from: NonNull<u8>, slice_length: usize, character: char) -> Result<String, TryReserveError>
 		{
 			const CharacterSize: usize = size_of::<char>();
-			StringSoFar::use_new_buffer::<_, CharacterSize>(from, slice_length, |buffer| unsafe { encode_utf8_not_reserving_space(&mut buffer, character, slice_length) })
+			StringSoFar::use_new_buffer::<_, CharacterSize>(from, slice_length, |buffer| unsafe { encode_utf8_not_reserving_space(buffer, character, slice_length) })
 		}
 		
 		use StringSoFar::*;
@@ -212,7 +212,7 @@ impl<'a> StringSoFar<'a>
 		{
 			Heap(string) => Self::string_push_character_of_known_length(string, character, utf8_character_length),
 			
-			Stack { from, slice_length, .. } =>
+			Stack { slice_length, .. } =>
 			{
 				let old_slice_length = *slice_length;
 				*slice_length = old_slice_length + utf8_character_length.add(old_slice_length);

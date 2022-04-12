@@ -253,26 +253,26 @@ impl InternetProtocolVersion4AddressParser
 	}
 	
 	#[inline(always)]
-	pub(super) const fn could_be_an_internet_protocol_version_4_address(length: usize) -> bool
+	pub(super) fn could_be_an_internet_protocol_version_4_address(length: usize) -> bool
 	{
 		Self::remainder_could_be_an_internet_protocol_version_4_address::<"0.0.0.0">(length)
 	}
 	
 	#[inline(always)]
-	const fn can_not_be_remaining_three_octets_of_an_internet_protocol_version_4_address(remaining_bytes: &[u8]) -> Result<(), InternetProtocolVersion4AddressParseError>
+	fn can_not_be_remaining_three_octets_of_an_internet_protocol_version_4_address(remaining_bytes: &[u8]) -> Result<(), InternetProtocolVersion4AddressParseError>
 	{
 		let _ = Self::check_remainder_could_be_an_internet_protocol_version_4_address::<_, "0.0.0">(remaining_bytes, InternetProtocolVersion4AddressParseError::RemainingThreeOctetsTooShort)?;
 		Ok(())
 	}
 	
 	#[inline(always)]
-	const fn can_not_be_remaining_two_octets_of_an_internet_protocol_version_4_address(remaining_bytes: &[u8]) -> Result<usize, InternetProtocolVersion4AddressParseError>
+	fn can_not_be_remaining_two_octets_of_an_internet_protocol_version_4_address(remaining_bytes: &[u8]) -> Result<usize, InternetProtocolVersion4AddressParseError>
 	{
 		Self::check_remainder_could_be_an_internet_protocol_version_4_address::<_, "0.0">(remaining_bytes, InternetProtocolVersion4AddressParseError::RemainingTwoOctetsTooShort)
 	}
 	
 	#[inline(always)]
-	const fn check_remainder_could_be_an_internet_protocol_version_4_address<E: FnOnce(usize) -> InternetProtocolVersion4AddressParseError, const minimum: &'static str>(remaining_bytes: &[u8], error: E) -> Result<usize, InternetProtocolVersion4AddressParseError>
+	fn check_remainder_could_be_an_internet_protocol_version_4_address<E: FnOnce(usize) -> InternetProtocolVersion4AddressParseError, const minimum: &'static str>(remaining_bytes: &[u8], error: E) -> Result<usize, InternetProtocolVersion4AddressParseError>
 	{
 		let length = remaining_bytes.len();
 		if Self::remainder_could_be_an_internet_protocol_version_4_address::<minimum>(length)
@@ -353,6 +353,6 @@ impl InternetProtocolVersion4AddressParser
 	#[inline(always)]
 	const fn invalid_digit<E: error::Error + Into<InternetProtocolVersion4AddressOctetParseError>, const octet_number: InternetProtocolVersion4AddressOctetNumber>(invalid: u8, error: E) -> Result<u8, InternetProtocolVersion4AddressParseError>
 	{
-		Err(InternetProtocolVersion4AddressParseError::InternetProtocolVersion4AddressOctetParse { octet_number, cause: error.into() })
+		Err(InternetProtocolVersion4AddressParseError::InternetProtocolVersion4AddressOctetParse { octet_number, cause: error.into(), invalid })
 	}
 }

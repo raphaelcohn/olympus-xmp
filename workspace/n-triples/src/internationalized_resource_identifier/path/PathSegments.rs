@@ -20,10 +20,9 @@ impl<'a, const PathDepth: usize> TryToOwn for PathSegments<'a, PathDepth>
 	type TryToOwned = PathSegments<'static, PathDepth>;
 	
 	#[inline(always)]
-	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
+	fn try_to_own(self) -> Result<Self::TryToOwned, TryReserveError>
 	{
-		self.try_to_own_in_place()?;
-		Ok(unsafe { transmute(self) })
+		self.0.try_to_own().map(PathSegments::<'static, PathDepth>)
 	}
 }
 

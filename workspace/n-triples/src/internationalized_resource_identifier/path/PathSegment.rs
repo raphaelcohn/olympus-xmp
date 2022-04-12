@@ -36,7 +36,7 @@ impl<'a> const FromUnchecked<Cow<'a, str>> for PathSegment<'a>
 	}
 }
 
-impl<'a> const Into<Cow<'a, str>> for PathSegment<'a>
+impl<'a> Into<Cow<'a, str>> for PathSegment<'a>
 {
 	#[inline(always)]
 	fn into(self) -> Cow<'a, str>
@@ -98,10 +98,10 @@ impl PathSegment<'static>
 impl<'a> PathSegment<'a>
 {
 	#[inline(always)]
-	fn decode_percent_encoded_path_segment(percent_encoded_path_segment_utf8_bytes: &'a [u8]) -> Result<Self, PathSegmentParseError>
+	fn decode_percent_encoded_path_segment(mut percent_encoded_path_segment_utf8_bytes: &'a [u8]) -> Result<Self, PathSegmentParseError>
 	{
 		let remaining_percent_encoded_path_segment_utf8_bytes = &mut percent_encoded_path_segment_utf8_bytes;
-		let mut string = StringSoFar::new_stack(remaining_percent_encoded_path_segment_utf8_bytes);
+		let string = StringSoFar::new_stack(remaining_percent_encoded_path_segment_utf8_bytes);
 		Self::decode_percent_encoded_path_segment_common(string, remaining_percent_encoded_path_segment_utf8_bytes, Self)
 	}
 	

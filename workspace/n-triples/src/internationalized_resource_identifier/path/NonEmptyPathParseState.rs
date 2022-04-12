@@ -23,9 +23,9 @@ impl<'a, F: FnOnce(NonEmptyPath<'a, PathDepth>) -> Hierarchy<'a, PathDepth>, con
 	}
 	
 	#[inline(always)]
-	fn parse(self, first_character_of_first_path_segment: (bool, char, Utf8CharacterLength), mut remaining_utf8_bytes: &'a [u8]) -> Result<(Hierarchy<'a, PathDepth>, ParseNextAfterHierarchy<'a>), NonEmptyPathParseError>
+	fn parse(mut self, first_character_of_first_path_segment: (bool, char, Utf8CharacterLength), remaining_utf8_bytes: &'a [u8]) -> Result<(Hierarchy<'a, PathDepth>, ParseNextAfterHierarchy<'a>), NonEmptyPathParseError>
 	{
-		let (first_non_empty_path_segment, mut remaining_utf8_bytes) = match memchr3(QuestionMark, Hash, Slash, remaining_utf8_bytes)
+		let (first_non_empty_path_segment, remaining_utf8_bytes) = match memchr3(QuestionMark, Hash, Slash, remaining_utf8_bytes)
 		{
 			// everything from `character` to the end is the first path segment.
 			None =>

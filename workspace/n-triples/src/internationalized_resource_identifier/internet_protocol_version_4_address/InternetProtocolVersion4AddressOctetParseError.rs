@@ -66,8 +66,6 @@ impl error::Error for InternetProtocolVersion4AddressOctetParseError
 			InternetProtocolVersion4AddressOctetLength2(cause) => Some(cause),
 			
 			InternetProtocolVersion4AddressOctetLength3(cause) => Some(cause),
-			
-			_ => None,
 		}
 	}
 }

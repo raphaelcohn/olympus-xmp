@@ -52,8 +52,6 @@ impl error::Error for OutOfMemoryOrUCHARParseError
 			OutOfMemory(cause) => Some(cause),
 			
 			UCHARParse(cause) => Some(cause),
-			
-			_ => None,
 		}
 	}
 }

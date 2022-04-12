@@ -10,7 +10,7 @@ pub struct Objects<'a>
 
 	blank_nodes: Vec<BlankNodeLabel<'a>>,
 	
-	string_literals_by_language: MutableKeyHashMap<RawIetfBcp47LanguageTag<'a>, Vec<Cow<'a, str>>>,
+	string_literals_by_language: MutableKeyHashMap<NaiveIetfBcp47LanguageTag<'a>, Vec<Cow<'a, str>>>,
 	
 	string_literals_by_absolute_internationalized_resource_identifier: MutableKeyHashMap<AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>, Vec<Cow<'a, str>>>,
 }
@@ -23,9 +23,7 @@ impl<'a> TryToOwnInPlace for Objects<'a>
 		self.absolute_internationalized_resource_identifiers.try_to_own_in_place()?;
 		self.blank_nodes.try_to_own_in_place()?;
 		self.string_literals_by_language.try_to_own_in_place()?;
-		self.string_literals_by_absolute_internationalized_resource_identifier.try_to_own_in_place()?;
-
-		Ok(())
+		self.string_literals_by_absolute_internationalized_resource_identifier.try_to_own_in_place()
 	}
 }
 
@@ -61,7 +59,7 @@ impl<'a> Objects<'a>
 	///
 	/// If an entry is present, its value will never be an empty Vec.
 	#[inline(always)]
-	pub fn string_literals_by_language(&self) -> impl Iterator<Item=(&impl Borrow<RawIetfBcp47LanguageTag<'a>>, &Vec<Cow<'a, str>>)>
+	pub fn string_literals_by_language(&self) -> impl Iterator<Item=(&impl Borrow<NaiveIetfBcp47LanguageTag<'a>>, &Vec<Cow<'a, str>>)>
 	{
 		self.string_literals_by_language.iter()
 	}
@@ -70,7 +68,7 @@ impl<'a> Objects<'a>
 	///
 	/// If an entry is present, its value will never be an empty Vec.
 	#[inline(always)]
-	pub fn get_string_literals_by_language(&self, ietf_bcp_47_language_tag: &RawIetfBcp47LanguageTag<'a>) -> Option<&Vec<Cow<'a, str>>>
+	pub fn get_string_literals_by_language(&self, ietf_bcp_47_language_tag: &NaiveIetfBcp47LanguageTag<'a>) -> Option<&Vec<Cow<'a, str>>>
 	{
 		self.string_literals_by_language.get(ietf_bcp_47_language_tag)
 	}

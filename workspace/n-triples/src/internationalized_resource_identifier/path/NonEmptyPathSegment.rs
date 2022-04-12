@@ -27,7 +27,7 @@ impl<'a> TryToOwn for NonEmptyPathSegment<'a>
 	}
 }
 
-impl<'a> const Into<Cow<'a, str>> for NonEmptyPathSegment<'a>
+impl<'a> Into<Cow<'a, str>> for NonEmptyPathSegment<'a>
 {
 	#[inline(always)]
 	fn into(self) -> Cow<'a, str>
@@ -68,11 +68,11 @@ impl<'a> const Deref for NonEmptyPathSegment<'a>
 impl<'a> NonEmptyPathSegment<'a>
 {
 	#[inline(always)]
-	fn decode_percent_encoded_path_segment_remainder(first_character_of_first_path_segment: (bool, char, Utf8CharacterLength), remaining_percent_encoded_path_segment_utf8_bytes: &'a [u8]) -> Result<NonEmptyPathSegment, PathSegmentParseError>
+	fn decode_percent_encoded_path_segment_remainder(first_character_of_first_path_segment: (bool, char, Utf8CharacterLength), mut remaining_percent_encoded_path_segment_utf8_bytes: &'a [u8]) -> Result<NonEmptyPathSegment, PathSegmentParseError>
 	{
 		let (was_percent_encoded, character, utf8_character_length) = first_character_of_first_path_segment;
 		
-		let mut string = if was_percent_encoded
+		let string = if was_percent_encoded
 		{
 			StringSoFar::new_heap(character, utf8_character_length)?
 		}

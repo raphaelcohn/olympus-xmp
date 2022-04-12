@@ -56,10 +56,23 @@ impl<'a, const PathDepth: usize> TryToOwn for Hierarchy<'a, PathDepth>
 	type TryToOwned = Hierarchy<'static, PathDepth>;
 	
 	#[inline(always)]
-	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
+	fn try_to_own(self) -> Result<Self::TryToOwned, TryReserveError>
 	{
-		self.try_to_own_in_place()?;
-		Ok(unsafe { transmute(self) })
+		use Hierarchy::*;
+		
+		Ok
+		(
+			match self
+			{
+				AuthorityAndAbsolutePath { authority, path_segments } => AuthorityAndAbsolutePath { authority: authority.try_to_own()?, path_segments: path_segments.try_to_own()? },
+				
+				AbsolutePath(non_empty_path) => AbsolutePath(non_empty_path.try_to_own()?),
+				
+				RootlessPath(non_empty_path) => RootlessPath(non_empty_path.try_to_own()?),
+				
+				EmptyPath => EmptyPath
+			}
+		)
 	}
 }
 
@@ -132,7 +145,7 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 	/// * "x///segment"
 	/// * "x///segment//x/"
 	#[inline(always)]
-	fn parse_ipath_rootless(first_character_of_first_path_segment: (bool, char, Utf8CharacterLength), mut remaining_utf8_bytes: &'a [u8]) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
+	fn parse_ipath_rootless(first_character_of_first_path_segment: (bool, char, Utf8CharacterLength), remaining_utf8_bytes: &'a [u8]) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
 	{
 		Self::parse_non_empty_path(first_character_of_first_path_segment, remaining_utf8_bytes, Hierarchy::RootlessPath, HierarchyParseError::IPathRootlessParse)
 	}
@@ -146,13 +159,13 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 	/// * "/x/segment"
 	/// * "/x/segment///"
 	#[inline(always)]
-	fn parse_ipath_absolute(first_character_of_first_path_segment: (bool, char, Utf8CharacterLength), mut remaining_utf8_bytes: &'a [u8]) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
+	fn parse_ipath_absolute(first_character_of_first_path_segment: (bool, char, Utf8CharacterLength), remaining_utf8_bytes: &'a [u8]) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
 	{
 		Self::parse_non_empty_path(first_character_of_first_path_segment, remaining_utf8_bytes, Hierarchy::AbsolutePath, HierarchyParseError::IPathAbsoluteParse)
 	}
 	
 	#[inline(always)]
-	fn parse_non_empty_path(first_character_of_first_path_segment: (bool, char, Utf8CharacterLength), mut remaining_utf8_bytes: &'a [u8], constructor: impl FnOnce(NonEmptyPath<'a, PathDepth>) -> Self, error: impl FnOnce(NonEmptyPathParseError) -> HierarchyParseError) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
+	fn parse_non_empty_path(first_character_of_first_path_segment: (bool, char, Utf8CharacterLength), remaining_utf8_bytes: &'a [u8], constructor: impl FnOnce(NonEmptyPath<'a, PathDepth>) -> Self, error: impl FnOnce(NonEmptyPathParseError) -> HierarchyParseError) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
 	{
 		NonEmptyPath::parse(constructor, error, first_character_of_first_path_segment, remaining_utf8_bytes)
 	}

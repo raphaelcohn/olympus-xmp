@@ -35,6 +35,8 @@ impl error::Error for GetPredicateError
 		match self
 		{
 			StringLiteralIsNotAnInteger(cause) => Some(cause),
+			
+			_ => None,
 		}
 	}
 }
