@@ -7,13 +7,22 @@
 pub enum UserInformationParseError
 {
 	#[allow(missing_docs)]
-	DidNotExpectEndParsingCharacter,
-	
-	#[allow(missing_docs)]
 	InvalidCharacterInUserInformation(char),
 	
 	#[allow(missing_docs)]
+	OutOfMemory(TryReserveError),
+	
+	#[allow(missing_docs)]
 	OutOfMemoryOrInvalidUtf8PercentDecodeParse(OutOfMemoryOrInvalidUtf8PercentDecodeParseError),
+}
+
+impl const From<TryReserveError> for UserInformationParseError
+{
+	#[inline(always)]
+	fn from(cause: TryReserveError) -> Self
+	{
+		UserInformationParseError::OutOfMemory(cause)
+	}
 }
 
 impl const From<OutOfMemoryOrInvalidUtf8PercentDecodeParseError> for UserInformationParseError
@@ -43,6 +52,8 @@ impl error::Error for UserInformationParseError
 		
 		match self
 		{
+			OutOfMemory(cause) => Some(cause),
+			
 			OutOfMemoryOrInvalidUtf8PercentDecodeParse(cause) => Some(cause),
 			
 			_ => None,

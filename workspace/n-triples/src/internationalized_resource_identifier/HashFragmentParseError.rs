@@ -8,7 +8,18 @@ pub enum HashFragmentParseError
 {
 	InvalidCharacterInHashFragment(char),
 	
+	OutOfMemory(TryReserveError),
+	
 	OutOfMemoryOrInvalidUtf8PercentDecodeParse(OutOfMemoryOrInvalidUtf8PercentDecodeParseError),
+}
+
+impl const From<TryReserveError> for HashFragmentParseError
+{
+	#[inline(always)]
+	fn from(cause: TryReserveError) -> Self
+	{
+		HashFragmentParseError::OutOfMemory(cause)
+	}
 }
 
 impl const From<OutOfMemoryOrInvalidUtf8PercentDecodeParseError> for HashFragmentParseError
@@ -38,6 +49,8 @@ impl error::Error for HashFragmentParseError
 		
 		match self
 		{
+			OutOfMemory(cause) => Some(cause),
+			
 			OutOfMemoryOrInvalidUtf8PercentDecodeParse(cause) => Some(cause),
 			
 			_ => None,

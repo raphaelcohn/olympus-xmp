@@ -42,7 +42,7 @@ impl<T, const N: usize, const M: usize> const From<[T; M]> for ConstSmallVec<T, 
 		}
 		
 		let stack_without_length = MaybeUninit::uninit();
-		let to = stack_without_length.as_mut_ptr().cast::<T>();
+		let to = stack_without_length.as_mut_ptr() as *mut T;
 		let from = array.as_ptr();
 		unsafe { copy_nonoverlapping(from, to, M) }
 		
@@ -91,7 +91,7 @@ impl<'a, T: Copy, const N: usize> const From<&'a [T]> for ConstSmallVec<T, N>
 		}
 		
 		let stack_without_length = MaybeUninit::uninit();
-		let to = stack_without_length.as_mut_ptr().cast::<T>();
+		let to = stack_without_length.as_mut_ptr() as *mut T;
 		let from = slice.as_ptr();
 		unsafe { copy_nonoverlapping(from, to, length_of_stack) }
 		
@@ -199,7 +199,7 @@ impl<T: Clone, const N: usize> Clone for ConstSmallVec<T, N>
 				Ok(allocation) => allocation,
 			};
 			
-			let to = allocation.as_mut_ptr();
+			let to = allocation.as_mut_ptr() as *mut T;
 			unsafe { copy_nonoverlapping(from, to, current_length) };
 			
 			Self
@@ -208,7 +208,7 @@ impl<T: Clone, const N: usize> Clone for ConstSmallVec<T, N>
 			
 				stack_without_length_or_heap: StackWithoutLengthOrHeap
 				{
-					heap: Heap::from_pointer_and_length(allocation.as_non_null_ptr(), current_capacity)
+					heap: Heap::from_pointer_and_length(allocation.as_non_null_ptr().cast(), current_capacity)
 				}
 			}
 		}
@@ -345,7 +345,7 @@ impl<T, const N: usize> ConstSmallVec<T, N>
 		let curent_length_ref_mut = self.length_of_stack_ref_mut();
 		let current_length = *curent_length_ref_mut;
 		let current_capacity = Self::capacity_of_stack();
-		let required_capacity = required_capacity!(current_length, current_capacity, additional, (self.stack_without_length_or_heap.stack_without_length().non_null_pointer(), current_length, curent_length_ref_mut))?;
+		let required_capacity = required_capacity!(current_length, current_capacity, additional, (NonNull::slice_from_raw_parts(self.stack_without_length_or_heap.stack_without_length().non_null_pointer(), current_capacity), current_length, curent_length_ref_mut));
 		
 		let new_capacity = NGC::calculate::<T>(current_capacity, required_capacity)?;
 		let new_layout = Self::new_layout(new_capacity)?;
@@ -357,7 +357,7 @@ impl<T, const N: usize> ConstSmallVec<T, N>
 			Ok(allocation) => allocation,
 		};
 		
-		let pointer = self.set_capacity_of_heap_to_new_capacity(allocation, new_capacity);
+		let pointer = self.set_capacity_of_heap_to_new_capacity(allocation, new_capacity).cast();
 		
 		{
 			let from = self.stack_without_length_or_heap.stack_without_length().pointer();
@@ -373,24 +373,24 @@ impl<T, const N: usize> ConstSmallVec<T, N>
 	#[inline(always)]
 	fn try_reserve_heap<NGC: NewCapacityCalculator>(&mut self, additional: usize) -> Result<(NonNull<[T]>, usize, &mut usize), TryReserveError>
 	{
-		let heap = self.stack_without_length_or_heap.heap();
+		let heap = self.stack_without_length_or_heap.heap_mut();
 		
 		let curent_length_ref_mut = heap.length_ref_mut();
 		let current_length = *curent_length_ref_mut;
 		let current_capacity = self.capacity_of_heap();
-		let required_capacity = required_capacity!(current_length, current_capacity, additional, (heap.pointer(), current_length, curent_length_ref_mut))?;
+		let required_capacity = required_capacity!(current_length, current_capacity, additional, (NonNull::slice_from_raw_parts(heap.non_null_pointer(), current_capacity), current_length, curent_length_ref_mut));
 		
-		let new_capacity = NGC::calculate(current_capacity, required_capacity)?;
+		let new_capacity = NGC::calculate::<T>(current_capacity, required_capacity)?;
 		let new_layout = Self::new_layout(new_capacity)?;
-		let current_pointer = heap.non_null_pointer();
+		let current_pointer = heap.non_null_pointer().cast();
 		let current_layout = Self::current_layout(current_capacity);
 		let allocator = Self::allocator();
 		match unsafe { allocator.grow(current_pointer, current_layout, new_layout) }
 		{
 			Ok(allocation) =>
 			{
-				let pointer = self.set_capacity_of_heap_to_new_capacity(allocation, new_capacity);
-				self.stack_without_length_or_heap.heap_mut().set_pointer(pointer);
+				let pointer = self.set_capacity_of_heap_to_new_capacity(allocation, new_capacity).cast();
+				heap.set_pointer(pointer);
 				Ok((NonNull::slice_from_raw_parts(pointer, new_capacity), current_length, curent_length_ref_mut))
 			},
 			
@@ -524,9 +524,8 @@ impl<T, const N: usize> ConstSmallVec<T, N>
 	}
 	
 	#[inline(always)]
-	fn allocator() -> &'static mut impl Allocator
+	fn allocator() -> impl Allocator
 	{
-		static Allocator: Global = Global;
-		&mut Allocator
+		Global
 	}
 }

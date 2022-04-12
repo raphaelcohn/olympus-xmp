@@ -116,7 +116,7 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 	}
 	
 	#[inline(always)]
-	fn parse_non_empty_path(first_character_of_first_path_segment: (bool, char, Utf8CharacterLength), mut remaining_utf8_bytes: &'a [u8], constructor: impl FnOnce(NonEmptyPath<PathDepth>) -> Self, error: impl FnOnce(NonEmptyPathParseError) -> HierarchyParseError) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
+	fn parse_non_empty_path(first_character_of_first_path_segment: (bool, char, Utf8CharacterLength), mut remaining_utf8_bytes: &'a [u8], constructor: impl FnOnce(NonEmptyPath<'a, PathDepth>) -> Self, error: impl FnOnce(NonEmptyPathParseError) -> HierarchyParseError) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
 	{
 		NonEmptyPath::parse(constructor, error, first_character_of_first_path_segment, remaining_utf8_bytes)
 	}

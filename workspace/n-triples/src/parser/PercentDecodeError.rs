@@ -9,7 +9,7 @@ pub enum PercentDecodeError
 	#[allow(missing_docs)]
 	MissingPercentSign
 	{
-		decoded_byte_number: NonZeroU8,
+		decoded_byte_number: Utf8CharacterLength,
 	
 		invalid: u8,
 	},
@@ -17,7 +17,7 @@ pub enum PercentDecodeError
 	#[allow(missing_docs)]
 	InvalidHexDigit
 	{
-		decoded_byte_number: NonZeroU8,
+		decoded_byte_number: Utf8CharacterLength,
 		
 		relative_index: u8,
 		

@@ -7,7 +7,7 @@ macro_rules! required_capacity
 	($current_length: ident, $current_capacity: ident, $additional: ident, $capacity_sufficient_pointer: expr) =>
 	{
 		{
-			let required_capacity = Self::required_capacity($current_length, $additional);
+			let required_capacity = Self::required_capacity($current_length, $additional)?;
 
 			if required_capacity <= $current_capacity
 			{

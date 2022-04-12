@@ -89,7 +89,7 @@ impl<'a> PathSegment<'a>
 	/// `isegment    = *ipchar`.
 	/// `isegment-nz = 1*ipchar`.
 	#[inline(always)]
-	fn decode_percent_encoded_path_segment_common<R>(mut string: StringSoFar, remaining_percent_encoded_path_segment_utf8_bytes: &mut &'a [u8], constructor: impl FnOnce(Cow<'a, str>) -> R) -> Result<R, PathSegmentParseError>
+	fn decode_percent_encoded_path_segment_common<R>(mut string: StringSoFar<'a>, remaining_percent_encoded_path_segment_utf8_bytes: &mut &'a [u8], constructor: impl FnOnce(Cow<'a, str>) -> R) -> Result<R, PathSegmentParseError>
 	{
 		use Utf8CharacterLength::*;
 		
@@ -99,20 +99,17 @@ impl<'a> PathSegment<'a>
 			{
 				None => break,
 				
-				Some(character) =>
+				Some(character) => match character
 				{
-					match character
-					{
-						ipchar_iunreserved_without_ucschar!() => string.push(character, One),
-						ipchar_iunreserved_with_ucschar_2!()  => string.push(character, Two),
-						ipchar_iunreserved_with_ucschar_3!()  => string.push(character, Three),
-						ipchar_iunreserved_with_ucschar_4!()  => string.push(character, Four),
-						ipchar_pct_encoded!()                 => string.push_forcing_heap_percent_encoded(remaining_percent_encoded_path_segment_utf8_bytes),
-						ipchar_sub_delims!()                  => string.push(character, One),
-						ipchar_other!()                       => string.push(character, One),
-						
-						_ => Err(PathSegmentParseError::InvalidCharacter(character)),
-					}
+					ipchar_iunreserved_without_ucschar!() => string.push(character, One)?,
+					ipchar_iunreserved_with_ucschar_2!()  => string.push(character, Two)?,
+					ipchar_iunreserved_with_ucschar_3!()  => string.push(character, Three)?,
+					ipchar_iunreserved_with_ucschar_4!()  => string.push(character, Four)?,
+					ipchar_pct_encoded!()                 => string.push_forcing_heap_percent_encoded(remaining_percent_encoded_path_segment_utf8_bytes)?,
+					ipchar_sub_delims!()                  => string.push(character, One)?,
+					ipchar_other!()                       => string.push(character, One)?,
+					
+					_ => return Err(PathSegmentParseError::InvalidCharacter(character)),
 				}
 			}
 		}

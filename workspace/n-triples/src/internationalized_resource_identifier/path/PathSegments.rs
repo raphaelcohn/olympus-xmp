@@ -6,10 +6,10 @@
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct PathSegments<'a, const PathDepth: usize>(ConstSmallVec<PathSegment<'a>, PathDepth>);
 
-impl<'a, T, const PathDepth: usize, const M: usize> const From<[T; M]> for PathSegments<'a, PathDepth>
+impl<'a, const PathDepth: usize, const M: usize> const From<[PathSegment<'a>; M]> for PathSegments<'a, PathDepth>
 {
 	#[inline(always)]
-	fn from(array: [T; M]) -> Self
+	fn from(array: [PathSegment<'a>; M]) -> Self
 	{
 		Self::from(ConstSmallVec::from(array))
 	}
@@ -58,7 +58,7 @@ impl<'a, const PathDepth: usize> const Default for PathSegments<'a, PathDepth>
 	#[inline(always)]
 	fn default() -> Self
 	{
-		Self(Vec::new())
+		Self(ConstSmallVec::default())
 	}
 }
 
@@ -83,7 +83,7 @@ impl<'a, const PathDepth: usize> PathSegments<'a, PathDepth>
 					self.decode_percent_encoded_path_segment(remaining_utf8_bytes.before_index(index))?;
 					let after_path_segment_bytes = remaining_utf8_bytes.after_index(index);
 					
-					match remaining_utf8_bytes.get(index)
+					match remaining_utf8_bytes.get_unchecked_value_safe(index)
 					{
 						QuestionMark => break ParseNextAfterHierarchy::query(after_path_segment_bytes),
 						
@@ -103,13 +103,11 @@ impl<'a, const PathDepth: usize> PathSegments<'a, PathDepth>
 	}
 	
 	#[inline(always)]
-	fn decode_percent_encoded_path_segment(&mut self, percent_encoded_path_segment_utf8_bytes: &[u8]) -> Result<(), PathSegmentsParseError>
+	fn decode_percent_encoded_path_segment(&mut self, percent_encoded_path_segment_utf8_bytes: &'a [u8]) -> Result<(), PathSegmentsParseError>
 	{
 		use PathSegmentsParseError::*;
 		
 		let path_segment = PathSegment::decode_percent_encoded_path_segment(percent_encoded_path_segment_utf8_bytes).map_err(PathSegmentParse)?;
-		self.0.try_reserve(1).map_err(OutOfMemory)?;
-		self.0.push_unchecked(path_segment);
-		Ok(())
+		self.0.try_reserve_push(path_segment).map_err(OutOfMemory)
 	}
 }

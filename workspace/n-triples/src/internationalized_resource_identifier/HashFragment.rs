@@ -66,29 +66,27 @@ impl<'a> HashFragment<'a>
 		
 		loop
 		{
-			let character = match StringSoFar::decode_next_utf8_validity_already_checked(remaining_utf8_bytes)
-			{
-				None => break,
-				
-				Some(character) => character,
-			};
-			
 			use Utf8CharacterLength::*;
 			
 			match StringSoFar::decode_next_utf8_validity_already_checked(remaining_utf8_bytes)
 			{
-				ipchar_iunreserved_without_ucschar!() => string.push(character, One),
-				ipchar_iunreserved_with_ucschar_2!()  => string.push(character, Two),
-				ipchar_iunreserved_with_ucschar_3!()  => string.push(character, Three),
-				ipchar_iunreserved_with_ucschar_4!()  => string.push(character, Four),
-				ipchar_pct_encoded!()                 => string.push_forcing_heap_percent_encoded(remaining_utf8_bytes)?,
-				ipchar_sub_delims!()                  => string.push(character, One),
-				ipchar_other!()                       => string.push(character, One),
+				None => break,
 				
-				SlashChar | QuestionMarkChar          => string.push(character, One),
-				
-				_ => Err(InvalidCharacterInHashFragment(character)),
-			}
+				Some(character) => match character
+				{
+					ipchar_iunreserved_without_ucschar!() => string.push(character, One)?,
+					ipchar_iunreserved_with_ucschar_2!()  => string.push(character, Two)?,
+					ipchar_iunreserved_with_ucschar_3!()  => string.push(character, Three)?,
+					ipchar_iunreserved_with_ucschar_4!()  => string.push(character, Four)?,
+					ipchar_pct_encoded!()                 => string.push_forcing_heap_percent_encoded(remaining_utf8_bytes)?,
+					ipchar_sub_delims!()                  => string.push(character, One)?,
+					ipchar_other!()                       => string.push(character, One)?,
+					
+					SlashChar | QuestionMarkChar          => string.push(character, One)?,
+					
+					_ => return Err(InvalidCharacterInHashFragment(character)),
+				},
+			};
 		}
 		Ok(Self(string.to_cow()))
 	}

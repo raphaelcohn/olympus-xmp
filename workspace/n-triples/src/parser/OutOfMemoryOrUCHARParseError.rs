@@ -22,10 +22,10 @@ impl const From<TryReserveError> for OutOfMemoryOrUCHARParseError
 	}
 }
 
-impl const From<CharTryFromError> for OutOfMemoryOrUCHARParseError
+impl const From<UCHARParseError> for OutOfMemoryOrUCHARParseError
 {
 	#[inline(always)]
-	fn from(cause: CharTryFromError) -> Self
+	fn from(cause: UCHARParseError) -> Self
 	{
 		OutOfMemoryOrUCHARParseError::UCHARParse(cause)
 	}

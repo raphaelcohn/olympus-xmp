@@ -36,7 +36,7 @@ impl<T, const N: usize> StackWithoutLengthOrHeap<T, N>
 	}
 	
 	#[inline(always)]
-	const fn stack_slice_mut(&mut self, length_of_stack: usize) -> &mut StackWithoutLength<T, N>
+	const fn stack_without_length_mut(&mut self) -> &mut StackWithoutLength<T, N>
 	{
 		&mut self.stack_without_length
 	}
@@ -48,8 +48,8 @@ impl<T, const N: usize> StackWithoutLengthOrHeap<T, N>
 	}
 	
 	#[inline(always)]
-	const fn into_stack(self) -> MaybeUninit<[T; N]>
+	const fn heap_mut(&self) -> &mut Heap<T>
 	{
-		ManuallyDrop::into_inner(unsafe { self.stack })
+		unsafe { &mut self.heap }
 	}
 }

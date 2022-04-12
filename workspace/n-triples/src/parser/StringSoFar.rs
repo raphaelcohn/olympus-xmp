@@ -48,10 +48,9 @@ impl<'a> StringSoFar<'a>
 	#[inline(always)]
 	pub(super) const fn new_stack_rewind_buffer(remaining_utf8_bytes: &[u8], utf8_character_length: Utf8CharacterLength) -> Self
 	{
-		let rewound_buffer = remaining_utf8_bytes.rewind_buffer();
+		let rewound_buffer = remaining_utf8_bytes.rewind_buffer(utf8_character_length);
 		
-		let slice_length = remaining_utf8_bytes.len() + utf8_character_length.into();
-		
+		let slice_length = utf8_character_length.add_from_bytes(remaining_utf8_bytes);
 		Self::new_stack_internal(rewound_buffer, slice_length)
 	}
 	
@@ -132,7 +131,7 @@ impl<'a> StringSoFar<'a>
 		use StringSoFar::*;
 		match self
 		{
-			Heap(string) => Self::string_push_character_of_known_length(string, character, utf8_character_length),
+			Heap(string) => Self::string_push_character_of_known_length(string, character, utf8_character_length)?,
 			
 			Stack { from, slice_length, .. } =>
 			{
@@ -140,7 +139,7 @@ impl<'a> StringSoFar<'a>
 				
 				let from = *from;
 				let slice_length = *slice_length;
-				match utf8_character_length
+				let string = match utf8_character_length
 				{
 					One => from_stack_to_heap_n::<1>(from, slice_length, encode_utf8_bytes_1(character as u32)),
 					
@@ -149,10 +148,10 @@ impl<'a> StringSoFar<'a>
 					Three => from_stack_to_heap_n::<3>(from, slice_length, encode_utf8_bytes_3(character as u32)),
 					
 					Four => from_stack_to_heap_n::<4>(from, slice_length, encode_utf8_bytes_4(character as u32)),
-				}
+				}?;
+				*self = Heap(string);
 			}
 		}
-		
 		Ok(())
 	}
 	
@@ -170,7 +169,7 @@ impl<'a> StringSoFar<'a>
 		fn from_stack_to_heap(from: NonNull<u8>, slice_length: usize, character: char) -> Result<String, TryReserveError>
 		{
 			const CharacterSize: usize = size_of::<char>();
-			StringSoFar::use_new_buffer::<CharacterSize>(from, slice_length, |buffer| unsafe { encode_utf8_not_reserving_space(&mut buffer, character, slice_length) })
+			StringSoFar::use_new_buffer::<_, CharacterSize>(from, slice_length, |buffer| unsafe { encode_utf8_not_reserving_space(&mut buffer, character, slice_length) })
 		}
 		
 		use StringSoFar::*;
@@ -216,7 +215,7 @@ impl<'a> StringSoFar<'a>
 			Stack { from, slice_length, .. } =>
 			{
 				let old_slice_length = *slice_length;
-				*slice_length = old_slice_length + utf8_character_length.into();
+				*slice_length = old_slice_length + utf8_character_length.add(old_slice_length);
 				Ok(())
 			}
 		}
@@ -252,7 +251,7 @@ impl<'a> StringSoFar<'a>
 		let offset = string.len();
 		let buffer = unsafe { string.as_mut_vec() };
 		buffer.try_reserve(length)?;
-		encode_utf8_push_unchecked::<offset>(buffer, offset, encoded_utf8_bytes);
+		encode_utf8_push_unchecked::<length>(buffer, offset, encoded_utf8_bytes);
 		Ok(())
 	}
 	
@@ -268,7 +267,7 @@ impl<'a> StringSoFar<'a>
 	{
 		debug_assert!(Self::is_ascii(character));
 		
-		Self::use_new_buffer::<1>(from, slice_length, |buffer| encode_utf8_push_unchecked::<1>(buffer, slice_length, encode_utf8_bytes_1(character as u32)))
+		Self::use_new_buffer::<_, 1>(from, slice_length, |buffer| encode_utf8_push_unchecked::<1>(buffer, slice_length, encode_utf8_bytes_1(character as u32)))
 	}
 	
 	/// NOTE: the buffer passed to buffer_user with have a `.len()` of `0`.

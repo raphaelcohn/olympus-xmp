@@ -52,6 +52,15 @@ impl const From<TryReserveError> for AbsoluteInternationalizedResourceIdentifier
 	}
 }
 
+impl const From<AbsoluteInternationalizedResourceIdentifierComponentsParseError> for AbsoluteInternationalizedResourceIdentifierParseError
+{
+	#[inline(always)]
+	fn from(cause: AbsoluteInternationalizedResourceIdentifierComponentsParseError) -> Self
+	{
+		AbsoluteInternationalizedResourceIdentifierParseError::AbsoluteInternationalizedResourceIdentifierComponentsParse(cause)
+	}
+}
+
 impl Display for AbsoluteInternationalizedResourceIdentifierParseError
 {
 	#[inline(always)]

@@ -71,7 +71,7 @@ impl PercentEncodedByteProvider
 		// Rust does not permit this value to be const, yet.
 		let index = Self::index_of_first_hex_byte::<decoded_byte_number>() - 1;
 		let potential_percent = bytes.get_unchecked_value_safe(index);
-		if potential_percent != '%'
+		if potential_percent != Percent
 		{
 			return Err(PercentDecodeError::MissingPercentSign { decoded_byte_number, invalid: potential_percent })
 		}

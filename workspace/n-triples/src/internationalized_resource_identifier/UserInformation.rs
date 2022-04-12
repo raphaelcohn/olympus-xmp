@@ -11,30 +11,33 @@ impl<'a> UserInformation<'a>
 	/// `iuserinfo      = *( iunreserved / pct-encoded / sub-delims / ":" )`
 	/// `iunreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~" / ucschar`.
 	#[inline(always)]
-	fn parse(mut remaining_utf8_bytes: &'a [u8]) -> Result<Self, UserInformationParseError>
+	fn parse(mut user_info_bytes: &'a [u8]) -> Result<Self, UserInformationParseError>
 	{
 		use UserInformationParseError::*;
 		
-		let remaining_utf8_bytes = &mut remaining_utf8_bytes;
+		let remaining_utf8_bytes = &mut user_info_bytes;
 		let mut string = StringSoFar::new_stack(remaining_utf8_bytes);
 		loop
 		{
 			use Utf8CharacterLength::*;
 			
-			let character = StringSoFar::decode_next_utf8_validity_already_checked_mandatory(remaining_utf8_bytes, DidNotExpectEndParsingCharacter)?;
-			match character
+			match StringSoFar::decode_next_utf8_validity_already_checked(remaining_utf8_bytes)
 			{
-				iunreserved_without_ucschar!() => string.push(character, One),
-				iunreserved_with_ucschar_2!()  => string.push(character, Two),
-				iunreserved_with_ucschar_3!()  => string.push(character, Three),
-				iunreserved_with_ucschar_4!()  => string.push(character, Four),
-				pct_encoded!()                 => string.push_forcing_heap_percent_encoded(remaining_utf8_bytes)?,
-				sub_delims!()                  => string.push(character, One),
-				ColonChar                      => string.push(character, One),
+				None => return Ok(Self(string.to_cow())),
 				
-				_ => Err(InvalidCharacterInUserInformation(character)),
+				Some(character) => match character
+				{
+					iunreserved_without_ucschar!() => string.push(character, One)?,
+					iunreserved_with_ucschar_2!()  => string.push(character, Two)?,
+					iunreserved_with_ucschar_3!()  => string.push(character, Three)?,
+					iunreserved_with_ucschar_4!()  => string.push(character, Four)?,
+					pct_encoded!()                 => string.push_forcing_heap_percent_encoded(remaining_utf8_bytes)?,
+					sub_delims!()                  => string.push(character, One)?,
+					ColonChar                      => string.push(character, One)?,
+					
+					_ => return Err(InvalidCharacterInUserInformation(character)),
+				},
 			}
 		}
-		Ok(Self(string.to_cow()))
 	}
 }

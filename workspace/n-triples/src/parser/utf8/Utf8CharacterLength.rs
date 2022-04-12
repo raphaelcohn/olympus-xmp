@@ -43,3 +43,19 @@ impl const Into<usize> for Utf8CharacterLength
 		into as usize
 	}
 }
+
+impl Utf8CharacterLength
+{
+	#[inline(always)]
+	pub(crate) const fn add_from_bytes(self, bytes: &[u8]) -> usize
+	{
+		self.add(bytes.len())
+	}
+	
+	#[inline(always)]
+	pub(crate) const fn add(self, increment: usize) -> usize
+	{
+		let into: usize = self.into();
+		into + increment
+	}
+}

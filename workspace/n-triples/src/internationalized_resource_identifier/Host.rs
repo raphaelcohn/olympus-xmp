@@ -69,14 +69,14 @@ impl<'a> Host<'a>
 	}
 	
 	#[inline(always)]
-	fn parse_name(ihost_and_port_bytes: &[u8]) -> Result<(Self, &[u8]), HostParseError>
+	fn parse_name(ihost_and_port_bytes: &'a [u8]) -> Result<(Self, &'a [u8]), HostParseError>
 	{
 		let (host_name, port_bytes_including_colon) = HostName::parse(ihost_and_port_bytes)?;
 		Ok((Host::Name(host_name), port_bytes_including_colon))
 	}
 	
 	#[inline(always)]
-	fn parse_internet_protocol_literal(ihost_and_port_bytes: &[u8]) -> Result<(Self, &[u8]), HostParseError>
+	fn parse_internet_protocol_literal(ihost_and_port_bytes: &'a [u8]) -> Result<(Self, &'a [u8]), HostParseError>
 	{
 		const MinimumIPLiteralLength: usize = 2;
 		
@@ -107,7 +107,7 @@ impl<'a> Host<'a>
 	// Find the trailing ']:'.
 	// Limits the scan to the last 6 bytes for efficiency.
 	#[inline(always)]
-	fn parse_end_of_ip_literal<const additional_offset_due_to_future_ip_literal_v: usize>(ihost_and_port_bytes: &[u8]) -> Result<(&[u8], &[u8]), HostParseError>
+	fn parse_end_of_ip_literal<const additional_offset_due_to_future_ip_literal_v: usize>(ihost_and_port_bytes: &'a [u8]) -> Result<(&'a [u8], &'a [u8]), HostParseError>
 	{
 		debug_assert!(additional_offset_due_to_future_ip_literal_v <= 1);
 		
@@ -160,7 +160,7 @@ impl<'a> Host<'a>
 	}
 	
 	#[inline(always)]
-	fn construct_internet_protocol_version_4_address(result: Result<(Ipv4Addr, &[u8]), InternetProtocolVersion4AddressParseError>) -> Result<(Self, &[u8]), HostParseError>
+	fn construct_internet_protocol_version_4_address(result: Result<(Ipv4Addr, &'a [u8]), InternetProtocolVersion4AddressParseError>) -> Result<(Self, &'a [u8]), HostParseError>
 	{
 		match result
 		{

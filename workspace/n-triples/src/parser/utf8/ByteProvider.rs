@@ -2,7 +2,7 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-trait ByteProvider
+trait ByteProvider where InvalidUtf8ParseError<<Self as ByteProvider>::Error>: From<<Self as ByteProvider>::Error>
 {
 	type Error: error::Error;
 	
@@ -26,16 +26,19 @@ trait ByteProvider
 		}
 		else if is_two(first)
 		{
-			Self::two_(first, remaining_utf8_bytes)
+			let two = Self::two_(first, remaining_utf8_bytes);
+			unsafe { two.unwrap_unchecked() }
 		}
 		else if is_three(first)
 		{
-			Self::three_(first, remaining_utf8_bytes)
+			let three = Self::three_(first, remaining_utf8_bytes);
+			unsafe { three.unwrap_unchecked() }
 		}
 		else
 		{
 			debug_assert!(is_four(first));
-			Self::four_(first, remaining_utf8_bytes)
+			let four = Self::four_(first, remaining_utf8_bytes);
+			unsafe { four.unwrap_unchecked() }
 		};
 		
 		let character = unsafe { char::from_u32_unchecked(raw_unicode_point) };
@@ -57,21 +60,21 @@ trait ByteProvider
 		}
 		else if is_two(first)
 		{
-			const SliceLength: NonZeroUsize = ByteProvider::TwoSliceLength;
+			const SliceLength: NonZeroUsize = <Self as ByteProvider>::TwoSliceLength;
 			Self::guard_slice_length::<SliceLength>(bytes, DidNotExpectEndParsingTwoByteUtf8Character)?;
-			Self::two_(first, remaining_bytes)
+			Self::two_(first, remaining_bytes)?
 		}
 		else if is_three(first)
 		{
-			const SliceLength: NonZeroUsize = ByteProvider::ThreeSliceLength;
+			const SliceLength: NonZeroUsize = <Self as ByteProvider>::ThreeSliceLength;
 			Self::guard_slice_length::<SliceLength>(bytes, DidNotExpectEndParsingThreeByteUtf8Character)?;
-			Self::three_(first, remaining_bytes)
+			Self::three_(first, remaining_bytes)?
 		}
 		else if is_four(first)
 		{
-			const SliceLength: NonZeroUsize = ByteProvider::FourSliceLength;
+			const SliceLength: NonZeroUsize = <Self as ByteProvider>::FourSliceLength;
 			Self::guard_slice_length::<SliceLength>(bytes, DidNotExpectEndParsingFourByteUtf8Character)?;
-			Self::four_(first, remaining_bytes)
+			Self::four_(first, remaining_bytes)?
 		}
 		else
 		{
@@ -112,35 +115,44 @@ trait ByteProvider
 	}
 	
 	#[inline(always)]
-	fn two_(first: u32, remaining_bytes: &mut &[u8]) -> (Utf8CharacterLength, NonZeroUsize, u32)
+	fn two_(first: u32, remaining_bytes: &mut &[u8]) -> Result<(Utf8CharacterLength, NonZeroUsize, u32), Self::Error>
 	{
 		let second = Self::two(remaining_bytes)?;
+		Ok
 		(
-			Two,
-			Self::TwoSliceLength,
-			(first & x1F) << Shift6 | second,
+			(
+				Two,
+				Self::TwoSliceLength,
+				(first & x1F) << Shift6 | second,
+			)
 		)
 	}
 	
 	#[inline(always)]
-	fn three_(first: u32, remaining_bytes: &mut &[u8]) -> (Utf8CharacterLength, NonZeroUsize, u32)
+	fn three_(first: u32, remaining_bytes: &mut &[u8]) -> Result<(Utf8CharacterLength, NonZeroUsize, u32), Self::Error>
 	{
 		let (second, third) = Self::three(remaining_bytes)?;
+		Ok
 		(
-			Three,
-			Self::ThreeSliceLength,
-			(first & x0F) << Shift12 | second << Shift6 | third,
+			(
+				Three,
+				Self::ThreeSliceLength,
+				(first & x0F) << Shift12 | second << Shift6 | third,
+			)
 		)
 	}
 	
 	#[inline(always)]
-	fn four_(first: u32, remaining_bytes: &mut &[u8]) -> (Utf8CharacterLength, NonZeroUsize, u32)
+	fn four_(first: u32, remaining_bytes: &mut &[u8]) -> Result<(Utf8CharacterLength, NonZeroUsize, u32), Self::Error>
 	{
 		let (second, third, fourth) = Self::four(remaining_bytes)?;
+		Ok
 		(
-			Four,
-			Self::FourSliceLength,
-			(first & x07) << Shift18 | second << Shift12 | third << Shift6 | fourth,
+			(
+				Four,
+				Self::FourSliceLength,
+				(first & x07) << Shift18 | second << Shift12 | third << Shift6 | fourth,
+			)
 		)
 	}
 	
@@ -154,7 +166,7 @@ trait ByteProvider
 	}
 	
 	#[inline(always)]
-	fn postamble(remaining_bytes: &mut &[u8], bytes: &[u8], slice_length: NonZeroUsize, character: char, utf8_character_length: Utf8CharacterLength) -> (char, Utf8CharacterLength)
+	fn postamble<'a>(remaining_bytes: &mut &'a [u8], bytes: &'a [u8], slice_length: NonZeroUsize, character: char, utf8_character_length: Utf8CharacterLength) -> (char, Utf8CharacterLength)
 	{
 		*remaining_bytes = bytes.get_unchecked_range_safe(slice_length.get() .. );
 		(character, utf8_character_length)

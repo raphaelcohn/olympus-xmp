@@ -2,8 +2,17 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[derive(Default, Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 struct Heap<T>(*mut [T]);
+
+impl<T> const Default for Heap<T>
+{
+	#[inline(always)]
+	fn default() -> Self
+	{
+		Self(unsafe { from_raw_parts_mut(null_mut(), 0) })
+	}
+}
 
 impl<T> Heap<T>
 {

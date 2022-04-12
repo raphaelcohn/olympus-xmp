@@ -76,18 +76,18 @@ impl<'a> Query<'a>
 				{
 					HashChar => break Some(*remaining_utf8_bytes),
 					
-					ipchar_iunreserved_without_ucschar!() => string.push(character, One),
-					ipchar_iunreserved_with_ucschar_2!()  => string.push(character, Two),
-					ipchar_iunreserved_with_ucschar_3!()  => string.push(character, Three),
-					ipchar_iunreserved_with_ucschar_4!()  => string.push(character, Four),
+					ipchar_iunreserved_without_ucschar!() => string.push(character, One)?,
+					ipchar_iunreserved_with_ucschar_2!()  => string.push(character, Two)?,
+					ipchar_iunreserved_with_ucschar_3!()  => string.push(character, Three)?,
+					ipchar_iunreserved_with_ucschar_4!()  => string.push(character, Four)?,
 					ipchar_pct_encoded!()                 => string.push_forcing_heap_percent_encoded(remaining_utf8_bytes)?,
-					ipchar_sub_delims!()                  => string.push(character, One),
-					ipchar_other!()                       => string.push(character, One),
-					iprivate_3!()                         => string.push(character, Three),
-					iprivate_4!()                         => string.push(character, Four),
-					SlashChar | QuestionMarkChar          => string.push(character, One),
+					ipchar_sub_delims!()                  => string.push(character, One)?,
+					ipchar_other!()                       => string.push(character, One)?,
+					iprivate_3!()                         => string.push(character, Three)?,
+					iprivate_4!()                         => string.push(character, Four)?,
+					SlashChar | QuestionMarkChar          => string.push(character, One)?,
 					
-					_ => Err(InvalidCharacterInQuery(character)),
+					_ => return Err(InvalidCharacterInQuery(character)),
 				},
 			}
 		};

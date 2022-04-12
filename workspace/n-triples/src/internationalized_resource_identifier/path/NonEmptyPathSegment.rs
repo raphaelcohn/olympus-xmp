@@ -57,7 +57,7 @@ impl<'a> NonEmptyPathSegment<'a>
 		}
 		else
 		{
-			StringSoFar::new_stack_rewind_buffer(remaining_percent_encoded_path_segment_utf8_bytes, utf8_character_length);
+			StringSoFar::new_stack_rewind_buffer(remaining_percent_encoded_path_segment_utf8_bytes, utf8_character_length)
 		};
 		
 		PathSegment::decode_percent_encoded_path_segment_common(string, &mut remaining_percent_encoded_path_segment_utf8_bytes, NonEmptyPathSegment)

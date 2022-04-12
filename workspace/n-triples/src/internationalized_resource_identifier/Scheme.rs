@@ -49,11 +49,11 @@ impl<'a> Scheme<'a>
 		
 		match Self::next_byte(remaining_bytes, DidNotExpectEndParsingFirstCharacter)?
 		{
-			byte @ A ..= Z => Self::push_lower_case(&mut string, byte),
+			byte @ A ..= Z => Self::push_lower_case(&mut string, byte)?,
 			
-			byte @ a ..= z => string.push_ascii(byte as char),
+			byte @ a ..= z => string.push_ascii(byte as char)?,
 			
-			invalid @ _ => Err(InvalidFirstCharacter(invalid))
+			invalid @ _ => return Err(InvalidFirstCharacter(invalid))
 		}
 		
 		Ok(string)
@@ -69,9 +69,9 @@ impl<'a> Scheme<'a>
 			{
 				Colon => break,
 				
-				byte @ A ..= Z => Self::push_lower_case(&mut string, byte),
+				byte @ A ..= Z => Self::push_lower_case(&mut string, byte)?,
 				
-				byte @ (_0 ..= _9 | a ..= z | PlusSign | MinusSign | Period) => string.push_ascii(byte as char),
+				byte @ (_0 ..= _9 | a ..= z | PlusSign | MinusSign | Period) => string.push_ascii(byte as char)?,
 				
 				invalid @ _ => return Err(InvalidSubsequentCharacter(invalid))
 			}

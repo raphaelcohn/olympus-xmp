@@ -34,7 +34,7 @@ impl InternetProtocolVersion4AddressParser
 		let (octet1, remaining_bytes) = first_octet_parse_result?;
 		let (octet2, remaining_bytes) = Self::parse_octet_2(remaining_bytes)?;
 		let (octet3, remaining_bytes) = Self::parse_octet_3(remaining_bytes)?;
-		let (octet4, ) = Self::parse_octet_4(remaining_bytes)?;
+		let (octet4, remaining_bytes) = Self::parse_octet_4(remaining_bytes)?;
 		
 		Ok((Ipv4Addr::new(octet1, octet2, octet3, octet4), remaining_bytes))
 	}
@@ -166,9 +166,9 @@ impl InternetProtocolVersion4AddressParser
 		
 		let octet = match Self::get_0(remaining_bytes)
 		{
-			valid @ DIGIT!() => Self::digit_to_value(valid),
+			valid @ _0 ..= _9 => Self::digit_to_value(valid),
 			
-			invalid @ _ => Self::invalid_digit::<octet_number>(invalid, FirstDigitMustBeBetween0To9Inclusive)
+			invalid @ _ => return Self::invalid_digit::<_, octet_number>(invalid, FirstDigitMustBeBetween0To9Inclusive)
 		};
 		Ok(octet)
 	}
@@ -184,12 +184,12 @@ impl InternetProtocolVersion4AddressParser
 		{
 			valid_times_10 @ _1 ..= _9 => match octet_byte1
 			{
-				valid @ DIGIT!() => Self::digit_to_value_times_10(valid_times_10) + Self::digit_to_value(valid),
+				valid @ _0 ..= _9 => Self::digit_to_value_times_10(valid_times_10) + Self::digit_to_value(valid),
 				
-				invalid @ _ => return Self::invalid_digit::<octet_number>(invalid, SecondDigitMustBeBetween0To9Inclusive)
+				invalid @ _ => return Self::invalid_digit::<_, octet_number>(invalid, SecondDigitMustBeBetween0To9Inclusive)
 			}
 			
-			invalid @ _ => return Self::invalid_digit::<octet_number>(invalid, FirstDigitMustBeBetween1To9Inclusive)
+			invalid @ _ => return Self::invalid_digit::<_, octet_number>(invalid, FirstDigitMustBeBetween1To9Inclusive)
 		};
 		Ok(octet)
 	}
@@ -206,14 +206,14 @@ impl InternetProtocolVersion4AddressParser
 			// Parse 100-199.
 			_1 => match octet_byte1
 			{
-				valid_times_10 @ DIGIT!() => match octet_byte2
+				valid_times_10 @ _0 ..= _9 => match octet_byte2
 				{
-					valid @ DIGIT!() => 100 + Self::digit_to_value_times_10(valid_times_10) + Self::digit_to_value(valid),
+					valid @ _0 ..= _9 => 100 + Self::digit_to_value_times_10(valid_times_10) + Self::digit_to_value(valid),
 					
-					invalid @ _ => return Self::invalid_digit::<octet_number>(invalid, ThirdDigitMustBeBetween0To9Inclusive)
+					invalid @ _ => return Self::invalid_digit::<_, octet_number>(invalid, ThirdDigitMustBeBetween0To9Inclusive)
 				},
 				
-				invalid @ _ => return Self::invalid_digit::<octet_number>(invalid, SecondDigitMustBeBetween0To9Inclusive)
+				invalid @ _ => return Self::invalid_digit::<_, octet_number>(invalid, SecondDigitMustBeBetween0To9Inclusive)
 			},
 			
 			// Parse 200-255.
@@ -222,9 +222,9 @@ impl InternetProtocolVersion4AddressParser
 				// Parse 200-249.
 				valid_times_10 @ _0 ..= _4 => match octet_byte2
 				{
-					valid @ DIGIT!() => 200 + Self::digit_to_value_times_10(valid_times_10) + Self::digit_to_value(valid),
+					valid @ _0 ..= _9 => 200 + Self::digit_to_value_times_10(valid_times_10) + Self::digit_to_value(valid),
 					
-					invalid @ _ => return Self::invalid_digit::<octet_number>(invalid, ThirdDigitMustBeBetween0To9Inclusive)
+					invalid @ _ => return Self::invalid_digit::<_, octet_number>(invalid, ThirdDigitMustBeBetween0To9Inclusive)
 				},
 				
 				// Parse 250-255.
@@ -232,13 +232,13 @@ impl InternetProtocolVersion4AddressParser
 				{
 					valid @ _0 ..= _5 => 200 + 50 + Self::digit_to_value(valid),
 					
-					invalid @ _ => return Self::invalid_digit::<octet_number>(invalid, ThirdDigitMustBeBetween0To5Inclusive)
+					invalid @ _ => return Self::invalid_digit::<_, octet_number>(invalid, ThirdDigitMustBeBetween0To5Inclusive)
 				},
 				
-				invalid @ _ => return Self::invalid_digit::<octet_number>(invalid, SecondDigitMustBeBetween0To5Inclusive)
+				invalid @ _ => return Self::invalid_digit::<_, octet_number>(invalid, SecondDigitMustBeBetween0To5Inclusive)
 			}
 			
-			invalid @ _ => return Self::invalid_digit::<octet_number>(invalid, FirstDigitMustBe1Or2)
+			invalid @ _ => return Self::invalid_digit::<_, octet_number>(invalid, FirstDigitMustBe1Or2)
 		};
 		Ok(octet)
 	}
@@ -246,7 +246,7 @@ impl InternetProtocolVersion4AddressParser
 	#[inline(always)]
 	fn slice_remaining_bytes<const width: u8>(remaining_bytes: &[u8], result: Result<u8, InternetProtocolVersion4AddressParseError>) -> Result<(u8, &[u8]), InternetProtocolVersion4AddressParseError>
 	{
-		debug_assert!(width >> 2);
+		debug_assert!(width >= 2);
 		debug_assert!(width <= 4);
 		
 		result.map(|octet| (octet, remaining_bytes.get_unchecked_range_safe(width .. )))

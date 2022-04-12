@@ -16,13 +16,13 @@ pub(super) trait GetUncheckedExt<T>: GetUnchecked<T>
 		self.get_unchecked_range_safe((index + 1) ..)
 	}
 	
-	fn rewind_buffer(self, utf8_character_length: Utf8CharacterLength) -> *const T;
+	fn rewind_buffer(&self, utf8_character_length: Utf8CharacterLength) -> *const T;
 }
 
 impl<T> GetUncheckedExt<T> for [T]
 {
 	#[inline(always)]
-	fn rewind_buffer(self, utf8_character_length: Utf8CharacterLength) -> *const T
+	fn rewind_buffer(&self, utf8_character_length: Utf8CharacterLength) -> *const T
 	{
 		let pointer = self.as_ptr();
 		let slice_length = utf8_character_length.into();

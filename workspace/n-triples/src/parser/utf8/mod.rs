@@ -15,6 +15,7 @@ use swiss_army_knife::a_to_z::A;
 use swiss_army_knife::a_to_z::F;
 use swiss_army_knife::a_to_z::a;
 use swiss_army_knife::a_to_z::f;
+use swiss_army_knife::a_to_z::Percent;
 use swiss_army_knife::get_unchecked::GetUnchecked;
 use swiss_army_knife::non_zero::new_non_zero_u8;
 use swiss_army_knife::non_zero::new_non_zero_usize;

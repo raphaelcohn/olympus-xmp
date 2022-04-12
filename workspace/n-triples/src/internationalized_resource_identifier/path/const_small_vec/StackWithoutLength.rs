@@ -2,7 +2,6 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[derive(Copy, Clone)]
 struct StackWithoutLength<T, const N: usize>(ManuallyDrop<MaybeUninit<[T; N]>>);
 
 impl<T, const N: usize> const Default for StackWithoutLength<T, N>
@@ -48,12 +47,12 @@ impl<T, const N: usize> StackWithoutLength<T, N>
 	#[inline(always)]
 	const fn pointer(&self) -> *const T
 	{
-		self.stack_without_length.as_ptr().cast::<T>()
+		self.0.as_ptr().cast::<T>()
 	}
 	
 	#[inline(always)]
 	const fn pointer_mut(&mut self) -> *mut T
 	{
-		self.stack_without_length.as_mut_ptr().cast::<T>()
+		self.0.as_mut_ptr().cast::<T>()
 	}
 }

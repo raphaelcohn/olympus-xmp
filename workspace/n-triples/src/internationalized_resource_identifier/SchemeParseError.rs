@@ -19,7 +19,19 @@ pub enum SchemeParseError
 	InvalidSubsequentCharacter(u8),
 	
 	#[allow(missing_docs)]
+	OutOfMemory(TryReserveError),
+	
+	#[allow(missing_docs)]
 	OutOfMemoryMakingAsciiLowerCase(TryReserveError),
+}
+
+impl const From<TryReserveError> for SchemeParseError
+{
+	#[inline(always)]
+	fn from(cause: TryReserveError) -> Self
+	{
+		SchemeParseError::OutOfMemory(cause)
+	}
 }
 
 impl Display for SchemeParseError
@@ -40,6 +52,8 @@ impl error::Error for SchemeParseError
 		
 		match self
 		{
+			OutOfMemory(cause) => Some(cause),
+			
 			OutOfMemoryMakingAsciiLowerCase(cause) => Some(cause),
 			
 			_ => None,
