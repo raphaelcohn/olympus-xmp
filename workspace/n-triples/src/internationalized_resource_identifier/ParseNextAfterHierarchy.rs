@@ -2,31 +2,33 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-pub(super) trait GetUncheckedExt<T>: GetUnchecked<T>
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+enum ParseNextAfterHierarchy<'a>
 {
-	#[inline(always)]
-	fn before_index(&self, index: usize) -> &[T]
+	Query
 	{
-		self.get_unchecked_range_safe(.. index)
-	}
+		remaining_utf8_bytes: &'a [u8],
+	},
 	
-	#[inline(always)]
-	fn after_index(&self, index: usize) -> &[T]
+	NoQueryFragment
 	{
-		self.get_unchecked_range_safe((index + 1) ..)
-	}
+		remaining_utf8_bytes: &'a [u8],
+	},
 	
-	fn rewind_buffer(self, utf8_character_length: Utf8CharacterLength) -> *const T;
+	NoQueryNoFragment,
 }
 
-impl<T> GetUncheckedExt<T> for [T]
+impl<'a> ParseNextAfterHierarchy<'a>
 {
 	#[inline(always)]
-	fn rewind_buffer(self, utf8_character_length: Utf8CharacterLength) -> *const T
+	const fn query(remaining_utf8_bytes: &'a [u8]) -> Self
 	{
-		let pointer = self.as_ptr();
-		let slice_length = utf8_character_length.into();
-		let rewound_buffer = unsafe { pointer.sub(slice_length) };
-		rewound_buffer
+		ParseNextAfterHierarchy::Query { remaining_utf8_bytes }
+	}
+	
+	#[inline(always)]
+	const fn fragment_no_query(remaining_utf8_bytes: &'a [u8]) -> Self
+	{
+		ParseNextAfterHierarchy::NoQueryFragment { remaining_utf8_bytes }
 	}
 }

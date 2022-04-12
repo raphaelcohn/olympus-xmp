@@ -4,25 +4,36 @@
 
 /// A parse error.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub enum SchemeParseError
+pub enum InternetProtocolVersion4AddressParseError
 {
 	#[allow(missing_docs)]
-	DidNotExpectEndParsingFirstCharacter,
+	InternetProtocolVersion4AddressOctetParse
+	{
+		cause: InternetProtocolVersion4AddressOctetParseError,
+	
+		octet_number: InternetProtocolVersion4AddressOctetNumber,
+	},
 	
 	#[allow(missing_docs)]
-	InvalidFirstCharacter(u8),
+	RemainingThreeOctetsTooShort(usize),
 	
 	#[allow(missing_docs)]
-	DidNotExpectEndParsingSubsequentCharacter,
+	RemainingTwoOctetsTooShort(usize),
 	
 	#[allow(missing_docs)]
-	InvalidSubsequentCharacter(u8),
+	RemainingOctetTooShort(usize),
 	
 	#[allow(missing_docs)]
-	OutOfMemoryMakingAsciiLowerCase(TryReserveError),
+	ThreeDigitSecondOctetNotFollowedByPeriod,
+	
+	#[allow(missing_docs)]
+	ThreeDigitThirdOctetEndsBeforePeriod,
+	
+	#[allow(missing_docs)]
+	ThreeDigitThirdOctetNotFollowedByPeriod,
 }
 
-impl Display for SchemeParseError
+impl Display for InternetProtocolVersion4AddressParseError
 {
 	#[inline(always)]
 	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
@@ -31,16 +42,16 @@ impl Display for SchemeParseError
 	}
 }
 
-impl error::Error for SchemeParseError
+impl error::Error for InternetProtocolVersion4AddressParseError
 {
 	#[inline(always)]
 	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		use SchemeParseError::*;
+		use InternetProtocolVersion4AddressParseError::*;
 		
 		match self
 		{
-			OutOfMemoryMakingAsciiLowerCase(cause) => Some(cause),
+			InternetProtocolVersion4AddressOctetParse { cause, .. } => Some(cause),
 			
 			_ => None,
 		}

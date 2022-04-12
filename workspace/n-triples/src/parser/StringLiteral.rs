@@ -32,7 +32,6 @@ impl<'a> StringLiteral<'a>
 				
 				'\\' => match get_0(remaining_bytes).ok_or(EndOfFileParsingEscapeSequence)?
 				{
-					// TODO: This is wrong... we can't push a slice.
 					t => string.push_forcing_heap_ascii('\t')?,
 					
 					b => string.push_forcing_heap_ascii('\x08')?,

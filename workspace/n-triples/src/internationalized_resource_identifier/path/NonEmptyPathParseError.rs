@@ -4,25 +4,34 @@
 
 /// A parse error.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub enum SchemeParseError
+pub enum NonEmptyPathParseError
 {
 	#[allow(missing_docs)]
-	DidNotExpectEndParsingFirstCharacter,
+	PathSegmentParse(PathSegmentParseError),
 	
 	#[allow(missing_docs)]
-	InvalidFirstCharacter(u8),
-	
-	#[allow(missing_docs)]
-	DidNotExpectEndParsingSubsequentCharacter,
-	
-	#[allow(missing_docs)]
-	InvalidSubsequentCharacter(u8),
-	
-	#[allow(missing_docs)]
-	OutOfMemoryMakingAsciiLowerCase(TryReserveError),
+	PathSegmentsParse(PathSegmentsParseError),
 }
 
-impl Display for SchemeParseError
+impl const From<PathSegmentParseError> for NonEmptyPathParseError
+{
+	#[inline(always)]
+	fn from(cause: PathSegmentParseError) -> Self
+	{
+		NonEmptyPathParseError::PathSegmentParse(cause)
+	}
+}
+
+impl const From<PathSegmentsParseError> for NonEmptyPathParseError
+{
+	#[inline(always)]
+	fn from(cause: PathSegmentsParseError) -> Self
+	{
+		NonEmptyPathParseError::PathSegmentsParse(cause)
+	}
+}
+
+impl Display for NonEmptyPathParseError
 {
 	#[inline(always)]
 	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
@@ -31,18 +40,18 @@ impl Display for SchemeParseError
 	}
 }
 
-impl error::Error for SchemeParseError
+impl error::Error for NonEmptyPathParseError
 {
 	#[inline(always)]
 	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		use SchemeParseError::*;
+		use NonEmptyPathParseError::*;
 		
 		match self
 		{
-			OutOfMemoryMakingAsciiLowerCase(cause) => Some(cause),
+			PathSegmentParse(cause) => Some(cause),
 			
-			_ => None,
+			PathSegmentsParse(cause) => Some(cause),
 		}
 	}
 }

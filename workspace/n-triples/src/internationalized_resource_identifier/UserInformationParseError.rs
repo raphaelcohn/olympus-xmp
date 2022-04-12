@@ -4,25 +4,28 @@
 
 /// A parse error.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub enum SchemeParseError
+pub enum UserInformationParseError
 {
 	#[allow(missing_docs)]
-	DidNotExpectEndParsingFirstCharacter,
+	DidNotExpectEndParsingCharacter,
 	
 	#[allow(missing_docs)]
-	InvalidFirstCharacter(u8),
+	InvalidCharacterInUserInformation(char),
 	
 	#[allow(missing_docs)]
-	DidNotExpectEndParsingSubsequentCharacter,
-	
-	#[allow(missing_docs)]
-	InvalidSubsequentCharacter(u8),
-	
-	#[allow(missing_docs)]
-	OutOfMemoryMakingAsciiLowerCase(TryReserveError),
+	OutOfMemoryOrInvalidUtf8PercentDecodeParse(OutOfMemoryOrInvalidUtf8PercentDecodeParseError),
 }
 
-impl Display for SchemeParseError
+impl const From<OutOfMemoryOrInvalidUtf8PercentDecodeParseError> for UserInformationParseError
+{
+	#[inline(always)]
+	fn from(cause: OutOfMemoryOrInvalidUtf8PercentDecodeParseError) -> Self
+	{
+		UserInformationParseError::OutOfMemoryOrInvalidUtf8PercentDecodeParse(cause)
+	}
+}
+
+impl Display for UserInformationParseError
 {
 	#[inline(always)]
 	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
@@ -31,16 +34,16 @@ impl Display for SchemeParseError
 	}
 }
 
-impl error::Error for SchemeParseError
+impl error::Error for UserInformationParseError
 {
 	#[inline(always)]
 	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		use SchemeParseError::*;
+		use UserInformationParseError::*;
 		
 		match self
 		{
-			OutOfMemoryMakingAsciiLowerCase(cause) => Some(cause),
+			OutOfMemoryOrInvalidUtf8PercentDecodeParse(cause) => Some(cause),
 			
 			_ => None,
 		}

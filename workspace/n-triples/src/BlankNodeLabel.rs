@@ -6,39 +6,12 @@
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct BlankNodeLabel<'a>(Cow<'a, str>);
 
-impl<'a> From<BlankNodeLabel<'a>> for Cow<'a, str>
+impl<'a> const FromUnchecked<Cow<'a, str>> for BlankNodeLabel<'a>
 {
 	#[inline(always)]
-	fn from(blank_node_label: BlankNodeLabel<'a>) -> Self
+	unsafe fn from_unchecked(value: Cow<'a, str>) -> Self
 	{
-		blank_node_label.0
-	}
-}
-
-impl<'a> const From<Cow<'a, str>> for BlankNodeLabel<'a>
-{
-	#[inline(always)]
-	fn from(string: Cow<'a, str>) -> Self
-	{
-		Self(string)
-	}
-}
-
-impl<'a> const From<String> for BlankNodeLabel<'a>
-{
-	#[inline(always)]
-	fn from(string: String) -> Self
-	{
-		Self(Cow::Owned(string))
-	}
-}
-
-impl<'a> const From<&'a str> for BlankNodeLabel<'a>
-{
-	#[inline(always)]
-	fn from(string: &'a str) -> Self
-	{
-		Self(Cow::Borrowed(string))
+		Self(value)
 	}
 }
 

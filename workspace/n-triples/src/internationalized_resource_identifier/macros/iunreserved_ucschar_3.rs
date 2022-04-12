@@ -2,21 +2,14 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[inline(always)]
-const fn new_array_unchecked_validation<RBC: ~const RestrictedByteConst, const length: usize>(value: &[u8; length])
+/// [RFC 3987, Section 2.2](https://datatracker.ietf.org/doc/html/rfc3987#section-2.2).
+///
+/// `ucschar = %xA0-D7FF / %xF900-FDCF / %xFDF0-FFEF / %x10000-1FFFD / %x20000-2FFFD / %x30000-3FFFD / %x40000-4FFFD / %x50000-5FFFD / %x60000-6FFFD / %x70000-7FFFD / %x80000-8FFFD / %x90000-9FFFD / %xA0000-AFFFD / %xB0000-BFFFD / %xC0000-CFFFD / %xD0000-DFFFD / %xE1000-EFFFD`.
+/// Instead of one macro, we separate by UTF-8 encoding count.
+macro_rules! iunreserved_ucschar_3
 {
-	if cfg!(debug_assertions)
+	() =>
 	{
-		// Uses a while loop because for loops are not yet implemented for const functions.
-		let mut index = 0;
-		while index < length
-		{
-			let byte = value[index];
-			if !RBC::validate_byte(byte)
-			{
-				panic!("Invalid byte")
-			}
-			index += 1;
-		}
+		x0800 ..= xD7FF | xF900 ..= xFDCF | xFDF0 ..= xFFEF
 	}
 }

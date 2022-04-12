@@ -29,6 +29,9 @@ pub enum AbsoluteInternationalizedResourceIdentifierParseError
 	
 	#[allow(missing_docs)]
 	InvalidEscapeSequence(u8),
+	
+	#[allow(missing_docs)]
+	AbsoluteInternationalizedResourceIdentifierComponentsParse(AbsoluteInternationalizedResourceIdentifierComponentsParseError),
 }
 
 impl const From<InvalidUtf8ParseError<Infallible>> for AbsoluteInternationalizedResourceIdentifierParseError
@@ -74,6 +77,8 @@ impl error::Error for AbsoluteInternationalizedResourceIdentifierParseError
 			InvalidUCHAR4EscapeSequence(cause) => Some(cause),
 			
 			InvalidUCHAR8EscapeSequence(cause) => Some(cause),
+			
+			AbsoluteInternationalizedResourceIdentifierComponentsParse(cause) => Some(cause),
 			
 			_ => None,
 		}

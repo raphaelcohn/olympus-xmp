@@ -20,6 +20,18 @@ pub(super) enum StringSoFar<'a>
 impl<'a> StringSoFar<'a>
 {
 	#[inline(always)]
+	pub(super) fn decode_next_utf8_validity_already_checked_mandatory(remaining_utf8_bytes: &mut &'a [u8], error: E) -> Result<char, E>
+	{
+		StringSoFar::decode_next_utf8_validity_already_checked(&mut remaining_utf8_bytes).ok_or(error)
+	}
+	
+	#[inline(always)]
+	pub(super) fn decode_next_utf8_validity_already_checked(remaining_utf8_bytes: &mut &[u8]) -> Option<char>
+	{
+		decode_next_utf8_validity_already_checked(remaining_utf8_bytes).map(|(character, utf8_character_length)| character)
+	}
+	
+	#[inline(always)]
 	pub(super) fn new_heap(character: char, utf8_character_length: Utf8CharacterLength) -> Result<Self, TryReserveError>
 	{
 		let mut string = String::new();
@@ -36,9 +48,7 @@ impl<'a> StringSoFar<'a>
 	#[inline(always)]
 	pub(super) const fn new_stack_rewind_buffer(remaining_utf8_bytes: &[u8], utf8_character_length: Utf8CharacterLength) -> Self
 	{
-		let pointer = remaining_utf8_bytes.as_ptr();
-		let slice_length = utf8_character_length.into();
-		let rewound_buffer = unsafe { pointer.sub(slice_length) };
+		let rewound_buffer = remaining_utf8_bytes.rewind_buffer();
 		
 		Self::new_stack_internal(rewound_buffer, slice_length)
 	}
@@ -77,6 +87,14 @@ impl<'a> StringSoFar<'a>
 	pub(super) fn push_forcing_heap_UCHAR8(&mut self, remaining_bytes: &mut &[u8]) -> Result<(), OutOfMemoryOrUCHARParseError>
 	{
 		self.push_forcing_heap_UCHAR(remaining_bytes, UCHARParser::parse_UCHAR8)
+	}
+	
+	#[inline(always)]
+	pub(super) fn push_forcing_heap_ascii_to_lower_case(&mut self, character: char) -> Result<(), TryReserveError>
+	{
+		debug_assert!(Self::is_ascii(character));
+		
+		self.push_forcing_heap_ascii(character.to_ascii_lowercase())
 	}
 	
 	#[inline(always)]

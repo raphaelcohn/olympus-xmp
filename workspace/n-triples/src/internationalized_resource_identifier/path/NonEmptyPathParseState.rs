@@ -2,14 +2,15 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-struct NonEmptyPathParseState<'a, F: FnOnce(NonEmptyPath) -> Hierarchy>
+#[derive(Debug)]
+struct NonEmptyPathParseState<'a, F: FnOnce(NonEmptyPath) -> Hierarchy, E: FnOnce(NonEmptyPathParseError) -> HierarchyParseError>
 {
 	constructor: F,
 	
 	remaining_path_segments: PathSegments<'a>,
 }
 
-impl<'a, F: FnOnce(NonEmptyPath) -> Hierarchy> NonEmptyPathParseState<'a, F>
+impl<'a, F: FnOnce(NonEmptyPath) -> Hierarchy, E: FnOnce(NonEmptyPathParseError) -> HierarchyParseError> NonEmptyPathParseState<'a, F, E>
 {
 	#[inline(always)]
 	fn new(constructor: F) -> Self
@@ -22,7 +23,7 @@ impl<'a, F: FnOnce(NonEmptyPath) -> Hierarchy> NonEmptyPathParseState<'a, F>
 	}
 	
 	#[inline(always)]
-	fn parse(self, mut remaining_utf8_bytes: &'a [u8]) -> Result<(Hierarchy, ParseNext<'a>), HierarchyParseError>
+	fn parse(self, mut remaining_utf8_bytes: &'a [u8]) -> Result<(Hierarchy, ParseNextAfterHierarchy<'a>), NonEmptyPathParseError>
 	{
 		let (first_non_empty_path_segment, mut remaining_utf8_bytes) = match memchr3(QuestionMark, Hash, Slash, remaining_utf8_bytes)
 		{
@@ -30,7 +31,7 @@ impl<'a, F: FnOnce(NonEmptyPath) -> Hierarchy> NonEmptyPathParseState<'a, F>
 			None =>
 			{
 				let first_non_empty_path_segment = NonEmptyPathSegment::decode_percent_encoded_path_segment_remainder(first_character_of_first_path_segment, remaining_utf8_bytes)?;
-				return self.finish(first_non_empty_path_segment, ParseNext::NoQueryNoFragment)
+				return self.finish(first_non_empty_path_segment, ParseNextAfterHierarchy::NoQueryNoFragment)
 			}
 			
 			// everything from `character` to the index is the first path segment.
@@ -41,9 +42,9 @@ impl<'a, F: FnOnce(NonEmptyPath) -> Hierarchy> NonEmptyPathParseState<'a, F>
 				
 				match remaining_utf8_bytes.get_unchecked_value_safe(index)
 				{
-					QuestionMark => return self.finish(first_non_empty_path_segment, ParseNext::query(after_first_non_empty_path_segment_bytes)),
+					QuestionMark => return self.finish(first_non_empty_path_segment, ParseNextAfterHierarchy::query(after_first_non_empty_path_segment_bytes)),
 					
-					Hash => return self.finish(first_non_empty_path_segment, ParseNext::fragment_no_query(after_first_non_empty_path_segment_bytes)),
+					Hash => return self.finish(first_non_empty_path_segment, ParseNextAfterHierarchy::fragment_no_query(after_first_non_empty_path_segment_bytes)),
 					
 					Slash => (first_non_empty_path_segment, after_first_non_empty_path_segment_bytes),
 					
@@ -57,7 +58,7 @@ impl<'a, F: FnOnce(NonEmptyPath) -> Hierarchy> NonEmptyPathParseState<'a, F>
 	}
 	
 	#[inline(always)]
-	fn finish(self, first_non_empty_path_segment: NonEmptyPathSegment<'a>, parse_next: ParseNext<'a>) -> Result<(Hierarchy, ParseNext<'a>), HierarchyParseError>
+	fn finish(self, first_non_empty_path_segment: NonEmptyPathSegment<'a>, parse_next: ParseNextAfterHierarchy<'a>) -> Result<(Hierarchy, ParseNextAfterHierarchy<'a>), NonEmptyPathParseError>
 	{
 		Ok(((self.constructor)(NonEmptyPath { first_non_empty_path_segment, remaining_path_segments: self.remaining_path_segments }), parse_next))
 	}

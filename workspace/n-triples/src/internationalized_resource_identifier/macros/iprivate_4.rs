@@ -2,21 +2,14 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[inline(always)]
-const fn new_array_unchecked_validation<RBC: ~const RestrictedByteConst, const length: usize>(value: &[u8; length])
+/// [RFC 3987, Section 2.2](https://datatracker.ietf.org/doc/html/rfc3987#section-2.2).
+///
+/// `iprivate = %xE000-F8FF / %xF0000-FFFFD / %x100000-10FFFD`.
+/// Instead of one macro, we separate by UTF-8 encoding count.
+macro_rules! iprivate_4
 {
-	if cfg!(debug_assertions)
+	() =>
 	{
-		// Uses a while loop because for loops are not yet implemented for const functions.
-		let mut index = 0;
-		while index < length
-		{
-			let byte = value[index];
-			if !RBC::validate_byte(byte)
-			{
-				panic!("Invalid byte")
-			}
-			index += 1;
-		}
+		xF0000 ..= xFFFFD | x100000 ..= x10FFFD
 	}
 }

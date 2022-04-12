@@ -4,25 +4,22 @@
 
 /// A parse error.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub enum SchemeParseError
+pub enum PortParseError
 {
-	#[allow(missing_docs)]
-	DidNotExpectEndParsingFirstCharacter,
+	InvalidCharacterIsNotAColon(u8),
 	
-	#[allow(missing_docs)]
-	InvalidFirstCharacter(u8),
+	ValuesGreaterThan655535AreUnsupported,
 	
-	#[allow(missing_docs)]
-	DidNotExpectEndParsingSubsequentCharacter,
+	InvalidCharacterIsNotADigit(u8),
 	
-	#[allow(missing_docs)]
-	InvalidSubsequentCharacter(u8),
+	/// A port number of zero is unusable with the Berkeley networking stack, as it selects a random port.
+	IsZero,
 	
-	#[allow(missing_docs)]
-	OutOfMemoryMakingAsciiLowerCase(TryReserveError),
+	/// The logic limiting the number to 5 bytes (u16) is deeply embedded in the parser and should not be changed.
+	IsGreaterThan65535(NonZeroU32),
 }
 
-impl Display for SchemeParseError
+impl Display for PortParseError
 {
 	#[inline(always)]
 	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
@@ -31,18 +28,6 @@ impl Display for SchemeParseError
 	}
 }
 
-impl error::Error for SchemeParseError
+impl error::Error for PortParseError
 {
-	#[inline(always)]
-	fn source(&self) -> Option<&(dyn error::Error + 'static)>
-	{
-		use SchemeParseError::*;
-		
-		match self
-		{
-			OutOfMemoryMakingAsciiLowerCase(cause) => Some(cause),
-			
-			_ => None,
-		}
-	}
 }

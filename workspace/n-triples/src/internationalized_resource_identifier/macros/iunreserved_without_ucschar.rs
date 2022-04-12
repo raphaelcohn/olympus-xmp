@@ -2,21 +2,14 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[inline(always)]
-const fn new_array_unchecked_validation<RBC: ~const RestrictedByteConst, const length: usize>(value: &[u8; length])
+/// [RFC 3987, Section 2.2](https://datatracker.ietf.org/doc/html/rfc3987#section-2.2).
+///
+/// `iunreserved = ALPHA / DIGIT / "-" / "." / "_" / "~" / ucschar`.
+/// This part represents `ALPHA / DIGIT / "-" / "." / "_" / "~"`.
+macro_rules! iunreserved_without_ucschar
 {
-	if cfg!(debug_assertions)
+	() =>
 	{
-		// Uses a while loop because for loops are not yet implemented for const functions.
-		let mut index = 0;
-		while index < length
-		{
-			let byte = value[index];
-			if !RBC::validate_byte(byte)
-			{
-				panic!("Invalid byte")
-			}
-			index += 1;
-		}
+		ALPHA!() | DIGIT!() | HyphenChar | PeriodChar | UnderscoreChar | TildeChar
 	}
 }

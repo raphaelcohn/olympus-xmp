@@ -7,7 +7,25 @@
 pub enum AbsoluteInternationalizedResourceIdentifierComponentsParseError
 {
 	#[allow(missing_docs)]
-	OutOfMemory(TryReserveError),
+	SchemeParse(SchemeParseError),
+	
+	#[allow(missing_docs)]
+	HierarchyParse(HierarchyParseError),
+	
+	#[allow(missing_docs)]
+	QueryParse(QueryParseError),
+	
+	#[allow(missing_docs)]
+	HashFragmentParse(HashFragmentParseError),
+}
+
+impl const From<HashFragmentParseError> for AbsoluteInternationalizedResourceIdentifierComponentsParseError
+{
+	#[inline(always)]
+	fn from(cause: HashFragmentParseError) -> Self
+	{
+		AbsoluteInternationalizedResourceIdentifierComponentsParseError::HashFragmentParse(cause)
+	}
 }
 
 impl Display for AbsoluteInternationalizedResourceIdentifierComponentsParseError
@@ -28,7 +46,13 @@ impl error::Error for AbsoluteInternationalizedResourceIdentifierComponentsParse
 		
 		match self
 		{
-			OutOfMemory(cause) => Some(cause),
+			SchemeParse(cause) => Some(cause),
+			
+			HierarchyParse(cause) => Some(cause),
+			
+			QueryParse(cause) => Some(cause),
+			
+			HashFragmentParse(cause) => Some(cause),
 			
 			_ => None,
 		}

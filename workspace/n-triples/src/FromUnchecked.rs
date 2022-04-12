@@ -2,31 +2,38 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-pub(super) trait GetUncheckedExt<T>: GetUnchecked<T>
+/// Constructs a new instance without checking the provided `value` is correct.
+///
+/// Used for constructing constants.
+pub trait FromUnchecked<T>: Sized
 {
-	#[inline(always)]
-	fn before_index(&self, index: usize) -> &[T]
-	{
-		self.get_unchecked_range_safe(.. index)
-	}
-	
-	#[inline(always)]
-	fn after_index(&self, index: usize) -> &[T]
-	{
-		self.get_unchecked_range_safe((index + 1) ..)
-	}
-	
-	fn rewind_buffer(self, utf8_character_length: Utf8CharacterLength) -> *const T;
+	/// Used for constructing constants.
+	unsafe fn from_unchecked(value: T) -> Self;
 }
 
-impl<T> GetUncheckedExt<T> for [T]
+impl<T> const FromUnchecked<T> for T
 {
 	#[inline(always)]
-	fn rewind_buffer(self, utf8_character_length: Utf8CharacterLength) -> *const T
+	unsafe fn from_unchecked(value: T) -> Self
 	{
-		let pointer = self.as_ptr();
-		let slice_length = utf8_character_length.into();
-		let rewound_buffer = unsafe { pointer.sub(slice_length) };
-		rewound_buffer
+		value
+	}
+}
+
+impl<'a, T: 'a + FromUnchecked<Cow<str>>> const FromUnchecked<&'a str> for T
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(value: &'a str) -> Self
+	{
+		Self::from_unchecked(Cow::Borrowed(value))
+	}
+}
+
+impl<'a, T: 'a + FromUnchecked<Cow<'a, str>>> const FromUnchecked<String> for T
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(value: String) -> Self
+	{
+		Self::from_unchecked(Cow::Owned(value))
 	}
 }

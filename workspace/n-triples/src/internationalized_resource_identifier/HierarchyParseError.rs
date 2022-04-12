@@ -1,39 +1,56 @@
 // This file is part of olympus-xmp. It is subject to the license terms in the COPYRIGHT file found in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT. No part of olympus-xmp, including this file, may be copied, modified, propagated, or distributed except according to the terms contained in the COPYRIGHT file.
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
-
 /// A parse error.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub enum HierarchyParseError
 {
 	#[allow(missing_docs)]
-	InvalidPercentEncodedUtf8Parse(InvalidUtf8ParseError<PercentDecodeError>),
+	DidNotExpectEndParsingFirstCharacter,
 	
 	#[allow(missing_docs)]
-	OutOfMemory(TryReserveError),
+	InvalidPercentEncodedUtf8ParseFirstCharacter(InvalidUtf8ParseError<PercentDecodeError>),
 	
 	#[allow(missing_docs)]
-	InvalidCharacter(char),
+	InvalidFirstCharacter(char),
 	
 	#[allow(missing_docs)]
-	DidNotExpectEndParsingCharacter,
+	DidNotExpectEndParsingSecondCharacter,
+	
+	#[allow(missing_docs)]
+	InvalidPercentEncodedUtf8ParseSecondCharacter(InvalidUtf8ParseError<PercentDecodeError>),
+	
+	#[allow(missing_docs)]
+	InvalidSecondCharacter(char),
+	
+	#[allow(missing_docs)]
+	AuthorityParse(AuthorityParseError),
+	
+	#[allow(missing_docs)]
+	IPathAbemptyParse(PathSegmentsParseError),
+	
+	#[allow(missing_docs)]
+	IPathRootlessParse(NonEmptyPathParseError),
+	
+	#[allow(missing_docs)]
+	IPathAbsoluteParse(NonEmptyPathParseError),
 }
 
-impl const From<InvalidUtf8ParseError<PercentDecodeError>> for HierarchyParseError
+impl const From<AuthorityParseError> for HierarchyParseError
 {
 	#[inline(always)]
-	fn from(cause: InvalidUtf8ParseError<PercentDecodeError>) -> Self
+	fn from(cause: AuthorityParseError) -> Self
 	{
-		HierarchyParseError::InvalidPercentEncodedUtf8Parse(cause)
+		HierarchyParseError::AuthorityParse(cause)
 	}
 }
 
-impl const From<TryReserveError> for HierarchyParseError
+impl const From<PathSegmentsParseError> for HierarchyParseError
 {
 	#[inline(always)]
-	fn from(cause: TryReserveError) -> Self
+	fn from(cause: PathSegmentsParseError) -> Self
 	{
-		HierarchyParseError::OutOfMemory(cause)
+		HierarchyParseError::IPathAbemptyParse(cause)
 	}
 }
 
@@ -55,9 +72,17 @@ impl error::Error for HierarchyParseError
 		
 		match self
 		{
-			InvalidPercentEncodedUtf8Parse(cause) => Some(cause),
+			InvalidPercentEncodedUtf8ParseFirstCharacter(cause) => Some(cause),
 			
-			OutOfMemory(cause) => Some(cause),
+			InvalidPercentEncodedUtf8ParseSecondCharacter(cause) => Some(cause),
+			
+			AuthorityParse(cause) => Some(cause),
+			
+			IPathAbemptyParse(cause) => Some(cause),
+			
+			IPathRootlessParse(cause) => Some(cause),
+			
+			IPathAbsoluteParse(cause) => Some(cause),
 			
 			_ => None,
 		}

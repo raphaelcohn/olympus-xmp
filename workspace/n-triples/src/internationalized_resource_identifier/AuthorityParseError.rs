@@ -4,25 +4,46 @@
 
 /// A parse error.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub enum SchemeParseError
+pub enum AuthorityParseError
 {
 	#[allow(missing_docs)]
-	DidNotExpectEndParsingFirstCharacter,
+	UserInformationParse(UserInformationParseError),
 	
 	#[allow(missing_docs)]
-	InvalidFirstCharacter(u8),
+	HostParse(HostParseError),
 	
 	#[allow(missing_docs)]
-	DidNotExpectEndParsingSubsequentCharacter,
-	
-	#[allow(missing_docs)]
-	InvalidSubsequentCharacter(u8),
-	
-	#[allow(missing_docs)]
-	OutOfMemoryMakingAsciiLowerCase(TryReserveError),
+	PortParse(PortParseError),
 }
 
-impl Display for SchemeParseError
+impl const From<UserInformationParseError> for AuthorityParseError
+{
+	#[inline(always)]
+	fn from(cause: UserInformationParseError) -> Self
+	{
+		AuthorityParseError::UserInformationParse(cause)
+	}
+}
+
+impl const From<HostParseError> for AuthorityParseError
+{
+	#[inline(always)]
+	fn from(cause: HostParseError) -> Self
+	{
+		AuthorityParseError::HostParse(cause)
+	}
+}
+
+impl const From<PortParseError> for AuthorityParseError
+{
+	#[inline(always)]
+	fn from(cause: PortParseError) -> Self
+	{
+		AuthorityParseError::PortParse(cause)
+	}
+}
+
+impl Display for AuthorityParseError
 {
 	#[inline(always)]
 	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
@@ -31,18 +52,20 @@ impl Display for SchemeParseError
 	}
 }
 
-impl error::Error for SchemeParseError
+impl error::Error for AuthorityParseError
 {
 	#[inline(always)]
 	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		use SchemeParseError::*;
+		use AuthorityParseError::*;
 		
 		match self
 		{
-			OutOfMemoryMakingAsciiLowerCase(cause) => Some(cause),
+			UserInformationParse(cause) => Some(cause),
 			
-			_ => None,
+			HostParse(cause) => Some(cause),
+			
+			PortParse(cause) => Some(cause),
 		}
 	}
 }

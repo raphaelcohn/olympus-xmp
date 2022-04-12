@@ -6,42 +6,19 @@
 ///
 /// This is raw; it is not validated according to RFC 3987.
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub struct AbsoluteInternationalizedResourceIdentifier<'a>(Cow<'a, str>);
-
-impl<'a> From<AbsoluteInternationalizedResourceIdentifier<'a>> for Cow<'a, str>
+pub struct AbsoluteInternationalizedResourceIdentifier<'a>
 {
-	#[inline(always)]
-	fn from(value: AbsoluteInternationalizedResourceIdentifier<'a>) -> Self
-	{
-		value.0
-	}
-}
-
-impl<'a> const From<Cow<'a, str>> for AbsoluteInternationalizedResourceIdentifier<'a>
-{
-	#[inline(always)]
-	fn from(string: Cow<'a, str>) -> Self
-	{
-		Self(string)
-	}
-}
-
-impl<'a> const From<String> for AbsoluteInternationalizedResourceIdentifier<'a>
-{
-	#[inline(always)]
-	fn from(string: String) -> Self
-	{
-		Self(Cow::Owned(string))
-	}
-}
-
-impl<'a> const From<&'a str> for AbsoluteInternationalizedResourceIdentifier<'a>
-{
-	#[inline(always)]
-	fn from(string: &'a str) -> Self
-	{
-		Self(Cow::Borrowed(string))
-	}
+	#[allow(missing_docs)]
+	pub scheme: Scheme<'a>,
+	
+	#[allow(missing_docs)]
+	pub hierarchy: Hierarchy<'a>,
+	
+	#[allow(missing_docs)]
+	pub query: Option<Query<'a>>,
+	
+	#[allow(missing_docs)]
+	pub hash_fragment: Option<HashFragment<'a>>,
 }
 
 impl<'a> TryToOwnInPlace for AbsoluteInternationalizedResourceIdentifier<'a>
@@ -49,7 +26,10 @@ impl<'a> TryToOwnInPlace for AbsoluteInternationalizedResourceIdentifier<'a>
 	#[inline(always)]
 	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
 	{
-		try_to_own_in_place_cow(&mut self.0)
+		self.scheme.try_to_own_in_place()?;
+		self.hierarchy.try_to_own_in_place()?;
+		self.query.try_to_own_in_place()?;
+		self.hash_fragment.try_to_own_in_place()
 	}
 }
 
@@ -63,32 +43,6 @@ impl<'a> TryToOwn for AbsoluteInternationalizedResourceIdentifier<'a>
 		self.try_to_own_in_place()?;
 		Ok(unsafe { transmute(self) })
 	}
-}
-
-impl AbsoluteInternationalizedResourceIdentifier<'static>
-{
-	#[allow(missing_docs)]
-	pub const OwlDeprecated: Self = Self::from("http://www.w3.org/2002/07/owl#deprecated");
-	
-	#[allow(missing_docs)]
-	pub const SimpleKnowledgeOrganizationSchemeCoreNarrower: Self = Self::from("http://www.w3.org/2004/02/skos/core#narrower");
-	
-	#[allow(missing_docs)]
-	pub const SimpleKnowledgeOrganizationSchemeCoreNotation: Self = Self::from("http://www.w3.org/2004/02/skos/core#notation");
-	
-	#[allow(missing_docs)]
-	pub const SimpleKnowledgeOrganizationSchemeCorePrefLabel: Self = Self::from("http://www.w3.org/2004/02/skos/core#prefLabel");
-	
-	#[allow(missing_docs)]
-	pub const XmlSchemaBoolean: Self = Self::from("http://www.w3.org/2001/XMLSchema#boolean");
-	
-	#[allow(missing_docs)]
-	pub const XmlSchemaInteger: Self = Self::from("http://www.w3.org/2001/XMLSchema#integer");
-	
-	#[allow(missing_docs)]
-	pub const XmlSchemaString: Self = Self::from("http://www.w3.org/2001/XMLSchema#string");
-	
-	const Simple: Self = Self::XmlSchemaString;
 }
 
 impl<'a> TryFrom<Cow<'a, str>> for AbsoluteInternationalizedResourceIdentifier<'a>
@@ -109,15 +63,68 @@ impl<'a> TryFrom<&'a str> for AbsoluteInternationalizedResourceIdentifier<'a>
 	#[inline(always)]
 	fn try_from(string: &'a str) -> Result<Self, Self::Error>
 	{
-		let (scheme, remaining_utf8_bytes) = Scheme::parse(string.as_bytes())?;
-		Hierarchy::parse(remaining_utf8_bytes)?;
+		use AbsoluteInternationalizedResourceIdentifierComponentsParseError::*;
+		
+		let (scheme, remaining_utf8_bytes) = Scheme::parse(string.as_bytes()).map_err(SchemeParse)?;
+		let (hierarchy, parse_next) = Hierarchy::parse(remaining_utf8_bytes).map_err(HierarchyParse)?;
+		
+		use ParseNextAfterHierarchy::*;
+		let (query, hash_fragment) = match parse_next
+		{
+			Query { remaining_utf8_bytes } => match self::Query::parse(remaining_utf8_bytes)
+			{
+				Err(error) => return Err(QueryParse(error)),
+				
+				Ok((query, None)) => (Some(query), None),
+				
+				Ok((query, Some(remaining_utf8_bytes))) => (Some(query), Some(HashFragment::parse(remaining_utf8_bytes)?)),
+			}
+			
+			NoQueryFragment { remaining_utf8_bytes} => (None, Some(HashFragment::parse(remaining_utf8_bytes)?)),
+			
+			NoQueryNoFragment => (None, None),
+		};
+		Ok
+		(
+			Self
+			{
+				scheme,
+				hierarchy,
+				query,
+				hash_fragment,
+			}
+		)
 	}
 }
 
 impl<'a> AbsoluteInternationalizedResourceIdentifier<'a>
 {
+	/// `http://www.w3.org/2002/07/owl#<hash_fragment>`.
 	#[inline(always)]
-	fn parse<R>(remaining_bytes: &mut &'a [u8], constructor: impl FnOnce(Self) -> R) -> Result<R, AbsoluteInternationalizedResourceIdentifierParseError>
+	pub fn owl_2002_07<HF>(hash_fragment: HF) -> Self
+	where HashFragment: FromUnchecked<'a, HF>
+	{
+		Self::http_www_w3_org(unsafe { vec![PathSegment::from_unchecked("2002"), PathSegment::from_unchecked("07"), PathSegment::from_unchecked("owl")] }, hash_fragment)
+	}
+	
+	/// `http://www.w3.org/2004/02/skos/core#<hash_fragment>`
+	#[inline(always)]
+	pub fn simple_knowledge_organization_scheme_2004_02_core<HF>(hash_fragment: HF) -> Self
+	where HashFragment: FromUnchecked<'a, HF>
+	{
+		Self::http_www_w3_org(unsafe { vec![PathSegment::from_unchecked("2004"), PathSegment::from_unchecked("02"), PathSegment::from_unchecked("skos"), PathSegment::from_unchecked("core")] }, hash_fragment)
+	}
+	
+	/// `http://www.w3.org/2001/XMLSchema#<hash_fragment>`
+	#[inline(always)]
+	pub fn xml_schema_2001<HF>(hash_fragment: HF) -> Self
+	where HashFragment: FromUnchecked<'a, HF>
+	{
+		Self::http_www_w3_org(unsafe { vec![PathSegment::from_unchecked("2001"), PathSegment::from_unchecked("XMLSchema")] }, hash_fragment)
+	}
+	
+	#[inline(always)]
+	pub(super) fn parse<R>(remaining_bytes: &mut &'a [u8], constructor: impl FnOnce(Self) -> R) -> Result<R, AbsoluteInternationalizedResourceIdentifierParseError>
 	{
 		use AbsoluteInternationalizedResourceIdentifierParseError::*;
 		
@@ -147,4 +154,54 @@ impl<'a> AbsoluteInternationalizedResourceIdentifier<'a>
 		
 		Ok(constructor(Self::try_from(string.to_cow())?))
 	}
+	
+	#[inline(always)]
+	const fn http_www_w3_org<HF>(path_segments: Smallvec<PathSegment>, hash_fragment: HF) -> Self
+	where HashFragment: FromUnchecked<'a, HF>
+	{
+		Self
+		{
+			scheme: Scheme::http,
+			hierarchy: Hierarchy::AuthorityAndAbsolutePath
+			{
+				authority: Authority::www_w3_org,
+				path_segments: PathSegments::from(path_segments),
+			},
+			query: None,
+			hash_fragment: Self::hash_fragment(hash_fragment),
+		}
+	}
+	
+	#[inline(always)]
+	const fn hash_fragment<HF>(hash_fragment: HF) -> Option<HashFragment<'a>>
+	where HashFragment: FromUnchecked<'a, HF>
+	{
+		Some(unsafe { HashFragment::from_unchecked(hash_fragment) })
+	}
+}
+
+impl AbsoluteInternationalizedResourceIdentifier<'static>
+{
+	/// `http://www.w3.org/2002/07/owl#deprecated`.
+	pub const OwlDeprecated: Self = Self::owl_2002_07("deprecated");
+	
+	/// `http://www.w3.org/2004/02/skos/core#narrower`.
+	pub const SimpleKnowledgeOrganizationSchemeCoreNarrower: Self = Self::simple_knowledge_organization_scheme_2004_02_core("narrower");
+	
+	/// `http://www.w3.org/2004/02/skos/core#notation`.
+	pub const SimpleKnowledgeOrganizationSchemeCoreNotation: Self = Self::simple_knowledge_organization_scheme_2004_02_core("notation");
+	
+	/// `http://www.w3.org/2004/02/skos/core#prefLabel`.
+	pub const SimpleKnowledgeOrganizationSchemeCorePrefLabel: Self = Self::simple_knowledge_organization_scheme_2004_02_core("prefLabel");
+	
+	/// `http://www.w3.org/2001/XMLSchema#boolean`.
+	pub const XmlSchemaBoolean: Self = Self::xml_schema_2001("boolean");
+	
+	/// `http://www.w3.org/2001/XMLSchema#integer`.
+	pub const XmlSchemaInteger: Self = Self::xml_schema_2001("integer");
+	
+	/// `http://www.w3.org/2001/XMLSchema#string`.
+	pub const XmlSchemaString: Self = Self::xml_schema_2001("string");
+	
+	pub(super) const Simple: Self = Self::XmlSchemaString;
 }

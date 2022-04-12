@@ -4,25 +4,37 @@
 
 /// A parse error.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub enum SchemeParseError
+pub enum HostParseError
 {
 	#[allow(missing_docs)]
-	DidNotExpectEndParsingFirstCharacter,
+	IpLiteralIsNotClosedBySquareBracket,
 	
 	#[allow(missing_docs)]
-	InvalidFirstCharacter(u8),
+	FutureInternetProtocolAddressParsingIsUnsupported,
 	
 	#[allow(missing_docs)]
-	DidNotExpectEndParsingSubsequentCharacter,
+	InternetProtocolVersion6AddressIsTooLong,
 	
 	#[allow(missing_docs)]
-	InvalidSubsequentCharacter(u8),
+	CouldNotParseInternetProtocolVersion6Address,
 	
 	#[allow(missing_docs)]
-	OutOfMemoryMakingAsciiLowerCase(TryReserveError),
+	InternetProtocolVersion4AddressParse(InternetProtocolVersion4AddressParseError),
+	
+	#[allow(missing_docs)]
+	HostNameParse(HostNameParseError),
 }
 
-impl Display for SchemeParseError
+impl const From<HostNameParseError> for HostParseError
+{
+	#[inline(always)]
+	fn from(cause: HostNameParseError) -> Self
+	{
+		HostParseError::HostNameParse(cause)
+	}
+}
+
+impl Display for HostParseError
 {
 	#[inline(always)]
 	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
@@ -31,18 +43,18 @@ impl Display for SchemeParseError
 	}
 }
 
-impl error::Error for SchemeParseError
+impl error::Error for HostParseError
 {
 	#[inline(always)]
 	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		use SchemeParseError::*;
+		use HostParseError::*;
 		
 		match self
 		{
-			OutOfMemoryMakingAsciiLowerCase(cause) => Some(cause),
+			InternetProtocolVersion4AddressParse(cause) => Some(cause),
 			
-			_ => None,
+			HostNameParse(cause) => Some(cause),
 		}
 	}
 }

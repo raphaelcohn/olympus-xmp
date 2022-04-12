@@ -2,42 +2,38 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-enum ParseNext<'a>
+/// A parse error.
+#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+pub enum PathSegmentsParseError
 {
-	Query
-	{
-		remaining_utf8_bytes: &'a [u8],
-	},
+	#[allow(missing_docs)]
+	PathSegmentParse(PathSegmentsParseError),
 	
-	Fragment
-	{
-		remaining_utf8_bytes: &'a [u8],
-		
-		query: Option<()>,
-	},
-	
-	End
-	{
-		query: Option<()>,
-		
-		fragment: Option<()>,
-	},
+	#[allow(missing_docs)]
+	OutOfMemory(TryReserveError),
 }
 
-impl<'a> ParseNext<'a>
+impl Display for PathSegmentsParseError
 {
-	const NoQueryNoFragment: Self = ParseNext::End { query: none, fragment: None };
-	
 	#[inline(always)]
-	const fn query(remaining_utf8_bytes: &'a [u8]) -> Self
+	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
 	{
-		ParseNext::Query { remaining_utf8_bytes }
+		Debug::fmt(self, formatter)
 	}
-	
+}
+
+impl error::Error for PathSegmentsParseError
+{
 	#[inline(always)]
-	const fn fragment_no_query(remaining_utf8_bytes: &'a [u8]) -> Self
+	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		ParseNext::Fragment { remaining_utf8_bytes, query: None }
+		use PathSegmentsParseError::*;
+		
+		match self
+		{
+			PathSegmentParse(cause) => Some(cause),
+			
+			OutOfMemory(cause) => Some(cause),
+		}
 	}
 }

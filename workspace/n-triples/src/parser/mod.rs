@@ -2,7 +2,6 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use internationalized_resource_identifier::AbsoluteInternationalizedResourceIdentifier;
 use memchr::memchr;
 use memchr::memchr2;
 use std::borrow::Cow;
@@ -41,7 +40,6 @@ use swiss_army_knife::a_to_z::LineFeed;
 use swiss_army_knife::a_to_z::Space;
 use swiss_army_knife::non_zero::new_non_null;
 use super::BlankNodeLabel;
-use super::AbsoluteInternationalizedResourceIdentifier;
 use super::Predicate;
 use super::RawIetfBcp47LanguageTag;
 use super::Subject;
@@ -53,8 +51,11 @@ use super::Underscore;
 use super::Caret;
 use super::AtSign;
 use super::x7F;
+use super::internationalized_resource_identifier::AbsoluteInternationalizedResourceIdentifier;
+use super::internationalized_resource_identifier::AbsoluteInternationalizedResourceIdentifierParseError;
 use utf8::decode_next_percent_encoded_utf8;
 use utf8::decode_next_utf8;
+use utf8::decode_next_utf8_validity_already_checked;
 use utf8::encode_utf8_not_reserving_space;
 use utf8::encode_utf8_push_unchecked;
 use utf8::encode_utf8_reserving_space;

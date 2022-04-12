@@ -2,21 +2,15 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[inline(always)]
-const fn new_array_unchecked_validation<RBC: ~const RestrictedByteConst, const length: usize>(value: &[u8; length])
+/// Exact growth.
+#[derive(Default, Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+pub struct ExactNewCapacityCalculator;
+
+impl const NewCapacityCalculator for ExactNewCapacityCalculator
 {
-	if cfg!(debug_assertions)
+	#[inline(always)]
+	fn calculate(_current_capacity: usize, required_capacity: usize) -> Result<usize, TryReserveError>
 	{
-		// Uses a while loop because for loops are not yet implemented for const functions.
-		let mut index = 0;
-		while index < length
-		{
-			let byte = value[index];
-			if !RBC::validate_byte(byte)
-			{
-				panic!("Invalid byte")
-			}
-			index += 1;
-		}
+		Ok(required_capacity)
 	}
 }

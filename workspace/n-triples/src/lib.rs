@@ -25,9 +25,14 @@
 #![warn(unused_crate_dependencies)]
 
 
+#![feature(adt_const_params)]
+#![feature(allocator_api)]
 #![feature(const_trait_impl)]
 #![feature(generic_arg_infer)]
-#![feature(adt_const_params)]
+#![feature(nonnull_slice_from_raw_parts)]
+#![feature(slice_ptr_get)]
+#![feature(slice_ptr_len)]
+#![feature(try_reserve_kind)]
 
 
 //! #n-triples.
@@ -35,6 +40,7 @@
 //! Domain model and parser for RDF N-triples [version 1.1](https://www.w3.org/TR/n-triples/).
 
 
+use internationalized_resource_identifier::AbsoluteInternationalizedResourceIdentifier;
 use memchr::memchr;
 use memchr::memchr2;
 use memchr::memchr3;
@@ -107,6 +113,7 @@ pub mod try_to_own;
 
 include!("u8.constants.rs");
 include!("BlankNodeLabel.rs");
+include!("FromUnchecked.rs");
 include!("GetStringPredicateError.rs");
 include!("NTriples.rs");
 include!("Objects.rs");

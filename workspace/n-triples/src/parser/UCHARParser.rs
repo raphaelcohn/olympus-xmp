@@ -10,12 +10,6 @@ impl UCHARParser
 	#[inline(always)]
 	pub(super) fn parse_UCHAR4(remaining_bytes: &mut &[u8]) -> Result<char, UCHARParseError>
 	{
-		// TODO: Can we know the size from the first hex digit?
-		xxx;
-		
-		// 7F and below: 1
-		
-		
 		const length: usize = 4;
 		Self::parse_UCHAR::<_, length>(remaining_bytes, |bytes| Ok(Self::hex_digit::<0, _>(bytes)? | Self::hex_digit::<1, _>(bytes)? | Self::hex_digit::<2, _>(bytes)? | Self::hex_digit::<3, _>(bytes)?))
 	}

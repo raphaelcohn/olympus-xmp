@@ -4,25 +4,16 @@
 
 /// A parse error.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub enum SchemeParseError
+pub enum InternetProtocolVersion4AddressOctetLength2ParseError
 {
 	#[allow(missing_docs)]
-	DidNotExpectEndParsingFirstCharacter,
+	SecondDigitMustBeBetween0To9Inclusive,
 	
 	#[allow(missing_docs)]
-	InvalidFirstCharacter(u8),
-	
-	#[allow(missing_docs)]
-	DidNotExpectEndParsingSubsequentCharacter,
-	
-	#[allow(missing_docs)]
-	InvalidSubsequentCharacter(u8),
-	
-	#[allow(missing_docs)]
-	OutOfMemoryMakingAsciiLowerCase(TryReserveError),
+	FirstDigitMustBeBetween1To9Inclusive,
 }
 
-impl Display for SchemeParseError
+impl Display for InternetProtocolVersion4AddressOctetLength2ParseError
 {
 	#[inline(always)]
 	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
@@ -31,18 +22,6 @@ impl Display for SchemeParseError
 	}
 }
 
-impl error::Error for SchemeParseError
+impl error::Error for InternetProtocolVersion4AddressOctetLength2ParseError
 {
-	#[inline(always)]
-	fn source(&self) -> Option<&(dyn error::Error + 'static)>
-	{
-		use SchemeParseError::*;
-		
-		match self
-		{
-			OutOfMemoryMakingAsciiLowerCase(cause) => Some(cause),
-			
-			_ => None,
-		}
-	}
 }

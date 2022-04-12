@@ -2,13 +2,17 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+/// Scheme.
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-enum Scheme<'a>
+pub enum Scheme<'a>
 {
+	#[allow(missing_docs)]
 	http,
-	
+
+	#[allow(missing_docs)]
 	https,
 	
+	/// Will have been forced to be lower case.
 	Unknown(Cow<'a, str>),
 }
 
@@ -21,67 +25,71 @@ impl<'a> Scheme<'a>
 	{
 		use SchemeParseError::*;
 		
-		Self::parse_first_character(remaining_bytes)?;
-		let index_of_colon = Self::parse_subequent_characters(remaining_bytes)?;
+		let remaining_bytes = &mut bytes;
+		let string = Self::parse_first_character(remaining_bytes)?;
+		let raw_scheme = Self::parse_subequent_characters(remaining_bytes, string)?;
 		
 		use Scheme::*;
-		let slice = bytes.get_unchecked_range_safe(0 .. index_of_colon);
 		
-		// TODO: We need to match case-insensitive.
-		// Uggh..
-		xxxx;
-		let scheme = match slice
+		let scheme = match raw_scheme.as_ref()
 		{
-			b"http" => http,
+			"http" => http,
 			
-			b"https" => https,
+			"https" => https,
 			
-			_ => Unknown(Cow::Borrowed(unsafe { from_utf8_unchecked(slice) })),
+			_ => Unknown(raw_scheme),
 		};
-		Ok((scheme, bytes.get_unchecked_range_safe((index_of_colon + 1) .. )))
+		
+		Ok((scheme, *remaining_bytes))
 	}
 	
 	#[inline(always)]
-	fn parse_first_character(bytes: &'a [u8]) -> Result<(), SchemeParseError>
+	fn parse_first_character(remaining_bytes: &mut &'a [u8]) -> Result<StringSoFar, SchemeParseError>
 	{
-		match Self::next_byte(bytes, 0)?
+		use SchemeParseError::*;
+		let mut string = StringSoFar::new_stack(remaining_bytes);
+		
+		match Self::next_byte(remaining_bytes, DidNotExpectEndParsingFirstCharacter)?
 		{
-			A ..= Z | a ..= z => Ok(()),
+			byte @ A ..= Z => Self::push_lower_case(&mut string, byte),
 			
-			invalid @ _ => Err(SchemeParseError::InvalidFirstCharacter(invalid))
+			byte @ a ..= z => string.push_ascii(byte as char),
+			
+			invalid @ _ => Err(InvalidFirstCharacter(invalid))
 		}
+		
+		Ok(string)
 	}
 	
 	#[inline(always)]
-	fn parse_subequent_characters(bytes: &'a [u8]) -> Result<usize, SchemeParseError>
+	fn parse_subequent_characters(remaining_bytes: &mut &'a [u8], string: StringSoFar<'a>) -> Result<Cow<'a, str>, SchemeParseError>
 	{
-		let mut slice_length = 1;
+		use SchemeParseError::*;
 		loop
 		{
-			match Self::next_byte(bytes, slice_length)?
+			match Self::next_byte(remaining_bytes, DidNotExpectEndParsingSubsequentCharacter)?
 			{
 				Colon => break,
 				
-				_0 ..= _9 | A ..= Z | a ..= z | PlusSign | MinusSign | Period => slice_length += 1,
+				byte @ A ..= Z => Self::push_lower_case(&mut string, byte),
 				
-				invalid @ _ => return Err(SchemeParseError::InvalidSubsequentCharacter(invalid))
+				byte @ (_0 ..= _9 | a ..= z | PlusSign | MinusSign | Period) => string.push_ascii(byte as char),
+				
+				invalid @ _ => return Err(InvalidSubsequentCharacter(invalid))
 			}
 		}
-		Ok(slice_length)
+		Ok(string.to_cow())
 	}
 	
 	#[inline(always)]
-	fn next_byte(bytes: &'a [u8], index: usize) -> Result<u8, SchemeParseError>
+	fn push_lower_case(string: &mut StringSoFar<'a>, byte: u8) -> Result<(), SchemeParseError>
 	{
-		let length = bytes.len();
-		debug_assert!(index <= length);
-		if length == index
-		{
-			Err(SchemeParseError::DidNotExpectEndParsingSubsequentCharacter)
-		}
-		else
-		{
-			Ok(bytes.get_unchecked_value_safe(index))
-		}
+		string.push_forcing_heap_ascii_to_lower_case(byte as char).map_err(SchemeParseError::OutOfMemoryMakingAsciiLowerCase)
+	}
+	
+	#[inline(always)]
+	fn next_byte(remaining_bytes: &mut &'a [u8], error: SchemeParseError) -> Result<u8, SchemeParseError>
+	{
+		get_0(remaining_bytes).ok_or(error)
 	}
 }

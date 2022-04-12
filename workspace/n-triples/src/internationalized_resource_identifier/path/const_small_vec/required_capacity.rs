@@ -2,21 +2,19 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[inline(always)]
-const fn new_array_unchecked_validation<RBC: ~const RestrictedByteConst, const length: usize>(value: &[u8; length])
+macro_rules! required_capacity
 {
-	if cfg!(debug_assertions)
+	($current_length: ident, $current_capacity: ident, $additional: ident, $capacity_sufficient_pointer: expr) =>
 	{
-		// Uses a while loop because for loops are not yet implemented for const functions.
-		let mut index = 0;
-		while index < length
 		{
-			let byte = value[index];
-			if !RBC::validate_byte(byte)
+			let required_capacity = Self::required_capacity($current_length, $additional);
+
+			if required_capacity <= current_capacity
 			{
-				panic!("Invalid byte")
+				return Ok($capacity_sufficient_pointer)
 			}
-			index += 1;
+			
+			required_capacity
 		}
 	}
 }
