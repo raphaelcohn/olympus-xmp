@@ -15,31 +15,31 @@ pub struct Objects<'a>
 	string_literals_by_absolute_internationalized_resource_identifier: MutableKeyHashMap<AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>, Vec<Cow<'a, str>>>,
 }
 
-// impl<'a> TryToOwnInPlace for Objects<'a>
-// {
-// 	#[inline(always)]
-// 	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
-// 	{
-// 		self.absolute_internationalized_resource_identifiers.try_to_own_in_place()?;
-// 		self.blank_nodes.try_to_own_in_place()?;
-// 		self.string_literals_by_language.try_to_own_in_place()?;
-// 		self.string_literals_by_absolute_internationalized_resource_identifier.try_to_own_in_place()?;
-//
-// 		Ok(())
-// 	}
-// }
-//
-// impl<'a> TryToOwn for Objects<'a>
-// {
-// 	type TryToOwned = Objects<'static>;
-//
-// 	#[inline(always)]
-// 	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
-// 	{
-// 		self.try_to_own_in_place()?;
-// 		Ok(unsafe { transmute(self) })
-// 	}
-// }
+impl<'a> TryToOwnInPlace for Objects<'a>
+{
+	#[inline(always)]
+	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
+	{
+		self.absolute_internationalized_resource_identifiers.try_to_own_in_place()?;
+		self.blank_nodes.try_to_own_in_place()?;
+		self.string_literals_by_language.try_to_own_in_place()?;
+		self.string_literals_by_absolute_internationalized_resource_identifier.try_to_own_in_place()?;
+
+		Ok(())
+	}
+}
+
+impl<'a> TryToOwn for Objects<'a>
+{
+	type TryToOwned = Objects<'static>;
+
+	#[inline(always)]
+	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
+	{
+		self.try_to_own_in_place()?;
+		Ok(unsafe { transmute(self) })
+	}
+}
 
 impl<'a> Objects<'a>
 {
@@ -87,12 +87,12 @@ impl<'a> Objects<'a>
 	/// String literal by Internationalized Resource Identifier (IRI).
 	///
 	/// If an entry is present, its value will never be an empty Vec.
-	///
-	/// Use the `IRI::Simple` for unadorned string literals.
 	#[inline(always)]
-	pub fn get_string_literals_by_absolute_internationalized_resource_identifier<'b: 'a>(&self, absolute_internationalized_resource_identifier: &AbsoluteInternationalizedResourceIdentifier<'b, PathDepth>) -> Option<&Vec<Cow<'a, str>>>
+	pub fn get_string_literals_by_absolute_internationalized_resource_identifier<'b>(&self, absolute_internationalized_resource_identifier: &AbsoluteInternationalizedResourceIdentifier<'b, PathDepth>) -> Option<&Vec<Cow<'a, str>>>
 	{
-		self.string_literals_by_absolute_internationalized_resource_identifier.get(absolute_internationalized_resource_identifier)
+		// Hack the borrow checker; it does not like to do equality on borrowed values with differrent instance lifetimes.
+		let y: &AbsoluteInternationalizedResourceIdentifier<'a, PathDepth> = unsafe { transmute(absolute_internationalized_resource_identifier) };
+		self.string_literals_by_absolute_internationalized_resource_identifier.get(y)
 	}
 	
 	#[inline(always)]

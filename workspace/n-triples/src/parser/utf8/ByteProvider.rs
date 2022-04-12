@@ -60,20 +60,17 @@ trait ByteProvider where InvalidUtf8ParseError<<Self as ByteProvider>::Error>: F
 		}
 		else if is_two(first)
 		{
-			const SliceLength: NonZeroUsize = <Self as ByteProvider>::TwoSliceLength;
-			Self::guard_slice_length::<SliceLength>(bytes, DidNotExpectEndParsingTwoByteUtf8Character)?;
+			Self::guard_slice_length(bytes, DidNotExpectEndParsingTwoByteUtf8Character, Self::TwoSliceLength)?;
 			Self::two_(first, remaining_bytes)?
 		}
 		else if is_three(first)
 		{
-			const SliceLength: NonZeroUsize = <Self as ByteProvider>::ThreeSliceLength;
-			Self::guard_slice_length::<SliceLength>(bytes, DidNotExpectEndParsingThreeByteUtf8Character)?;
+			Self::guard_slice_length(bytes, DidNotExpectEndParsingThreeByteUtf8Character, Self::ThreeSliceLength)?;
 			Self::three_(first, remaining_bytes)?
 		}
 		else if is_four(first)
 		{
-			const SliceLength: NonZeroUsize = <Self as ByteProvider>::FourSliceLength;
-			Self::guard_slice_length::<SliceLength>(bytes, DidNotExpectEndParsingFourByteUtf8Character)?;
+			Self::guard_slice_length(bytes, DidNotExpectEndParsingFourByteUtf8Character, Self::FourSliceLength)?;
 			Self::four_(first, remaining_bytes)?
 		}
 		else
@@ -92,9 +89,9 @@ trait ByteProvider where InvalidUtf8ParseError<<Self as ByteProvider>::Error>: F
 	fn four(bytes: &[u8]) -> Result<(u32, u32, u32), Self::Error>;
 	
 	#[inline(always)]
-	fn guard_slice_length<const SliceLength: NonZeroUsize>(bytes: &[u8], error: InvalidUtf8ParseError<Self::Error>) -> Result<(), InvalidUtf8ParseError<Self::Error>>
+	fn guard_slice_length(bytes: &[u8], error: InvalidUtf8ParseError<Self::Error>, slice_length: NonZeroUsize) -> Result<(), InvalidUtf8ParseError<Self::Error>>
 	{
-		if bytes.len() < SliceLength.get()
+		if bytes.len() < slice_length.get()
 		{
 			Err(error)
 		}

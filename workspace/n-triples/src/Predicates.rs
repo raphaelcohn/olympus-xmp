@@ -26,7 +26,7 @@ impl<'a> Predicates<'a> for HashMap<Predicate<'a>, Objects<'a>>
 		use GetPredicateError::*;
 		
 		let predicate = self.get(predicate).ok_or(PredicateAbsent)?;
-		let vec = predicate.get_string_literals_by_absolute_internationalized_resource_identifier(&AbsoluteInternationalizedResourceIdentifier::XmlSchemaBoolean).ok_or(StringLiteralAbsent)?;
+		let vec = predicate.get_string_literals_by_absolute_internationalized_resource_identifier(&AbsoluteInternationalizedResourceIdentifier::<PathDepth>::XmlSchemaBoolean).ok_or(StringLiteralAbsent)?;
 		let length = vec.len();
 		debug_assert_ne!(length, 0);
 		if length == 1
@@ -52,7 +52,7 @@ impl<'a> Predicates<'a> for HashMap<Predicate<'a>, Objects<'a>>
 		use GetPredicateError::*;
 		
 		let predicate = self.get(predicate).ok_or(PredicateAbsent)?;
-		let vec = predicate.get_string_literals_by_absolute_internationalized_resource_identifier(&AbsoluteInternationalizedResourceIdentifier::XmlSchemaInteger).ok_or(StringLiteralAbsent)?;
+		let vec = predicate.get_string_literals_by_absolute_internationalized_resource_identifier(&AbsoluteInternationalizedResourceIdentifier::<PathDepth>::XmlSchemaInteger).ok_or(StringLiteralAbsent)?;
 		let length = vec.len();
 		debug_assert_ne!(length, 0);
 		if length == 1
@@ -71,7 +71,7 @@ impl<'a> Predicates<'a> for HashMap<Predicate<'a>, Objects<'a>>
 		use GetPredicateError::*;
 		
 		let predicate = self.get(predicate).ok_or(PredicateAbsent)?;
-		let vec = predicate.get_string_literals_by_absolute_internationalized_resource_identifier(&AbsoluteInternationalizedResourceIdentifier::XmlSchemaString).ok_or(StringLiteralAbsent)?;
+		let vec = predicate.get_string_literals_by_absolute_internationalized_resource_identifier(&AbsoluteInternationalizedResourceIdentifier::<PathDepth>::XmlSchemaString).ok_or(StringLiteralAbsent)?;
 		let length = vec.len();
 		debug_assert_ne!(length, 0);
 		if length == 1

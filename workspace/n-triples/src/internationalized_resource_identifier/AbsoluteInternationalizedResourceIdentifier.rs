@@ -21,29 +21,29 @@ pub struct AbsoluteInternationalizedResourceIdentifier<'a, const PathDepth: usiz
 	pub hash_fragment: Option<HashFragment<'a>>,
 }
 
-// impl<'a, const PathDepth: usize> TryToOwnInPlace for AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>
-// {
-// 	#[inline(always)]
-// 	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
-// 	{
-// 		self.scheme.try_to_own_in_place()?;
-// 		self.hierarchy.try_to_own_in_place()?;
-// 		self.query.try_to_own_in_place()?;
-// 		self.hash_fragment.try_to_own_in_place()
-// 	}
-// }
-//
-// impl<'a, const PathDepth: usize> TryToOwn for AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>
-// {
-// 	type TryToOwned = AbsoluteInternationalizedResourceIdentifier<'static, PathDepth>;
-//
-// 	#[inline(always)]
-// 	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
-// 	{
-// 		self.try_to_own_in_place()?;
-// 		Ok(unsafe { transmute(self) })
-// 	}
-// }
+impl<'a, const PathDepth: usize> TryToOwnInPlace for AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>
+{
+	#[inline(always)]
+	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
+	{
+		self.scheme.try_to_own_in_place()?;
+		self.hierarchy.try_to_own_in_place()?;
+		self.query.try_to_own_in_place()?;
+		self.hash_fragment.try_to_own_in_place()
+	}
+}
+
+impl<'a, const PathDepth: usize> TryToOwn for AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>
+{
+	type TryToOwned = AbsoluteInternationalizedResourceIdentifier<'static, PathDepth>;
+
+	#[inline(always)]
+	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
+	{
+		self.try_to_own_in_place()?;
+		Ok(unsafe { transmute(self) })
+	}
+}
 
 impl<'a, const PathDepth: usize> TryFrom<Cow<'a, str>> for AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>
 {

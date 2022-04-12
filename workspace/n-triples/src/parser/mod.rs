@@ -15,7 +15,6 @@ use std::fmt::Display;
 use std::fmt::Formatter;
 use std::marker::PhantomData;
 use std::mem::size_of;
-use std::num::NonZeroU8;
 use std::ptr::NonNull;
 use std::slice::from_raw_parts;
 use std::str::from_utf8;

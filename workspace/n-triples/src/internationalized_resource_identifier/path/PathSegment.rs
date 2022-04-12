@@ -6,6 +6,27 @@
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct PathSegment<'a>(Cow<'a, str>);
 
+impl<'a> TryToOwnInPlace for PathSegment<'a>
+{
+	#[inline(always)]
+	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
+	{
+		self.0.try_to_own_in_place()
+	}
+}
+
+impl<'a> TryToOwn for PathSegment<'a>
+{
+	type TryToOwned = PathSegment<'static>;
+	
+	#[inline(always)]
+	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
+	{
+		self.try_to_own_in_place()?;
+		Ok(unsafe { transmute(self) })
+	}
+}
+
 impl<'a> const FromUnchecked<Cow<'a, str>> for PathSegment<'a>
 {
 	#[inline(always)]

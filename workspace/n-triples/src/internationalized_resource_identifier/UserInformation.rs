@@ -6,6 +6,27 @@
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct UserInformation<'a>(Cow<'a, str>);
 
+impl<'a> TryToOwnInPlace for UserInformation<'a>
+{
+	#[inline(always)]
+	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
+	{
+		self.0.try_to_own_in_place()
+	}
+}
+
+impl<'a> TryToOwn for UserInformation<'a>
+{
+	type TryToOwned = UserInformation<'static>;
+	
+	#[inline(always)]
+	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
+	{
+		self.try_to_own_in_place()?;
+		Ok(unsafe { transmute(self) })
+	}
+}
+
 impl<'a> UserInformation<'a>
 {
 	/// `iuserinfo      = *( iunreserved / pct-encoded / sub-delims / ":" )`

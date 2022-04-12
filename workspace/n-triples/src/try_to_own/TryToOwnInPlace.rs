@@ -9,6 +9,35 @@ pub trait TryToOwnInPlace
 	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>;
 }
 
+impl<T: TryToOwnInPlace> TryToOwnInPlace for [T]
+{
+	#[inline(always)]
+	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
+	{
+		for index in 0 .. self.len()
+		{
+			self.get_unchecked_mut_safe(index).try_to_own_in_place()?
+		}
+		Ok(())
+	}
+}
+
+impl<T: TryToOwnInPlace> TryToOwnInPlace for Option<T>
+{
+	#[inline(always)]
+	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
+	{
+		if let Some(some) = self
+		{
+			some.try_to_own_in_place()
+		}
+		else
+		{
+			Ok(())
+		}
+	}
+}
+
 impl<'a, B: 'static + TryToOwned + ?Sized> TryToOwnInPlace for Cow<'a, B>
 {
 	#[inline(always)]

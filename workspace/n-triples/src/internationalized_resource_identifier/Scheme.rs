@@ -16,6 +16,34 @@ pub enum Scheme<'a>
 	Unknown(Cow<'a, str>),
 }
 
+impl<'a> TryToOwnInPlace for Scheme<'a>
+{
+	#[inline(always)]
+	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
+	{
+		if let Scheme::Unknown(cow) = self
+		{
+			cow.try_to_own_in_place()
+		}
+		else
+		{
+			Ok(())
+		}
+	}
+}
+
+impl<'a> TryToOwn for Scheme<'a>
+{
+	type TryToOwned = Scheme<'static>;
+	
+	#[inline(always)]
+	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
+	{
+		self.try_to_own_in_place()?;
+		Ok(unsafe { transmute(self) })
+	}
+}
+
 impl<'a> Scheme<'a>
 {
 	/// `IRI = scheme ":" ihier-part [ "?" iquery ] [ "#" ifragment ]`.

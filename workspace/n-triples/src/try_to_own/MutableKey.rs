@@ -80,6 +80,15 @@ impl<K: Hash> Hash for MutableKey<K>
 	}
 }
 
+impl<K> Borrow<K> for MutableKey<K>
+{
+	#[inline(always)]
+	fn borrow(&self) -> &K
+	{
+		self.borrow_x()
+	}
+}
+
 impl<K: TryToOwnInPlace> MutableKey<K>
 {
 	#[inline(always)]
@@ -88,15 +97,6 @@ impl<K: TryToOwnInPlace> MutableKey<K>
 		let pointer = self.0.get();
 		let key = unsafe { &mut *pointer };
 		key.try_to_own_in_place()
-	}
-}
-
-impl<K> Borrow<K> for MutableKey<K>
-{
-	#[inline(always)]
-	fn borrow(&self) -> &K
-	{
-		self.borrow_x()
 	}
 }
 

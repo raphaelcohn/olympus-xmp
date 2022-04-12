@@ -13,6 +13,28 @@ pub struct NonEmptyPath<'a, const PathDepth: usize>
 	pub remaining_path_segments: PathSegments<'a, PathDepth>,
 }
 
+impl<'a, const PathDepth: usize> TryToOwnInPlace for NonEmptyPath<'a, PathDepth>
+{
+	#[inline(always)]
+	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
+	{
+		self.first_non_empty_path_segment.try_to_own_in_place()?;
+		self.remaining_path_segments.try_to_own_in_place()
+	}
+}
+
+impl<'a, const PathDepth: usize> TryToOwn for NonEmptyPath<'a, PathDepth>
+{
+	type TryToOwned = NonEmptyPath<'static, PathDepth>;
+	
+	#[inline(always)]
+	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
+	{
+		self.try_to_own_in_place()?;
+		Ok(unsafe { transmute(self) })
+	}
+}
+
 impl<'a, const PathDepth: usize> NonEmptyPath<'a, PathDepth>
 {
 	#[inline(always)]

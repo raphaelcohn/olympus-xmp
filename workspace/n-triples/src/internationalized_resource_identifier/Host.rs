@@ -16,6 +16,34 @@ pub enum Host<'a>
 	InternetProtocolVersion6Address(Ipv6Addr),
 }
 
+impl<'a> TryToOwnInPlace for Host<'a>
+{
+	#[inline(always)]
+	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
+	{
+		if let Host::Name(host_name) = self
+		{
+			host_name.try_to_own_in_place()
+		}
+		else
+		{
+			Ok(())
+		}
+	}
+}
+
+impl<'a> TryToOwn for Host<'a>
+{
+	type TryToOwned = Host<'static>;
+	
+	#[inline(always)]
+	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
+	{
+		self.try_to_own_in_place()?;
+		Ok(unsafe { transmute(self) })
+	}
+}
+
 impl<'a> Host<'a>
 {
 	/// `ihost          = IP-literal / IPv4address / ireg-name`

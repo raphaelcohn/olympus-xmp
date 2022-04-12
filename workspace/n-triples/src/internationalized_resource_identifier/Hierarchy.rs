@@ -27,6 +27,42 @@ pub enum Hierarchy<'a, const PathDepth: usize>
 	EmptyPath,
 }
 
+impl<'a, const PathDepth: usize> TryToOwnInPlace for Hierarchy<'a, PathDepth>
+{
+	#[inline(always)]
+	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
+	{
+		use Hierarchy::*;
+		
+		match self
+		{
+			AuthorityAndAbsolutePath { authority, path_segments } =>
+			{
+				authority.try_to_own_in_place()?;
+				path_segments.try_to_own_in_place()
+			}
+			
+			AbsolutePath(non_empty_path) => non_empty_path.try_to_own_in_place(),
+			
+			RootlessPath(non_empty_path) => non_empty_path.try_to_own_in_place(),
+			
+			EmptyPath => Ok(())
+		}
+	}
+}
+
+impl<'a, const PathDepth: usize> TryToOwn for Hierarchy<'a, PathDepth>
+{
+	type TryToOwned = Hierarchy<'static, PathDepth>;
+	
+	#[inline(always)]
+	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
+	{
+		self.try_to_own_in_place()?;
+		Ok(unsafe { transmute(self) })
+	}
+}
+
 impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 {
 	/// `ihier-part = "//" iauthority ipath-abempty / ipath-absolute / ipath-rootless / ipath-empty`.

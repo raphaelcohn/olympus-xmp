@@ -10,6 +10,27 @@ pub struct ConstSmallVec<T, const N: usize>
 	stack_without_length_or_heap: StackWithoutLengthOrHeap<T, N>
 }
 
+impl<T: TryToOwnInPlace, const N: usize> TryToOwnInPlace for ConstSmallVec<T, N>
+{
+	#[inline(always)]
+	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
+	{
+		self.deref_mut().try_to_own_in_place()
+	}
+}
+
+impl<T: TryToOwn + TryToOwnInPlace, const N: usize> TryToOwn for ConstSmallVec<T, N>
+{
+	type TryToOwned = ConstSmallVec<T::TryToOwned, N>;
+	
+	#[inline(always)]
+	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
+	{
+		self.try_to_own_in_place()?;
+		Ok(unsafe { transmute(self) })
+	}
+}
+
 impl<T, const N: usize> Drop for ConstSmallVec<T, N>
 {
 	#[inline(always)]
@@ -30,53 +51,22 @@ impl<T, const N: usize> Drop for ConstSmallVec<T, N>
 	}
 }
 
-impl<T, const N: usize, const M: usize> const From<[T; M]> for ConstSmallVec<T, N>
+impl<T, const N: usize> const From<[T; N]> for ConstSmallVec<T, N>
 {
-	/// Will panic if `M` exceeds `N` (unless `T` is zero-sized).
 	#[inline(always)]
-	fn from(array: [T; M]) -> Self
+	fn from(array: [T; N]) -> Self
 	{
-		if M > Self::capacity_of_stack()
-		{
-			panic!("Stack capacity exceeded")
-		}
-		
-		let stack_without_length = MaybeUninit::uninit();
-		let to = stack_without_length.as_mut_ptr() as *mut T;
-		let from = array.as_ptr();
-		unsafe { copy_nonoverlapping(from, to, M) }
-		
-		ManuallyDrop::new(array);
-		
 		Self
 		{
 			length_of_stack_or_capacity_of_heap: Self::capacity_of_stack(),
-			
+
 			stack_without_length_or_heap: StackWithoutLengthOrHeap
 			{
-				stack_without_length: StackWithoutLength::from(stack_without_length),
-			},
+				stack_without_length: StackWithoutLength::from(MaybeUninit::new(array)),
+			}
 		}
 	}
-	
 }
-
-// impl<T, const N: usize> const From<[T; N]> for ConstSmallVec<T, N>
-// {
-// 	#[inline(always)]
-// 	default fn from(array: [T; N]) -> Self
-// 	{
-// 		Self
-// 		{
-// 			length_of_stack_or_capacity_of_heap: Self::capacity_of_stack(),
-//
-// 			stack_without_length_or_heap: StackWithoutLengthOrHeap
-// 			{
-// 				stack_without_length: StackWithoutLength::from(MaybeUninit::new(array)),
-// 			}
-// 		}
-// 	}
-// }
 
 impl<'a, T: Copy, const N: usize> const From<&'a [T]> for ConstSmallVec<T, N>
 {
@@ -143,8 +133,6 @@ impl<T, const N: usize> const From<Vec<T>> for ConstSmallVec<T, N>
 				},
 			}
 		}
-		
-		
 	}
 }
 
@@ -313,6 +301,37 @@ impl<T, const N: usize> DerefMut for ConstSmallVec<T, N>
 
 impl<T, const N: usize> ConstSmallVec<T, N>
 {
+	/// Will panic if `M` exceeds `N` (unless `T` is zero-sized).
+	#[inline(always)]
+	pub const fn from_panic<const M: usize>(array: [T; M]) -> Self
+	{
+		if M == N
+		{
+			return <ConstSmallVec::<T, N> as From<[T; N]>>::from(unsafe { transmute(array) })
+		}
+		if M > Self::capacity_of_stack()
+		{
+			panic!("Stack capacity exceeded")
+		}
+		
+		let stack_without_length = MaybeUninit::uninit();
+		let to = stack_without_length.as_mut_ptr() as *mut T;
+		let from = array.as_ptr();
+		unsafe { copy_nonoverlapping(from, to, M) }
+		
+		ManuallyDrop::new(array);
+		
+		Self
+		{
+			length_of_stack_or_capacity_of_heap: Self::capacity_of_stack(),
+			
+			stack_without_length_or_heap: StackWithoutLengthOrHeap
+			{
+				stack_without_length: StackWithoutLength::from(stack_without_length),
+			},
+		}
+	}
+	
 	/// Optimized reservation followed by push.
 	#[inline(always)]
 	pub fn try_reserve_push(&mut self, element: T) -> Result<(), TryReserveError>

@@ -6,6 +6,45 @@
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct Query<'a>(Cow<'a, str>);
 
+impl<'a> TryToOwnInPlace for Query<'a>
+{
+	#[inline(always)]
+	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
+	{
+		self.0.try_to_own_in_place()
+	}
+}
+
+impl<'a> TryToOwn for Query<'a>
+{
+	type TryToOwned = Query<'static>;
+	
+	#[inline(always)]
+	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
+	{
+		self.try_to_own_in_place()?;
+		Ok(unsafe { transmute(self) })
+	}
+}
+
+impl<'a> TryToOwn for Option<Query<'a>>
+{
+	type TryToOwned = Option<Query<'static>>;
+	
+	#[inline(always)]
+	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
+	{
+		if let Some(value) = self
+		{
+			Ok(Some(value.try_to_own()?))
+		}
+		else
+		{
+			Ok(None)
+		}
+	}
+}
+
 impl<'a> const FromUnchecked<Cow<'a, str>> for Query<'a>
 {
 	#[inline(always)]

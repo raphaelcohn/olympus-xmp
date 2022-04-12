@@ -2,6 +2,8 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+use crate::try_to_own::TryToOwn;
+use crate::try_to_own::TryToOwnInPlace;
 use new_capacity_calculator::ExactNewCapacityCalculator;
 use new_capacity_calculator::NewCapacityCalculator;
 use std::alloc::Allocator;
@@ -20,6 +22,7 @@ use std::hash::Hasher;
 use std::mem::align_of;
 use std::mem::ManuallyDrop;
 use std::mem::size_of;
+use std::mem::transmute;
 use std::mem::MaybeUninit;
 use std::ops::Deref;
 use std::ops::DerefMut;

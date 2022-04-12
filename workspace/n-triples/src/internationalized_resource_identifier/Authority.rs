@@ -16,6 +16,28 @@ pub struct Authority<'a>
 	pub port: Option<NonZeroU16>,
 }
 
+impl<'a> TryToOwnInPlace for Authority<'a>
+{
+	#[inline(always)]
+	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
+	{
+		self.user_information.try_to_own_in_place();
+		self.host.try_to_own_in_place()
+	}
+}
+
+impl<'a> TryToOwn for Authority<'a>
+{
+	type TryToOwned = Authority<'static>;
+	
+	#[inline(always)]
+	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
+	{
+		self.try_to_own_in_place()?;
+		Ok(unsafe { transmute(self) })
+	}
+}
+
 impl<'a> const From<Host<'a>> for Authority<'a>
 {
 	#[inline(always)]

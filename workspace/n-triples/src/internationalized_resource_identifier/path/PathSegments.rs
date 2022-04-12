@@ -6,12 +6,33 @@
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct PathSegments<'a, const PathDepth: usize>(ConstSmallVec<PathSegment<'a>, PathDepth>);
 
+impl<'a, const PathDepth: usize> TryToOwnInPlace for PathSegments<'a, PathDepth>
+{
+	#[inline(always)]
+	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
+	{
+		self.0.try_to_own_in_place()
+	}
+}
+
+impl<'a, const PathDepth: usize> TryToOwn for PathSegments<'a, PathDepth>
+{
+	type TryToOwned = PathSegments<'static, PathDepth>;
+	
+	#[inline(always)]
+	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
+	{
+		self.try_to_own_in_place()?;
+		Ok(unsafe { transmute(self) })
+	}
+}
+
 impl<'a, const PathDepth: usize, const M: usize> const From<[PathSegment<'a>; M]> for PathSegments<'a, PathDepth>
 {
 	#[inline(always)]
 	fn from(array: [PathSegment<'a>; M]) -> Self
 	{
-		Self::from(ConstSmallVec::from(array))
+		Self::from(ConstSmallVec::from_panic(array))
 	}
 }
 
