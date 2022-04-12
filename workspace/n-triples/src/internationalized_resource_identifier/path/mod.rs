@@ -2,7 +2,6 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use const_small_vec::ConstSmallVec;
 use crate::FromUnchecked;
 use crate::Hash;
 use crate::QuestionMark;
@@ -27,12 +26,9 @@ use crate::parser::OutOfMemoryOrInvalidUtf8PercentDecodeParseError;
 use crate::parser::StringSoFar;
 use crate::parser::utf8::Utf8CharacterLength;
 use swiss_army_knife::a_to_z::Slash;
+use swiss_army_knife::const_small_vec::ConstSmallVec;
 use swiss_army_knife::get_unchecked::GetUnchecked;
 use swiss_army_knife::unreachable_code_const;
-
-
-/// A `SmallVec`-like structure which can be constructed at build time (i.e. has `const` constructors).
-pub mod const_small_vec;
 
 
 include!("NonEmptyPath.rs");

@@ -14,6 +14,9 @@ use std::fmt::Display;
 use std::fmt::Formatter;
 use std::hash::Hash;
 use std::hash::Hasher;
+use std::mem::transmute;
+use std::ops::DerefMut;
+use swiss_army_knife::const_small_vec::ConstSmallVec;
 use swiss_army_knife::get_unchecked::GetUnchecked;
 
 

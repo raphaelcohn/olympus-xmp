@@ -73,6 +73,21 @@ use try_to_own::TryToOwn;
 use try_to_own::TryToOwnInPlace;
 use swiss_army_knife::a_to_z::Colon;
 use swiss_army_knife::a_to_z::Period;
+use swiss_army_knife::a_to_z::_1;
+use swiss_army_knife::a_to_z::_4;
+use swiss_army_knife::a_to_z::_5;
+use swiss_army_knife::a_to_z::AtSign;
+use swiss_army_knife::a_to_z::Caret;
+use swiss_army_knife::a_to_z::DoubleQuote;
+use swiss_army_knife::a_to_z::Hash;
+use swiss_army_knife::a_to_z::MinusSign;
+use swiss_army_knife::a_to_z::OpenAngleBracket;
+use swiss_army_knife::a_to_z::PlusSign;
+use swiss_army_knife::a_to_z::QuestionMark;
+use swiss_army_knife::a_to_z::Tab;
+use swiss_army_knife::a_to_z::Underscore;
+use swiss_army_knife::a_to_z::OpenSquareBracket;
+use swiss_army_knife::a_to_z::CloseSquareBracket;
 use swiss_army_knife::get_unchecked::GetUnchecked;
 use swiss_army_knife::vec::VecExt;
 
@@ -90,7 +105,6 @@ pub mod parser;
 pub mod try_to_own;
 
 
-include!("u8.constants.rs");
 include!("BlankNodeLabel.rs");
 include!("FromUnchecked.rs");
 include!("GetStringPredicateError.rs");

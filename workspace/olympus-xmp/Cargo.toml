@@ -26,7 +26,7 @@ ietf-bcp-47-language-tag = { version = "^0.0.0", path = "../ietf-bcp-47-language
 iso-3166-1-country = { version = "^0.0.0", path = "../iso-3166-1-country" }
 memchr = "2.4.1"
 phonenumber = "0.3.1"
-swiss-army-knife = "^0.0.32"
+swiss-army-knife = "^0.0.33"
 xml-rs = "0.8"
 unroll = "0.1.5"
 url = "2.2.2"

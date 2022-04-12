@@ -9,6 +9,15 @@ pub trait TryToOwnInPlace
 	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>;
 }
 
+impl<T: TryToOwnInPlace, const N: usize> TryToOwnInPlace for ConstSmallVec<T, N>
+{
+	#[inline(always)]
+	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
+	{
+		self.deref_mut().try_to_own_in_place()
+	}
+}
+
 impl<T: TryToOwnInPlace> TryToOwnInPlace for [T]
 {
 	#[inline(always)]

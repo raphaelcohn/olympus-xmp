@@ -10,9 +10,9 @@
 # See Cargo.toml.orig for the original contents.
 
 [package]
-edition = "2018"
+edition = "2021"
 name = "swiss-army-knife"
-version = "0.0.32"
+version = "0.0.33"
 authors = ["Raphael Cohn <raphael.cohn@stormmq.com>"]
 exclude = ["*"]
 include = [

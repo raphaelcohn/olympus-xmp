@@ -2,8 +2,21 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Debug, Ord, PartialOrd, Eq, PartialEq, Hash)]
 struct Heap<T>(*mut [T]);
+
+impl<T> Copy for Heap<T>
+{
+}
+
+impl<T> Clone for Heap<T>
+{
+	#[inline(always)]
+	fn clone(&self) -> Self
+	{
+		Self(self.0)
+	}
+}
 
 impl<T> const Default for Heap<T>
 {
@@ -17,23 +30,19 @@ impl<T> const Default for Heap<T>
 impl<T> Heap<T>
 {
 	#[inline(always)]
-	const fn from_vec(vec: Vec<T>) -> Self
+	fn from_vec(mut vec: Vec<T>) -> Self
 	{
-		let raw_parts = vec.as_mut_slice();
-		ManuallyDrop::new(vec);
-		Self(raw_parts)
+		let pointer = vec.as_mut_ptr();
+		let length = vec.len();
+		
+		let _forget = ManuallyDrop::new(vec);
+		Self(unsafe { from_raw_parts_mut(pointer, length) })
 	}
 	
 	#[inline(always)]
 	fn from_pointer_and_length(pointer: NonNull<T>, length: usize) -> Self
 	{
 		Self(NonNull::slice_from_raw_parts(pointer, length).as_ptr())
-	}
-	
-	#[inline(always)]
-	fn set_pointer_and_length(&mut self, pointer: NonNull<T>, length: usize)
-	{
-		self.0 = NonNull::slice_from_raw_parts(pointer, length).as_ptr();
 	}
 	
 	#[inline(always)]
@@ -45,38 +54,38 @@ impl<T> Heap<T>
 	}
 	
 	#[inline(always)]
-	const fn slice(&self) -> &[T]
+	const fn slice<'a>(&self) -> &'a [T]
 	{
 		unsafe { & * self.0 }
 	}
 	
 	#[inline(always)]
-	const fn slice_mut(&self) -> &mut [T]
+	const fn slice_mut<'a>(&self) -> &'a mut [T]
 	{
 		unsafe { &mut * self.0 }
 	}
 	
 	#[inline(always)]
-	const fn into_vec(self, capacity: usize) -> Vec<T>
+	fn into_vec(&self, capacity: usize) -> Vec<T>
 	{
 		let (pointer, length) = self.pointer_and_length();
 		unsafe { Vec::from_raw_parts(pointer, length, capacity) }
 	}
 	
 	#[inline(always)]
-	const fn pointer_and_length(self) -> (*mut T, usize)
+	const fn pointer_and_length(&self) -> (*mut T, usize)
 	{
 		(self.pointer(), self.length())
 	}
 	
 	#[inline(always)]
-	const fn non_null_pointer(self) -> NonNull<T>
+	const fn non_null_pointer(&self) -> NonNull<T>
 	{
 		new_non_null(self.pointer())
 	}
 	
 	#[inline(always)]
-	const fn pointer(self) -> *mut T
+	const fn pointer(&self) -> *mut T
 	{
 		self.0.as_mut_ptr()
 	}
@@ -89,7 +98,7 @@ impl<T> Heap<T>
 	}
 	
 	#[inline(always)]
-	const fn length(self) -> usize
+	const fn length(&self) -> usize
 	{
 		self.0.len()
 	}

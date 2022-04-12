@@ -25,8 +25,8 @@ build = "src/build.rs"
 n-triples = { version = "0.0.0", path = "../n-triples" }
 json = "0.12.4"
 memchr = "2.4.1"
-swiss-army-knife = "^0.0.32"
+swiss-army-knife = "^0.0.33"
 
 [dependencies]
 memchr = "2.4.1"
-swiss-army-knife = "^0.0.32"
+swiss-army-knife = "^0.0.33"

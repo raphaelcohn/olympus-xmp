@@ -9,6 +9,15 @@ union StackWithoutLengthOrHeap<T, const N: usize>
 	heap: Heap<T>,
 }
 
+impl<T, const N: usize> Clone for StackWithoutLengthOrHeap<T, N>
+{
+	#[inline(always)]
+	fn clone(&self) -> Self
+	{
+		unsafe { transmute_copy(self) }
+	}
+}
+
 impl<T, const N: usize> const Default for StackWithoutLengthOrHeap<T, N>
 {
 	#[inline(always)]
@@ -26,29 +35,30 @@ impl<T, const N: usize> StackWithoutLengthOrHeap<T, N>
 	#[inline(always)]
 	fn set_heap(&mut self, heap: Heap<T>)
 	{
-		unsafe { self.heap = heap }
+		self.heap = heap
 	}
 	
 	#[inline(always)]
 	const fn stack_without_length(&self) -> &StackWithoutLength<T, N>
 	{
-		&self.stack_without_length
+		unsafe { &self.stack_without_length }
 	}
 	
 	#[inline(always)]
 	const fn stack_without_length_mut(&mut self) -> &mut StackWithoutLength<T, N>
 	{
-		&mut self.stack_without_length
+		unsafe { &mut self.stack_without_length }
 	}
 	
 	#[inline(always)]
 	const fn heap(&self) -> Heap<T>
 	{
-		unsafe { self.heap }
+		let heap = unsafe { &self.heap };
+		Heap(heap.0)
 	}
 	
 	#[inline(always)]
-	const fn heap_mut(&self) -> &mut Heap<T>
+	const fn heap_mut(&mut self) -> &mut Heap<T>
 	{
 		unsafe { &mut self.heap }
 	}

@@ -11,3 +11,15 @@ pub trait TryToOwn: TryToOwnInPlace
 	/// Try to own a Cow-backed object that might require allocation that could fail.
 	fn try_to_own(self) -> Result<Self::TryToOwned, TryReserveError>;
 }
+
+impl<T: TryToOwn + TryToOwnInPlace, const N: usize> TryToOwn for ConstSmallVec<T, N>
+{
+	type TryToOwned = ConstSmallVec<T::TryToOwned, N>;
+	
+	#[inline(always)]
+	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
+	{
+		self.try_to_own_in_place()?;
+		Ok(unsafe { transmute(self) })
+	}
+}

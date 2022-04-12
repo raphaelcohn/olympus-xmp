@@ -10,27 +10,6 @@ pub struct ConstSmallVec<T, const N: usize>
 	stack_without_length_or_heap: StackWithoutLengthOrHeap<T, N>
 }
 
-impl<T: TryToOwnInPlace, const N: usize> TryToOwnInPlace for ConstSmallVec<T, N>
-{
-	#[inline(always)]
-	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
-	{
-		self.deref_mut().try_to_own_in_place()
-	}
-}
-
-impl<T: TryToOwn + TryToOwnInPlace, const N: usize> TryToOwn for ConstSmallVec<T, N>
-{
-	type TryToOwned = ConstSmallVec<T::TryToOwned, N>;
-	
-	#[inline(always)]
-	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
-	{
-		self.try_to_own_in_place()?;
-		Ok(unsafe { transmute(self) })
-	}
-}
-
 impl<T, const N: usize> Drop for ConstSmallVec<T, N>
 {
 	#[inline(always)]
@@ -80,7 +59,7 @@ impl<'a, T: Copy, const N: usize> const From<&'a [T]> for ConstSmallVec<T, N>
 			panic!("Stack capacity exceeded")
 		}
 		
-		let stack_without_length = MaybeUninit::uninit();
+		let mut stack_without_length = MaybeUninit::uninit();
 		let to = stack_without_length.as_mut_ptr() as *mut T;
 		let from = slice.as_ptr();
 		unsafe { copy_nonoverlapping(from, to, length_of_stack) }
@@ -97,19 +76,22 @@ impl<'a, T: Copy, const N: usize> const From<&'a [T]> for ConstSmallVec<T, N>
 	}
 }
 
-impl<T, const N: usize> const From<Vec<T>> for ConstSmallVec<T, N>
+impl<T, const N: usize> From<Vec<T>> for ConstSmallVec<T, N>
 {
 	#[inline(always)]
 	fn from(vec: Vec<T>) -> Self
 	{
-		if vec.len() <= Self::capacity_of_stack()
+		let length = vec.len();
+		if length <= Self::capacity_of_stack()
 		{
-			let stack_without_length: MaybeUninit<[T; N]> = MaybeUninit::uninit();
+			let mut stack_without_length: MaybeUninit<[T; N]> = MaybeUninit::uninit();
 			
 			let from = vec.as_ptr();
 			let to = stack_without_length.as_mut_ptr().cast::<T>();
-			let length_of_stack = vec.len();
+			let length_of_stack = length;
 			unsafe { copy_nonoverlapping(from, to, length_of_stack) };
+			
+			let _forget = ManuallyDrop::new(vec);
 			
 			Self
 			{
@@ -136,7 +118,7 @@ impl<T, const N: usize> const From<Vec<T>> for ConstSmallVec<T, N>
 	}
 }
 
-impl<T, const N: usize> const TryFrom<ConstSmallVec<T, N>> for Vec<T>
+impl<T, const N: usize> TryFrom<ConstSmallVec<T, N>> for Vec<T>
 {
 	type Error = TryReserveError;
 	
@@ -148,7 +130,10 @@ impl<T, const N: usize> const TryFrom<ConstSmallVec<T, N>> for Vec<T>
 		let length = slice.len();
 		
 		let mut vec = Vec::new();
-		vec.try_reserve(length)?;
+		if let Err(error) = vec.try_reserve(length)
+		{
+			return Err(error)
+		}
 		
 		let to = vec.as_mut_ptr();
 		unsafe
@@ -205,7 +190,7 @@ impl<T: Clone, const N: usize> Clone for ConstSmallVec<T, N>
 			Self
 			{
 				length_of_stack_or_capacity_of_heap: self.length_of_stack_or_capacity_of_heap,
-				stack_without_length_or_heap: self.stack_without_length_or_heap,
+				stack_without_length_or_heap: self.stack_without_length_or_heap.clone(),
 			}
 		}
 	}
@@ -229,7 +214,7 @@ impl<T: PartialOrd + PartialEq, const N: usize> PartialOrd for ConstSmallVec<T, 
 	#[inline(always)]
 	fn partial_cmp(&self, other: &Self) -> Option<Ordering>
 	{
-		self.partial_cmp(other)
+		self.deref().partial_cmp(other.deref())
 	}
 }
 
@@ -238,7 +223,7 @@ impl<T: Ord + PartialOrd + Eq + PartialEq, const N: usize> Ord for ConstSmallVec
 	#[inline(always)]
 	fn cmp(&self, other: &Self) -> Ordering
 	{
-		self.cmp(other)
+		self.deref().cmp(other.deref())
 	}
 }
 
@@ -265,7 +250,7 @@ impl<T, const N: usize> const Default for ConstSmallVec<T, N>
 	}
 }
 
-impl<T, const N: usize> Deref for ConstSmallVec<T, N>
+impl<T, const N: usize> const Deref for ConstSmallVec<T, N>
 {
 	type Target = [T];
 	
@@ -283,7 +268,7 @@ impl<T, const N: usize> Deref for ConstSmallVec<T, N>
 	}
 }
 
-impl<T, const N: usize> DerefMut for ConstSmallVec<T, N>
+impl<T, const N: usize> const DerefMut for ConstSmallVec<T, N>
 {
 	#[inline(always)]
 	fn deref_mut(&mut self) -> &mut [T]
@@ -294,7 +279,8 @@ impl<T, const N: usize> DerefMut for ConstSmallVec<T, N>
 		}
 		else
 		{
-			self.stack_without_length_or_heap.stack_without_length_mut().slice_mut(self.length_of_stack())
+			let length_of_stack = self.length_of_stack();
+			self.stack_without_length_or_heap.stack_without_length_mut().slice_mut(length_of_stack)
 		}
 	}
 }
@@ -305,21 +291,17 @@ impl<T, const N: usize> ConstSmallVec<T, N>
 	#[inline(always)]
 	pub const fn from_panic<const M: usize>(array: [T; M]) -> Self
 	{
-		if M == N
-		{
-			return <ConstSmallVec::<T, N> as From<[T; N]>>::from(unsafe { transmute(array) })
-		}
 		if M > Self::capacity_of_stack()
 		{
 			panic!("Stack capacity exceeded")
 		}
 		
-		let stack_without_length = MaybeUninit::uninit();
+		let mut stack_without_length = MaybeUninit::uninit();
 		let to = stack_without_length.as_mut_ptr() as *mut T;
 		let from = array.as_ptr();
 		unsafe { copy_nonoverlapping(from, to, M) }
 		
-		ManuallyDrop::new(array);
+		let _forget = ManuallyDrop::new(array);
 		
 		Self
 		{
@@ -361,10 +343,9 @@ impl<T, const N: usize> ConstSmallVec<T, N>
 	#[inline(always)]
 	fn try_reserve_stack<NGC: NewCapacityCalculator>(&mut self, additional: usize) -> Result<(NonNull<[T]>, usize, &mut usize), TryReserveError>
 	{
-		let curent_length_ref_mut = self.length_of_stack_ref_mut();
-		let current_length = *curent_length_ref_mut;
+		let current_length = self.length_of_stack();
 		let current_capacity = Self::capacity_of_stack();
-		let required_capacity = required_capacity!(current_length, current_capacity, additional, (NonNull::slice_from_raw_parts(self.stack_without_length_or_heap.stack_without_length().non_null_pointer(), current_capacity), current_length, curent_length_ref_mut));
+		let required_capacity = required_capacity!(current_length, current_capacity, additional, (NonNull::slice_from_raw_parts(self.stack_without_length_or_heap.stack_without_length_mut().non_null_pointer(), current_capacity), current_length, self.length_of_stack_ref_mut()));
 		
 		let new_capacity = NGC::calculate::<T>(current_capacity, required_capacity)?;
 		let new_layout = Self::new_layout(new_capacity)?;
@@ -386,22 +367,21 @@ impl<T, const N: usize> ConstSmallVec<T, N>
 		
 		self.stack_without_length_or_heap.set_heap(Heap::from_pointer_and_length(pointer, current_length));
 		
-		Ok((NonNull::slice_from_raw_parts(pointer, new_capacity), current_length, curent_length_ref_mut))
+		Ok((NonNull::slice_from_raw_parts(pointer, new_capacity), current_length, self.stack_without_length_or_heap.heap_mut().length_ref_mut()))
 	}
 	
 	#[inline(always)]
 	fn try_reserve_heap<NGC: NewCapacityCalculator>(&mut self, additional: usize) -> Result<(NonNull<[T]>, usize, &mut usize), TryReserveError>
 	{
-		let heap = self.stack_without_length_or_heap.heap_mut();
-		
-		let curent_length_ref_mut = heap.length_ref_mut();
-		let current_length = *curent_length_ref_mut;
 		let current_capacity = self.capacity_of_heap();
-		let required_capacity = required_capacity!(current_length, current_capacity, additional, (NonNull::slice_from_raw_parts(heap.non_null_pointer(), current_capacity), current_length, curent_length_ref_mut));
+		
+		let current_length = self.stack_without_length_or_heap.heap().length();
+		let heap_pointer = self.stack_without_length_or_heap.heap().non_null_pointer();
+		let required_capacity = required_capacity!(current_length, current_capacity, additional, (NonNull::slice_from_raw_parts(heap_pointer, current_capacity), current_length, self.stack_without_length_or_heap.heap_mut().length_ref_mut()));
 		
 		let new_capacity = NGC::calculate::<T>(current_capacity, required_capacity)?;
 		let new_layout = Self::new_layout(new_capacity)?;
-		let current_pointer = heap.non_null_pointer().cast();
+		let current_pointer = heap_pointer.cast();
 		let current_layout = Self::current_layout(current_capacity);
 		let allocator = Self::allocator();
 		match unsafe { allocator.grow(current_pointer, current_layout, new_layout) }
@@ -409,8 +389,9 @@ impl<T, const N: usize> ConstSmallVec<T, N>
 			Ok(allocation) =>
 			{
 				let pointer = self.set_capacity_of_heap_to_new_capacity(allocation, new_capacity).cast();
+				let heap = self.stack_without_length_or_heap.heap_mut();
 				heap.set_pointer(pointer);
-				Ok((NonNull::slice_from_raw_parts(pointer, new_capacity), current_length, curent_length_ref_mut))
+				Ok((NonNull::slice_from_raw_parts(pointer, new_capacity), current_length, heap.length_ref_mut()))
 			},
 			
 			Err(alloc_error) => Self::alloc_error(alloc_error, new_layout),
