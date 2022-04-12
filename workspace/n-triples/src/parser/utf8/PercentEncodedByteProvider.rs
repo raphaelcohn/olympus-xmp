@@ -19,7 +19,7 @@ impl ByteProvider for PercentEncodedByteProvider
 	#[inline(always)]
 	fn two(bytes: &[u8]) -> Result<u32, Self::Error>
 	{
-		Self::percent_then_byte::<One>(bytes)
+		Self::percent_then_byte::<{One}>(bytes)
 	}
 	
 	#[inline(always)]
@@ -28,8 +28,8 @@ impl ByteProvider for PercentEncodedByteProvider
 		Ok
 		(
 			(
-				Self::percent_then_byte::<Two>(bytes)?,
-				Self::percent_then_byte::<Three>(bytes)?,
+				Self::percent_then_byte::<{Two}>(bytes)?,
+				Self::percent_then_byte::<{Three}>(bytes)?,
 			)
 		)
 	}
@@ -40,9 +40,9 @@ impl ByteProvider for PercentEncodedByteProvider
 		Ok
 		(
 			(
-				Self::percent_then_byte::<Two>(bytes)?,
-				Self::percent_then_byte::<Three>(bytes)?,
-				Self::percent_then_byte::<Four>(bytes)?,
+				Self::percent_then_byte::<{Two}>(bytes)?,
+				Self::percent_then_byte::<{Three}>(bytes)?,
+				Self::percent_then_byte::<{Four}>(bytes)?,
 			)
 		)
 	}
@@ -54,11 +54,12 @@ impl PercentEncodedByteProvider
 	#[inline(always)]
 	fn decode_next_percent_encoded_utf8(remaining_bytes: &mut &[u8]) -> Result<(char, Utf8CharacterLength), InvalidUtf8ParseError<PercentDecodeError>>
 	{
+		let bytes = *remaining_bytes;
 		if bytes.len() < Self::OneSliceLength.get()
 		{
 			return Err(InvalidUtf8ParseError::DidNotExpectEndParsingOneByteUtf8Character)
 		}
-		let first = Self::byte::<One>(*remaining_bytes)?;
+		let first = Self::byte::<{One}>(bytes)?;
 		Ok(Self::decode_internal(first, remaining_bytes)?)
 	}
 	
@@ -82,10 +83,8 @@ impl PercentEncodedByteProvider
 	{
 		debug_assert!(bytes.len() >= Self::slice_length_non_zero_usize(decoded_byte_number).get());
 		
-		use PercentDecodeError::*;
-		
-		let upper_nibble = Self::hex_digit::<decoded_byte_number, 0>(remaining_bytes)?;
-		let lower_nibble = Self::hex_digit::<decoded_byte_number, 1>(remaining_bytes)?;
+		let upper_nibble = Self::hex_digit::<decoded_byte_number, 0>(bytes)?;
+		let lower_nibble = Self::hex_digit::<decoded_byte_number, 1>(bytes)?;
 		let byte = upper_nibble | lower_nibble;
 		Ok(byte as u32)
 	}

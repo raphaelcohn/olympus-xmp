@@ -10,6 +10,6 @@ macro_rules! iprivate_3
 {
 	() =>
 	{
-		xE000 ..= xF8FF
+		crate::xE000 ..= crate::xF8FF
 	}
 }

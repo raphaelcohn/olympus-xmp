@@ -9,6 +9,6 @@ macro_rules! DIGIT
 {
 	() =>
 	{
-		_0Char ..= _9Char
+		crate::_0Char ..= crate::_9Char
 	}
 }

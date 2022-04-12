@@ -48,7 +48,7 @@ impl<T> Heap<T>
 	}
 	
 	#[inline(always)]
-	const fn into_vec(self, capacity: usize) -> Vec
+	const fn into_vec(self, capacity: usize) -> Vec<T>
 	{
 		let (pointer, length) = self.pointer_and_length();
 		unsafe { Vec::from_raw_parts(pointer, length, capacity) }
@@ -89,6 +89,6 @@ impl<T> Heap<T>
 	const fn inner_ref_mut(&mut self) -> &mut (NonNull<T>, usize)
 	{
 		let hack = (&mut self.0).cast::<(NonNull<T>, usize)>();
-		unsafe { (&mut * hack) }
+		unsafe { &mut * hack }
 	}
 }

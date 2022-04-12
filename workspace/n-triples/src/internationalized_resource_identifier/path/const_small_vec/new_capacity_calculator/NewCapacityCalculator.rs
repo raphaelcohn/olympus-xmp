@@ -5,5 +5,5 @@
 /// How new capacity is calculated
 pub trait NewCapacityCalculator
 {
-	fn calculate(current_capacity: usize, required_capacity: usize) -> Result<usize, TryReserveError>;
+	fn calculate<T>(current_capacity: usize, required_capacity: usize) -> Result<usize, TryReserveError>;
 }

@@ -2,6 +2,7 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+#[derive(Copy, Clone)]
 struct StackWithoutLength<T, const N: usize>(ManuallyDrop<MaybeUninit<[T; N]>>);
 
 impl<T, const N: usize> const Default for StackWithoutLength<T, N>

@@ -9,6 +9,6 @@ macro_rules! ALPHA
 {
 	() =>
 	{
-		AChar ..= ZChar | aChar ..= zChar
+		crate::AChar ..= crate::ZChar | crate::aChar ..= crate::zChar
 	}
 }

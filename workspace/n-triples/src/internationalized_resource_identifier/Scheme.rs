@@ -23,8 +23,6 @@ impl<'a> Scheme<'a>
 	#[inline(always)]
 	fn parse(bytes: &'a [u8]) -> Result<(Self, &'a [u8]), SchemeParseError>
 	{
-		use SchemeParseError::*;
-		
 		let remaining_bytes = &mut bytes;
 		let string = Self::parse_first_character(remaining_bytes)?;
 		let raw_scheme = Self::parse_subequent_characters(remaining_bytes, string)?;
@@ -44,7 +42,7 @@ impl<'a> Scheme<'a>
 	}
 	
 	#[inline(always)]
-	fn parse_first_character(remaining_bytes: &mut &'a [u8]) -> Result<StringSoFar, SchemeParseError>
+	fn parse_first_character(remaining_bytes: &mut &'a [u8]) -> Result<StringSoFar<'a>, SchemeParseError>
 	{
 		use SchemeParseError::*;
 		let mut string = StringSoFar::new_stack(remaining_bytes);

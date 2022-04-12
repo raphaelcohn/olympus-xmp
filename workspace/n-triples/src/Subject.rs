@@ -7,7 +7,7 @@
 pub enum Subject<'a>
 {
 	#[allow(missing_docs)]
-	AbsoluteInternationalizedResourceIdentifier(AbsoluteInternationalizedResourceIdentifier<'a>),
+	AbsoluteInternationalizedResourceIdentifier(AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>),
 	
 	#[allow(missing_docs)]
 	BlankNode(BlankNodeLabel<'a>),

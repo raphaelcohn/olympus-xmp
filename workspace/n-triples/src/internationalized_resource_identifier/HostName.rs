@@ -5,7 +5,7 @@
 /// Can be empty; can start with a digit.
 ///
 /// Will have been forced to be lower case.
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct HostName<'a>(Cow<'a, str>);
 
 impl<'a> const FromUnchecked<Cow<'a, str>> for HostName<'a>

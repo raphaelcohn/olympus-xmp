@@ -18,7 +18,7 @@ trait ByteProvider
 	#[inline(always)]
 	fn decode_internal_utf8_validity_already_checked(first: u32, remaining_utf8_bytes: &mut &[u8]) -> (char, Utf8CharacterLength)
 	{
-		let bytes = Self::preamble(remaining_utf8_bytes);
+		let bytes = Self::preamble(first, remaining_utf8_bytes);
 		
 		let (utf8_character_length, slice_length, raw_unicode_point) = if is_one(first)
 		{
@@ -48,7 +48,7 @@ trait ByteProvider
 	{
 		use InvalidUtf8ParseError::*;
 		
-		let bytes = Self::preamble(remaining_utf8_bytes);
+		let bytes = Self::preamble(first, remaining_bytes);
 		
 		let (utf8_character_length, slice_length, raw_unicode_point) = if is_one(first)
 		{
@@ -57,21 +57,21 @@ trait ByteProvider
 		}
 		else if is_two(first)
 		{
-			const SliceLength: NonZeroUsize = Self::TwoSliceLength;
+			const SliceLength: NonZeroUsize = ByteProvider::TwoSliceLength;
 			Self::guard_slice_length::<SliceLength>(bytes, DidNotExpectEndParsingTwoByteUtf8Character)?;
-			Self::two_(first, remaining_utf8_bytes)
+			Self::two_(first, remaining_bytes)
 		}
 		else if is_three(first)
 		{
-			const SliceLength: NonZeroUsize = Self::ThreeSliceLength;
+			const SliceLength: NonZeroUsize = ByteProvider::ThreeSliceLength;
 			Self::guard_slice_length::<SliceLength>(bytes, DidNotExpectEndParsingThreeByteUtf8Character)?;
-			Self::three_(first, remaining_utf8_bytes)
+			Self::three_(first, remaining_bytes)
 		}
 		else if is_four(first)
 		{
-			const SliceLength: NonZeroUsize = Self::FourSliceLength;
+			const SliceLength: NonZeroUsize = ByteProvider::FourSliceLength;
 			Self::guard_slice_length::<SliceLength>(bytes, DidNotExpectEndParsingFourByteUtf8Character)?;
-			Self::four_(first, remaining_utf8_bytes)
+			Self::four_(first, remaining_bytes)
 		}
 		else
 		{
@@ -79,7 +79,7 @@ trait ByteProvider
 		};
 		
 		let character = char::try_from(raw_unicode_point).map_err(InvalidUtf8CodePoint)?;
-		Ok(Self::postamble(remaining_utf8_bytes, bytes, slice_length, character, utf8_character_length))
+		Ok(Self::postamble(remaining_bytes, bytes, slice_length, character, utf8_character_length))
 	}
 	
 	fn two(bytes: &[u8]) -> Result<u32, Self::Error>;
@@ -89,7 +89,7 @@ trait ByteProvider
 	fn four(bytes: &[u8]) -> Result<(u32, u32, u32), Self::Error>;
 	
 	#[inline(always)]
-	fn guard_slice_length<const SliceLength: NonZeroUsize>(bytes: &[u8], error: InvalidUtf8ParseError) -> Result<(), InvalidUtf8ParseError>
+	fn guard_slice_length<const SliceLength: NonZeroUsize>(bytes: &[u8], error: InvalidUtf8ParseError<Self::Error>) -> Result<(), InvalidUtf8ParseError<Self::Error>>
 	{
 		if bytes.len() < SliceLength.get()
 		{
@@ -112,7 +112,7 @@ trait ByteProvider
 	}
 	
 	#[inline(always)]
-	fn two_(first: u32, remaining_utf8_bytes: &mut &[u8]) -> (Utf8CharacterLength, NonZeroUsize, u32)
+	fn two_(first: u32, remaining_bytes: &mut &[u8]) -> (Utf8CharacterLength, NonZeroUsize, u32)
 	{
 		let second = Self::two(remaining_bytes)?;
 		(
@@ -123,7 +123,7 @@ trait ByteProvider
 	}
 	
 	#[inline(always)]
-	fn three_(first: u32, remaining_utf8_bytes: &mut &[u8]) -> (Utf8CharacterLength, NonZeroUsize, u32)
+	fn three_(first: u32, remaining_bytes: &mut &[u8]) -> (Utf8CharacterLength, NonZeroUsize, u32)
 	{
 		let (second, third) = Self::three(remaining_bytes)?;
 		(
@@ -134,18 +134,18 @@ trait ByteProvider
 	}
 	
 	#[inline(always)]
-	fn four_(first: u32, remaining_utf8_bytes: &mut &[u8]) -> (Utf8CharacterLength, NonZeroUsize, u32)
+	fn four_(first: u32, remaining_bytes: &mut &[u8]) -> (Utf8CharacterLength, NonZeroUsize, u32)
 	{
 		let (second, third, fourth) = Self::four(remaining_bytes)?;
 		(
 			Four,
 			Self::FourSliceLength,
-			(slice_length, first & x07) << Shift18 | second << Shift12 | third << Shift6 | fourth,
+			(first & x07) << Shift18 | second << Shift12 | third << Shift6 | fourth,
 		)
 	}
 	
 	#[inline(always)]
-	fn preamble(remaining_bytes: &mut &[u8]) -> &[u8]
+	fn preamble<'a>(first: u32, remaining_bytes: &mut &'a [u8]) -> &'a [u8]
 	{
 		debug_assert_ne!(remaining_bytes.len(), 0, "remaining_utf8_bytes is empty");
 		debug_assert_eq!(first, remaining_bytes.get_unchecked_value_safe(0) as u32, "remaining_utf8_bytes does not have first at index 0");

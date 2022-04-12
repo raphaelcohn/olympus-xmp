@@ -10,6 +10,6 @@ macro_rules! ipchar_other
 {
 	() =>
 	{
-		ColonChar | AtSignChar
+		crate::ColonChar | crate::AtSignChar
 	}
 }

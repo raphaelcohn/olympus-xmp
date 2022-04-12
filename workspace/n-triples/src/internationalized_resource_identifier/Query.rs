@@ -3,7 +3,7 @@
 
 
 /// A query.
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct Query<'a>(Cow<'a, str>);
 
 impl<'a> const FromUnchecked<Cow<'a, str>> for Query<'a>

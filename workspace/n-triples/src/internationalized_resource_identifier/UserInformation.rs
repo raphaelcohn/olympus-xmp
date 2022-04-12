@@ -21,7 +21,8 @@ impl<'a> UserInformation<'a>
 		{
 			use Utf8CharacterLength::*;
 			
-			match StringSoFar::decode_next_utf8_validity_already_checked_mandatory(remaining_utf8_bytes, DidNotExpectEndParsingCharacter)?
+			let character = StringSoFar::decode_next_utf8_validity_already_checked_mandatory(remaining_utf8_bytes, DidNotExpectEndParsingCharacter)?;
+			match character
 			{
 				iunreserved_without_ucschar!() => string.push(character, One),
 				iunreserved_with_ucschar_2!()  => string.push(character, Two),

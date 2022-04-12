@@ -21,7 +21,7 @@ pub enum InternetProtocolVersion4AddressParseError
 	RemainingTwoOctetsTooShort(usize),
 	
 	#[allow(missing_docs)]
-	RemainingOctetTooShort(usize),
+	RemainingOctetTooShort,
 	
 	#[allow(missing_docs)]
 	ThreeDigitSecondOctetNotFollowedByPeriod,

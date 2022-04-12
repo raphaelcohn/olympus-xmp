@@ -3,11 +3,11 @@
 
 
 /// A parse error.
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub enum PathSegmentsParseError
 {
 	#[allow(missing_docs)]
-	PathSegmentParse(PathSegmentsParseError),
+	PathSegmentParse(PathSegmentParseError),
 	
 	#[allow(missing_docs)]
 	OutOfMemory(TryReserveError),

@@ -6,13 +6,13 @@
 ///
 /// This is raw; it is not validated according to RFC 3987.
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub struct AbsoluteInternationalizedResourceIdentifier<'a>
+pub struct AbsoluteInternationalizedResourceIdentifier<'a, const PathDepth: usize>
 {
 	#[allow(missing_docs)]
 	pub scheme: Scheme<'a>,
 	
 	#[allow(missing_docs)]
-	pub hierarchy: Hierarchy<'a>,
+	pub hierarchy: Hierarchy<'a, PathDepth>,
 	
 	#[allow(missing_docs)]
 	pub query: Option<Query<'a>>,
@@ -21,7 +21,7 @@ pub struct AbsoluteInternationalizedResourceIdentifier<'a>
 	pub hash_fragment: Option<HashFragment<'a>>,
 }
 
-impl<'a> TryToOwnInPlace for AbsoluteInternationalizedResourceIdentifier<'a>
+impl<'a, const PathDepth: usize> TryToOwnInPlace for AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>
 {
 	#[inline(always)]
 	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
@@ -33,9 +33,9 @@ impl<'a> TryToOwnInPlace for AbsoluteInternationalizedResourceIdentifier<'a>
 	}
 }
 
-impl<'a> TryToOwn for AbsoluteInternationalizedResourceIdentifier<'a>
+impl<'a, const PathDepth: usize> TryToOwn for AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>
 {
-	type TryToOwned = AbsoluteInternationalizedResourceIdentifier<'static>;
+	type TryToOwned = AbsoluteInternationalizedResourceIdentifier<'static, PathDepth>;
 	
 	#[inline(always)]
 	fn try_to_own(mut self) -> Result<Self::TryToOwned, TryReserveError>
@@ -45,7 +45,7 @@ impl<'a> TryToOwn for AbsoluteInternationalizedResourceIdentifier<'a>
 	}
 }
 
-impl<'a> TryFrom<Cow<'a, str>> for AbsoluteInternationalizedResourceIdentifier<'a>
+impl<'a, const PathDepth: usize> TryFrom<Cow<'a, str>> for AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>
 {
 	type Error = AbsoluteInternationalizedResourceIdentifierComponentsParseError;
 	
@@ -56,7 +56,7 @@ impl<'a> TryFrom<Cow<'a, str>> for AbsoluteInternationalizedResourceIdentifier<'
 	}
 }
 
-impl<'a> TryFrom<&'a str> for AbsoluteInternationalizedResourceIdentifier<'a>
+impl<'a, const PathDepth: usize> TryFrom<&'a str> for AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>
 {
 	type Error = AbsoluteInternationalizedResourceIdentifierComponentsParseError;
 	
@@ -97,30 +97,30 @@ impl<'a> TryFrom<&'a str> for AbsoluteInternationalizedResourceIdentifier<'a>
 	}
 }
 
-impl<'a> AbsoluteInternationalizedResourceIdentifier<'a>
+impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>
 {
 	/// `http://www.w3.org/2002/07/owl#<hash_fragment>`.
 	#[inline(always)]
 	pub fn owl_2002_07<HF>(hash_fragment: HF) -> Self
-	where HashFragment: FromUnchecked<'a, HF>
+	where HashFragment<'a>: FromUnchecked<HF>
 	{
-		Self::http_www_w3_org(unsafe { vec![PathSegment::from_unchecked("2002"), PathSegment::from_unchecked("07"), PathSegment::from_unchecked("owl")] }, hash_fragment)
+		Self::http_www_w3_org([PathSegment::_2002, PathSegment::_07, PathSegment::owl], hash_fragment)
 	}
 	
 	/// `http://www.w3.org/2004/02/skos/core#<hash_fragment>`
 	#[inline(always)]
 	pub fn simple_knowledge_organization_scheme_2004_02_core<HF>(hash_fragment: HF) -> Self
-	where HashFragment: FromUnchecked<'a, HF>
+	where HashFragment<'a>: FromUnchecked<HF>
 	{
-		Self::http_www_w3_org(unsafe { vec![PathSegment::from_unchecked("2004"), PathSegment::from_unchecked("02"), PathSegment::from_unchecked("skos"), PathSegment::from_unchecked("core")] }, hash_fragment)
+		Self::http_www_w3_org([PathSegment::_2004, PathSegment::_02, PathSegment::skos, PathSegment::core], hash_fragment)
 	}
 	
 	/// `http://www.w3.org/2001/XMLSchema#<hash_fragment>`
 	#[inline(always)]
 	pub fn xml_schema_2001<HF>(hash_fragment: HF) -> Self
-	where HashFragment: FromUnchecked<'a, HF>
+	where HashFragment<'a>: FromUnchecked<HF>
 	{
-		Self::http_www_w3_org(unsafe { vec![PathSegment::from_unchecked("2001"), PathSegment::from_unchecked("XMLSchema")] }, hash_fragment)
+		Self::http_www_w3_org([PathSegment::_2001, PathSegment::XMLSchema], hash_fragment)
 	}
 	
 	#[inline(always)]
@@ -156,8 +156,8 @@ impl<'a> AbsoluteInternationalizedResourceIdentifier<'a>
 	}
 	
 	#[inline(always)]
-	const fn http_www_w3_org<HF>(path_segments: Smallvec<PathSegment>, hash_fragment: HF) -> Self
-	where HashFragment: FromUnchecked<'a, HF>
+	const fn http_www_w3_org<HF, const M: usize>(path_segments: [PathSegment<'a>; M], hash_fragment: HF) -> Self
+	where HashFragment<'a>: FromUnchecked<HF>
 	{
 		Self
 		{
@@ -174,13 +174,13 @@ impl<'a> AbsoluteInternationalizedResourceIdentifier<'a>
 	
 	#[inline(always)]
 	const fn hash_fragment<HF>(hash_fragment: HF) -> Option<HashFragment<'a>>
-	where HashFragment: FromUnchecked<'a, HF>
+	where HashFragment<'a>: FromUnchecked<HF>
 	{
 		Some(unsafe { HashFragment::from_unchecked(hash_fragment) })
 	}
 }
 
-impl AbsoluteInternationalizedResourceIdentifier<'static>
+impl<const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'static, PathDepth>
 {
 	/// `http://www.w3.org/2002/07/owl#deprecated`.
 	pub const OwlDeprecated: Self = Self::owl_2002_07("deprecated");

@@ -6,10 +6,10 @@
 ///
 /// `ucschar = %xA0-D7FF / %xF900-FDCF / %xFDF0-FFEF / %x10000-1FFFD / %x20000-2FFFD / %x30000-3FFFD / %x40000-4FFFD / %x50000-5FFFD / %x60000-6FFFD / %x70000-7FFFD / %x80000-8FFFD / %x90000-9FFFD / %xA0000-AFFFD / %xB0000-BFFFD / %xC0000-CFFFD / %xD0000-DFFFD / %xE1000-EFFFD`.
 /// Instead of one macro, we separate by UTF-8 encoding count.
-macro_rules! iunreserved_ucschar_2
+macro_rules! iunreserved_with_ucschar_4
 {
 	() =>
 	{
-		xA0 ..= x07FF
+		crate::x10000 ..= crate::x1FFFD | crate::x20000 ..= crate::x2FFFD | crate::x30000 ..= crate::x3FFFD | crate::x40000 ..= crate::x4FFFD | crate::x50000 ..= crate::x5FFFD | crate::x60000 ..= crate::x6FFFD | crate::x70000 ..= crate::x7FFFD | crate::x80000 ..= crate::x8FFFD | crate::x90000 ..= crate::x9FFFD | crate::xA0000 ..= crate::xAFFFD | crate::xB0000 ..= crate::xBFFFD | crate::xC0000 ..= crate::xCFFFD | crate::xD0000 ..= crate::xDFFFD | crate::xE1000 ..= crate::xEFFFD
 	}
 }

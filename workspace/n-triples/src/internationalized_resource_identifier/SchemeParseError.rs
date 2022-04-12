@@ -3,7 +3,7 @@
 
 
 /// A parse error.
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub enum SchemeParseError
 {
 	#[allow(missing_docs)]

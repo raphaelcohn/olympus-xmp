@@ -4,7 +4,7 @@
 
 /// Hierarchy.
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub enum Hierarchy<'a>
+pub enum Hierarchy<'a, const PathDepth: usize>
 {
 	/// If not empty, then starts with `/`.
 	AuthorityAndAbsolutePath
@@ -12,22 +12,22 @@ pub enum Hierarchy<'a>
 		authority: Authority<'a>,
 		
 		/// Zero or more; each path segment can be empty.
-		path_segments: PathSegments<'a>,
+		path_segments: PathSegments<'a, PathDepth>,
 	},
 	
 	/// Starts `/`.
 	/// Minimum is `/X`, where `X` is a valid character.
-	AbsolutePath(NonEmptyPath<'a>),
+	AbsolutePath(NonEmptyPath<'a, PathDepth>),
 
 	/// Does not start `/`.
 	/// Minimum is `X`, where `X` is a valid character.
-	RootlessPath(NonEmptyPath<'a>),
+	RootlessPath(NonEmptyPath<'a, PathDepth>),
 	
 	/// An empty path.
 	EmptyPath,
 }
 
-impl<'a> Hierarchy<'a>
+impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 {
 	/// `ihier-part = "//" iauthority ipath-abempty / ipath-absolute / ipath-rootless / ipath-empty`.
 	/// `ipath-abempty  = *( "/" isegment )`.
@@ -43,7 +43,8 @@ impl<'a> Hierarchy<'a>
 		use Hierarchy::*;
 		use HierarchyParseError::*;
 		
-		match StringSoFar::decode_next_utf8_validity_already_checked_mandatory(&mut remaining_utf8_bytes, DidNotExpectEndParsingFirstCharacter)?
+		let character = StringSoFar::decode_next_utf8_validity_already_checked_mandatory(&mut remaining_utf8_bytes, DidNotExpectEndParsingFirstCharacter)?;
+		match character
 		{
 			QuestionMarkChar => Ok((EmptyPath, ParseNextAfterHierarchy::query(remaining_utf8_bytes))),
 			
@@ -67,10 +68,10 @@ impl<'a> Hierarchy<'a>
 	fn parse_iauthority_ipath_abempty_or_ipath_absolute(mut remaining_utf8_bytes: &'a [u8]) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
 	{
 		use Utf8CharacterLength::*;
-		use Hierarchy::*;
 		use HierarchyParseError::*;
 		
-		match StringSoFar::decode_next_utf8_validity_already_checked_mandatory(&mut remaining_utf8_bytes, DidNotExpectEndParsingSecondCharacter)?
+		let character = StringSoFar::decode_next_utf8_validity_already_checked_mandatory(&mut remaining_utf8_bytes, DidNotExpectEndParsingSecondCharacter)?;
+		match character
 		{
 			SlashChar => Self::parse_iauthority_ipath_abempty(remaining_utf8_bytes),
 			
@@ -115,7 +116,7 @@ impl<'a> Hierarchy<'a>
 	}
 	
 	#[inline(always)]
-	fn parse_non_empty_path(first_character_of_first_path_segment: (bool, char, Utf8CharacterLength), mut remaining_utf8_bytes: &'a [u8], constructor: impl FnOnce(NonEmptyPath) -> Self, error: impl FnOnce(NonEmptyPathParseError) -> HierarchyParseError) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
+	fn parse_non_empty_path(first_character_of_first_path_segment: (bool, char, Utf8CharacterLength), mut remaining_utf8_bytes: &'a [u8], constructor: impl FnOnce(NonEmptyPath<PathDepth>) -> Self, error: impl FnOnce(NonEmptyPathParseError) -> HierarchyParseError) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
 	{
 		NonEmptyPath::parse(constructor, error, first_character_of_first_path_segment, remaining_utf8_bytes)
 	}

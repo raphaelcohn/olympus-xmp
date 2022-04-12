@@ -9,7 +9,7 @@ pub struct ExactNewCapacityCalculator;
 impl const NewCapacityCalculator for ExactNewCapacityCalculator
 {
 	#[inline(always)]
-	fn calculate(_current_capacity: usize, required_capacity: usize) -> Result<usize, TryReserveError>
+	fn calculate<T>(_current_capacity: usize, required_capacity: usize) -> Result<usize, TryReserveError>
 	{
 		Ok(required_capacity)
 	}

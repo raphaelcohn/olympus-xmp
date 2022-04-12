@@ -10,6 +10,6 @@ macro_rules! iprivate_4
 {
 	() =>
 	{
-		xF0000 ..= xFFFFD | x100000 ..= x10FFFD
+		crate::xF0000 ..= crate::xFFFFD | crate::x100000 ..= crate::x10FFFD
 	}
 }

@@ -20,7 +20,6 @@ use std::hash::Hasher;
 use std::mem::align_of;
 use std::mem::ManuallyDrop;
 use std::mem::size_of;
-use std::mem::transmute;
 use std::mem::MaybeUninit;
 use std::ops::Deref;
 use std::ops::DerefMut;

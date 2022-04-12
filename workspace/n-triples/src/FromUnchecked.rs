@@ -20,7 +20,7 @@ impl<T> const FromUnchecked<T> for T
 	}
 }
 
-impl<'a, T: 'a + FromUnchecked<Cow<str>>> const FromUnchecked<&'a str> for T
+impl<'a, T: 'a + FromUnchecked<Cow<'a, str>>> const FromUnchecked<&'a str> for T
 {
 	#[inline(always)]
 	unsafe fn from_unchecked(value: &'a str) -> Self

@@ -20,7 +20,7 @@ pub(super) enum StringSoFar<'a>
 impl<'a> StringSoFar<'a>
 {
 	#[inline(always)]
-	pub(super) fn decode_next_utf8_validity_already_checked_mandatory(remaining_utf8_bytes: &mut &'a [u8], error: E) -> Result<char, E>
+	pub(super) fn decode_next_utf8_validity_already_checked_mandatory<E: error::Error>(remaining_utf8_bytes: &mut &'a [u8], error: E) -> Result<char, E>
 	{
 		StringSoFar::decode_next_utf8_validity_already_checked(&mut remaining_utf8_bytes).ok_or(error)
 	}
@@ -49,6 +49,8 @@ impl<'a> StringSoFar<'a>
 	pub(super) const fn new_stack_rewind_buffer(remaining_utf8_bytes: &[u8], utf8_character_length: Utf8CharacterLength) -> Self
 	{
 		let rewound_buffer = remaining_utf8_bytes.rewind_buffer();
+		
+		let slice_length = remaining_utf8_bytes.len() + utf8_character_length.into();
 		
 		Self::new_stack_internal(rewound_buffer, slice_length)
 	}

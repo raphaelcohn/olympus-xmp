@@ -11,10 +11,10 @@ pub struct ExponentiallyGrowingNewCapacityCalculator;
 impl NewCapacityCalculator for ExponentiallyGrowingNewCapacityCalculator
 {
 	#[inline(always)]
-	fn calculate(current_capacity: usize, required_capacity: usize) -> Result<usize, TryReserveError>
+	fn calculate<T>(current_capacity: usize, required_capacity: usize) -> Result<usize, TryReserveError>
 	{
-		/// This constant is duplicated from Rust's RawVec, and attempts to optimize for a memory allocator's algorithm without overly wasting space.
-		const MIN_NON_ZERO_CAP: usize = if size_of::<T>() == 1
+		// This constant is duplicated from Rust's RawVec, and attempts to optimize for a memory allocator's algorithm without overly wasting space.
+		let MIN_NON_ZERO_CAP: usize = if size_of::<T>() == 1
 		{
 			8
 		}

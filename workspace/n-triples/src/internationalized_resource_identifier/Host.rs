@@ -31,8 +31,6 @@ impl<'a> Host<'a>
 	#[inline(always)]
 	fn parse(ihost_and_port_bytes: &'a [u8]) -> Result<(Self, &'a [u8]), HostParseError>
 	{
-		use HostParseError::*;
-		
 		let length = ihost_and_port_bytes.len();
 		
 		if length == 0
@@ -73,7 +71,7 @@ impl<'a> Host<'a>
 	#[inline(always)]
 	fn parse_name(ihost_and_port_bytes: &[u8]) -> Result<(Self, &[u8]), HostParseError>
 	{
-		let (host_name, port_bytes_including_colon) = HostName::parse(ihost_bytes)?;
+		let (host_name, port_bytes_including_colon) = HostName::parse(ihost_and_port_bytes)?;
 		Ok((Host::Name(host_name), port_bytes_including_colon))
 	}
 	
@@ -88,7 +86,7 @@ impl<'a> Host<'a>
 			return Err(HostParseError::IpLiteralIsNotClosedBySquareBracket)
 		}
 		
-		let second = ihost_bytes.get_unchecked_value_safe(1);
+		let second = ihost_and_port_bytes.get_unchecked_value_safe(1);
 		if second == v
 		{
 			const AdditionalOffsetDueToFutureLiteralIpLiteralV: usize = 1;
@@ -101,7 +99,7 @@ impl<'a> Host<'a>
 		}
 		else
 		{
-			let (ihost_bytes) = Self::parse_end_of_ip_literal::<0>(ihost_and_port_bytes)?;
+			let (ihost_bytes, port_bytes_including_colon) = Self::parse_end_of_ip_literal::<0>(ihost_and_port_bytes)?;
 			Self::parse_internet_protocol_version_6_address(ihost_bytes, port_bytes_including_colon)
 		}
 	}
@@ -134,7 +132,7 @@ impl<'a> Host<'a>
 	}
 	
 	#[inline(always)]
-	fn parse_internet_protocol_version_6_address(ihost_bytes: &[u8], port_bytes_including_colon: &[u8]) -> Result<(Self, &[u8]), HostParseError>
+	fn parse_internet_protocol_version_6_address(ihost_bytes: &'a [u8], port_bytes_including_colon: &'a [u8]) -> Result<(Self, &'a [u8]), HostParseError>
 	{
 		const MaximumInternetProtocolVersion6AddressLength: usize = "[0000:0000:0000:0000:0000:ffff:255.255.255.255]".len();
 		const MaximumLength: usize = MaximumInternetProtocolVersion6AddressLength;
@@ -149,14 +147,14 @@ impl<'a> Host<'a>
 		
 		match Ipv6Addr::from_str(unsafe { from_utf8_unchecked(ihost_bytes) })
 		{
-			Ok(address) => Ok((Host::InternetProtocolVersion6Address(address), port_bytes_including_leading_colon)),
+			Ok(address) => Ok((Host::InternetProtocolVersion6Address(address), port_bytes_including_colon)),
 			
 			Err(_) => Err(CouldNotParseInternetProtocolVersion6Address),
 		}
 	}
 	
 	#[inline(always)]
-	fn parse_future_internet_protocol_address(_ihost_bytes: &[u8], _port_bytes_including_colon: &[u8]) -> Result<(Self, &[u8]), HostParseError>
+	fn parse_future_internet_protocol_address(_ihost_bytes: &'a [u8], _port_bytes_including_colon: &'a [u8]) -> Result<(Self, &'a [u8]), HostParseError>
 	{
 		return Err(HostParseError::FutureInternetProtocolAddressParsingIsUnsupported)
 	}

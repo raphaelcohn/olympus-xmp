@@ -4,18 +4,27 @@
 
 /// Path segments.
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub struct PathSegments<'a>(Vec<PathSegment<'a>>);
+pub struct PathSegments<'a, const PathDepth: usize>(ConstSmallVec<PathSegment<'a>, PathDepth>);
 
-impl<'a> const From<Vec<PathSegment<'a>>> for PathSegments<'a>
+impl<'a, T, const PathDepth: usize, const M: usize> const From<[T; M]> for PathSegments<'a, PathDepth>
 {
 	#[inline(always)]
-	fn from(value: Vec<PathSegment<'a>>) -> Self
+	fn from(array: [T; M]) -> Self
+	{
+		Self::from(ConstSmallVec::from(array))
+	}
+}
+
+impl<'a, const PathDepth: usize> const From<ConstSmallVec<PathSegment<'a>, PathDepth>> for PathSegments<'a, PathDepth>
+{
+	#[inline(always)]
+	fn from(value: ConstSmallVec<PathSegment<'a>, PathDepth>) -> Self
 	{
 		Self(value)
 	}
 }
 
-impl<'a> Borrow<[PathSegment<'a>]> for PathSegments<'a>
+impl<'a, const PathDepth: usize> Borrow<[PathSegment<'a>]> for PathSegments<'a, PathDepth>
 {
 	#[inline(always)]
 	fn borrow(&self) -> &[PathSegment<'a>]
@@ -24,7 +33,7 @@ impl<'a> Borrow<[PathSegment<'a>]> for PathSegments<'a>
 	}
 }
 
-impl<'a> AsRef<[PathSegment<'a>]> for PathSegments<'a>
+impl<'a, const PathDepth: usize> AsRef<[PathSegment<'a>]> for PathSegments<'a, PathDepth>
 {
 	#[inline(always)]
 	fn as_ref(&self) -> &[PathSegment<'a>]
@@ -33,7 +42,7 @@ impl<'a> AsRef<[PathSegment<'a>]> for PathSegments<'a>
 	}
 }
 
-impl<'a> Deref for PathSegments<'a>
+impl<'a, const PathDepth: usize> Deref for PathSegments<'a, PathDepth>
 {
 	type Target = [PathSegment<'a>];
 	
@@ -44,7 +53,7 @@ impl<'a> Deref for PathSegments<'a>
 	}
 }
 
-impl<'a> const Default for PathSegments<'a>
+impl<'a, const PathDepth: usize> const Default for PathSegments<'a, PathDepth>
 {
 	#[inline(always)]
 	fn default() -> Self
@@ -53,7 +62,7 @@ impl<'a> const Default for PathSegments<'a>
 	}
 }
 
-impl<'a> PathSegments<'a>
+impl<'a, const PathDepth: usize> PathSegments<'a, PathDepth>
 {
 	/// Assumes that on input `remaining_utf8_bytes` is positioned just to the right of any `Slash`, i.e. `Slash` would be at `remaining_utf8_bytes[-1]`.
 	#[inline(always)]

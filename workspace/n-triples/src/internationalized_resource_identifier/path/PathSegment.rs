@@ -53,6 +53,27 @@ impl<'a> const Deref for PathSegment<'a>
 	}
 }
 
+impl PathSegment<'static>
+{
+	pub(super) const _2001: Self = unsafe { Self::from_unchecked("2001") };
+	
+	pub(super) const _2002: Self = unsafe { Self::from_unchecked("2002") };
+	
+	pub(super) const _2004: Self = unsafe { Self::from_unchecked("2004") };
+	
+	pub(super) const _02: Self = unsafe { Self::from_unchecked("02") };
+	
+	pub(super) const _07: Self = unsafe { Self::from_unchecked("07") };
+	
+	pub(super) const owl: Self = unsafe { Self::from_unchecked("owl") };
+	
+	pub(super) const skos: Self = unsafe { Self::from_unchecked("skos") };
+	
+	pub(super) const core: Self = unsafe { Self::from_unchecked("core") };
+	
+	pub(super) const XMLSchema: Self = unsafe { Self::from_unchecked("XMLSchema") };
+}
+
 impl<'a> PathSegment<'a>
 {
 	#[inline(always)]

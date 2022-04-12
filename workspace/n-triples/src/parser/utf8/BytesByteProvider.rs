@@ -76,7 +76,7 @@ impl BytesByteProvider
 	}
 	
 	#[inline(always)]
-	fn first(remaining_bytes: &mut &[u8]) -> Option<&u8>
+	fn first<'a>(remaining_bytes: &mut &'a [u8]) -> Option<&'a u8>
 	{
 		(*remaining_bytes).get(0)
 	}

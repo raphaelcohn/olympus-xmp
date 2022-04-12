@@ -3,4 +3,4 @@
 
 
 /// A predicate.
-pub type Predicate<'a> = AbsoluteInternationalizedResourceIdentifier<'a>;
+pub type Predicate<'a> = AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>;

@@ -10,6 +10,6 @@ macro_rules! pct_encoded
 {
 	() =>
 	{
-		PercentChar
+		crate::PercentChar
 	}
 }

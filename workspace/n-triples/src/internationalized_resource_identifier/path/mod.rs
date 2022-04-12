@@ -2,6 +2,7 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+use const_small_vec::ConstSmallVec;
 use crate::FromUnchecked;
 use crate::Hash;
 use crate::QuestionMark;

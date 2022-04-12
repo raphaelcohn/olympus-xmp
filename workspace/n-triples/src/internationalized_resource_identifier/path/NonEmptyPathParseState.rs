@@ -3,14 +3,14 @@
 
 
 #[derive(Debug)]
-struct NonEmptyPathParseState<'a, F: FnOnce(NonEmptyPath) -> Hierarchy, E: FnOnce(NonEmptyPathParseError) -> HierarchyParseError>
+struct NonEmptyPathParseState<'a, F: FnOnce(NonEmptyPath<'a, PathDepth>) -> Hierarchy<'a, PathDepth>, const PathDepth: usize>
 {
 	constructor: F,
 	
-	remaining_path_segments: PathSegments<'a>,
+	remaining_path_segments: PathSegments<'a, PathDepth>,
 }
 
-impl<'a, F: FnOnce(NonEmptyPath) -> Hierarchy, E: FnOnce(NonEmptyPathParseError) -> HierarchyParseError> NonEmptyPathParseState<'a, F, E>
+impl<'a, F: FnOnce(NonEmptyPath<'a, PathDepth>) -> Hierarchy<'a, PathDepth>, const PathDepth: usize> NonEmptyPathParseState<'a, F, PathDepth>
 {
 	#[inline(always)]
 	fn new(constructor: F) -> Self
@@ -23,7 +23,7 @@ impl<'a, F: FnOnce(NonEmptyPath) -> Hierarchy, E: FnOnce(NonEmptyPathParseError)
 	}
 	
 	#[inline(always)]
-	fn parse(self, mut remaining_utf8_bytes: &'a [u8]) -> Result<(Hierarchy, ParseNextAfterHierarchy<'a>), NonEmptyPathParseError>
+	fn parse(self, first_character_of_first_path_segment: (bool, char, Utf8CharacterLength), mut remaining_utf8_bytes: &'a [u8]) -> Result<(Hierarchy<'a, PathDepth>, ParseNextAfterHierarchy<'a>), NonEmptyPathParseError>
 	{
 		let (first_non_empty_path_segment, mut remaining_utf8_bytes) = match memchr3(QuestionMark, Hash, Slash, remaining_utf8_bytes)
 		{
@@ -58,7 +58,7 @@ impl<'a, F: FnOnce(NonEmptyPath) -> Hierarchy, E: FnOnce(NonEmptyPathParseError)
 	}
 	
 	#[inline(always)]
-	fn finish(self, first_non_empty_path_segment: NonEmptyPathSegment<'a>, parse_next: ParseNextAfterHierarchy<'a>) -> Result<(Hierarchy, ParseNextAfterHierarchy<'a>), NonEmptyPathParseError>
+	fn finish(self, first_non_empty_path_segment: NonEmptyPathSegment<'a>, parse_next: ParseNextAfterHierarchy<'a>) -> Result<(Hierarchy<'a, PathDepth>, ParseNextAfterHierarchy<'a>), NonEmptyPathParseError>
 	{
 		Ok(((self.constructor)(NonEmptyPath { first_non_empty_path_segment, remaining_path_segments: self.remaining_path_segments }), parse_next))
 	}

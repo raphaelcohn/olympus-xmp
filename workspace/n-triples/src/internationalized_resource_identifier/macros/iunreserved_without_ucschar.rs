@@ -10,6 +10,6 @@ macro_rules! iunreserved_without_ucschar
 {
 	() =>
 	{
-		ALPHA!() | DIGIT!() | HyphenChar | PeriodChar | UnderscoreChar | TildeChar
+		ALPHA!() | DIGIT!() | crate::_0Char ..= crate::_9Char | crate::HyphenChar | crate::PeriodChar | crate::UnderscoreChar | crate::TildeChar
 	}
 }

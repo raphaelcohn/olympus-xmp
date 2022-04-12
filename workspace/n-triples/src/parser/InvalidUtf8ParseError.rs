@@ -2,8 +2,6 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use crate::parser::utf8::PercentDecodeError;
-
 /// A parse error.
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub enum InvalidUtf8ParseError<E: error::Error>

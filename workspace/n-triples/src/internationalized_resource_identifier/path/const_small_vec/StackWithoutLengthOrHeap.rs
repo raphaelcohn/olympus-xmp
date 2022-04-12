@@ -50,6 +50,6 @@ impl<T, const N: usize> StackWithoutLengthOrHeap<T, N>
 	#[inline(always)]
 	const fn into_stack(self) -> MaybeUninit<[T; N]>
 	{
-		ManuallyDrop::into_inner((unsafe { self.stack } ))
+		ManuallyDrop::into_inner(unsafe { self.stack })
 	}
 }

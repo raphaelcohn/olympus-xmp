@@ -28,11 +28,14 @@
 #![feature(adt_const_params)]
 #![feature(allocator_api)]
 #![feature(const_trait_impl)]
+#![feature(const_try)]
 #![feature(generic_arg_infer)]
 #![feature(nonnull_slice_from_raw_parts)]
 #![feature(slice_ptr_get)]
 #![feature(slice_ptr_len)]
+#![feature(min_specialization)]
 #![feature(try_reserve_kind)]
+#![feature(untagged_unions)]
 
 
 //! #n-triples.
@@ -41,28 +44,15 @@
 
 
 use internationalized_resource_identifier::AbsoluteInternationalizedResourceIdentifier;
-use memchr::memchr;
-use memchr::memchr2;
-use memchr::memchr3;
-use parser::AbsoluteInternationalizedResourceIdentifierComponentsParseError;
-use parser::AbsoluteInternationalizedResourceIdentifierParseError;
 use parser::BlankNodeLabelParseError;
 use parser::get_0;
-use parser::IHierPartParseError;
-use parser::InvalidUtf8ParseError;
 use parser::LiteralTag;
 use parser::NTriple;
 use parser::NTriplesParseError;
 use parser::Object;
-use parser::ParseNext;
-use parser::PercentDecodeError;
-use parser::SchemeParseError;
 use parser::StringLiteral;
 use parser::StringSoFar;
-use parser::UCHARParser;
 use parser::utf8::decode_next_utf8;
-use parser::utf8::decode_next_percent_encoded_utf8;
-use parser::utf8::Utf8CharacterLength;
 use std::borrow::Borrow;
 use std::borrow::Cow;
 use std::collections::HashMap;
@@ -76,30 +66,19 @@ use std::mem::transmute;
 use std::num::ParseIntError;
 use std::ops::Deref;
 use std::str::FromStr;
-use std::str::from_utf8_unchecked;
 use try_to_own::MutableKey;
 use try_to_own::MutableKeyHashMap;
 use try_to_own::try_to_own_in_place_cow;
 use try_to_own::TryToOwn;
 use try_to_own::TryToOwnInPlace;
-use swiss_army_knife::unreachable_code_const;
 use swiss_army_knife::a_to_z::Colon;
 use swiss_army_knife::a_to_z::Period;
-use swiss_army_knife::a_to_z::_0;
-use swiss_army_knife::a_to_z::_9;
-use swiss_army_knife::a_to_z::A;
-use swiss_army_knife::a_to_z::F;
-use swiss_army_knife::a_to_z::U;
-use swiss_army_knife::a_to_z::Z;
-use swiss_army_knife::a_to_z::a;
-use swiss_army_knife::a_to_z::f;
-use swiss_army_knife::a_to_z::u;
-use swiss_army_knife::a_to_z::z;
 use swiss_army_knife::get_unchecked::GetUnchecked;
 use swiss_army_knife::vec::VecExt;
 
 
 /// Internationalized Resource Identifier (IRI).
+#[allow(unused_qualifications)]
 pub mod internationalized_resource_identifier;
 
 
@@ -117,6 +96,7 @@ include!("FromUnchecked.rs");
 include!("GetStringPredicateError.rs");
 include!("NTriples.rs");
 include!("Objects.rs");
+include!("PathDepth.rs");
 include!("Predicate.rs");
 include!("Predicates.rs");
 include!("RawIetfBcp47LanguageTag.rs");

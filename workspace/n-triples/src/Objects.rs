@@ -6,13 +6,13 @@
 #[derive(Default, Debug, Clone, Eq, PartialEq)]
 pub struct Objects<'a>
 {
-	absolute_internationalized_resource_identifiers: Vec<AbsoluteInternationalizedResourceIdentifier<'a>>,
+	absolute_internationalized_resource_identifiers: Vec<AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>>,
 
 	blank_nodes: Vec<BlankNodeLabel<'a>>,
 	
 	string_literals_by_language: MutableKeyHashMap<RawIetfBcp47LanguageTag<'a>, Vec<Cow<'a, str>>>,
 	
-	string_literals_by_absolute_internationalized_resource_identifier: MutableKeyHashMap<AbsoluteInternationalizedResourceIdentifier<'a>, Vec<Cow<'a, str>>>,
+	string_literals_by_absolute_internationalized_resource_identifier: MutableKeyHashMap<AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>, Vec<Cow<'a, str>>>,
 }
 
 impl<'a> TryToOwnInPlace for Objects<'a>
@@ -45,7 +45,7 @@ impl<'a> Objects<'a>
 {
 	/// Internationalized Resource Identifiers (IRIs).
 	#[inline(always)]
-	pub fn absolute_internationalized_resource_identifiers(&self) -> &[AbsoluteInternationalizedResourceIdentifier<'a>]
+	pub fn absolute_internationalized_resource_identifiers(&self) -> &[AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>]
 	{
 		&self.absolute_internationalized_resource_identifiers
 	}
@@ -79,7 +79,7 @@ impl<'a> Objects<'a>
 	///
 	/// If an entry is present, its value will never be an empty Vec.
 	#[inline(always)]
-	pub fn string_literals_by_absolute_internationalized_resource_identifier(&self) -> impl Iterator<Item=(&impl Borrow<AbsoluteInternationalizedResourceIdentifier<'a>>, &Vec<Cow<'a, str>>)>
+	pub fn string_literals_by_absolute_internationalized_resource_identifier(&self) -> impl Iterator<Item=(&impl Borrow<AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>>, &Vec<Cow<'a, str>>)>
 	{
 		self.string_literals_by_absolute_internationalized_resource_identifier.iter()
 	}
@@ -90,7 +90,7 @@ impl<'a> Objects<'a>
 	///
 	/// Use the `IRI::Simple` for unadorned string literals.
 	#[inline(always)]
-	pub fn get_string_literals_by_absolute_internationalized_resource_identifier(&self, absolute_internationalized_resource_identifier: &AbsoluteInternationalizedResourceIdentifier<'a>) -> Option<&Vec<Cow<'a, str>>>
+	pub fn get_string_literals_by_absolute_internationalized_resource_identifier(&self, absolute_internationalized_resource_identifier: &AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>) -> Option<&Vec<Cow<'a, str>>>
 	{
 		self.string_literals_by_absolute_internationalized_resource_identifier.get(absolute_internationalized_resource_identifier)
 	}

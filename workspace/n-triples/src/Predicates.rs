@@ -15,7 +15,7 @@ pub trait Predicates<'a>
 	fn get_simple_string(&self, predicate: &Predicate<'a>) -> Result<&str, GetPredicateError>;
 	
 	#[allow(missing_docs)]
-	fn get_absolute_internationalized_resource_identifiers(&self, predicate: &Predicate<'a>) -> Result<&[AbsoluteInternationalizedResourceIdentifier<'a>], GetPredicateError>;
+	fn get_absolute_internationalized_resource_identifiers(&self, predicate: &Predicate<'a>) -> Result<&[AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>], GetPredicateError>;
 }
 
 impl<'a> Predicates<'a> for HashMap<Predicate<'a>, Objects<'a>>
@@ -57,7 +57,7 @@ impl<'a> Predicates<'a> for HashMap<Predicate<'a>, Objects<'a>>
 		debug_assert_ne!(length, 0);
 		if length == 1
 		{
-			i64::from_str(vec.get_unchecked_safe(0).borrow()).map_err(IntegerParse)
+			i64::from_str(vec.get_unchecked_safe(0).borrow()).map_err(StringLiteralIsNotAnInteger)
 		}
 		else
 		{
@@ -85,7 +85,7 @@ impl<'a> Predicates<'a> for HashMap<Predicate<'a>, Objects<'a>>
 	}
 	
 	#[inline(always)]
-	fn get_absolute_internationalized_resource_identifiers(&self, predicate: &Predicate<'a>) -> Result<&[AbsoluteInternationalizedResourceIdentifier<'a>], GetPredicateError>
+	fn get_absolute_internationalized_resource_identifiers(&self, predicate: &Predicate<'a>) -> Result<&[AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>], GetPredicateError>
 	{
 		use GetPredicateError::*;
 		

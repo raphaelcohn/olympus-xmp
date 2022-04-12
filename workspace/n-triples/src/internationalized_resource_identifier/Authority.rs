@@ -89,13 +89,13 @@ impl<'a> Authority<'a>
 		fn parse_port_digit<const index: u32, const count: u32>(port_bytes_including_colon: &[u8]) -> Result<u32, PortParseError>
 		{
 			debug_assert_ne!(count, 0);
-			debug_assert!(count <= (Self::MaximumPortLengthInBytesWithoutColon as u32));
+			debug_assert!(count <= (Authority::MaximumPortLengthInBytesWithoutColon as u32));
 			debug_assert!(index < count);
 			
-			let byte = port_bytes.get_unchecked_value_safe(index + 1);
+			let byte = port_bytes_including_colon.get_unchecked_value_safe(index + 1);
 			let value = match byte
 			{
-				_0 .. _9 => (byte - _0) as u32,
+				_0 ..= _9 => (byte - _0) as u32,
 				
 				_ => return Err(InvalidCharacterIsNotADigit(byte)),
 			};

@@ -30,11 +30,11 @@ impl<T, const N: usize> Drop for ConstSmallVec<T, N>
 	}
 }
 
-impl<'a, T, const N: usize, const M: usize> const From<[T; M]> for ConstSmallVec<T, N>
+impl<T, const N: usize, const M: usize> const From<[T; M]> for ConstSmallVec<T, N>
 {
 	/// Will panic if `M` exceeds `N` (unless `T` is zero-sized).
 	#[inline(always)]
-	const unsafe fn from(array: [T; M]) -> Self
+	fn from(array: [T; M]) -> Self
 	{
 		if M > Self::capacity_of_stack()
 		{
@@ -50,7 +50,7 @@ impl<'a, T, const N: usize, const M: usize> const From<[T; M]> for ConstSmallVec
 		
 		Self
 		{
-			length_of_stack_or_capacity_of_heap: length_of_stack,
+			length_of_stack_or_capacity_of_heap: Self::capacity_of_stack(),
 			
 			stack_without_length_or_heap: StackWithoutLengthOrHeap
 			{
@@ -61,31 +61,22 @@ impl<'a, T, const N: usize, const M: usize> const From<[T; M]> for ConstSmallVec
 	
 }
 
-impl<T> const From<[T; 0]> for ConstSmallVec<T, N>
-{
-	#[inline(always)]
-	fn from(_array: [T; 0]) -> Self
-	{
-		Self::default()
-	}
-}
-
-impl<T, const N: usize> const From<[T; N]> for ConstSmallVec<T, N>
-{
-	#[inline(always)]
-	fn from(array: [T; N]) -> Self
-	{
-		Self
-		{
-			length_of_stack_or_capacity_of_heap: Self::capacity_of_stack(),
-			
-			stack_without_length_or_heap: StackWithoutLengthOrHeap
-			{
-				stack_without_length: StackWithoutLength::from(MaybeUninit::new(array)),
-			}
-		}
-	}
-}
+// impl<T, const N: usize> const From<[T; N]> for ConstSmallVec<T, N>
+// {
+// 	#[inline(always)]
+// 	default fn from(array: [T; N]) -> Self
+// 	{
+// 		Self
+// 		{
+// 			length_of_stack_or_capacity_of_heap: Self::capacity_of_stack(),
+//
+// 			stack_without_length_or_heap: StackWithoutLengthOrHeap
+// 			{
+// 				stack_without_length: StackWithoutLength::from(MaybeUninit::new(array)),
+// 			}
+// 		}
+// 	}
+// }
 
 impl<'a, T: Copy, const N: usize> const From<&'a [T]> for ConstSmallVec<T, N>
 {
@@ -356,12 +347,12 @@ impl<T, const N: usize> ConstSmallVec<T, N>
 		let current_capacity = Self::capacity_of_stack();
 		let required_capacity = required_capacity!(current_length, current_capacity, additional, (self.stack_without_length_or_heap.stack_without_length().non_null_pointer(), current_length, curent_length_ref_mut))?;
 		
-		let new_capacity = NGC::calculate(current_capacity, required_capacity)?;
+		let new_capacity = NGC::calculate::<T>(current_capacity, required_capacity)?;
 		let new_layout = Self::new_layout(new_capacity)?;
 		let allocator = Self::allocator();
-		let allocation = match allocator.allocate(layout)
+		let allocation = match allocator.allocate(new_layout)
 		{
-			Err(alloc_error) => return Self::alloc_error(alloc_error, layout),
+			Err(alloc_error) => return Self::alloc_error(alloc_error, new_layout),
 			
 			Ok(allocation) => allocation,
 		};
@@ -416,7 +407,7 @@ impl<T, const N: usize> ConstSmallVec<T, N>
 	}
 	
 	#[inline(always)]
-	fn alloc_error(alloc_error: AllocError, layout: Layout) -> Result<(NonNull<[T]>, usize, &mut usize), TryReserveError>
+	fn alloc_error<'a>(alloc_error: AllocError, layout: Layout) -> Result<(NonNull<[T]>, usize, &'a mut usize), TryReserveError>
 	{
 		let _ = alloc_error;
 		Err(TryReserveErrorKind::AllocError { layout, non_exhaustive: () }.into())
@@ -440,7 +431,7 @@ impl<T, const N: usize> ConstSmallVec<T, N>
 	#[inline(always)]
 	fn guard_allocation_does_exceed_isize_max_on_16_bit_and_32_bit_platforms(new_layout: Layout) -> Result<Layout, TryReserveError>
 	{
-		if cfg!(not((target_pointer_width = "64")))
+		if cfg!(not(target_pointer_width = "64"))
 		{
 			if new_layout.size() > (isize::MAX as usize)
 			{
@@ -506,9 +497,9 @@ impl<T, const N: usize> ConstSmallVec<T, N>
 	#[inline(always)]
 	const fn capacity_of_stack() -> usize
 	{
-		const ElementsAreZeroSized: bool = size_of::<T>() == 0;
+		let elements_are_zero_sized = size_of::<T>() == 0;
 		
-		if ElementsAreZeroSized
+		if elements_are_zero_sized
 		{
 			usize::MAX
 		}
@@ -533,7 +524,7 @@ impl<T, const N: usize> ConstSmallVec<T, N>
 	}
 	
 	#[inline(always)]
-	fn allocator() -> &mut impl Allocator
+	fn allocator() -> &'static mut impl Allocator
 	{
 		static Allocator: Global = Global;
 		&mut Allocator

@@ -7,5 +7,5 @@ pub(super) enum LiteralTag<'a>
 {
 	Language(RawIetfBcp47LanguageTag<'a>),
 	
-	Datatype(AbsoluteInternationalizedResourceIdentifier<'a>),
+	Datatype(AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>),
 }

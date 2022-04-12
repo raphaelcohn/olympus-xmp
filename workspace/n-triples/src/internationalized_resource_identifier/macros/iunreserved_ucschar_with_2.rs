@@ -6,10 +6,10 @@
 ///
 /// `ucschar = %xA0-D7FF / %xF900-FDCF / %xFDF0-FFEF / %x10000-1FFFD / %x20000-2FFFD / %x30000-3FFFD / %x40000-4FFFD / %x50000-5FFFD / %x60000-6FFFD / %x70000-7FFFD / %x80000-8FFFD / %x90000-9FFFD / %xA0000-AFFFD / %xB0000-BFFFD / %xC0000-CFFFD / %xD0000-DFFFD / %xE1000-EFFFD`.
 /// Instead of one macro, we separate by UTF-8 encoding count.
-macro_rules! ipchar_iunreserved_ucschar_2
+macro_rules! iunreserved_with_ucschar_2
 {
 	() =>
 	{
-		iunreserved_ucschar_2!()
+		crate::xA0 ..= crate::x07FF
 	}
 }

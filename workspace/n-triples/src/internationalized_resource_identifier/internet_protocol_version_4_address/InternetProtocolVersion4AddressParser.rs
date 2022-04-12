@@ -11,21 +11,21 @@ impl InternetProtocolVersion4AddressParser
 	pub(super) fn parse_knowing_octet_1_is_0_to_9(ihost_and_port_bytes: &[u8]) -> Result<(Ipv4Addr, &[u8]), InternetProtocolVersion4AddressParseError>
 	{
 		use InternetProtocolVersion4AddressOctetNumber::One;
-		Self::parse_remaining_three_octets(Self::parse_octet_0_to_9::<One>(ihost_and_port_bytes))
+		Self::parse_remaining_three_octets(Self::parse_octet_0_to_9::<{One}>(ihost_and_port_bytes))
 	}
 	
 	#[inline(always)]
 	pub(super) fn parse_knowing_octet_1_is_10_to_99(ihost_and_port_bytes: &[u8], octet0_byte1: u8) -> Result<(Ipv4Addr, &[u8]), InternetProtocolVersion4AddressParseError>
 	{
 		use InternetProtocolVersion4AddressOctetNumber::One;
-		Self::parse_remaining_three_octets(Self::parse_octet_10_to_99::<One>(ihost_and_port_bytes, octet0_byte1))
+		Self::parse_remaining_three_octets(Self::parse_octet_10_to_99::<{One}>(ihost_and_port_bytes, octet0_byte1))
 	}
 	
 	#[inline(always)]
 	pub(super) fn parse_knowing_octet_1_is_100_to_255(ihost_and_port_bytes: &[u8], octet0_byte1: u8, octet0_byte2: u8) -> Result<(Ipv4Addr, &[u8]), InternetProtocolVersion4AddressParseError>
 	{
 		use InternetProtocolVersion4AddressOctetNumber::One;
-		Self::parse_remaining_three_octets(Self::parse_octet_100_to_255::<One>(ihost_and_port_bytes, octet0_byte1, octet0_byte2))
+		Self::parse_remaining_three_octets(Self::parse_octet_100_to_255::<{One}>(ihost_and_port_bytes, octet0_byte1, octet0_byte2))
 	}
 	
 	#[inline(always)]
@@ -65,14 +65,14 @@ impl InternetProtocolVersion4AddressParser
 		let (possible_octet2_byte1, is_period) = InternetProtocolVersion4AddressParser::get_byte_and_check_if_it_is_period_index_1(remaining_bytes);
 		if is_period
 		{
-			Self::parse_octet_0_to_9::<Two>(remaining_bytes)
+			Self::parse_octet_0_to_9::<{Two}>(remaining_bytes)
 		}
 		else
 		{
 			let (possible_octet2_byte2, is_period) = InternetProtocolVersion4AddressParser::get_byte_and_check_if_it_is_period_index_2(remaining_bytes);
 			if is_period
 			{
-				Self::parse_octet_10_to_99::<Two>(remaining_bytes, possible_octet2_byte1)
+				Self::parse_octet_10_to_99::<{Two}>(remaining_bytes, possible_octet2_byte1)
 			}
 			else
 			{
@@ -80,7 +80,7 @@ impl InternetProtocolVersion4AddressParser
 				{
 					return Err(InternetProtocolVersion4AddressParseError::ThreeDigitSecondOctetNotFollowedByPeriod)
 				}
-				Self::parse_octet_100_to_255::<Two>(remaining_bytes, possible_octet2_byte1, possible_octet2_byte2)
+				Self::parse_octet_100_to_255::<{Two}>(remaining_bytes, possible_octet2_byte1, possible_octet2_byte2)
 			}
 		}
 	}
@@ -98,14 +98,14 @@ impl InternetProtocolVersion4AddressParser
 		let (possible_octet3_byte1, is_period) = InternetProtocolVersion4AddressParser::get_byte_and_check_if_it_is_period_index_1(remaining_bytes);
 		if is_period
 		{
-			Self::parse_octet_0_to_9::<Three>(remaining_bytes)
+			Self::parse_octet_0_to_9::<{Three}>(remaining_bytes)
 		}
 		else
 		{
 			let (possible_octet3_byte2, is_period) = InternetProtocolVersion4AddressParser::get_byte_and_check_if_it_is_period_index_2(remaining_bytes);
 			if is_period
 			{
-				Self::parse_octet_10_to_99::<Two>(remaining_bytes, possible_octet3_byte1)
+				Self::parse_octet_10_to_99::<{Three}>(remaining_bytes, possible_octet3_byte1)
 			}
 			else
 			{
@@ -117,7 +117,7 @@ impl InternetProtocolVersion4AddressParser
 				{
 					return Err(ThreeDigitThirdOctetNotFollowedByPeriod)
 				}
-				Self::parse_octet_100_to_255::<Two>(remaining_bytes, possible_octet3_byte1, possible_octet3_byte2)
+				Self::parse_octet_100_to_255::<{Three}>(remaining_bytes, possible_octet3_byte1, possible_octet3_byte2)
 			}
 		}
 	}
@@ -129,13 +129,13 @@ impl InternetProtocolVersion4AddressParser
 		
 		match remaining_bytes.len()
 		{
-			0 => Err(InternetProtocolVersion4AddressParseError::RemainingOctetTooShort(length)),
+			0 => Err(InternetProtocolVersion4AddressParseError::RemainingOctetTooShort),
 			
-			1 => Self::parse_octet_0_to_9(remaining_bytes),
+			1 => Self::parse_octet_0_to_9::<{Four}>(remaining_bytes),
 			
-			2 => Self::parse_octet_10_to_99(remaining_bytes, remaining_bytes.get_unchecked_value_safe(1)),
+			2 => Self::parse_octet_10_to_99::<{Four}>(remaining_bytes, remaining_bytes.get_unchecked_value_safe(1)),
 			
-			_ => Self::parse_octet_100_to_255(remaining_bytes, remaining_bytes.get_unchecked_value_safe(1), remaining_bytes.get_unchecked_value_safe(2)),
+			_ => Self::parse_octet_100_to_255::<{Four}>(remaining_bytes, remaining_bytes.get_unchecked_value_safe(1), remaining_bytes.get_unchecked_value_safe(2)),
 		}
 	}
 	
@@ -203,10 +203,10 @@ impl InternetProtocolVersion4AddressParser
 		
 		let octet = match Self::get_0(remaining_bytes)
 		{
-			/// Parse 100-199.
-			_1 => match octet0_byte1
+			// Parse 100-199.
+			_1 => match octet_byte1
 			{
-				valid_times_10 @ DIGIT!() => match octet0_byte2
+				valid_times_10 @ DIGIT!() => match octet_byte2
 				{
 					valid @ DIGIT!() => 100 + Self::digit_to_value_times_10(valid_times_10) + Self::digit_to_value(valid),
 					
@@ -216,11 +216,11 @@ impl InternetProtocolVersion4AddressParser
 				invalid @ _ => return Self::invalid_digit::<octet_number>(invalid, SecondDigitMustBeBetween0To9Inclusive)
 			},
 			
-			/// Parse 200-255.
-			_2 => match octet0_byte1
+			// Parse 200-255.
+			_2 => match octet_byte1
 			{
 				// Parse 200-249.
-				valid_times_10 @ _0 ..= _4 => match octet0_byte2
+				valid_times_10 @ _0 ..= _4 => match octet_byte2
 				{
 					valid @ DIGIT!() => 200 + Self::digit_to_value_times_10(valid_times_10) + Self::digit_to_value(valid),
 					
@@ -228,7 +228,7 @@ impl InternetProtocolVersion4AddressParser
 				},
 				
 				// Parse 250-255.
-				_5 => match octet0_byte2
+				_5 => match octet_byte2
 				{
 					valid @ _0 ..= _5 => 200 + 50 + Self::digit_to_value(valid),
 					
@@ -353,6 +353,6 @@ impl InternetProtocolVersion4AddressParser
 	#[inline(always)]
 	const fn invalid_digit<E: error::Error + Into<InternetProtocolVersion4AddressOctetParseError>, const octet_number: InternetProtocolVersion4AddressOctetNumber>(invalid: u8, error: E) -> Result<u8, InternetProtocolVersion4AddressParseError>
 	{
-		Err(InternetProtocolVersion4AddressOctetParseError { octet_number, cause: error.into() })
+		Err(InternetProtocolVersion4AddressParseError::InternetProtocolVersion4AddressOctetParse { octet_number, cause: error.into() })
 	}
 }
