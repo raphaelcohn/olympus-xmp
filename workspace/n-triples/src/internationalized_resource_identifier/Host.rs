@@ -16,6 +16,15 @@ pub enum Host<'a>
 	InternetProtocolVersion6Address(Ipv6Addr),
 }
 
+impl<'a> const FromUnchecked<&'a str> for Host<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(host_name: &'a str) -> Self
+	{
+		Self::from(HostName::from_unchecked(host_name))
+	}
+}
+
 impl<'a> const From<HostName<'a>> for Host<'a>
 {
 	#[inline(always)]

@@ -40,20 +40,3 @@ impl<'a> TryToOwn for Subject<'a>
 		Ok(unsafe { transmute(self) })
 	}
 }
-
-impl Subject<'static>
-{
-	#[allow(missing_docs)]
-	#[inline(always)]
-	pub const unsafe fn from_absolute_internationalized_resource_identifier_string(absolute_internationalized_resource_identifier: AbsoluteInternationalizedResourceIdentifier<'static, PathDepth>) -> Self
-	{
-		Subject::AbsoluteInternationalizedResourceIdentifier(absolute_internationalized_resource_identifier)
-	}
-	
-	#[allow(missing_docs)]
-	#[inline(always)]
-	pub const unsafe fn from_blank_label_node_string(blank_label_node: String) -> Self
-	{
-		Subject::BlankNode(BlankNodeLabel::from_unchecked(blank_label_node))
-	}
-}

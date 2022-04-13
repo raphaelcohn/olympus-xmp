@@ -120,3 +120,4 @@ include!("Scheme.rs");
 include!("SchemeParseError.rs");
 include!("UserInformation.rs");
 include!("UserInformationParseError.rs");
+include!("WithPathSegmentError.rs");

@@ -94,25 +94,47 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 {
 	/// Http.
 	#[inline(always)]
-	pub const fn http<A, const M: usize>(authority: A, path_segments: [PathSegment<'a>; M]) -> Self
-	where Authority<'a>: ~const From<A>
+	pub const fn http<A, P, const M: usize>(authority: A, path_segments: [P; M]) -> Self
+	where Authority<'a>: ~const FromUnchecked<A>, PathSegment<'a>: ~const FromUnchecked<P>,
 	{
 		Self::new_scheme_and_authority(Scheme::http, authority, path_segments)
 	}
 	
 	/// Https.
 	#[inline(always)]
-	pub const fn https<A, const M: usize>(authority: A, path_segments: [PathSegment<'a>; M]) -> Self
-	where Authority<'a>: ~const From<A>
+	pub const fn https<A, P, const M: usize>(authority: A, path_segments: [P; M]) -> Self
+	where Authority<'a>: ~const FromUnchecked<A>, PathSegment<'a>: ~const FromUnchecked<P>,
 	{
 		Self::new_scheme_and_authority(Scheme::https, authority, path_segments)
 	}
 	
 	#[inline(always)]
-	const fn new_scheme_and_authority<A, const M: usize>(scheme: Scheme<'a>, authority: A, path_segments: [PathSegment<'a>; M]) -> Self
-	where Authority<'a>: ~const From<A>
+	const fn new_scheme_and_authority<A, P, const M: usize>(scheme: Scheme<'a>, authority: A, path_segments: [P; M]) -> Self
+	where Authority<'a>: ~const FromUnchecked<A>, PathSegment<'a>: ~const FromUnchecked<P>,
 	{
-		Self::new_minimal(scheme, Authority::from(authority).with(path_segments))
+		let authority = unsafe { Authority::from_unchecked(authority) };
+		let path_segments = unsafe { PathSegments::from_unchecked(path_segments) };
+		Self::new_minimal(scheme, authority.with(path_segments))
+	}
+	
+	/// Appends a path segment.
+	///
+	/// Not const, but potentially could be.
+	/// If the hierarchy is `Hierarchy::EmptyPath`, it is converted according to the argument `convert_empty_path_to_absolute`:-
+	///
+	/// * If `true`, empty path becomes an absolute path.
+	/// * If `false`, empty path becomes a rootless path.
+	///
+	/// Failure:-
+	/// * Can fail with an `Err()` if there is not enough memory.
+	/// * If the `path_segment` is empty and the hierarchy is `Hierarchy::EmptyPath`.
+	#[inline(always)]
+	pub fn with_path_segment<P, const convert_empty_path_to_absolute: bool>(mut self, path_segment: P) -> Result<Self, WithPathSegmentError>
+	where PathSegment<'a>: FromUnchecked<P>
+	{
+		let path_segment = unsafe { PathSegment::from_unchecked(path_segment) };
+		self.hierarchy.with_path_segment::<convert_empty_path_to_absolute>(path_segment)?;
+		Ok(self)
 	}
 	
 	/// Replace query.
@@ -126,10 +148,12 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 	/// Replace query (const).
 	///
 	/// Only works if the query is previously `None`; panics if it was not.
+	/// Does not check that the query is valid.
 	#[inline(always)]
-	pub const fn with_query_const(mut self, query: Query<'a>) -> Self
+	pub const fn with_query_const<Q>(mut self, query: Q) -> Self
+	where Query<'a>: ~const FromUnchecked<Q>
 	{
-		let was = self.query.replace(query);
+		let was = self.query.replace(unsafe { Query::from_unchecked(query) });
 		if was.is_some()
 		{
 			panic!("query was Some()")
@@ -149,10 +173,12 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 	/// Replace hash fragment (const).
 	///
 	/// Only works if the hash fragment is previously `None`; panics if it was not.
+	/// Does not check that the hash fragment is valid.
 	#[inline(always)]
-	pub const fn with_hash_fragment_const(mut self, hash_fragment: HashFragment<'a>) -> Self
+	pub const fn with_hash_fragment_const<HF>(mut self, hash_fragment: HF) -> Self
+	where HashFragment<'a>: ~const FromUnchecked<HF>
 	{
-		let was = self.hash_fragment.replace(hash_fragment);
+		let was = self.hash_fragment.replace(unsafe { HashFragment::from_unchecked(hash_fragment) });
 		if was.is_some()
 		{
 			panic!("hash_fragment was Some()")
@@ -230,7 +256,7 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 	const fn http_www_w3_org<HF, const M: usize>(path_segments: [PathSegment<'a>; M], hash_fragment: HF) -> Self
 	where HashFragment<'a>: ~const FromUnchecked<HF>
 	{
-		Self::http(HostName::www_w3_org, path_segments).with_hash_fragment_const(unsafe { HashFragment::from_unchecked(hash_fragment) })
+		Self::http("www.w3.org", path_segments).with_hash_fragment_const(hash_fragment)
 	}
 	
 	#[inline(always)]
@@ -292,6 +318,7 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 			{
 				let mut this = AbsoluteInternationalizedResourceIdentifier::<PathDepth>::try_from(owned.as_str())?;
 				this.try_to_own_in_place()?;
+				// This is horrible; Rust does not allow transmute on types with const generics.
 				return Ok(unsafe { std::mem::transmute_copy(&this) })
 			},
 		};

@@ -13,7 +13,7 @@ pub enum Hierarchy<'a, const PathDepth: usize>
 		authority: Authority<'a>,
 		
 		/// Zero or more; each path segment can be empty.
-		path_segments: PathSegments<'a, PathDepth>,
+		absolute_path: PathSegments<'a, PathDepth>,
 	},
 	
 	/// Starts `/`.
@@ -37,10 +37,10 @@ impl<'a, const PathDepth: usize> TryToOwnInPlace for Hierarchy<'a, PathDepth>
 		
 		match self
 		{
-			AuthorityAndAbsolutePath { authority, path_segments } =>
+			AuthorityAndAbsolutePath { authority, absolute_path } =>
 			{
 				authority.try_to_own_in_place()?;
-				path_segments.try_to_own_in_place()
+				absolute_path.try_to_own_in_place()
 			}
 			
 			AbsolutePath(non_empty_path) => non_empty_path.try_to_own_in_place(),
@@ -65,7 +65,7 @@ impl<'a, const PathDepth: usize> TryToOwn for Hierarchy<'a, PathDepth>
 		(
 			match self
 			{
-				AuthorityAndAbsolutePath { authority, path_segments } => AuthorityAndAbsolutePath { authority: authority.try_to_own()?, path_segments: path_segments.try_to_own()? },
+				AuthorityAndAbsolutePath { authority, absolute_path } => AuthorityAndAbsolutePath { authority: authority.try_to_own()?, absolute_path: absolute_path.try_to_own()? },
 				
 				AbsolutePath(non_empty_path) => AbsolutePath(non_empty_path.try_to_own()?),
 				
@@ -83,23 +83,70 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 	///
 	/// Prefer `Authority.with()` over this method.
 	#[inline(always)]
-	pub const fn new_authority_and_absolute_path<const M: usize>(authority: Authority<'a>, path_segments: [PathSegment<'a>; M]) -> Self
+	pub const fn new_authority_and_absolute_path(authority: Authority<'a>, path_segments: PathSegments<'a, PathDepth>) -> Self
 	{
 		authority.with(path_segments)
 	}
 	
 	/// New instance.
 	#[inline(always)]
-	pub const fn new_absolute_path<const M: usize>(first_non_empty_path_segment: NonEmptyPathSegment<'a>, remaining_path_segments: [PathSegment<'a>; M]) -> Self
+	pub const fn new_absolute_path(first_non_empty_path_segment: NonEmptyPathSegment<'a>, remaining_path_segments: PathSegments<'a, PathDepth>) -> Self
 	{
 		Hierarchy::AbsolutePath(NonEmptyPath::new(first_non_empty_path_segment, remaining_path_segments))
 	}
 	
 	/// New instance.
 	#[inline(always)]
-	pub const fn new_rootless_path<const M: usize>(first_non_empty_path_segment: NonEmptyPathSegment<'a>, remaining_path_segments: [PathSegment<'a>; M]) -> Self
+	pub const fn new_rootless_path(first_non_empty_path_segment: NonEmptyPathSegment<'a>, remaining_path_segments: PathSegments<'a, PathDepth>) -> Self
 	{
 		Hierarchy::RootlessPath(NonEmptyPath::new(first_non_empty_path_segment, remaining_path_segments))
+	}
+	
+	/// Appends a path segment.
+	///
+	/// Not const, but potentially could be.
+	/// If the hierarchy is `Hierarchy::EmptyPath`, it is converted according to the argument `convert_empty_path_to_absolute`:-
+	///
+	/// * If `true`, empty path becomes an absolute path.
+	/// * If `false`, empty path becomes a rootless path.
+	///
+	/// Failure:-
+	/// * Can fail with an `Err()` if there is not enough memory.
+	/// * If the `path_segment` is empty and the hierarchy is `Hierarchy::EmptyPath`.
+	#[inline(always)]
+	pub fn with_path_segment<const convert_empty_path_to_absolute: bool>(&mut self, path_segment: PathSegment<'a>) -> Result<(), WithPathSegmentError>
+	{
+		use Hierarchy::*;
+		match self
+		{
+			AuthorityAndAbsolutePath { absolute_path, .. } => absolute_path.with_path_segment(path_segment)?,
+			
+			AbsolutePath(non_empty_path) => non_empty_path.with_path_segment(path_segment)?,
+			
+			RootlessPath(non_empty_path) => non_empty_path.with_path_segment(path_segment)?,
+			
+			EmptyPath =>
+			{
+				if path_segment.is_empty()
+				{
+					return Err(WithPathSegmentError::HierarchyIsEmptyPathAndPathSegmentIsEmpty)
+				}
+				
+				let first_non_empty_path_segment = NonEmptyPathSegment::try_from(path_segment).map_err(|()| WithPathSegmentError::HierarchyIsEmptyPathAndPathSegmentIsEmpty)?;
+				let non_empty_path = NonEmptyPath::new_minimal(first_non_empty_path_segment);
+				
+				*self = if convert_empty_path_to_absolute
+				{
+					AbsolutePath(non_empty_path)
+				}
+				else
+				{
+					RootlessPath(non_empty_path)
+				};
+			}
+		}
+		
+		Ok(())
 	}
 	
 	/// `ihier-part = "//" iauthority ipath-abempty / ipath-absolute / ipath-rootless / ipath-empty`.
@@ -209,7 +256,7 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 	#[inline(always)]
 	fn parse_iauthority_ipath_abempty(remaining_utf8_bytes: &'a [u8]) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
 	{
-		let mut path_segments = PathSegments::default();
+		let mut absolute_path = PathSegments::default();
 		
 		let (authority, parse_next) = match memchr3(QuestionMark, Hash, Slash, remaining_utf8_bytes)
 		{
@@ -235,7 +282,7 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 					Hash => ParseNextAfterHierarchy::fragment_no_query(after_authority_bytes),
 					
 					// after_authority_bytes is the start of the absolute path.
-					Slash => path_segments.parse(after_authority_bytes)?,
+					Slash => absolute_path.parse(after_authority_bytes)?,
 					
 					_ => unreachable_code_const("memchr3")
 				};
@@ -244,7 +291,7 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 			}
 		};
 		
-		Ok((Hierarchy::AuthorityAndAbsolutePath { authority, path_segments }, parse_next))
+		Ok((Hierarchy::AuthorityAndAbsolutePath { authority, absolute_path }, parse_next))
 	}
 	
 	#[inline(always)]

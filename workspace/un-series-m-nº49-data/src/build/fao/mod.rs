@@ -7,7 +7,6 @@ use n_triples::parser::NTriplesParseError;
 use n_triples::Predicate;
 use n_triples::Predicates;
 use n_triples::Subject;
-use std::error;
 use std::path::Path;
 use super::m49_code_string;
 use super::StaticM49Code;

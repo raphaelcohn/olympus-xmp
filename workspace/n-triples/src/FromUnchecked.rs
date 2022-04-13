@@ -12,11 +12,12 @@ pub trait FromUnchecked<T>: Sized
 }
 
 impl<T> const FromUnchecked<T> for T
+where T: From<T>
 {
 	#[inline(always)]
 	unsafe fn from_unchecked(value: T) -> Self
 	{
-		value
+		T::from(value)
 	}
 }
 

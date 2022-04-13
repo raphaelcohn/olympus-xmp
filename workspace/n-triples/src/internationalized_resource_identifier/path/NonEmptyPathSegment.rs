@@ -65,6 +65,24 @@ impl<'a> const Deref for NonEmptyPathSegment<'a>
 	}
 }
 
+impl<'a> TryFrom<PathSegment<'a>> for NonEmptyPathSegment<'a>
+{
+	type Error = ();
+	
+	#[inline(always)]
+	fn try_from(value: PathSegment<'a>) -> Result<Self, Self::Error>
+	{
+		if value.is_empty()
+		{
+			Err(())
+		}
+		else
+		{
+			Ok(Self(value.0))
+		}
+	}
+}
+
 impl<'a> NonEmptyPathSegment<'a>
 {
 	#[inline(always)]

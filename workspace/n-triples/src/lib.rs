@@ -29,8 +29,12 @@
 #![feature(allocator_api)]
 #![feature(const_convert)]
 #![feature(const_deref)]
+#![feature(const_maybe_uninit_write)]
 #![feature(const_mut_refs)]
 #![feature(const_option)]
+#![feature(const_ptr_offset)]
+#![feature(const_ptr_read)]
+#![feature(const_refs_to_cell)]
 #![feature(const_trait_impl)]
 #![feature(const_try)]
 #![feature(generic_arg_infer)]
@@ -39,6 +43,8 @@
 #![feature(slice_ptr_len)]
 #![feature(try_reserve_kind)]
 #![feature(untagged_unions)]
+#![feature(maybe_uninit_uninit_array)]
+#![feature(maybe_uninit_array_assume_init)]
 
 
 //! #n-triples.

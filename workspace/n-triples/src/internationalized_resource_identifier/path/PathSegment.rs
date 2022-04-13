@@ -36,6 +36,15 @@ impl<'a> const FromUnchecked<Cow<'a, str>> for PathSegment<'a>
 	}
 }
 
+impl<'a> const From<NonEmptyPathSegment<'a>> for PathSegment<'a>
+{
+	#[inline(always)]
+	fn from(value: NonEmptyPathSegment<'a>) -> Self
+	{
+		unsafe { transmute(value) }
+	}
+}
+
 impl<'a> Into<Cow<'a, str>> for PathSegment<'a>
 {
 	#[inline(always)]

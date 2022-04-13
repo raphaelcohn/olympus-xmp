@@ -26,6 +26,38 @@ impl<'a, const PathDepth: usize> TryToOwn for PathSegments<'a, PathDepth>
 	}
 }
 
+impl<'a, P, const PathDepth: usize, const M: usize> const FromUnchecked<[P; M]> for PathSegments<'a, PathDepth>
+where PathSegment<'a>: ~const FromUnchecked<P>,
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(array: [P; M]) -> Self
+	{
+		let mut into_array: [MaybeUninit<PathSegment<'a>>; M] = MaybeUninit::uninit_array();
+		let mut index = 0;
+		let array_pointer = array.as_ptr();
+		while index != M
+		{
+			let from_unchecked = read(array_pointer.add(index));
+			let into = PathSegment::from_unchecked(from_unchecked);
+			let _ = into_array[index].write(into);
+			index += 1;
+		}
+		
+		let _ = ManuallyDrop::new(array);
+		
+		// Substitute for non-const MaybeUninit::array_assume_init().
+		#[inline(always)]
+		const unsafe fn array_assume_init<T, const N: usize>(array: [MaybeUninit<T>; N]) -> [T; N]
+		{
+			let init = (&array as *const _ as *const [T; N]).read();
+			let _ = ManuallyDrop::new(array);
+			init
+		}
+		
+		Self::from(array_assume_init(into_array))
+	}
+}
+
 impl<'a, const PathDepth: usize, const M: usize> const From<[PathSegment<'a>; M]> for PathSegments<'a, PathDepth>
 {
 	#[inline(always)]
@@ -84,6 +116,20 @@ impl<'a, const PathDepth: usize> const Default for PathSegments<'a, PathDepth>
 
 impl<'a, const PathDepth: usize> PathSegments<'a, PathDepth>
 {
+	/// Empty.
+	pub const Empty: Self = Self::default();
+	
+	/// Appends a path segment.
+	///
+	/// Not const, but potentially could be.
+	///
+	/// Can fail with an `Err()` if there is not enough memory.
+	#[inline(always)]
+	pub fn with_path_segment(&mut self, path_segment: PathSegment<'a>) -> Result<(), TryReserveError>
+	{
+		self.0.try_reserve_push(path_segment)
+	}
+	
 	/// Assumes that on input `remaining_utf8_bytes` is positioned just to the right of any `Slash`, i.e. `Slash` would be at `remaining_utf8_bytes[-1]`.
 	#[inline(always)]
 	pub(super) fn parse(&mut self, mut remaining_utf8_bytes: &'a [u8]) -> Result<ParseNextAfterHierarchy<'a>, PathSegmentsParseError>

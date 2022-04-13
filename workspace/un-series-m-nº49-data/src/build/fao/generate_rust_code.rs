@@ -3,6 +3,8 @@
 
 
 use std::borrow::Borrow;
+use n_triples::PathDepth;
+use n_triples::internationalized_resource_identifier::AbsoluteInternationalizedResourceIdentifier;
 
 #[inline(always)]
 pub(super) fn generate_rust_code(out_folder_path: &Path) -> Result<(), NTriplesParseError>
@@ -20,10 +22,9 @@ pub(super) fn generate_rust_code(out_folder_path: &Path) -> Result<(), NTriplesP
 
 fn process_n_triples(m49_code: StaticM49Code, n_triples_file_bytes: &'static [u8])
 {
-	const GeoM49Prefix: &'static str = "http://stats-class.fao.uniroma2.it/geo/m49/";
-	
+	const GeoM49: AbsoluteInternationalizedResourceIdentifier<'static, PathDepth> = AbsoluteInternationalizedResourceIdentifier::http("stats-class.fao.uniroma2.it", ["geo", "m49"]);
 	let m49_code_string = m49_code_string(*m49_code);
-	let subject = Subject::from_absolute_internationalized_resource_identifier_string(format!("{}{}", GeoM49Prefix, m49_code_string));
+	let subject = Subject::AbsoluteInternationalizedResourceIdentifier(GeoM49.with_path_segment::<_, true>(m49_code_string.clone()).unwrap());
 	{
 		macro_rules! expect
 		{
@@ -90,24 +91,30 @@ fn process_n_triples(m49_code: StaticM49Code, n_triples_file_bytes: &'static [u8
 				}
 			}
 			
-			// eg "953".
-			const GeopoliticalCodeFAOSTAT: Predicate<'static> = Predicate::from("http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT");
+			const FaoOntologiesGeopolitical: Predicate<'static> = Predicate::http("stats-class.fao.uniroma2.it", ["ontologies", "geopolitical"]);
+			
+			/// `"http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeFAOSTAT"`.
+			/// eg "953".
+			const GeopoliticalCodeFAOSTAT: Predicate<'static> = FaoOntologiesGeopolitical.with_hash_fragment_const("codeFAOSTAT");
 			let code_fao_stat = simple_string!(GeopoliticalCodeFAOSTAT);
 			
-			// eg "001".
-			const GeopoliticalCodeUN: Predicate<'static> = Predicate::from("http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN");
+			/// `http://stats-class.fao.uniroma2.it/ontologies/geopolitical#codeUN`.
+			/// eg "001".
+			const GeopoliticalCodeUN: Predicate<'static> = FaoOntologiesGeopolitical.with_hash_fragment_const("codeUN");
 			let code_un = simple_string!(GeopoliticalCodeUN);
 			
-			// Should have 1 or more.
-			// All look like 'http://stats-class.fao.uniroma2.it/geo/m49/142'.
-			const GeopoliticalHasMember: Predicate<'static> = Predicate::from("http://stats-class.fao.uniroma2.it/ontologies/geopolitical#hasMember");
+			/// `http://stats-class.fao.uniroma2.it/ontologies/geopolitical#hasMember`.
+			/// Should have 1 or more.
+			/// All look like 'http://stats-class.fao.uniroma2.it/geo/m49/142'.
+			const GeopoliticalHasMember: Predicate<'static> = FaoOntologiesGeopolitical.with_hash_fragment_const("hasMember");
 			for member in absolute_internationalized_resource_identifiers!(GeopoliticalHasMember)
 			{
 				eprintln!("Member {:?}", member)
 			}
 			
-			// eg "World".
-			const GeopoliticalNameShortEnglish: Predicate<'static> = Predicate::from("http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN");
+			/// `http://stats-class.fao.uniroma2.it/ontologies/geopolitical#nameShortEN`.
+			/// eg "World".
+			const GeopoliticalNameShortEnglish: Predicate<'static> =  FaoOntologiesGeopolitical.with_hash_fragment_const("nameShortEN");
 			let name_short_en = simple_string!(GeopoliticalNameShortEnglish);
 			
 			// eg 'false'.

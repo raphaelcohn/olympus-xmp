@@ -121,8 +121,6 @@ impl<'a> HostName<'a>
 
 impl HostName<'static>
 {
-	/// `wwww.w3.org`.
-	pub const www_w3_org: Self = unsafe { Self::from_unchecked("www.w3.org") };
-	
-	const Empty: Self = HostName(Cow::Borrowed(""));
+	/// Empty host name.
+	pub const Empty: Self = HostName(Cow::Borrowed(""));
 }

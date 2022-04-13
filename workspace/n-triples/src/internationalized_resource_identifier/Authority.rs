@@ -38,12 +38,12 @@ impl<'a> TryToOwn for Authority<'a>
 	}
 }
 
-impl<'a> const From<Host<'a>> for Authority<'a>
+impl<'a> const FromUnchecked<&'a str> for Authority<'a>
 {
 	#[inline(always)]
-	fn from(host: Host<'a>) -> Self
+	unsafe fn from_unchecked(host_name: &'a str) -> Self
 	{
-		Self::new_for_host(host)
+		Self::new_for_host(Host::from_unchecked(host_name))
 	}
 }
 
@@ -53,6 +53,15 @@ impl<'a> const From<HostName<'a>> for Authority<'a>
 	fn from(host_name: HostName<'a>) -> Self
 	{
 		Self::new_for_host_name(host_name)
+	}
+}
+
+impl<'a> const From<Host<'a>> for Authority<'a>
+{
+	#[inline(always)]
+	fn from(host: Host<'a>) -> Self
+	{
+		Self::new_for_host(host)
 	}
 }
 
@@ -100,12 +109,12 @@ impl<'a> Authority<'a>
 	
 	/// New hierarchy.
 	#[inline(always)]
-	pub const fn with<const M: usize, const PathDepth: usize>(self, path_segments: [PathSegment<'a>; M]) -> Hierarchy<'a, PathDepth>
+	pub const fn with<const PathDepth: usize>(self, path_segments: PathSegments<'a, PathDepth>) -> Hierarchy<'a, PathDepth>
 	{
 		Hierarchy::AuthorityAndAbsolutePath
 		{
 			authority: self,
-			path_segments: PathSegments::from(path_segments),
+			absolute_path: path_segments,
 		}
 	}
 	

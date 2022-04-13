@@ -45,7 +45,14 @@ impl<'a, const PathDepth: usize> NonEmptyPath<'a, PathDepth>
 {
 	/// New instance.
 	#[inline(always)]
-	pub const fn new<const M: usize>(first_non_empty_path_segment: NonEmptyPathSegment<'a>, remaining_path_segments: [PathSegment<'a>; M]) -> Self
+	pub const fn new_minimal(first_non_empty_path_segment: NonEmptyPathSegment<'a>) -> Self
+	{
+		Self::new(first_non_empty_path_segment, PathSegments::Empty)
+	}
+	
+	/// New instance.
+	#[inline(always)]
+	pub const fn new(first_non_empty_path_segment: NonEmptyPathSegment<'a>, remaining_path_segments: PathSegments<'a, PathDepth>) -> Self
 	{
 		Self
 		{
@@ -53,6 +60,17 @@ impl<'a, const PathDepth: usize> NonEmptyPath<'a, PathDepth>
 		
 			remaining_path_segments: PathSegments::from(remaining_path_segments),
 		}
+	}
+	
+	/// Appends a path segment.
+	///
+	/// Not const, but potentially could be.
+	///
+	/// Can fail with an `Err()` if there is not enough memory.
+	#[inline(always)]
+	pub fn with_path_segment(&mut self, path_segment: PathSegment<'a>) -> Result<(), TryReserveError>
+	{
+		self.remaining_path_segments.with_path_segment(path_segment)
 	}
 	
 	#[inline(always)]
