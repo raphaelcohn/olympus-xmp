@@ -29,6 +29,8 @@
 #![feature(allocator_api)]
 #![feature(const_convert)]
 #![feature(const_deref)]
+#![feature(const_mut_refs)]
+#![feature(const_option)]
 #![feature(const_trait_impl)]
 #![feature(const_try)]
 #![feature(generic_arg_infer)]
@@ -70,7 +72,6 @@ use std::ops::Deref;
 use std::str::FromStr;
 use try_to_own::MutableKey;
 use try_to_own::MutableKeyHashMap;
-use try_to_own::try_to_own_in_place_cow;
 use try_to_own::TryToOwn;
 use try_to_own::TryToOwnInPlace;
 use swiss_army_knife::a_to_z::Colon;

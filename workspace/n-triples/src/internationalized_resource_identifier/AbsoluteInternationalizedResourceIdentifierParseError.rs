@@ -7,48 +7,18 @@
 pub enum AbsoluteInternationalizedResourceIdentifierParseError
 {
 	#[allow(missing_docs)]
-	InvalidUtf8Parse(InvalidUtf8ParseError<Infallible>),
-	
-	#[allow(missing_docs)]
-	DidNotExpectEndParsingBody,
-	
-	#[allow(missing_docs)]
-	InvalidCharacter(char),
-	
-	#[allow(missing_docs)]
-	OutOfMemory(TryReserveError),
-	
-	#[allow(missing_docs)]
-	EndOfFileParsingEscapeSequence,
-	
-	#[allow(missing_docs)]
-	InvalidUCHAR4EscapeSequence(OutOfMemoryOrUCHARParseError),
-	
-	#[allow(missing_docs)]
-	InvalidUCHAR8EscapeSequence(OutOfMemoryOrUCHARParseError),
-	
-	#[allow(missing_docs)]
-	InvalidEscapeSequence(u8),
+	AbsoluteInternationalizedResourceNTripleEscapedIdentifierParse(AbsoluteInternationalizedResourceNTripleEscapedIdentifierParseError),
 	
 	#[allow(missing_docs)]
 	AbsoluteInternationalizedResourceIdentifierComponentsParse(AbsoluteInternationalizedResourceIdentifierComponentsParseError),
 }
 
-impl const From<InvalidUtf8ParseError<Infallible>> for AbsoluteInternationalizedResourceIdentifierParseError
+impl const From<AbsoluteInternationalizedResourceNTripleEscapedIdentifierParseError> for AbsoluteInternationalizedResourceIdentifierParseError
 {
 	#[inline(always)]
-	fn from(cause: InvalidUtf8ParseError<Infallible>) -> Self
+	fn from(cause: AbsoluteInternationalizedResourceNTripleEscapedIdentifierParseError) -> Self
 	{
-		AbsoluteInternationalizedResourceIdentifierParseError::InvalidUtf8Parse(cause)
-	}
-}
-
-impl const From<TryReserveError> for AbsoluteInternationalizedResourceIdentifierParseError
-{
-	#[inline(always)]
-	fn from(cause: TryReserveError) -> Self
-	{
-		AbsoluteInternationalizedResourceIdentifierParseError::OutOfMemory(cause)
+		AbsoluteInternationalizedResourceIdentifierParseError::AbsoluteInternationalizedResourceNTripleEscapedIdentifierParse(cause)
 	}
 }
 
@@ -79,17 +49,9 @@ impl error::Error for AbsoluteInternationalizedResourceIdentifierParseError
 		
 		match self
 		{
-			InvalidUtf8Parse(cause) => Some(cause),
-			
-			OutOfMemory(cause) => Some(cause),
-			
-			InvalidUCHAR4EscapeSequence(cause) => Some(cause),
-			
-			InvalidUCHAR8EscapeSequence(cause) => Some(cause),
+			AbsoluteInternationalizedResourceNTripleEscapedIdentifierParse(cause) => Some(cause),
 			
 			AbsoluteInternationalizedResourceIdentifierComponentsParse(cause) => Some(cause),
-			
-			_ => None,
 		}
 	}
 }

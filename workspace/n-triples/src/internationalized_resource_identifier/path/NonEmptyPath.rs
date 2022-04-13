@@ -43,6 +43,18 @@ impl<'a, const PathDepth: usize> TryToOwn for NonEmptyPath<'a, PathDepth>
 
 impl<'a, const PathDepth: usize> NonEmptyPath<'a, PathDepth>
 {
+	/// New instance.
+	#[inline(always)]
+	pub const fn new<const M: usize>(first_non_empty_path_segment: NonEmptyPathSegment<'a>, remaining_path_segments: [PathSegment<'a>; M]) -> Self
+	{
+		Self
+		{
+			first_non_empty_path_segment,
+		
+			remaining_path_segments: PathSegments::from(remaining_path_segments),
+		}
+	}
+	
 	#[inline(always)]
 	pub(super) fn parse(constructor: impl FnOnce(Self) -> Hierarchy<'a, PathDepth>, error: impl FnOnce(NonEmptyPathParseError) -> HierarchyParseError, first_character_of_first_path_segment: (bool, char, Utf8CharacterLength), remaining_utf8_bytes: &'a [u8]) -> Result<(Hierarchy<'a, PathDepth>, ParseNextAfterHierarchy<'a>), HierarchyParseError>
 	{

@@ -78,6 +78,29 @@ impl<'a, const PathDepth: usize> TryToOwn for Hierarchy<'a, PathDepth>
 
 impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 {
+	/// New instance.
+	///
+	/// Prefer `Authority.with()` over this method.
+	#[inline(always)]
+	pub const fn new_authority_and_absolute_path<const M: usize>(authority: Authority<'a>, path_segments: [PathSegment<'a>; M]) -> Self
+	{
+		authority.with(path_segments)
+	}
+	
+	/// New instance.
+	#[inline(always)]
+	pub const fn new_absolute_path<const M: usize>(first_non_empty_path_segment: NonEmptyPathSegment<'a>, remaining_path_segments: [PathSegment<'a>; M]) -> Self
+	{
+		Hierarchy::AbsolutePath(NonEmptyPath::new(first_non_empty_path_segment, remaining_path_segments))
+	}
+	
+	/// New instance.
+	#[inline(always)]
+	pub const fn new_rootless_path<const M: usize>(first_non_empty_path_segment: NonEmptyPathSegment<'a>, remaining_path_segments: [PathSegment<'a>; M]) -> Self
+	{
+		Hierarchy::RootlessPath(NonEmptyPath::new(first_non_empty_path_segment, remaining_path_segments))
+	}
+	
 	/// `ihier-part = "//" iauthority ipath-abempty / ipath-absolute / ipath-rootless / ipath-empty`.
 	/// `ipath-abempty  = *( "/" isegment )`.
 	/// `ipath-absolute = "/" [ isegment-nz *( "/" isegment ) ]`.

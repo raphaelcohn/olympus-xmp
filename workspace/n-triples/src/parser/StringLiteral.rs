@@ -62,7 +62,7 @@ impl<'a> StringLiteral<'a>
 		use LiteralTag::*;
 		let literal_tag = match get_0(remaining_bytes).ok_or(DidNotExpectEndParsingLiteralTag)?
 		{
-			Space | Tab => Datatype(AbsoluteInternationalizedResourceIdentifier::xml_schema_2001("string")),
+			Space | Tab => Datatype(AbsoluteInternationalizedResourceIdentifier::_2001_xml_schema("string")),
 			
 			Caret =>
 			{

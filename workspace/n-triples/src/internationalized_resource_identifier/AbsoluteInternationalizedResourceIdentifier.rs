@@ -8,17 +8,21 @@
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct AbsoluteInternationalizedResourceIdentifier<'a, const PathDepth: usize>
 {
-	#[allow(missing_docs)]
+	/// Scheme.
 	pub scheme: Scheme<'a>,
 	
-	#[allow(missing_docs)]
+	/// Hierarchy.
 	pub hierarchy: Hierarchy<'a, PathDepth>,
 	
-	#[allow(missing_docs)]
+	/// Query.
 	pub query: Option<Query<'a>>,
 	
-	#[allow(missing_docs)]
+	/// Hash Fragment.
 	pub hash_fragment: Option<HashFragment<'a>>,
+}
+
+impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>
+{
 }
 
 impl<'a, const PathDepth: usize> TryToOwnInPlace for AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>
@@ -53,21 +57,11 @@ impl<'a, const PathDepth: usize> TryToOwn for AbsoluteInternationalizedResourceI
 	}
 }
 
-impl<'a, const PathDepth: usize> TryFrom<Cow<'a, str>> for AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>
-{
-	type Error = AbsoluteInternationalizedResourceIdentifierComponentsParseError;
-	
-	#[inline(always)]
-	fn try_from(value: Cow<'a, str>) -> Result<Self, Self::Error>
-	{
-		Self::try_from(value.as_ref())
-	}
-}
-
 impl<'a, const PathDepth: usize> TryFrom<&'a str> for AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>
 {
 	type Error = AbsoluteInternationalizedResourceIdentifierComponentsParseError;
 	
+	/// The resultant instance will only be owned if required.
 	#[inline(always)]
 	fn try_from(string: &'a str) -> Result<Self, Self::Error>
 	{
@@ -92,24 +86,125 @@ impl<'a, const PathDepth: usize> TryFrom<&'a str> for AbsoluteInternationalizedR
 			
 			NoQueryNoFragment => (None, None),
 		};
-		Ok
-		(
-			Self
-			{
-				scheme,
-				hierarchy,
-				query,
-				hash_fragment,
-			}
-		)
+		Ok(Self::new(scheme, hierarchy, query, hash_fragment))
 	}
 }
 
 impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>
 {
+	/// Http.
+	#[inline(always)]
+	pub const fn http<A, const M: usize>(authority: A, path_segments: [PathSegment<'a>; M]) -> Self
+	where Authority<'a>: ~const From<A>
+	{
+		Self::new_scheme_and_authority(Scheme::http, authority, path_segments)
+	}
+	
+	/// Https.
+	#[inline(always)]
+	pub const fn https<A, const M: usize>(authority: A, path_segments: [PathSegment<'a>; M]) -> Self
+	where Authority<'a>: ~const From<A>
+	{
+		Self::new_scheme_and_authority(Scheme::https, authority, path_segments)
+	}
+	
+	#[inline(always)]
+	const fn new_scheme_and_authority<A, const M: usize>(scheme: Scheme<'a>, authority: A, path_segments: [PathSegment<'a>; M]) -> Self
+	where Authority<'a>: ~const From<A>
+	{
+		Self::new_minimal(scheme, Authority::from(authority).with(path_segments))
+	}
+	
+	/// Replace query.
+	#[inline(always)]
+	pub fn with_query(mut self, query: Query<'a>) -> Self
+	{
+		self.query = Some(query);
+		self
+	}
+	
+	/// Replace query (const).
+	///
+	/// Only works if the query is previously `None`; panics if it was not.
+	#[inline(always)]
+	pub const fn with_query_const(mut self, query: Query<'a>) -> Self
+	{
+		let was = self.query.replace(query);
+		if was.is_some()
+		{
+			panic!("query was Some()")
+		}
+		forget(was);
+		self
+	}
+	
+	/// Replace hash fragment.
+	#[inline(always)]
+	pub fn with_hash_fragment(mut self, hash_fragment: HashFragment<'a>) -> Self
+	{
+		self.hash_fragment = Some(hash_fragment);
+		self
+	}
+	
+	/// Replace hash fragment (const).
+	///
+	/// Only works if the hash fragment is previously `None`; panics if it was not.
+	#[inline(always)]
+	pub const fn with_hash_fragment_const(mut self, hash_fragment: HashFragment<'a>) -> Self
+	{
+		let was = self.hash_fragment.replace(hash_fragment);
+		if was.is_some()
+		{
+			panic!("hash_fragment was Some()")
+		}
+		forget(was);
+		self
+	}
+	
+	/// Create a new instance.
+	#[inline(always)]
+	pub const fn new_minimal(scheme: Scheme<'a>, hierarchy: Hierarchy<'a, PathDepth>) -> Self
+	{
+		Self::new(scheme, hierarchy, None, None)
+	}
+	
+	/// Create a new instance.
+	#[inline(always)]
+	pub const fn new_with_query(scheme: Scheme<'a>, hierarchy: Hierarchy<'a, PathDepth>, query: Query<'a>) -> Self
+	{
+		Self::new(scheme, hierarchy, Some(query), None)
+	}
+	
+	/// Create a new instance.
+	#[inline(always)]
+	pub const fn new_with_hash_fragment(scheme: Scheme<'a>, hierarchy: Hierarchy<'a, PathDepth>, hash_fragment: HashFragment<'a>) -> Self
+	{
+		Self::new(scheme, hierarchy, None, Some(hash_fragment))
+	}
+	
+	/// Create a new instance.
+	#[inline(always)]
+	pub const fn new_with_query_and_hash_fragment(scheme: Scheme<'a>, hierarchy: Hierarchy<'a, PathDepth>, query: Query<'a>, hash_fragment: HashFragment<'a>) -> Self
+	{
+		Self::new(scheme, hierarchy, Some(query), Some(hash_fragment))
+	}
+	
+	/// Create a new instance.
+	#[inline(always)]
+	pub const fn new(scheme: Scheme<'a>, hierarchy: Hierarchy<'a, PathDepth>, query: Option<Query<'a>>, hash_fragment: Option<HashFragment<'a>>) -> Self
+	{
+		Self
+		{
+			scheme,
+			hierarchy,
+			query,
+			hash_fragment,
+		}
+	}
+	
 	/// `http://www.w3.org/2002/07/owl#<hash_fragment>`.
 	#[inline(always)]
-	pub const fn owl_2002_07<HF>(hash_fragment: HF) -> Self
+	pub const fn _2002_07_owl<HF>(hash_fragment: HF) -> Self
 	where HashFragment<'a>: ~const FromUnchecked<HF>
 	{
 		Self::http_www_w3_org([PathSegment::_2002, PathSegment::_07, PathSegment::owl], hash_fragment)
@@ -117,7 +212,7 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 	
 	/// `http://www.w3.org/2004/02/skos/core#<hash_fragment>`
 	#[inline(always)]
-	pub const fn simple_knowledge_organization_scheme_2004_02_core<HF>(hash_fragment: HF) -> Self
+	pub const fn _2004_02_simple_knowledge_organization_scheme_core<HF>(hash_fragment: HF) -> Self
 	where HashFragment<'a>: ~const FromUnchecked<HF>
 	{
 		Self::http_www_w3_org([PathSegment::_2004, PathSegment::_02, PathSegment::skos, PathSegment::core], hash_fragment)
@@ -125,16 +220,31 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 	
 	/// `http://www.w3.org/2001/XMLSchema#<hash_fragment>`
 	#[inline(always)]
-	pub const fn xml_schema_2001<HF>(hash_fragment: HF) -> Self
+	pub const fn _2001_xml_schema<HF>(hash_fragment: HF) -> Self
 	where HashFragment<'a>: ~const FromUnchecked<HF>
 	{
 		Self::http_www_w3_org([PathSegment::_2001, PathSegment::XMLSchema], hash_fragment)
 	}
 	
 	#[inline(always)]
+	const fn http_www_w3_org<HF, const M: usize>(path_segments: [PathSegment<'a>; M], hash_fragment: HF) -> Self
+	where HashFragment<'a>: ~const FromUnchecked<HF>
+	{
+		Self::http(HostName::www_w3_org, path_segments).with_hash_fragment_const(unsafe { HashFragment::from_unchecked(hash_fragment) })
+	}
+	
+	#[inline(always)]
 	pub(super) fn parse<R>(remaining_bytes: &mut &'a [u8], constructor: impl FnOnce(Self) -> R) -> Result<R, AbsoluteInternationalizedResourceIdentifierParseError>
 	{
-		use AbsoluteInternationalizedResourceIdentifierParseError::*;
+		let string = Self::parse_escaped_string(remaining_bytes)?;
+		let this = Self::parse_components(string)?;
+		Ok(constructor(this))
+	}
+	
+	#[inline(always)]
+	fn parse_escaped_string(remaining_bytes: &mut &'a [u8]) -> Result<StringSoFar<'a>, AbsoluteInternationalizedResourceNTripleEscapedIdentifierParseError>
+	{
+		use AbsoluteInternationalizedResourceNTripleEscapedIdentifierParseError::*;
 		
 		let mut string = StringSoFar::new_stack(remaining_bytes);
 		
@@ -160,56 +270,57 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 			}
 		}
 		
-		Ok(constructor(Self::try_from(string.to_cow())?))
+		Ok(string)
 	}
 	
-	#[inline(always)]
-	const fn http_www_w3_org<HF, const M: usize>(path_segments: [PathSegment<'a>; M], hash_fragment: HF) -> Self
-	where HashFragment<'a>: ~const FromUnchecked<HF>
+	// So the problem we have here is that we may have created a new string if processing the escape sequences.
+	// If so, then we need to return an owned implementation.
+	fn parse_components(string: StringSoFar<'a>) -> Result<Self, AbsoluteInternationalizedResourceIdentifierComponentsParseError>
 	{
-		Self
+		let cow = string.to_cow();
+		let this = match cow
 		{
-			scheme: Scheme::http,
-			hierarchy: Hierarchy::AuthorityAndAbsolutePath
+			// The input string required no escapes.
+			// Lifetime is 'a.
+			Cow::Borrowed(borrowed) => Self::try_from(borrowed)?,
+			
+			// The input string required escapes.
+			// We have an instance of `String` which we can't return and and reference will only live as long as this method call, ie shorter than 'a.
+			// This is a frustrating situation.
+			// The only way out is to either somehow attach the `String` to Self, but that would still have us return `Self` with a lifetime of 'a, which forces the caller to carry on owning the original (unused) string.
+			Cow::Owned(owned) =>
 			{
-				authority: Authority::www_w3_org,
-				path_segments: PathSegments::from(path_segments),
+				let mut this = Self::try_from(owned.as_str())?;
+				this.try_to_own_in_place()?;
+				this
 			},
-			query: None,
-			hash_fragment: Self::hash_fragment(hash_fragment),
-		}
-	}
-	
-	#[inline(always)]
-	const fn hash_fragment<HF>(hash_fragment: HF) -> Option<HashFragment<'a>>
-	where HashFragment<'a>: ~const FromUnchecked<HF>
-	{
-		Some(unsafe { HashFragment::from_unchecked(hash_fragment) })
+		};
+		Ok(this)
 	}
 }
 
 impl<const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'static, PathDepth>
 {
 	/// `http://www.w3.org/2002/07/owl#deprecated`.
-	pub const OwlDeprecated: Self = Self::owl_2002_07("deprecated");
+	pub const OwlDeprecated: Self = Self::_2002_07_owl("deprecated");
 	
 	/// `http://www.w3.org/2004/02/skos/core#narrower`.
-	pub const SimpleKnowledgeOrganizationSchemeCoreNarrower: Self = Self::simple_knowledge_organization_scheme_2004_02_core("narrower");
+	pub const SimpleKnowledgeOrganizationSchemeCoreNarrower: Self = Self::_2004_02_simple_knowledge_organization_scheme_core("narrower");
 	
 	/// `http://www.w3.org/2004/02/skos/core#notation`.
-	pub const SimpleKnowledgeOrganizationSchemeCoreNotation: Self = Self::simple_knowledge_organization_scheme_2004_02_core("notation");
+	pub const SimpleKnowledgeOrganizationSchemeCoreNotation: Self = Self::_2004_02_simple_knowledge_organization_scheme_core("notation");
 	
 	/// `http://www.w3.org/2004/02/skos/core#prefLabel`.
-	pub const SimpleKnowledgeOrganizationSchemeCorePrefLabel: Self = Self::simple_knowledge_organization_scheme_2004_02_core("prefLabel");
+	pub const SimpleKnowledgeOrganizationSchemeCorePrefLabel: Self = Self::_2004_02_simple_knowledge_organization_scheme_core("prefLabel");
 	
 	/// `http://www.w3.org/2001/XMLSchema#boolean`.
-	pub const XmlSchemaBoolean: Self = Self::xml_schema_2001("boolean");
+	pub const XmlSchemaBoolean: Self = Self::_2001_xml_schema("boolean");
 	
 	/// `http://www.w3.org/2001/XMLSchema#integer`.
-	pub const XmlSchemaInteger: Self = Self::xml_schema_2001("integer");
+	pub const XmlSchemaInteger: Self = Self::_2001_xml_schema("integer");
 	
 	/// `http://www.w3.org/2001/XMLSchema#string`.
-	pub const XmlSchemaString: Self = Self::xml_schema_2001("string");
+	pub const XmlSchemaString: Self = Self::_2001_xml_schema("string");
 	
 	pub(super) const Simple: Self = Self::XmlSchemaString;
 }

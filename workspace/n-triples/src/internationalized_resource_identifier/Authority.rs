@@ -43,12 +43,7 @@ impl<'a> const From<Host<'a>> for Authority<'a>
 	#[inline(always)]
 	fn from(host: Host<'a>) -> Self
 	{
-		Authority
-		{
-			user_information: None,
-			host,
-			port: None
-		}
+		Self::new_for_host(host)
 	}
 }
 
@@ -57,12 +52,63 @@ impl<'a> const From<HostName<'a>> for Authority<'a>
 	#[inline(always)]
 	fn from(host_name: HostName<'a>) -> Self
 	{
-		Self::from(Host::Name(host_name))
+		Self::new_for_host_name(host_name)
 	}
 }
 
 impl<'a> Authority<'a>
 {
+	/// New instance.
+	#[inline(always)]
+	pub const fn new_for_host_name(host_name: HostName<'a>) -> Self
+	{
+		Self::new_for_host(Host::from(host_name))
+	}
+	
+	/// New instance.
+	#[inline(always)]
+	pub const fn new_for_host_name_and_port(host_name: HostName<'a>, port: NonZeroU16) -> Self
+	{
+		Self::new_for_host_and_port(Host::from(host_name), port)
+	}
+	
+	/// New instance.
+	#[inline(always)]
+	pub const fn new_for_host(host: Host<'a>) -> Self
+	{
+		Self::new(None, host, None)
+	}
+	
+	/// New instance.
+	#[inline(always)]
+	pub const fn new_for_host_and_port(host: Host<'a>, port: NonZeroU16) -> Self
+	{
+		Self::new(None, host, Some(port))
+	}
+	
+	/// New instance.
+	#[inline(always)]
+	pub const fn new(user_information: Option<UserInformation<'a>>, host: Host<'a>, port: Option<NonZeroU16>) -> Self
+	{
+		Self
+		{
+			user_information,
+			host,
+			port
+		}
+	}
+	
+	/// New hierarchy.
+	#[inline(always)]
+	pub const fn with<const M: usize, const PathDepth: usize>(self, path_segments: [PathSegment<'a>; M]) -> Hierarchy<'a, PathDepth>
+	{
+		Hierarchy::AuthorityAndAbsolutePath
+		{
+			authority: self,
+			path_segments: PathSegments::from(path_segments),
+		}
+	}
+	
 	/// `iauthority = [ iuserinfo "@" ] ihost [ ":" port ]`.
 	#[inline(always)]
 	fn parse(authority_bytes: &'a [u8]) -> Result<Self, AuthorityParseError>
@@ -192,10 +238,4 @@ impl<'a> Authority<'a>
 		}
 		Ok(Some(new_non_zero_u16(raw_value as u16)))
 	}
-}
-
-impl Authority<'static>
-{
-	/// `wwww.w3.org`.
-	pub const www_w3_org: Self = Self::from(HostName::www_w3_org);
 }

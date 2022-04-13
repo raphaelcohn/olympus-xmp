@@ -16,6 +16,33 @@ pub enum Host<'a>
 	InternetProtocolVersion6Address(Ipv6Addr),
 }
 
+impl<'a> const From<HostName<'a>> for Host<'a>
+{
+	#[inline(always)]
+	fn from(host_name: HostName<'a>) -> Self
+	{
+		Host::Name(host_name)
+	}
+}
+
+impl<'a> const From<Ipv4Addr> for Host<'a>
+{
+	#[inline(always)]
+	fn from(internet_protocol_version_4_address: Ipv4Addr) -> Self
+	{
+		Host::InternetProtocolVersion4Address(internet_protocol_version_4_address)
+	}
+}
+
+impl<'a> const From<Ipv6Addr> for Host<'a>
+{
+	#[inline(always)]
+	fn from(internet_protocol_version_6_address: Ipv6Addr) -> Self
+	{
+		Host::InternetProtocolVersion6Address(internet_protocol_version_6_address)
+	}
+}
+
 impl<'a> TryToOwnInPlace for Host<'a>
 {
 	#[inline(always)]

@@ -4,6 +4,7 @@
 
 /// Scheme.
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[repr(u8)]
 pub enum Scheme<'a>
 {
 	#[allow(missing_docs)]
@@ -46,6 +47,22 @@ impl<'a> TryToOwn for Scheme<'a>
 
 impl<'a> Scheme<'a>
 {
+	/// Default port for known schemes.
+	#[inline(always)]
+	pub const fn default_port_if_scheme_is_known(&self) -> Option<NonZeroU16>
+	{
+		use Scheme::*;
+		
+		match self
+		{
+			http => Some(new_non_zero_u16(80)),
+			
+			https => Some(new_non_zero_u16(443)),
+			
+			Unknown(_) => None,
+		}
+	}
+	
 	/// `IRI = scheme ":" ihier-part [ "?" iquery ] [ "#" ifragment ]`.
 	/// `scheme = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )`.
 	#[inline(always)]

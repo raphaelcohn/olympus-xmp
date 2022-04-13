@@ -52,7 +52,13 @@ impl<'a, B: 'static + TryToOwned + ?Sized> TryToOwnInPlace for Cow<'a, B>
 	#[inline(always)]
 	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
 	{
-		try_to_own_in_place_cow(self)
+		use Cow::*;
+		if let Borrowed(borrowed) = self
+		{
+			let string = (*borrowed).try_to_owned()?;
+			*self = Owned(string)
+		}
+		Ok(())
 	}
 }
 

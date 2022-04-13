@@ -20,7 +20,7 @@ impl<'a> TryToOwnInPlace for BlankNodeLabel<'a>
 	#[inline(always)]
 	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
 	{
-		try_to_own_in_place_cow(&mut self.0)
+		self.0.try_to_own_in_place()
 	}
 }
 

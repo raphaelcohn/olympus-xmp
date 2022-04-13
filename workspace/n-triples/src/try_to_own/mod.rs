@@ -23,7 +23,6 @@ use swiss_army_knife::get_unchecked::GetUnchecked;
 
 include!("MutableKey.rs");
 include!("MutableKeyHashMap.rs");
-include!("try_to_own_in_place_cow_str.rs");
 include!("TryToOwn.rs");
 include!("TryToOwned.rs");
 include!("TryToOwnInPlace.rs");

@@ -115,8 +115,6 @@ impl<'a> HostName<'a>
 			}
 		};
 		
-		
-		
 		Ok((Self(string.to_cow()), port_bytes_including_colon))
 	}
 }
