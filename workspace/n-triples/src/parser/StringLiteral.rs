@@ -87,8 +87,6 @@ impl<'a> StringLiteral<'a>
 				let raw_ietf_bcp_47_language_tag_bytes = haystack.before_index(index);
 				*remaining_bytes = haystack.after_index(index);
 				
-				NaiveIetfBcp47LanguageTag::parse(raw_ietf_bcp_47_language_tag_bytes).map_err(NaiveIetfBcp47LanguageTagParse)?;
-				
 				// 	let language_tag = NaiveIetfBcp47LanguageTag::parse(haystack.after_index(index)).map_err(NaiveIetfBcp47LanguageTagParse)?;
 				Language(NaiveIetfBcp47LanguageTag::parse(raw_ietf_bcp_47_language_tag_bytes).map_err(NaiveIetfBcp47LanguageTagParse)?)
 			}

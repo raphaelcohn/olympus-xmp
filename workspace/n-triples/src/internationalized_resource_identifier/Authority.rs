@@ -21,7 +21,7 @@ impl<'a> TryToOwnInPlace for Authority<'a>
 	#[inline(always)]
 	fn try_to_own_in_place(&mut self) -> Result<(), TryReserveError>
 	{
-		self.user_information.try_to_own_in_place();
+		self.user_information.try_to_own_in_place()?;
 		self.host.try_to_own_in_place()
 	}
 }

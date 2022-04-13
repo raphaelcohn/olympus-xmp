@@ -9,6 +9,7 @@ pub enum Hierarchy<'a, const PathDepth: usize>
 	/// If not empty, then starts with `/`.
 	AuthorityAndAbsolutePath
 	{
+		/// Authority.
 		authority: Authority<'a>,
 		
 		/// Zero or more; each path segment can be empty.

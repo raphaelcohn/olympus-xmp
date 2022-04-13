@@ -6,10 +6,13 @@
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub enum PortParseError
 {
+	#[allow(missing_docs)]
 	InvalidCharacterIsNotAColon(u8),
 	
+	#[allow(missing_docs)]
 	ValuesGreaterThan655535AreUnsupported,
 	
+	#[allow(missing_docs)]
 	InvalidCharacterIsNotADigit(u8),
 	
 	/// A port number of zero is unusable with the Berkeley networking stack, as it selects a random port.

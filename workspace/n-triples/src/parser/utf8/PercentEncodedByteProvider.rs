@@ -73,7 +73,7 @@ impl PercentEncodedByteProvider
 		let potential_percent = bytes.get_unchecked_value_safe(index);
 		if potential_percent != Percent
 		{
-			return Err(PercentDecodeError::MissingPercentSign { decoded_byte_number, invalid: potential_percent })
+			return Err(PercentDecodeError::MissingPercentSign { decoded_byte_number: decoded_byte_number as u8, invalid: potential_percent })
 		}
 		Self::byte::<decoded_byte_number>(bytes)
 	}
@@ -105,7 +105,7 @@ impl PercentEncodedByteProvider
 			
 			a ..= f => a,
 			
-			_ => return Err(PercentDecodeError::InvalidHexDigit { decoded_byte_number, relative_index, invalid: potential_hex_digit }),
+			_ => return Err(PercentDecodeError::InvalidHexDigit { decoded_byte_number: decoded_byte_number as u8, relative_index, invalid: potential_hex_digit }),
 		};
 		let value = potential_hex_digit - correction;
 		

@@ -6,10 +6,13 @@
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub enum HashFragmentParseError
 {
+	#[allow(missing_docs)]
 	InvalidCharacterInHashFragment(char),
 	
+	#[allow(missing_docs)]
 	OutOfMemory(TryReserveError),
 	
+	#[allow(missing_docs)]
 	OutOfMemoryOrInvalidUtf8PercentDecodeParse(OutOfMemoryOrInvalidUtf8PercentDecodeParseError),
 }
 

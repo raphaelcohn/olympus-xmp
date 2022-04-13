@@ -290,9 +290,9 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 			// The only way out is to either somehow attach the `String` to Self, but that would still have us return `Self` with a lifetime of 'a, which forces the caller to carry on owning the original (unused) string.
 			Cow::Owned(owned) =>
 			{
-				let mut this = Self::try_from(owned.as_str())?;
+				let mut this = AbsoluteInternationalizedResourceIdentifier::<PathDepth>::try_from(owned.as_str())?;
 				this.try_to_own_in_place()?;
-				this
+				return Ok(unsafe { std::mem::transmute_copy(&this) })
 			},
 		};
 		Ok(this)
@@ -321,6 +321,4 @@ impl<const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'static
 	
 	/// `http://www.w3.org/2001/XMLSchema#string`.
 	pub const XmlSchemaString: Self = Self::_2001_xml_schema("string");
-	
-	pub(super) const Simple: Self = Self::XmlSchemaString;
 }

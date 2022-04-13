@@ -7,11 +7,15 @@
 #[repr(u8)]
 pub enum InternetProtocolVersion4AddressOctetNumber
 {
+	#[allow(missing_docs)]
 	One = 1,
-
+	
+	#[allow(missing_docs)]
 	Two = 2,
-
+	
+	#[allow(missing_docs)]
 	Three = 3,
-
+	
+	#[allow(missing_docs)]
 	Four = 4,
 }
