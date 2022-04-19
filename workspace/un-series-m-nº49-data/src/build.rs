@@ -25,9 +25,6 @@
 #![warn(unused_crate_dependencies)]
 
 
-#![feature(const_trait_impl)]
-
-
 //! #un-series-m-nº49-data (build)
 //!
 //! Build script.

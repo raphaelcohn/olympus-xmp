@@ -3,14 +3,18 @@
 
 
 use n_triples::NTriples;
-use n_triples::parser::NTriplesParseError;
-use n_triples::Predicate;
-use n_triples::Predicates;
+use n_triples::PathDepth;
 use n_triples::Subject;
+use n_triples::internationalized_resource_identifier::AbsoluteInternationalizedResourceIdentifier;
+use n_triples::parser::NTriplesParseError;
+use n_triples::predicate::Predicate;
+use n_triples::predicate::Predicates;
+use n_triples::predicate::OnlyOneXmlSchemaStringLiteralError;
 use std::path::Path;
-use super::m49_code_string;
 use super::StaticM49Code;
+use super::m49_code_string;
 
 
 include!("generate_rust_code.rs");
 include!("NTriplesFiles.rs");
+include!("ProcessNTriplesError.rs");

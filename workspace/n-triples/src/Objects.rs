@@ -10,9 +10,9 @@ pub struct Objects<'a>
 
 	blank_nodes: Vec<BlankNodeLabel<'a>>,
 	
-	string_literals_by_language: MutableKeyHashMap<NaiveIetfBcp47LanguageTag<'a>, Vec<Cow<'a, str>>>,
+	string_literals_by_language: StringLiteralsMap<'a, NaiveIetfBcp47LanguageTag<'a>>,
 	
-	string_literals_by_absolute_internationalized_resource_identifier: MutableKeyHashMap<AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>, Vec<Cow<'a, str>>>,
+	string_literals_by_absolute_internationalized_resource_identifier: StringLiteralsMap<'a, AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>>,
 }
 
 impl<'a> TryToOwnInPlace for Objects<'a>
@@ -59,38 +59,18 @@ impl<'a> Objects<'a>
 	///
 	/// If an entry is present, its value will never be an empty Vec.
 	#[inline(always)]
-	pub fn string_literals_by_language(&self) -> impl Iterator<Item=(&impl Borrow<NaiveIetfBcp47LanguageTag<'a>>, &Vec<Cow<'a, str>>)>
+	pub fn string_literals_by_language(&self) -> &StringLiteralsMap<'a, NaiveIetfBcp47LanguageTag<'a>>
 	{
-		self.string_literals_by_language.iter()
-	}
-	
-	/// String literal by language tag.
-	///
-	/// If an entry is present, its value will never be an empty Vec.
-	#[inline(always)]
-	pub fn get_string_literals_by_language(&self, ietf_bcp_47_language_tag: &NaiveIetfBcp47LanguageTag<'a>) -> Option<&Vec<Cow<'a, str>>>
-	{
-		self.string_literals_by_language.get(ietf_bcp_47_language_tag)
+		&self.string_literals_by_language
 	}
 	
 	/// String literals by Internationalized Resource Identifier (IRI).
 	///
 	/// If an entry is present, its value will never be an empty Vec.
 	#[inline(always)]
-	pub fn string_literals_by_absolute_internationalized_resource_identifier(&self) -> impl Iterator<Item=(&impl Borrow<AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>>, &Vec<Cow<'a, str>>)>
+	pub fn string_literals_by_absolute_internationalized_resource_identifier(&self) -> &StringLiteralsMap<'a, AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>>
 	{
-		self.string_literals_by_absolute_internationalized_resource_identifier.iter()
-	}
-	
-	/// String literal by Internationalized Resource Identifier (IRI).
-	///
-	/// If an entry is present, its value will never be an empty Vec.
-	#[inline(always)]
-	pub fn get_string_literals_by_absolute_internationalized_resource_identifier<'b>(&self, absolute_internationalized_resource_identifier: &AbsoluteInternationalizedResourceIdentifier<'b, PathDepth>) -> Option<&Vec<Cow<'a, str>>>
-	{
-		// Hack the borrow checker; it does not like to do equality on borrowed values with differrent instance lifetimes.
-		let y: &AbsoluteInternationalizedResourceIdentifier<'a, PathDepth> = unsafe { transmute(absolute_internationalized_resource_identifier) };
-		self.string_literals_by_absolute_internationalized_resource_identifier.get(y)
+		&self.string_literals_by_absolute_internationalized_resource_identifier
 	}
 	
 	#[inline(always)]
@@ -120,15 +100,15 @@ impl<'a> Objects<'a>
 				vec_push_one(vec, blank_node_label)
 			}
 			
-			Literal(StringLiteral { literal_value, literal_tag: Language(raw_ietf_bcp_47_language_tag) }) =>
+			Literal(StringLiteral { literal_value, literal_tag: Language(naive_ietf_bcp_47_language_tag) }) =>
 			{
-				let vec = self.string_literals_by_language.entry(MutableKey::new(raw_ietf_bcp_47_language_tag)).or_default();
+				let vec = self.string_literals_by_language.entry(naive_ietf_bcp_47_language_tag);
 				vec_push_one(vec, literal_value)
 			}
 			
 			Literal(StringLiteral { literal_value, literal_tag: Datatype(absolute_internationalized_resource_identifier) }) =>
 			{
-				let vec = self.string_literals_by_absolute_internationalized_resource_identifier.entry(MutableKey::new(absolute_internationalized_resource_identifier)).or_default();
+				let vec = self.string_literals_by_absolute_internationalized_resource_identifier.entry(absolute_internationalized_resource_identifier);
 				vec_push_one(vec, literal_value)
 			}
 		}

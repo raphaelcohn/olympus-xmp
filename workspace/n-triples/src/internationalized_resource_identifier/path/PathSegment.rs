@@ -6,6 +6,15 @@
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct PathSegment<'a>(Cow<'a, str>);
 
+impl<'a> Display for PathSegment<'a>
+{
+	#[inline(always)]
+	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	{
+		write!(f, "{}", self.0.as_ref())
+	}
+}
+
 impl<'a> TryToOwnInPlace for PathSegment<'a>
 {
 	#[inline(always)]
@@ -83,27 +92,6 @@ impl<'a> const Deref for PathSegment<'a>
 	}
 }
 
-impl PathSegment<'static>
-{
-	pub(super) const _2001: Self = unsafe { Self::from_unchecked("2001") };
-	
-	pub(super) const _2002: Self = unsafe { Self::from_unchecked("2002") };
-	
-	pub(super) const _2004: Self = unsafe { Self::from_unchecked("2004") };
-	
-	pub(super) const _02: Self = unsafe { Self::from_unchecked("02") };
-	
-	pub(super) const _07: Self = unsafe { Self::from_unchecked("07") };
-	
-	pub(super) const owl: Self = unsafe { Self::from_unchecked("owl") };
-	
-	pub(super) const skos: Self = unsafe { Self::from_unchecked("skos") };
-	
-	pub(super) const core: Self = unsafe { Self::from_unchecked("core") };
-	
-	pub(super) const XMLSchema: Self = unsafe { Self::from_unchecked("XMLSchema") };
-}
-
 impl<'a> PathSegment<'a>
 {
 	#[inline(always)]
@@ -135,7 +123,7 @@ impl<'a> PathSegment<'a>
 					ipchar_iunreserved_with_ucschar_2!()  => string.push(character, Two)?,
 					ipchar_iunreserved_with_ucschar_3!()  => string.push(character, Three)?,
 					ipchar_iunreserved_with_ucschar_4!()  => string.push(character, Four)?,
-					ipchar_pct_encoded!()                 => string.push_forcing_heap_percent_encoded(remaining_percent_encoded_path_segment_utf8_bytes)?,
+					ipchar_pct_encoded!()                 => string.push_forcing_heap_percent_encoded::<false>(remaining_percent_encoded_path_segment_utf8_bytes)?,
 					ipchar_sub_delims!()                  => string.push(character, One)?,
 					ipchar_other!()                       => string.push(character, One)?,
 					
@@ -146,4 +134,33 @@ impl<'a> PathSegment<'a>
 		
 		Ok(constructor(string.to_cow()))
 	}
+}
+
+impl PathSegment<'static>
+{
+	pub(super) const _1999: Self = unsafe { Self::from_unchecked("1999") };
+	
+	pub(super) const _2001: Self = unsafe { Self::from_unchecked("2001") };
+	
+	pub(super) const _2002: Self = unsafe { Self::from_unchecked("2002") };
+	
+	pub(super) const _2004: Self = unsafe { Self::from_unchecked("2004") };
+	
+	pub(super) const _02: Self = unsafe { Self::from_unchecked("02") };
+	
+	pub(super) const _07: Self = unsafe { Self::from_unchecked("07") };
+	
+	pub(super) const _22_rdf_syntax_ns: Self = unsafe { Self::from_unchecked("22-rdf-syntax-ns") };
+	
+	pub(super) const owl: Self = unsafe { Self::from_unchecked("owl") };
+	
+	pub(super) const skos: Self = unsafe { Self::from_unchecked("skos") };
+	
+	pub(super) const core: Self = unsafe { Self::from_unchecked("core") };
+	
+	pub(super) const XMLSchema: Self = unsafe { Self::from_unchecked("XMLSchema") };
+	
+	pub(super) const dc: Self = unsafe { Self::from_unchecked("dc") };
+	
+	pub(super) const terms: Self = unsafe { Self::from_unchecked("terms") };
 }

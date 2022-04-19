@@ -21,8 +21,24 @@ pub struct AbsoluteInternationalizedResourceIdentifier<'a, const PathDepth: usiz
 	pub hash_fragment: Option<HashFragment<'a>>,
 }
 
-impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>
+impl<'a, const PathDepth: usize> Display for AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>
 {
+	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	{
+		write!(f, "{}:{}", self.scheme, self.hierarchy)?;
+		if let Some(ref query) = self.query
+		{
+			write!(f, "?{}", query)?;
+		}
+		if let Some(ref hash_fragment) = self.hash_fragment
+		{
+			write!(f, "#{}", hash_fragment)
+		}
+		else
+		{
+			Ok(())
+		}
+	}
 }
 
 impl<'a, const PathDepth: usize> TryToOwnInPlace for AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>
@@ -67,8 +83,8 @@ impl<'a, const PathDepth: usize> TryFrom<&'a str> for AbsoluteInternationalizedR
 	{
 		use AbsoluteInternationalizedResourceIdentifierComponentsParseError::*;
 		
-		let (scheme, remaining_utf8_bytes) = Scheme::parse(string.as_bytes()).map_err(SchemeParse)?;
-		let (hierarchy, parse_next) = Hierarchy::parse(remaining_utf8_bytes).map_err(HierarchyParse)?;
+		let (scheme, has_authority_and_absolute_path_with_dns_host_name, remaining_utf8_bytes) = Scheme::parse(string.as_bytes()).map_err(SchemeParse)?;
+		let (hierarchy, parse_next) = Hierarchy::parse(has_authority_and_absolute_path_with_dns_host_name, remaining_utf8_bytes).map_err(HierarchyParse)?;
 		
 		use ParseNextAfterHierarchy::*;
 		let (query, hash_fragment) = match parse_next
@@ -230,7 +246,7 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 	
 	/// `http://www.w3.org/2002/07/owl#<hash_fragment>`.
 	#[inline(always)]
-	pub const fn _2002_07_owl<HF>(hash_fragment: HF) -> Self
+	pub const fn http_www_w3_org_2002_07_owl<HF>(hash_fragment: HF) -> Self
 	where HashFragment<'a>: ~const FromUnchecked<HF>
 	{
 		Self::http_www_w3_org([PathSegment::_2002, PathSegment::_07, PathSegment::owl], hash_fragment)
@@ -238,7 +254,7 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 	
 	/// `http://www.w3.org/2004/02/skos/core#<hash_fragment>`
 	#[inline(always)]
-	pub const fn _2004_02_simple_knowledge_organization_scheme_core<HF>(hash_fragment: HF) -> Self
+	pub const fn http_www_w3_org_2004_02_simple_knowledge_organization_scheme_core<HF>(hash_fragment: HF) -> Self
 	where HashFragment<'a>: ~const FromUnchecked<HF>
 	{
 		Self::http_www_w3_org([PathSegment::_2004, PathSegment::_02, PathSegment::skos, PathSegment::core], hash_fragment)
@@ -246,10 +262,18 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 	
 	/// `http://www.w3.org/2001/XMLSchema#<hash_fragment>`
 	#[inline(always)]
-	pub const fn _2001_xml_schema<HF>(hash_fragment: HF) -> Self
+	pub const fn http_www_w3_org_2001_xml_schema<HF>(hash_fragment: HF) -> Self
 	where HashFragment<'a>: ~const FromUnchecked<HF>
 	{
 		Self::http_www_w3_org([PathSegment::_2001, PathSegment::XMLSchema], hash_fragment)
+	}
+	
+	/// `http://www.w3.org/1999/02/22-rdf-syntax-ns#<hash_fragment>`.
+	#[inline(always)]
+	pub const fn http_www_w3_org_1999_02_22_rdf_syntax_ns<HF>(hash_fragment: HF) -> Self
+	where HashFragment<'a>: ~const FromUnchecked<HF>
+	{
+		Self::http_www_w3_org([PathSegment::_1999, PathSegment::_02, PathSegment::_22_rdf_syntax_ns], hash_fragment)
 	}
 	
 	#[inline(always)]
@@ -259,7 +283,13 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 		Self::http("www.w3.org", path_segments).with_hash_fragment_const(hash_fragment)
 	}
 	
+	/// `http://purl.org/dc/terms/<term>`
 	#[inline(always)]
+	pub const fn http_purl_org_dc_terms(term: &'static str) -> Self
+	{
+		Self::http("purl.org", [PathSegment::dc, PathSegment::terms, unsafe { PathSegment::from_unchecked(term) }])
+	}
+	
 	pub(super) fn parse<R>(remaining_bytes: &mut &'a [u8], constructor: impl FnOnce(Self) -> R) -> Result<R, AbsoluteInternationalizedResourceIdentifierParseError>
 	{
 		let string = Self::parse_escaped_string(remaining_bytes)?;
@@ -301,6 +331,7 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 	
 	// So the problem we have here is that we may have created a new string if processing the escape sequences.
 	// If so, then we need to return an owned implementation.
+	#[inline(always)]
 	fn parse_components(string: StringSoFar<'a>) -> Result<Self, AbsoluteInternationalizedResourceIdentifierComponentsParseError>
 	{
 		let cow = string.to_cow();
@@ -329,23 +360,41 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 impl<const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'static, PathDepth>
 {
 	/// `http://www.w3.org/2002/07/owl#deprecated`.
-	pub const OwlDeprecated: Self = Self::_2002_07_owl("deprecated");
+	pub const OwlDeprecated: Self = Self::http_www_w3_org_2002_07_owl("deprecated");
 	
 	/// `http://www.w3.org/2004/02/skos/core#narrower`.
-	pub const SimpleKnowledgeOrganizationSchemeCoreNarrower: Self = Self::_2004_02_simple_knowledge_organization_scheme_core("narrower");
+	pub const SimpleKnowledgeOrganizationSchemeCoreNarrower: Self = Self::http_www_w3_org_2004_02_simple_knowledge_organization_scheme_core("narrower");
 	
 	/// `http://www.w3.org/2004/02/skos/core#notation`.
-	pub const SimpleKnowledgeOrganizationSchemeCoreNotation: Self = Self::_2004_02_simple_knowledge_organization_scheme_core("notation");
+	pub const SimpleKnowledgeOrganizationSchemeCoreNotation: Self = Self::http_www_w3_org_2004_02_simple_knowledge_organization_scheme_core("notation");
 	
 	/// `http://www.w3.org/2004/02/skos/core#prefLabel`.
-	pub const SimpleKnowledgeOrganizationSchemeCorePrefLabel: Self = Self::_2004_02_simple_knowledge_organization_scheme_core("prefLabel");
+	pub const SimpleKnowledgeOrganizationSchemeCorePrefLabel: Self = Self::http_www_w3_org_2004_02_simple_knowledge_organization_scheme_core("prefLabel");
+	
+	/// `http://www.w3.org/2004/02/skos/core#altLabel`.
+	pub const SimpleKnowledgeOrganizationSchemeCoreAltLabel: Self = Self::http_www_w3_org_2004_02_simple_knowledge_organization_scheme_core("altLabel");
+	
+	/// `http://www.w3.org/2004/02/skos/core#inScheme`.
+	pub const SimpleKnowledgeOrganizationSchemeCoreInScheme: Self = Self::http_www_w3_org_2004_02_simple_knowledge_organization_scheme_core("inScheme");
+	
+	/// `http://www.w3.org/2004/02/skos/core#topConceptOf`.
+	pub const SimpleKnowledgeOrganizationSchemeCoreTopConceptOf: Self = Self::http_www_w3_org_2004_02_simple_knowledge_organization_scheme_core("topConceptOf");
 	
 	/// `http://www.w3.org/2001/XMLSchema#boolean`.
-	pub const XmlSchemaBoolean: Self = Self::_2001_xml_schema("boolean");
+	pub const XmlSchemaBoolean: Self = Self::http_www_w3_org_2001_xml_schema("boolean");
 	
 	/// `http://www.w3.org/2001/XMLSchema#integer`.
-	pub const XmlSchemaInteger: Self = Self::_2001_xml_schema("integer");
+	pub const XmlSchemaInteger: Self = Self::http_www_w3_org_2001_xml_schema("integer");
 	
 	/// `http://www.w3.org/2001/XMLSchema#string`.
-	pub const XmlSchemaString: Self = Self::_2001_xml_schema("string");
+	pub const XmlSchemaString: Self = Self::http_www_w3_org_2001_xml_schema("string");
+	
+	/// `http://www.w3.org/2001/XMLSchema#dateTime`.
+	pub const XmlSchemaDateTime: Self = Self::http_www_w3_org_2001_xml_schema("dateTime");
+	
+	/// `http://purl.org/dc/terms/modified`.
+	pub const DublinCoreModified: Self = Self::http_purl_org_dc_terms("modified");
+	
+	/// `http://www.w3.org/1999/02/22-rdf-syntax-ns#type`.
+	pub const RdfSyntaxType: Self = Self::http_www_w3_org_1999_02_22_rdf_syntax_ns("type");
 }

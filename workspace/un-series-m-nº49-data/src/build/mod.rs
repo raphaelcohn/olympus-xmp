@@ -35,5 +35,4 @@ include!("generate_rust_code.rs");
 include!("m49_code_string.rs");
 include!("M49CodeArray.rs");
 include!("StaticM49Code.rs");
-include!("new_inefficient_record_lines_iterator.rs");
 include!("write_key.rs");

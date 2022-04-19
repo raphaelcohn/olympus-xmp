@@ -118,7 +118,7 @@ impl<'a> StringSoFar<'a>
 	}
 	
 	#[inline(always)]
-	pub(super) fn push_forcing_heap_percent_encoded(&mut self, remaining_utf8_bytes: &mut &'a [u8]) -> Result<(), OutOfMemoryOrInvalidUtf8PercentDecodeParseError>
+	pub(super) fn push_forcing_heap_percent_encoded<const to_ascii_lower_case: bool>(&mut self, remaining_utf8_bytes: &mut &'a [u8]) -> Result<(), OutOfMemoryOrInvalidUtf8PercentDecodeParseError>
 	{
 		#[inline(always)]
 		fn from_stack_to_heap_n<const length: usize>(from: NonNull<u8>, slice_length: usize, encoded_utf8_bytes: [u8; length]) -> Result<String, TryReserveError>
@@ -127,6 +127,22 @@ impl<'a> StringSoFar<'a>
 		}
 		
 		let (character, utf8_character_length) = decode_next_percent_encoded_utf8(remaining_utf8_bytes)?;
+		
+		let character = if to_ascii_lower_case
+		{
+			if utf8_character_length == Utf8CharacterLength::One
+			{
+				character.to_ascii_lowercase()
+			}
+			else
+			{
+				character
+			}
+		}
+		else
+		{
+			character
+		};
 		
 		use StringSoFar::*;
 		match self
@@ -215,7 +231,7 @@ impl<'a> StringSoFar<'a>
 			Stack { slice_length, .. } =>
 			{
 				let old_slice_length = *slice_length;
-				*slice_length = old_slice_length + utf8_character_length.add(old_slice_length);
+				*slice_length = utf8_character_length.add(old_slice_length);
 				Ok(())
 			}
 		}

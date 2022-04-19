@@ -8,6 +8,15 @@
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct HostName<'a>(Cow<'a, str>);
 
+impl<'a> Display for HostName<'a>
+{
+	#[inline(always)]
+	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	{
+		write!(f, "{}", self.0.deref())
+	}
+}
+
 impl<'a> TryToOwnInPlace for HostName<'a>
 {
 	#[inline(always)]
@@ -80,7 +89,7 @@ impl<'a> HostName<'a>
 {
 	/// `ireg-name = *( iunreserved / pct-encoded / sub-delims )`.
 	#[inline(always)]
-	fn parse(mut remaining_utf8_bytes: &'a [u8]) -> Result<(Self, &'a [u8]), HostNameParseError>
+	fn parse_name_lower_case(mut remaining_utf8_bytes: &'a [u8]) -> Result<(Self, &'a [u8]), HostNameParseError>
 	{
 		use HostNameParseError::*;
 		
@@ -103,11 +112,51 @@ impl<'a> HostName<'a>
 					},
 					
 					AChar ..= ZChar                                                                   => string.push_forcing_heap_ascii_to_lower_case(character)?,
-					aChar ..= zChar | DIGIT!() | HyphenChar | PeriodChar | UnderscoreChar | TildeChar => string.push(character, One)?,
+					aChar ..= zChar | DIGIT!() | HyphenChar | PeriodChar | UnderscoreChar | TildeChar => string.push_ascii(character)?,
 					iunreserved_with_ucschar_2!()                                                     => string.push(character, Two)?,
 					iunreserved_with_ucschar_3!()                                                     => string.push(character, Three)?,
 					iunreserved_with_ucschar_4!()                                                     => string.push(character, Four)?,
-					pct_encoded!()                                                                    => string.push_forcing_heap_percent_encoded(remaining_utf8_bytes)?,
+					pct_encoded!()                                                                    => string.push_forcing_heap_percent_encoded::<true>(remaining_utf8_bytes)?,
+					sub_delims!()                                                                     => string.push(character, One)?,
+					
+					_ => return Err(InvalidCharacterInHostName(character)),
+				},
+			}
+		};
+		
+		Ok((Self(string.to_cow()), port_bytes_including_colon))
+	}
+	
+	/// `ireg-name = *( iunreserved / pct-encoded / sub-delims )`.
+	#[inline(always)]
+	fn parse(mut remaining_utf8_bytes: &'a [u8]) -> Result<(Self, &'a [u8]), HostNameParseError>
+	{
+		use HostNameParseError::*;
+		
+		let remaining_utf8_bytes = &mut remaining_utf8_bytes;
+		let mut string = StringSoFar::new_stack(remaining_utf8_bytes);
+		
+		use Utf8CharacterLength::*;
+		let port_bytes_including_colon = loop
+		{
+			match StringSoFar::decode_next_utf8_validity_already_checked(remaining_utf8_bytes)
+			{
+				None => break b"" as &[u8],
+				
+				Some(character) => match character
+				{
+					ColonChar                                                                         => break
+					{
+						let bytes = *remaining_utf8_bytes;
+						unsafe { from_raw_parts((bytes).rewind_buffer(One), One.add_from_bytes(bytes)) }
+					},
+					
+					AChar ..= ZChar                                                                   => string.push_ascii(character)?,
+					aChar ..= zChar | DIGIT!() | HyphenChar | PeriodChar | UnderscoreChar | TildeChar => string.push_ascii(character)?,
+					iunreserved_with_ucschar_2!()                                                     => string.push(character, Two)?,
+					iunreserved_with_ucschar_3!()                                                     => string.push(character, Three)?,
+					iunreserved_with_ucschar_4!()                                                     => string.push(character, Four)?,
+					pct_encoded!()                                                                    => string.push_forcing_heap_percent_encoded::<false>(remaining_utf8_bytes)?,
 					sub_delims!()                                                                     => string.push(character, One)?,
 					
 					_ => return Err(InvalidCharacterInHostName(character)),

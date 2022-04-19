@@ -6,6 +6,15 @@
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct NonEmptyPathSegment<'a>(Cow<'a, str>);
 
+impl<'a> Display for NonEmptyPathSegment<'a>
+{
+	#[inline(always)]
+	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	{
+		write!(f, "{}", self.0.as_ref())
+	}
+}
+
 impl<'a> TryToOwnInPlace for NonEmptyPathSegment<'a>
 {
 	#[inline(always)]

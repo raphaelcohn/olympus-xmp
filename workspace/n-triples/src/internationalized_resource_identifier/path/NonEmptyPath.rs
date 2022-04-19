@@ -13,6 +13,16 @@ pub struct NonEmptyPath<'a, const PathDepth: usize>
 	pub remaining_path_segments: PathSegments<'a, PathDepth>,
 }
 
+impl<'a, const PathDepth: usize> Display for NonEmptyPath<'a, PathDepth>
+{
+	#[inline(always)]
+	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	{
+		write!(f, "{}", self.first_non_empty_path_segment)?;
+		write!(f, "{}", self.remaining_path_segments)
+	}
+}
+
 impl<'a, const PathDepth: usize> TryToOwnInPlace for NonEmptyPath<'a, PathDepth>
 {
 	#[inline(always)]

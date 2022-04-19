@@ -16,6 +16,27 @@ pub struct Authority<'a>
 	pub port: Option<NonZeroU16>,
 }
 
+impl<'a> Display for Authority<'a>
+{
+	#[inline(always)]
+	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	{
+		if let Some(ref user_information) = self.user_information
+		{
+			write!(f, "{}@", user_information)?
+		}
+		write!(f, "{}", self.host)?;
+		if let Some(port) = self.port
+		{
+			write!(f, ":{}", port)
+		}
+		else
+		{
+			Ok(())
+		}
+	}
+}
+
 impl<'a> TryToOwnInPlace for Authority<'a>
 {
 	#[inline(always)]
@@ -120,7 +141,7 @@ impl<'a> Authority<'a>
 	
 	/// `iauthority = [ iuserinfo "@" ] ihost [ ":" port ]`.
 	#[inline(always)]
-	fn parse(authority_bytes: &'a [u8]) -> Result<Self, AuthorityParseError>
+	fn parse(has_authority_and_absolute_path_with_dns_host_name: bool, authority_bytes: &'a [u8]) -> Result<Self, AuthorityParseError>
 	{
 		// Frustrating, as requires a long scan (`memchr`) which will nearly always return `None` as user information is very rare.
 		// The alternative is to assume there is no user_host data, then throwaway what we've pased so far if an `@` is encountered.
@@ -135,7 +156,7 @@ impl<'a> Authority<'a>
 			}
 		};
 		
-		let (host, port_bytes_including_colon) = Host::parse(ihost_and_port_bytes)?;
+		let (host, port_bytes_including_colon) = Host::parse(has_authority_and_absolute_path_with_dns_host_name, ihost_and_port_bytes)?;
 		
 		let port = Self::parse_port(port_bytes_including_colon)?;
 		

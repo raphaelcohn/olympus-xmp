@@ -20,6 +20,7 @@ use std::mem::transmute;
 use std::mem::ManuallyDrop;
 use std::mem::MaybeUninit;
 use std::ops::Deref;
+use std::ops::DerefMut;
 use std::ptr::read;
 use super::HierarchyParseError;
 use super::Hierarchy;

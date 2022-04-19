@@ -2,7 +2,6 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[inline(always)]
 pub(super) fn generate_rust_code(out_folder_path: &Path) -> io::Result<()>
 {
 	cargo_rerun_if_changed!();

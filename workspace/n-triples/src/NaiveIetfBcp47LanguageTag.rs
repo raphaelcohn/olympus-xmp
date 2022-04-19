@@ -3,12 +3,42 @@
 
 
 /// A naive IETF BCP-47 language tag structure.
-#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Default, Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct NaiveIetfBcp47LanguageTag<'a>
 {
 	first_component: Cow<'a, str>,
 	
 	subsequent_components: ConstSmallVec<Cow<'a, str>, 4>
+}
+
+impl<'a> const FromUnchecked<Cow<'a, str>> for NaiveIetfBcp47LanguageTag<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(value: Cow<'a, str>) -> Self
+	{
+		Self
+		{
+			first_component: value,
+		
+			subsequent_components: ConstSmallVec::default(),
+		}
+	}
+}
+
+impl<'a> Display for NaiveIetfBcp47LanguageTag<'a>
+{
+	#[inline(always)]
+	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	{
+		write!(f, "{}", self.first_component.as_ref())?;
+		
+		for item in self.subsequent_components.deref()
+		{
+			write!(f, "-{}", item.as_ref())?;
+		}
+		
+		Ok(())
+	}
 }
 
 impl<'a> TryToOwnInPlace for NaiveIetfBcp47LanguageTag<'a>
@@ -37,9 +67,9 @@ impl<'a> NaiveIetfBcp47LanguageTag<'a>
 {
 	// `LANGTAG ::= `[a-zA-Z]+ ('-' [a-zA-Z0-9]+)*`.
 	#[inline(always)]
-	fn parse(mut raw_ietf_bcp_47_language_tag_bytes: &'a [u8]) -> Result<Self, NaiveIetfBcp47LanguageTagParseError>
+	fn parse(mut naive_ietf_bcp_47_language_tag_bytes: &'a [u8]) -> Result<Self, NaiveIetfBcp47LanguageTagParseError>
 	{
-		let remaining_bytes = &mut raw_ietf_bcp_47_language_tag_bytes;
+		let remaining_bytes = &mut naive_ietf_bcp_47_language_tag_bytes;
 		let (first_component, mut has_more_components) = Self::parse_first_component(remaining_bytes)?;
 		
 		let mut subsequent_components = ConstSmallVec::default();
@@ -124,4 +154,10 @@ impl<'a> NaiveIetfBcp47LanguageTag<'a>
 		}
 		Ok((cow, has_more_components))
 	}
+}
+
+impl NaiveIetfBcp47LanguageTag<'static>
+{
+	/// English language tag.
+	pub const en: Self = unsafe { Self::from_unchecked("en") };
 }

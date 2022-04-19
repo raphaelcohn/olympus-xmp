@@ -45,6 +45,8 @@
 #![feature(untagged_unions)]
 #![feature(maybe_uninit_uninit_array)]
 #![feature(maybe_uninit_array_assume_init)]
+#![feature(trusted_len)]
+#![feature(once_cell)]
 
 
 //! #n-triples.
@@ -63,21 +65,17 @@ use parser::Object;
 use parser::StringLiteral;
 use parser::StringSoFar;
 use parser::utf8::decode_next_utf8;
-use std::borrow::Borrow;
+use predicate::Predicate;
 use std::borrow::Cow;
 use std::collections::HashMap;
 use std::collections::TryReserveError;
-use std::error;
 use std::fmt;
 use std::fmt::Debug;
 use std::fmt::Display;
 use std::fmt::Formatter;
 use std::mem::transmute;
-use std::num::ParseIntError;
 use std::ops::Deref;
-use std::str::FromStr;
-use try_to_own::MutableKey;
-use try_to_own::MutableKeyHashMap;
+use string_literals_map::StringLiteralsMap;
 use try_to_own::TryToOwn;
 use try_to_own::TryToOwnInPlace;
 use swiss_army_knife::a_to_z::Colon;
@@ -115,19 +113,25 @@ pub mod internationalized_resource_identifier;
 pub mod parser;
 
 
+/// Predicate.
+pub mod predicate;
+
+
+/// String literals map.
+pub mod string_literals_map;
+
+
 /// Try-to-own
 pub mod try_to_own;
 
 
 include!("BlankNodeLabel.rs");
 include!("FromUnchecked.rs");
-include!("GetStringPredicateError.rs");
 include!("NaiveIetfBcp47LanguageTag.rs");
+include!("NonEmptyVec.rs");
 include!("NTriples.rs");
 include!("Objects.rs");
 include!("PathDepth.rs");
-include!("Predicate.rs");
-include!("Predicates.rs");
 include!("Subject.rs");
 
 include!("char.constants.rs");

@@ -12,9 +12,31 @@ pub enum Scheme<'a>
 
 	#[allow(missing_docs)]
 	https,
+
+	#[allow(missing_docs)]
+	file,
 	
 	/// Will have been forced to be lower case.
 	Unknown(Cow<'a, str>),
+}
+
+impl<'a> Display for Scheme<'a>
+{
+	#[inline(always)]
+	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	{
+		use Scheme::*;
+		match self
+		{
+			http => write!(f, "http"),
+			
+			https => write!(f, "https"),
+			
+			file => write!(f, "file"),
+			
+			Unknown(unknown) => write!(f, "{}", unknown.as_ref()),
+		}
+	}
 }
 
 impl<'a> TryToOwnInPlace for Scheme<'a>
@@ -49,7 +71,7 @@ impl<'a> Scheme<'a>
 {
 	/// Default port for known schemes.
 	#[inline(always)]
-	pub const fn default_port_if_scheme_is_known(&self) -> Option<NonZeroU16>
+	pub const fn default_port(&self) -> Option<NonZeroU16>
 	{
 		use Scheme::*;
 		
@@ -59,6 +81,8 @@ impl<'a> Scheme<'a>
 			
 			https => Some(new_non_zero_u16(443)),
 			
+			file => None,
+			
 			Unknown(_) => None,
 		}
 	}
@@ -66,7 +90,7 @@ impl<'a> Scheme<'a>
 	/// `IRI = scheme ":" ihier-part [ "?" iquery ] [ "#" ifragment ]`.
 	/// `scheme = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )`.
 	#[inline(always)]
-	fn parse(mut bytes: &'a [u8]) -> Result<(Self, &'a [u8]), SchemeParseError>
+	fn parse(mut bytes: &'a [u8]) -> Result<(Self, bool, &'a [u8]), SchemeParseError>
 	{
 		let remaining_bytes = &mut bytes;
 		let string = Self::parse_first_character(remaining_bytes)?;
@@ -74,16 +98,18 @@ impl<'a> Scheme<'a>
 		
 		use Scheme::*;
 		
-		let scheme = match raw_scheme.as_ref()
+		let (scheme, has_authority_and_absolute_path_with_dns_host_name) = match raw_scheme.as_ref()
 		{
-			"http" => http,
+			"http" => (http, true),
 			
-			"https" => https,
+			"https" => (https, true),
 			
-			_ => Unknown(raw_scheme),
+			"file" => (file, true),
+			
+			_ => (Unknown(raw_scheme), false),
 		};
 		
-		Ok((scheme, *remaining_bytes))
+		Ok((scheme, has_authority_and_absolute_path_with_dns_host_name, *remaining_bytes))
 	}
 	
 	#[inline(always)]

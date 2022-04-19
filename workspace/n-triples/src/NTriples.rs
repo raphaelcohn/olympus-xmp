@@ -8,18 +8,11 @@ pub struct NTriples<'a>(HashMap<Subject<'a>, HashMap<Predicate<'a>, Objects<'a>>
 
 impl<'a> NTriples<'a>
 {
-	/// Objects.
-	#[inline(always)]
-	pub fn objects(&self, subject: &Subject<'a>, predicate: &Predicate<'a>) -> Option<&Objects<'a>>
-	{
-		self.predicates(subject)?.get(predicate)
-	}
-	
 	/// Predicates.
 	#[inline(always)]
-	pub fn predicates(&self, subject: &Subject<'a>) -> Option<&HashMap<Predicate<'a>, Objects<'a>>>
+	pub fn predicates<'b, 's>(&'s self, subject: &Subject<'b>) -> Option<&'s HashMap<Predicate<'a>, Objects<'a>>>
 	{
-		self.0.get(subject)
+		self.0.get(unsafe { transmute(subject) })
 	}
 	
 	/// Parses using the official specification at <https://www.w3.org/TR/n-triples/>.

@@ -6,6 +6,15 @@
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct Query<'a>(Cow<'a, str>);
 
+impl<'a> Display for Query<'a>
+{
+	#[inline(always)]
+	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	{
+		write!(f, "{}", self.0.as_ref())
+	}
+}
+
 impl<'a> TryToOwnInPlace for Query<'a>
 {
 	#[inline(always)]
@@ -119,7 +128,7 @@ impl<'a> Query<'a>
 					ipchar_iunreserved_with_ucschar_2!()  => string.push(character, Two)?,
 					ipchar_iunreserved_with_ucschar_3!()  => string.push(character, Three)?,
 					ipchar_iunreserved_with_ucschar_4!()  => string.push(character, Four)?,
-					ipchar_pct_encoded!()                 => string.push_forcing_heap_percent_encoded(remaining_utf8_bytes)?,
+					ipchar_pct_encoded!()                 => string.push_forcing_heap_percent_encoded::<false>(remaining_utf8_bytes)?,
 					ipchar_sub_delims!()                  => string.push(character, One)?,
 					ipchar_other!()                       => string.push(character, One)?,
 					iprivate_3!()                         => string.push(character, Three)?,

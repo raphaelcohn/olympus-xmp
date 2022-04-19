@@ -21,12 +21,10 @@ build = "src/build.rs"
 
 [build-dependencies]
 #calamine = "0.18.0"
-#indexmap = "1.8.1"
 n-triples = { version = "0.0.0", path = "../n-triples" }
 json = "0.12.4"
-memchr = "2.4.1"
-swiss-army-knife = "^0.0.33"
+swiss-army-knife = "^0.0.36"
 
 [dependencies]
 memchr = "2.4.1"
-swiss-army-knife = "^0.0.33"
+swiss-army-knife = "^0.0.36"

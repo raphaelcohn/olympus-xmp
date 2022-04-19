@@ -6,6 +6,53 @@
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct PathSegments<'a, const PathDepth: usize>(ConstSmallVec<PathSegment<'a>, PathDepth>);
 
+impl<'a: 'b, 'b, const PathDepth: usize> IntoIterator for &'b PathSegments<'a, PathDepth>
+{
+	type Item = &'b PathSegment<'a>;
+	
+	type IntoIter = std::slice::Iter<'b, PathSegment<'a>>;
+	
+	#[inline(always)]
+	fn into_iter(self) -> Self::IntoIter
+	{
+		self.deref().iter()
+	}
+}
+
+impl<'a, const PathDepth: usize> Display for PathSegments<'a, PathDepth>
+{
+	#[inline(always)]
+	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	{
+		let slice = self.0.deref();
+		for path_segment in slice.into_iter()
+		{
+			write!(f, "/{}", path_segment)?;
+		}
+		Ok(())
+	}
+}
+
+impl<'a, const PathDepth: usize> Deref for PathSegments<'a, PathDepth>
+{
+	type Target = [PathSegment<'a>];
+	
+	#[inline(always)]
+	fn deref(&self) -> &Self::Target
+	{
+		self.0.deref()
+	}
+}
+
+impl<'a, const PathDepth: usize> DerefMut for PathSegments<'a, PathDepth>
+{
+	#[inline(always)]
+	fn deref_mut(&mut self) -> &mut Self::Target
+	{
+		self.0.deref_mut()
+	}
+}
+
 impl<'a, const PathDepth: usize> TryToOwnInPlace for PathSegments<'a, PathDepth>
 {
 	#[inline(always)]
@@ -32,9 +79,14 @@ where PathSegment<'a>: ~const FromUnchecked<P>,
 	#[inline(always)]
 	unsafe fn from_unchecked(array: [P; M]) -> Self
 	{
+		if M > PathDepth
+		{
+			panic!("array is too large to allocate on the stack, and heap allocation is not possible at build time")
+		}
+		
 		let mut into_array: [MaybeUninit<PathSegment<'a>>; M] = MaybeUninit::uninit_array();
-		let mut index = 0;
 		let array_pointer = array.as_ptr();
+		let mut index = 0;
 		while index != M
 		{
 			let from_unchecked = read(array_pointer.add(index));
@@ -63,7 +115,12 @@ impl<'a, const PathDepth: usize, const M: usize> const From<[PathSegment<'a>; M]
 	#[inline(always)]
 	fn from(array: [PathSegment<'a>; M]) -> Self
 	{
-		Self::from(ConstSmallVec::from_panic(array))
+		if M > PathDepth
+		{
+			panic!("array is too large to allocate on the stack, and heap allocation is not possible at build time")
+		}
+		
+		Self::from(ConstSmallVec::from_panic_array(array))
 	}
 }
 
@@ -91,17 +148,6 @@ impl<'a, const PathDepth: usize> AsRef<[PathSegment<'a>]> for PathSegments<'a, P
 	fn as_ref(&self) -> &[PathSegment<'a>]
 	{
 		self.deref()
-	}
-}
-
-impl<'a, const PathDepth: usize> Deref for PathSegments<'a, PathDepth>
-{
-	type Target = [PathSegment<'a>];
-	
-	#[inline(always)]
-	fn deref(&self) -> &Self::Target
-	{
-		self.0.deref()
 	}
 }
 

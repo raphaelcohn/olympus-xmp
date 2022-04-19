@@ -28,6 +28,25 @@ pub enum Hierarchy<'a, const PathDepth: usize>
 	EmptyPath,
 }
 
+impl<'a, const PathDepth: usize> Display for Hierarchy<'a, PathDepth>
+{
+	#[inline(always)]
+	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	{
+		use Hierarchy::*;
+		match self
+		{
+			AuthorityAndAbsolutePath { authority, absolute_path } => write!(f, "//{}{}", authority, absolute_path),
+			
+			AbsolutePath(non_empty_path) => write!(f, "/{}", non_empty_path),
+			
+			RootlessPath(non_empty_path) => write!(f, "{}", non_empty_path),
+			
+			EmptyPath => Ok(()),
+		}
+	}
+}
+
 impl<'a, const PathDepth: usize> TryToOwnInPlace for Hierarchy<'a, PathDepth>
 {
 	#[inline(always)]
@@ -157,20 +176,33 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 	/// `isegment       = *ipchar`.
 	/// `isegment-nz    = 1*ipchar`.
 	#[inline(always)]
-	fn parse(mut remaining_utf8_bytes: &'a [u8]) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
+	fn parse(has_authority_and_absolute_path_with_dns_host_name: bool, mut remaining_utf8_bytes: &'a [u8]) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
 	{
 		use Utf8CharacterLength::*;
 		use Hierarchy::*;
 		use HierarchyParseError::*;
 		
 		let character = StringSoFar::decode_next_utf8_validity_already_checked_mandatory(&mut remaining_utf8_bytes, DidNotExpectEndParsingFirstCharacter)?;
+		
+		if has_authority_and_absolute_path_with_dns_host_name
+		{
+			return if character == SlashChar
+			{
+				Self::parse_iauthority_ipath_abempty_or_ipath_absolute(has_authority_and_absolute_path_with_dns_host_name, remaining_utf8_bytes)
+			}
+			else
+			{
+				Err(InvalidFirstCharacter(character))
+			}
+		}
+		
 		match character
 		{
 			QuestionMarkChar => Ok((EmptyPath, ParseNextAfterHierarchy::query(remaining_utf8_bytes))),
 			
 			HashChar => Ok((EmptyPath, ParseNextAfterHierarchy::fragment_no_query(remaining_utf8_bytes))),
 			
-			SlashChar => Self::parse_iauthority_ipath_abempty_or_ipath_absolute(remaining_utf8_bytes),
+			SlashChar => Self::parse_iauthority_ipath_abempty_or_ipath_absolute(has_authority_and_absolute_path_with_dns_host_name, remaining_utf8_bytes),
 			
 			ipchar_iunreserved_without_ucschar!() => Self::parse_ipath_rootless(Self::decoded(character, One), remaining_utf8_bytes),
 			ipchar_iunreserved_with_ucschar_2!()  => Self::parse_ipath_rootless(Self::decoded(character, Two), remaining_utf8_bytes),
@@ -185,15 +217,27 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 	}
 	
 	#[inline(always)]
-	fn parse_iauthority_ipath_abempty_or_ipath_absolute(mut remaining_utf8_bytes: &'a [u8]) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
+	fn parse_iauthority_ipath_abempty_or_ipath_absolute(has_authority_and_absolute_path_with_dns_host_name: bool, mut remaining_utf8_bytes: &'a [u8]) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
 	{
 		use Utf8CharacterLength::*;
 		use HierarchyParseError::*;
 		
 		let character = StringSoFar::decode_next_utf8_validity_already_checked_mandatory(&mut remaining_utf8_bytes, DidNotExpectEndParsingSecondCharacter)?;
+		if has_authority_and_absolute_path_with_dns_host_name
+		{
+			return if character == SlashChar
+			{
+				Self::parse_iauthority_ipath_abempty(has_authority_and_absolute_path_with_dns_host_name, remaining_utf8_bytes)
+			}
+			else
+			{
+				Err(InvalidSecondCharacter(character))
+			}
+		}
+		
 		match character
 		{
-			SlashChar => Self::parse_iauthority_ipath_abempty(remaining_utf8_bytes),
+			SlashChar => Self::parse_iauthority_ipath_abempty(has_authority_and_absolute_path_with_dns_host_name, remaining_utf8_bytes),
 			
 			ipchar_iunreserved_without_ucschar!() => Self::parse_ipath_absolute(Self::decoded(character, One), remaining_utf8_bytes),
 			ipchar_iunreserved_with_ucschar_2!()  => Self::parse_ipath_absolute(Self::decoded(character, Two), remaining_utf8_bytes),
@@ -254,7 +298,7 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 	/// * "//segment/"
 	/// * "//segment////segment"
 	#[inline(always)]
-	fn parse_iauthority_ipath_abempty(remaining_utf8_bytes: &'a [u8]) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
+	fn parse_iauthority_ipath_abempty(has_authority_and_absolute_path_with_dns_host_name: bool, remaining_utf8_bytes: &'a [u8]) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
 	{
 		let mut absolute_path = PathSegments::default();
 		
@@ -262,14 +306,14 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 		{
 			None =>
 			{
-				let authority = Authority::parse(remaining_utf8_bytes)?;
+				let authority = Authority::parse(has_authority_and_absolute_path_with_dns_host_name, remaining_utf8_bytes)?;
 				(authority, ParseNextAfterHierarchy::NoQueryNoFragment)
 			}
 			
 			Some(index) =>
 			{
 				let authority_bytes = remaining_utf8_bytes.before_index(index);
-				let authority = Authority::parse(authority_bytes)?;
+				let authority = Authority::parse(has_authority_and_absolute_path_with_dns_host_name, authority_bytes)?;
 				
 				let after_authority_bytes = remaining_utf8_bytes.after_index(index);
 				

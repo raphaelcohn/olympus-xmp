@@ -16,6 +16,24 @@ pub enum Host<'a>
 	InternetProtocolVersion6Address(Ipv6Addr),
 }
 
+impl<'a> Display for Host<'a>
+{
+	#[inline(always)]
+	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	{
+		use Host::*;
+		
+		match self
+		{
+			Name(host_name) => write!(f, "{}", host_name),
+			
+			InternetProtocolVersion4Address(internet_protocol_version_4_address) => write!(f, "{}", internet_protocol_version_4_address),
+			
+			InternetProtocolVersion6Address(internet_protocol_version_6_address) => write!(f, "[{}]", internet_protocol_version_6_address),
+		}
+	}
+}
+
 impl<'a> const FromUnchecked<&'a str> for Host<'a>
 {
 	#[inline(always)]
@@ -93,7 +111,7 @@ impl<'a> Host<'a>
 	/// `dec-octet      = DIGIT  / %x31-39 DIGIT / "1" 2DIGIT / "2" %x30-34 DIGIT / "25" %x30-35` (ie `0-9 | 10-99 | 100-199 | 200-249 | 250-255`).
 	/// `iunreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~" / ucschar`.
 	#[inline(always)]
-	fn parse(ihost_and_port_bytes: &'a [u8]) -> Result<(Self, &'a [u8]), HostParseError>
+	fn parse(has_authority_and_absolute_path_with_dns_host_name: bool, ihost_and_port_bytes: &'a [u8]) -> Result<(Self, &'a [u8]), HostParseError>
 	{
 		let length = ihost_and_port_bytes.len();
 		
@@ -108,28 +126,79 @@ impl<'a> Host<'a>
 		}
 		
 		// Either a name or an IPv4 address.
-		// How do we tell the difference? Check for the presence of '.' in the first 4 bytes.
-		if InternetProtocolVersion4AddressParser::could_be_an_internet_protocol_version_4_address(length)
+		if has_authority_and_absolute_path_with_dns_host_name
+		{
+			return match ihost_and_port_bytes.get_unchecked_value_safe(0)
+			{
+				_0 ..= _9 =>
+				{
+					use HostParseError::StartsWithADigitButIsNotAnInternetProtocolVersion4Address;
+					
+					if InternetProtocolVersion4AddressParser::could_be_an_internet_protocol_version_4_address(length)
+					{
+						let (possible_octet0_byte1, is_period) = InternetProtocolVersion4AddressParser::get_byte_and_check_if_it_is_period_index_1(ihost_and_port_bytes);
+						if is_period
+						{
+							Self::construct_internet_protocol_version_4_address(InternetProtocolVersion4AddressParser::parse_knowing_octet_1_is_0_to_9(ihost_and_port_bytes))
+						}
+						else
+						{
+							let (possible_octet0_byte2, is_period) = InternetProtocolVersion4AddressParser::get_byte_and_check_if_it_is_period_index_2(ihost_and_port_bytes);
+							if is_period
+							{
+								Self::construct_internet_protocol_version_4_address(InternetProtocolVersion4AddressParser::parse_knowing_octet_1_is_10_to_99(ihost_and_port_bytes, possible_octet0_byte1))
+							}
+							else if InternetProtocolVersion4AddressParser::get_byte_and_check_if_it_is_period_index_3(ihost_and_port_bytes)
+							{
+								Self::construct_internet_protocol_version_4_address(InternetProtocolVersion4AddressParser::parse_knowing_octet_1_is_100_to_255(ihost_and_port_bytes, possible_octet0_byte1, possible_octet0_byte2))
+							}
+							else
+							{
+								Err(StartsWithADigitButIsNotAnInternetProtocolVersion4Address)
+							}
+						}
+					}
+					else
+					{
+						Err(StartsWithADigitButIsNotAnInternetProtocolVersion4Address)
+					}
+				}
+				
+				_ => Self::parse_name_lower_case(ihost_and_port_bytes),
+			}
+		}
+		
+		// Either a name or an IPv4 address.
+		// How do we tell the difference? Check for the presence of '.' in the first 4 bytes, try to parse as an IPv4 address then fallback to host name parsing.
+		// NOTE: host names do not have to be legal domain names (DNS ANAME or CNAME), otherwise we could simply check if the first byte is a digit!
+		if !InternetProtocolVersion4AddressParser::could_be_an_internet_protocol_version_4_address(length)
 		{
 			let (possible_octet0_byte1, is_period_so_is_either_an_internet_protocol_version_4_address_or_invalid_ireg_name) = InternetProtocolVersion4AddressParser::get_byte_and_check_if_it_is_period_index_1(ihost_and_port_bytes);
 			if is_period_so_is_either_an_internet_protocol_version_4_address_or_invalid_ireg_name
 			{
-				return Self::construct_internet_protocol_version_4_address(InternetProtocolVersion4AddressParser::parse_knowing_octet_1_is_0_to_9(ihost_and_port_bytes))
+				return Self::construct_internet_protocol_version_4_address_or_fallback_to_parse_name(ihost_and_port_bytes, InternetProtocolVersion4AddressParser::parse_knowing_octet_1_is_0_to_9(ihost_and_port_bytes))
 			}
 			
 			let (possible_octet0_byte2, is_period_so_is_either_an_internet_protocol_version_4_address_or_invalid_ireg_name) = InternetProtocolVersion4AddressParser::get_byte_and_check_if_it_is_period_index_2(ihost_and_port_bytes);
 			if is_period_so_is_either_an_internet_protocol_version_4_address_or_invalid_ireg_name
 			{
-				return Self::construct_internet_protocol_version_4_address(InternetProtocolVersion4AddressParser::parse_knowing_octet_1_is_10_to_99(ihost_and_port_bytes, possible_octet0_byte1))
+				return Self::construct_internet_protocol_version_4_address_or_fallback_to_parse_name(ihost_and_port_bytes, InternetProtocolVersion4AddressParser::parse_knowing_octet_1_is_10_to_99(ihost_and_port_bytes, possible_octet0_byte1))
 			}
 			
 			if InternetProtocolVersion4AddressParser::get_byte_and_check_if_it_is_period_index_3(ihost_and_port_bytes)
 			{
-				return Self::construct_internet_protocol_version_4_address(InternetProtocolVersion4AddressParser::parse_knowing_octet_1_is_100_to_255(ihost_and_port_bytes, possible_octet0_byte1, possible_octet0_byte2))
+				return Self::construct_internet_protocol_version_4_address_or_fallback_to_parse_name(ihost_and_port_bytes, InternetProtocolVersion4AddressParser::parse_knowing_octet_1_is_100_to_255(ihost_and_port_bytes, possible_octet0_byte1, possible_octet0_byte2))
 			}
 		}
 		
 		Self::parse_name(ihost_and_port_bytes)
+	}
+	
+	#[inline(always)]
+	fn parse_name_lower_case(ihost_and_port_bytes: &'a [u8]) -> Result<(Self, &'a [u8]), HostParseError>
+	{
+		let (host_name, port_bytes_including_colon) = HostName::parse_name_lower_case(ihost_and_port_bytes)?;
+		Ok((Host::Name(host_name), port_bytes_including_colon))
 	}
 	
 	#[inline(always)]
@@ -224,13 +293,30 @@ impl<'a> Host<'a>
 	}
 	
 	#[inline(always)]
+	fn construct_internet_protocol_version_4_address_or_fallback_to_parse_name(ihost_and_port_bytes: &'a [u8], result: Result<(Ipv4Addr, &'a [u8]), InternetProtocolVersion4AddressParseError>) -> Result<(Self, &'a [u8]), HostParseError>
+	{
+		match result
+		{
+			Ok(inner) => Self::construct_internet_protocol_version_4_address_common(inner),
+			
+			Err(_) => Self::parse_name(ihost_and_port_bytes)
+		}
+	}
+	
+	#[inline(always)]
 	fn construct_internet_protocol_version_4_address(result: Result<(Ipv4Addr, &'a [u8]), InternetProtocolVersion4AddressParseError>) -> Result<(Self, &'a [u8]), HostParseError>
 	{
 		match result
 		{
-			Ok((internet_protocol_version_4_address, port_bytes)) => Ok((Host::InternetProtocolVersion4Address(internet_protocol_version_4_address), port_bytes)),
+			Ok(inner) => Self::construct_internet_protocol_version_4_address_common(inner),
 			
 			Err(error) => Err(HostParseError::InternetProtocolVersion4AddressParse(error))
 		}
+	}
+	
+	#[inline(always)]
+	fn construct_internet_protocol_version_4_address_common((internet_protocol_version_4_address, port_bytes): (Ipv4Addr, &'a [u8])) -> Result<(Self, &'a [u8]), HostParseError>
+	{
+		Ok((Host::InternetProtocolVersion4Address(internet_protocol_version_4_address), port_bytes))
 	}
 }

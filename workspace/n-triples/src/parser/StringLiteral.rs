@@ -62,7 +62,7 @@ impl<'a> StringLiteral<'a>
 		use LiteralTag::*;
 		let literal_tag = match get_0(remaining_bytes).ok_or(DidNotExpectEndParsingLiteralTag)?
 		{
-			Space | Tab => Datatype(AbsoluteInternationalizedResourceIdentifier::_2001_xml_schema("string")),
+			Space | Tab => Datatype(AbsoluteInternationalizedResourceIdentifier::http_www_w3_org_2001_xml_schema("string")),
 			
 			Caret =>
 			{
@@ -84,11 +84,11 @@ impl<'a> StringLiteral<'a>
 				let haystack = *remaining_bytes;
 				let index = memchr2(Space, Tab, haystack).ok_or(DidNotExpectEndParsingLanguageTag)?;
 				
-				let raw_ietf_bcp_47_language_tag_bytes = haystack.before_index(index);
+				let naive_ietf_bcp_47_language_tag_bytes = haystack.before_index(index);
 				*remaining_bytes = haystack.after_index(index);
 				
 				// 	let language_tag = NaiveIetfBcp47LanguageTag::parse(haystack.after_index(index)).map_err(NaiveIetfBcp47LanguageTagParse)?;
-				Language(NaiveIetfBcp47LanguageTag::parse(raw_ietf_bcp_47_language_tag_bytes).map_err(NaiveIetfBcp47LanguageTagParse)?)
+				Language(NaiveIetfBcp47LanguageTag::parse(naive_ietf_bcp_47_language_tag_bytes).map_err(NaiveIetfBcp47LanguageTagParse)?)
 			}
 			
 			invalid @ _ => return Err(InvalidByteStartsLiteralTag(invalid)),

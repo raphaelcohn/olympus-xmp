@@ -6,6 +6,15 @@
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct UserInformation<'a>(Cow<'a, str>);
 
+impl<'a> Display for UserInformation<'a>
+{
+	#[inline(always)]
+	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	{
+		write!(f, "{}", self.0.deref())
+	}
+}
+
 impl<'a> TryToOwnInPlace for UserInformation<'a>
 {
 	#[inline(always)]
@@ -52,7 +61,7 @@ impl<'a> UserInformation<'a>
 					iunreserved_with_ucschar_2!()  => string.push(character, Two)?,
 					iunreserved_with_ucschar_3!()  => string.push(character, Three)?,
 					iunreserved_with_ucschar_4!()  => string.push(character, Four)?,
-					pct_encoded!()                 => string.push_forcing_heap_percent_encoded(remaining_utf8_bytes)?,
+					pct_encoded!()                 => string.push_forcing_heap_percent_encoded::<false>(remaining_utf8_bytes)?,
 					sub_delims!()                  => string.push(character, One)?,
 					ColonChar                      => string.push(character, One)?,
 					

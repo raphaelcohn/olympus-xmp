@@ -22,4 +22,5 @@ use swiss_army_knife::get_unchecked::GetUnchecked;
 
 include!("CrudeCsvLineIterator.rs");
 include!("inefficient_csv_records.rs");
+include!("new_inefficient_record_lines_iterator.rs");
 include!("RecordParser.rs");
