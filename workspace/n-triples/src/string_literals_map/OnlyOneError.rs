@@ -10,10 +10,7 @@ pub enum OnlyOneError<E: error::Error>
 	Missing,
 	
 	#[allow(missing_docs)]
-	TooMany(NonZeroUsize),
-	
-	#[allow(missing_docs)]
-	Parse(E),
+	ZeroOrOne(ZeroOrOneError<E>),
 }
 
 impl<E: error::Error> From<E> for OnlyOneError<E>
@@ -21,7 +18,7 @@ impl<E: error::Error> From<E> for OnlyOneError<E>
 	#[inline(always)]
 	fn from(cause: E) -> Self
 	{
-		OnlyOneError::Parse(cause)
+		OnlyOneError::ZeroOrOne(ZeroOrOneError::Parse(cause))
 	}
 }
 
@@ -43,7 +40,7 @@ impl<E: 'static + error::Error> error::Error for OnlyOneError<E>
 		
 		match self
 		{
-			Parse(cause) => Some(cause),
+			ZeroOrOne(cause) => Some(cause),
 			
 			_ => None,
 		}

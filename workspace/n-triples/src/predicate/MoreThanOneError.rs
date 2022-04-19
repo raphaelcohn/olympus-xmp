@@ -4,22 +4,13 @@
 
 /// Error.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub enum OnlyOneXmlSchemaStringLiteralError<'a>
+pub struct MoreThanOneError
 {
 	#[allow(missing_docs)]
-	String(OnlyOneError<Infallible>, Predicate<'a>),
-	
-	#[allow(missing_docs)]
-	Boolean(OnlyOneError<ParseBoolError>, Predicate<'a>),
-	
-	#[allow(missing_docs)]
-	Integer(OnlyOneError<ParseIntError>, Predicate<'a>),
-	
-	#[allow(missing_docs)]
-	DateTime(OnlyOneError<ParseDateTimeError>, Predicate<'a>),
+	pub count: NonZeroUsize,
 }
 
-impl<'a> Display for OnlyOneXmlSchemaStringLiteralError<'a>
+impl Display for MoreThanOneError
 {
 	#[inline(always)]
 	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
@@ -28,22 +19,6 @@ impl<'a> Display for OnlyOneXmlSchemaStringLiteralError<'a>
 	}
 }
 
-impl<'a> error::Error for OnlyOneXmlSchemaStringLiteralError<'a>
+impl error::Error for MoreThanOneError
 {
-	#[inline(always)]
-	fn source(&self) -> Option<&(dyn error::Error + 'static)>
-	{
-		use OnlyOneXmlSchemaStringLiteralError::*;
-		
-		match self
-		{
-			String(cause, _) => Some(cause),
-			
-			Boolean(cause, _) => Some(cause),
-			
-			Integer(cause, _) => Some(cause),
-			
-			DateTime(cause, _) => Some(cause),
-		}
-	}
 }

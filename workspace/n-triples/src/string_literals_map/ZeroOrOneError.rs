@@ -2,48 +2,47 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-/// Error.
+/// An error.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub enum OnlyOneXmlSchemaStringLiteralError<'a>
+pub enum ZeroOrOneError<E: error::Error>
 {
 	#[allow(missing_docs)]
-	String(OnlyOneError<Infallible>, Predicate<'a>),
+	TooMany(MoreThanOneError),
 	
 	#[allow(missing_docs)]
-	Boolean(OnlyOneError<ParseBoolError>, Predicate<'a>),
-	
-	#[allow(missing_docs)]
-	Integer(OnlyOneError<ParseIntError>, Predicate<'a>),
-	
-	#[allow(missing_docs)]
-	DateTime(OnlyOneError<ParseDateTimeError>, Predicate<'a>),
+	Parse(E),
 }
 
-impl<'a> Display for OnlyOneXmlSchemaStringLiteralError<'a>
+impl<E: error::Error> From<E> for ZeroOrOneError<E>
 {
 	#[inline(always)]
-	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	fn from(cause: E) -> Self
 	{
-		Debug::fmt(self, f)
+		ZeroOrOneError::Parse(cause)
 	}
 }
 
-impl<'a> error::Error for OnlyOneXmlSchemaStringLiteralError<'a>
+impl<E: error::Error> Display for ZeroOrOneError<E>
+{
+	#[inline(always)]
+	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
+	{
+		Debug::fmt(self, formatter)
+	}
+}
+
+impl<E: 'static + error::Error> error::Error for ZeroOrOneError<E>
 {
 	#[inline(always)]
 	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		use OnlyOneXmlSchemaStringLiteralError::*;
+		use ZeroOrOneError::*;
 		
 		match self
 		{
-			String(cause, _) => Some(cause),
+			TooMany(cause) => Some(cause),
 			
-			Boolean(cause, _) => Some(cause),
-			
-			Integer(cause, _) => Some(cause),
-			
-			DateTime(cause, _) => Some(cause),
+			Parse(cause) => Some(cause),
 		}
 	}
 }

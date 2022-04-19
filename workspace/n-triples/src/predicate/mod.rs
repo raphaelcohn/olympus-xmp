@@ -13,9 +13,12 @@ use std::fmt::Display;
 use std::fmt::Formatter;
 use std::lazy::SyncLazy;
 use std::mem::transmute;
+use std::num::NonZeroUsize;
 use std::num::ParseIntError;
 use std::ops::Deref;
 use std::str::ParseBoolError;
+use swiss_army_knife::get_unchecked::GetUnchecked;
+use swiss_army_knife::non_zero::new_non_zero_usize;
 use super::BlankNodeLabel;
 use super::NaiveIetfBcp47LanguageTag;
 use super::Objects;
@@ -24,8 +27,11 @@ use super::internationalized_resource_identifier::AbsoluteInternationalizedResou
 use super::string_literals_map::OnlyOneError;
 use super::string_literals_map::ParseDateTimeError;
 use super::string_literals_map::StringLiteralsMap;
+use super::string_literals_map::ZeroOrOneError;
 
 
+include!("MoreThanOneError.rs");
 include!("OnlyOneXmlSchemaStringLiteralError.rs");
+include!("OptionalXmlSchemaStringLiteralError.rs");
 include!("Predicate.rs");
 include!("Predicates.rs");

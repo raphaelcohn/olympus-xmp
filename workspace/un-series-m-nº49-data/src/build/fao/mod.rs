@@ -7,6 +7,7 @@ use n_triples::PathDepth;
 use n_triples::Subject;
 use n_triples::internationalized_resource_identifier::AbsoluteInternationalizedResourceIdentifier;
 use n_triples::parser::NTriplesParseError;
+use n_triples::predicate::MoreThanOneError;
 use n_triples::predicate::Predicate;
 use n_triples::predicate::Predicates;
 use n_triples::predicate::OnlyOneXmlSchemaStringLiteralError;

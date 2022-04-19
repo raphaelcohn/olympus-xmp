@@ -9,29 +9,60 @@ pub trait Predicates<'a: 'string_literals_map, 'string_literals_map, 'predicate>
 	#[inline(always)]
 	fn get_only_one_xml_schema_string(&'string_literals_map self, predicate: Predicate<'predicate>) -> Result<&'string_literals_map str, OnlyOneXmlSchemaStringLiteralError<'predicate>>
 	{
-		self.get_string_literals_by_absolute_internationalized_resource_identifier(&predicate).xml_schema_string().map_err(|error| OnlyOneXmlSchemaStringLiteralError::String(predicate, error))
+		self.get_string_literals_by_absolute_internationalized_resource_identifier(&predicate).xml_schema_string().map_err(|error| OnlyOneXmlSchemaStringLiteralError::String(error, predicate))
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
 	fn get_only_one_xml_schema_boolean(&'string_literals_map self, predicate: Predicate<'predicate>) -> Result<bool, OnlyOneXmlSchemaStringLiteralError<'predicate>>
 	{
-		self.get_string_literals_by_absolute_internationalized_resource_identifier(&predicate).xml_schema_boolean().map_err(|error| OnlyOneXmlSchemaStringLiteralError::Boolean(predicate, error))
+		self.get_string_literals_by_absolute_internationalized_resource_identifier(&predicate).xml_schema_boolean().map_err(|error| OnlyOneXmlSchemaStringLiteralError::Boolean(error, predicate))
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
 	fn get_only_one_xml_schema_integer(&'string_literals_map self, predicate: Predicate<'predicate>) -> Result<i64, OnlyOneXmlSchemaStringLiteralError<'predicate>>
 	{
-		self.get_string_literals_by_absolute_internationalized_resource_identifier(&predicate).xml_schema_integer().map_err(|error| OnlyOneXmlSchemaStringLiteralError::Integer(predicate, error))
+		self.get_string_literals_by_absolute_internationalized_resource_identifier(&predicate).xml_schema_integer().map_err(|error| OnlyOneXmlSchemaStringLiteralError::Integer(error, predicate))
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
 	fn get_only_one_xml_schema_date_time(&'string_literals_map self, predicate: Predicate<'predicate>) -> Result<DateTime<FixedOffset>, OnlyOneXmlSchemaStringLiteralError<'predicate>>
 	{
-		self.get_string_literals_by_absolute_internationalized_resource_identifier(&predicate).xml_schema_date_time().map_err(|error| OnlyOneXmlSchemaStringLiteralError::DateTime(predicate, error))
+		self.get_string_literals_by_absolute_internationalized_resource_identifier(&predicate).xml_schema_date_time().map_err(|error| OnlyOneXmlSchemaStringLiteralError::DateTime(error, predicate))
 	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
+	fn get_optional_xml_schema_string(&'string_literals_map self, predicate: Predicate<'predicate>) -> Result<Option<&'string_literals_map str>, OptionalXmlSchemaStringLiteralError<'predicate>>
+	{
+		self.get_string_literals_by_absolute_internationalized_resource_identifier(&predicate).optional_xml_schema_string().map_err(|error| OptionalXmlSchemaStringLiteralError::String(error, predicate))
+	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
+	fn get_optional_xml_schema_boolean(&'string_literals_map self, predicate: Predicate<'predicate>) -> Result<Option<bool>, OptionalXmlSchemaStringLiteralError<'predicate>>
+	{
+		self.get_string_literals_by_absolute_internationalized_resource_identifier(&predicate).optional_xml_schema_boolean().map_err(|error| OptionalXmlSchemaStringLiteralError::Boolean(error, predicate))
+	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
+	fn get_optional_xml_schema_integer(&'string_literals_map self, predicate: Predicate<'predicate>) -> Result<Option<i64>, OptionalXmlSchemaStringLiteralError<'predicate>>
+	{
+		self.get_string_literals_by_absolute_internationalized_resource_identifier(&predicate).optional_xml_schema_integer().map_err(|error| OptionalXmlSchemaStringLiteralError::Integer(error, predicate))
+	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
+	fn get_optional_xml_schema_date_time(&'string_literals_map self, predicate: Predicate<'predicate>) -> Result<Option<DateTime<FixedOffset>>, OptionalXmlSchemaStringLiteralError<'predicate>>
+	{
+		self.get_string_literals_by_absolute_internationalized_resource_identifier(&predicate).optional_xml_schema_date_time().map_err(|error| OptionalXmlSchemaStringLiteralError::DateTime(error, predicate))
+	}
+	
+	#[allow(missing_docs)]
+	fn get_optional_absolute_internationalized_resource_identifier(&'string_literals_map self, predicate: &Predicate<'predicate>) -> Result<Option<&'string_literals_map AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>>, MoreThanOneError>;
 	
 	#[allow(missing_docs)]
 	fn get_absolute_internationalized_resource_identifiers(&'string_literals_map self, predicate: &Predicate<'predicate>) -> &[AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>];
@@ -48,6 +79,29 @@ pub trait Predicates<'a: 'string_literals_map, 'string_literals_map, 'predicate>
 
 impl<'a: 'string_literals_map, 'string_literals_map, 'predicate> Predicates<'a, 'string_literals_map, 'predicate> for HashMap<Predicate<'a>, Objects<'a>>
 {
+	#[inline(always)]
+	fn get_optional_absolute_internationalized_resource_identifier(&'string_literals_map self, predicate: &Predicate<'predicate>) -> Result<Option<&'string_literals_map AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>>, MoreThanOneError>
+	{
+		match self.get(unsafe { transmute(predicate) })
+		{
+			None => Ok(None),
+			
+			Some(objects) =>
+			{
+				let x = objects.absolute_internationalized_resource_identifiers();
+				let length = x.len();
+				if length == 1
+				{
+					Ok(Some(x.get_unchecked_safe(0)))
+				}
+				else
+				{
+					Err(MoreThanOneError { count: new_non_zero_usize(length) })
+				}
+			}
+		}
+	}
+	
 	#[inline(always)]
 	fn get_absolute_internationalized_resource_identifiers(&'string_literals_map self, predicate: &Predicate<'predicate>) -> &'string_literals_map [AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>]
 	{

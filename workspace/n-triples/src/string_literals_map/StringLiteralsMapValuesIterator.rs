@@ -4,7 +4,7 @@
 
 /// An iterator.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub struct StringLiteralsMapValuesIterator<'a: 'string_literals_map, 'string_literals_map, I, Parser: Copy + FnOnce(&'string_literals_map str) -> I>(&'string_literals_map [Cow<'a, str>], Parser);
+pub struct StringLiteralsMapValuesIterator<'a: 'string_literals_map, 'string_literals_map, Item, Parser: Copy + FnOnce(&'string_literals_map str) -> Item>(&'string_literals_map [Cow<'a, str>], Parser);
 
 impl<'a: 'string_literals_map, 'string_literals_map, Item, Parser: Copy + FnOnce(&'string_literals_map str) -> Item> Iterator for StringLiteralsMapValuesIterator<'a, 'string_literals_map, Item, Parser>
 {
@@ -73,15 +73,20 @@ impl<'a: 'string_literals_map, 'string_literals_map, Item, Parser: Copy + FnOnce
 {
 	#[allow(missing_docs)]
 	#[inline(always)]
-	pub fn only_one_option(mut self) -> Option<Item>
+	pub fn zero_or_one<E: error::Error>(mut self) -> Result<Option<Item>, ZeroOrOneError<E>>
 	{
-		if self.len() == 1
+		use ZeroOrOneError::*;
+		match self.len()
 		{
-			self.next()
-		}
-		else
-		{
-			None
+			0 => Ok(None),
+			
+			1 =>
+			{
+				let next = self.next();
+				Ok(Some(unsafe { next.unwrap_unchecked() }))
+			}
+			
+			length @ _ => Err(TooMany(MoreThanOneError { count: new_non_zero_usize(length) }))
 		}
 	}
 	
@@ -89,6 +94,7 @@ impl<'a: 'string_literals_map, 'string_literals_map, Item, Parser: Copy + FnOnce
 	#[inline(always)]
 	pub fn only_one<E: error::Error>(mut self) -> Result<Item, OnlyOneError<E>>
 	{
+		use ZeroOrOneError::*;
 		use OnlyOneError::*;
 		match self.len()
 		{
@@ -100,7 +106,7 @@ impl<'a: 'string_literals_map, 'string_literals_map, Item, Parser: Copy + FnOnce
 				Ok(unsafe { next.unwrap_unchecked() })
 			}
 			
-			length @ _ => Err(TooMany(new_non_zero_usize(length)))
+			length @ _ => Err(ZeroOrOne(TooMany(MoreThanOneError { count: new_non_zero_usize(length) })))
 		}
 	}
 }

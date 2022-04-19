@@ -4,22 +4,22 @@
 
 /// Error.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub enum OnlyOneXmlSchemaStringLiteralError<'a>
+pub enum OptionalXmlSchemaStringLiteralError<'a>
 {
 	#[allow(missing_docs)]
-	String(OnlyOneError<Infallible>, Predicate<'a>),
+	String(ZeroOrOneError<Infallible>, Predicate<'a>),
 	
 	#[allow(missing_docs)]
-	Boolean(OnlyOneError<ParseBoolError>, Predicate<'a>),
+	Boolean(ZeroOrOneError<ParseBoolError>, Predicate<'a>),
 	
 	#[allow(missing_docs)]
-	Integer(OnlyOneError<ParseIntError>, Predicate<'a>),
+	Integer(ZeroOrOneError<ParseIntError>, Predicate<'a>),
 	
 	#[allow(missing_docs)]
-	DateTime(OnlyOneError<ParseDateTimeError>, Predicate<'a>),
+	DateTime(ZeroOrOneError<ParseDateTimeError>, Predicate<'a>),
 }
 
-impl<'a> Display for OnlyOneXmlSchemaStringLiteralError<'a>
+impl<'a> Display for OptionalXmlSchemaStringLiteralError<'a>
 {
 	#[inline(always)]
 	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
@@ -28,12 +28,12 @@ impl<'a> Display for OnlyOneXmlSchemaStringLiteralError<'a>
 	}
 }
 
-impl<'a> error::Error for OnlyOneXmlSchemaStringLiteralError<'a>
+impl<'a> error::Error for OptionalXmlSchemaStringLiteralError<'a>
 {
 	#[inline(always)]
 	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		use OnlyOneXmlSchemaStringLiteralError::*;
+		use OptionalXmlSchemaStringLiteralError::*;
 		
 		match self
 		{

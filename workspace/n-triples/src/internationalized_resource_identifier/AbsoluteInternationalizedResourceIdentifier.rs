@@ -380,6 +380,9 @@ impl<const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'static
 	/// `http://www.w3.org/2004/02/skos/core#topConceptOf`.
 	pub const SimpleKnowledgeOrganizationSchemeCoreTopConceptOf: Self = Self::http_www_w3_org_2004_02_simple_knowledge_organization_scheme_core("topConceptOf");
 	
+	/// `http://www.w3.org/2004/02/skos/core#broader`.
+	pub const SimpleKnowledgeOrganizationSchemeCoreBroader: Self = Self::http_www_w3_org_2004_02_simple_knowledge_organization_scheme_core("broader");
+	
 	/// `http://www.w3.org/2001/XMLSchema#boolean`.
 	pub const XmlSchemaBoolean: Self = Self::http_www_w3_org_2001_xml_schema("boolean");
 	

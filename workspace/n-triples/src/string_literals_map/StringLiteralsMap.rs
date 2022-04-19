@@ -92,21 +92,77 @@ impl<'a: 'string_literals_map, 'string_literals_map, const PathDepth: usize> Str
 	#[inline(always)]
 	pub fn xml_schema_boolean(&'string_literals_map self) -> Result<bool, OnlyOneError<ParseBoolError>>
 	{
-		Ok(self.get_xml_schema_booleans().only_one()??)
+		Self::xml_schema_result(self.get_xml_schema_booleans())
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
 	pub fn xml_schema_integer(&'string_literals_map self) -> Result<i64, OnlyOneError<ParseIntError>>
 	{
-		Ok(self.get_xml_schema_integers().only_one()??)
+		Self::xml_schema_result(self.get_xml_schema_integers())
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
 	pub fn xml_schema_date_time(&'string_literals_map self) -> Result<DateTime<FixedOffset>, OnlyOneError<ParseDateTimeError>>
 	{
-		Ok(self.get_xml_schema_date_time().only_one()??)
+		Self::xml_schema_result(self.get_xml_schema_date_time())
+	}
+	
+	#[inline(always)]
+	fn xml_schema_result<O, E: error::Error>(iterator: StringLiteralsMapValuesIterator<'a, 'string_literals_map, Result<O, E>, impl Copy + FnOnce(&'string_literals_map str) -> Result<O, E>>) -> Result<O, OnlyOneError<E>>
+	{
+		match iterator.only_one::<E>()
+		{
+			Ok(Ok(value)) => Ok(value),
+			
+			Ok(Err(parse_error)) => Err(OnlyOneError::from(parse_error)),
+			
+			Err(error) => Err(error)
+		}
+	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub fn optional_xml_schema_string(&'string_literals_map self) -> Result<Option<&'string_literals_map str>, ZeroOrOneError<Infallible>>
+	{
+		self.get_xml_schema_strings().zero_or_one::<Infallible>()
+	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub fn optional_xml_schema_boolean(&'string_literals_map self) -> Result<Option<bool>, ZeroOrOneError<ParseBoolError>>
+	{
+		Self::optional_xml_schema_result(self.get_xml_schema_booleans())
+	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub fn optional_xml_schema_integer(&'string_literals_map self) -> Result<Option<i64>, ZeroOrOneError<ParseIntError>>
+	{
+		Self::optional_xml_schema_result(self.get_xml_schema_integers())
+	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
+	pub fn optional_xml_schema_date_time(&'string_literals_map self) -> Result<Option<DateTime<FixedOffset>>, ZeroOrOneError<ParseDateTimeError>>
+	{
+		Self::optional_xml_schema_result(self.get_xml_schema_date_time())
+	}
+	
+	#[inline(always)]
+	fn optional_xml_schema_result<O, E: error::Error>(iterator: StringLiteralsMapValuesIterator<'a, 'string_literals_map, Result<O, E>, impl Copy + FnOnce(&'string_literals_map str) -> Result<O, E>>) -> Result<Option<O>, ZeroOrOneError<E>>
+	{
+		match iterator.zero_or_one()
+		{
+			Ok(None) => Ok(None),
+			
+			Ok(Some(Ok(ok))) => Ok(Some(ok)),
+			
+			Ok(Some(Err(error))) => Err(ZeroOrOneError::Parse(error)),
+			
+			Err(error) => Err(error),
+		}
 	}
 	
 	#[allow(missing_docs)]
@@ -138,7 +194,7 @@ impl<'a: 'string_literals_map, 'string_literals_map, const PathDepth: usize> Str
 	}
 	
 	#[inline(always)]
-	fn get_inner<Item, Parser: Copy + FnOnce(&'string_literals_map str) -> Item>(&'string_literals_map self, key: AbsoluteInternationalizedResourceIdentifier::<'static, PathDepth>, parser: Parser) -> StringLiteralsMapValuesIterator<'a, 'string_literals_map, Item, Parser>
+	fn get_inner<Item, Parser: Copy + FnOnce(&'string_literals_map str) -> Item>(&'string_literals_map self, key: AbsoluteInternationalizedResourceIdentifier<'static, PathDepth>, parser: Parser) -> StringLiteralsMapValuesIterator<'a, 'string_literals_map, Item, Parser>
 	{
 		const Empty: &'static [Cow<'static, str>] = &[];
 		

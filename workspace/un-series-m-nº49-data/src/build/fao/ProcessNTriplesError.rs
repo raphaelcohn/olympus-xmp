@@ -7,6 +7,8 @@ enum ProcessNTriplesError<'a>
 {
 	NTriplesParse(NTriplesParseError),
 	
+	MoreThanOne(MoreThanOneError),
+	
 	MissingPredicatesForSubject,
 	
 	OnlyOneXmlSchemaStringLiteral(OnlyOneXmlSchemaStringLiteralError<'a>),
@@ -18,6 +20,15 @@ impl<'a> From<NTriplesParseError> for ProcessNTriplesError<'a>
 	fn from(cause: NTriplesParseError) -> Self
 	{
 		ProcessNTriplesError::NTriplesParse(cause)
+	}
+}
+
+impl<'a> From<MoreThanOneError> for ProcessNTriplesError<'a>
+{
+	#[inline(always)]
+	fn from(cause: MoreThanOneError) -> Self
+	{
+		ProcessNTriplesError::MoreThanOne(cause)
 	}
 }
 
