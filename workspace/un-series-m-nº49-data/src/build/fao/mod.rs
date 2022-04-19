@@ -6,14 +6,17 @@ use n_triples::NTriples;
 use n_triples::PathDepth;
 use n_triples::Subject;
 use n_triples::internationalized_resource_identifier::AbsoluteInternationalizedResourceIdentifier;
+use n_triples::internationalized_resource_identifier::RemovePrefixError;
 use n_triples::parser::NTriplesParseError;
 use n_triples::predicate::MoreThanOneError;
 use n_triples::predicate::Predicate;
 use n_triples::predicate::Predicates;
 use n_triples::predicate::OnlyOneXmlSchemaStringLiteralError;
+use n_triples::predicate::OptionalXmlSchemaStringLiteralError;
 use std::path::Path;
 use super::StaticM49Code;
 use super::m49_code_string;
+use swiss_army_knife::get_unchecked::GetUnchecked;
 
 
 include!("generate_rust_code.rs");

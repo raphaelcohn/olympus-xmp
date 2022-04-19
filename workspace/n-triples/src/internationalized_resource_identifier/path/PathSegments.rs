@@ -176,6 +176,29 @@ impl<'a, const PathDepth: usize> PathSegments<'a, PathDepth>
 		self.0.try_reserve_push(path_segment)
 	}
 	
+	/// Removes `other`.
+	#[inline(always)]
+	pub fn remove(&self, prefix: &PathSegments<PathDepth>) -> Option<&[PathSegment<'a>]>
+	{
+		let this = self.0.deref();
+		let other = prefix.0.deref();
+		
+		let other_length = other.len();
+		if this.len() < other_length
+		{
+			return None
+		}
+		
+		for index in 0 .. other_length
+		{
+			if this.get_unchecked_safe(index) != other.get_unchecked_safe(index)
+			{
+				return None
+			}
+		}
+		Some(this.get_unchecked_range_safe(other_length .. ))
+	}
+	
 	/// Assumes that on input `remaining_utf8_bytes` is positioned just to the right of any `Slash`, i.e. `Slash` would be at `remaining_utf8_bytes[-1]`.
 	#[inline(always)]
 	pub(super) fn parse(&mut self, mut remaining_utf8_bytes: &'a [u8]) -> Result<ParseNextAfterHierarchy<'a>, PathSegmentsParseError>

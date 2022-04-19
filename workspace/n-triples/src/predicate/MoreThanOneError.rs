@@ -3,7 +3,7 @@
 
 
 /// Error.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Ord, PartialOrd, Hash)]
 pub struct MoreThanOneError
 {
 	#[allow(missing_docs)]

@@ -12,6 +12,10 @@ enum ProcessNTriplesError<'a>
 	MissingPredicatesForSubject,
 	
 	OnlyOneXmlSchemaStringLiteral(OnlyOneXmlSchemaStringLiteralError<'a>),
+	
+	OptionalXmlSchemaStringLiteral(OptionalXmlSchemaStringLiteralError<'a>),
+
+	RemovePrefix(RemovePrefixError<'a, PathDepth>),
 }
 
 impl<'a> From<NTriplesParseError> for ProcessNTriplesError<'a>
@@ -38,5 +42,23 @@ impl<'a> From<OnlyOneXmlSchemaStringLiteralError<'a>> for ProcessNTriplesError<'
 	fn from(cause: OnlyOneXmlSchemaStringLiteralError<'a>) -> Self
 	{
 		ProcessNTriplesError::OnlyOneXmlSchemaStringLiteral(cause)
+	}
+}
+
+impl<'a> From<OptionalXmlSchemaStringLiteralError<'a>> for ProcessNTriplesError<'a>
+{
+	#[inline(always)]
+	fn from(cause: OptionalXmlSchemaStringLiteralError<'a>) -> Self
+	{
+		ProcessNTriplesError::OptionalXmlSchemaStringLiteral(cause)
+	}
+}
+
+impl<'a> From<RemovePrefixError<'a, PathDepth>> for ProcessNTriplesError<'a>
+{
+	#[inline(always)]
+	fn from(cause: RemovePrefixError<'a, PathDepth>) -> Self
+	{
+		ProcessNTriplesError::RemovePrefix(cause)
 	}
 }

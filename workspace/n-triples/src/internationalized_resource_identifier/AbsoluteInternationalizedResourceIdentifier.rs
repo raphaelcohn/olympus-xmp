@@ -108,6 +108,80 @@ impl<'a, const PathDepth: usize> TryFrom<&'a str> for AbsoluteInternationalizedR
 
 impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>
 {
+	/// Removes 'prefix' returning one path segment if possible.
+	///
+	/// Scheme, query and hash_fragment must all match exactly.
+	/// Hierarchy type must match exactly, and, if present, so must authority.
+	/// If other has more path segments than self, no match will be returned.
+	#[inline(always)]
+	pub fn remove_leaving_one_path_segment_or_error<'prefix>(&self, prefix: AbsoluteInternationalizedResourceIdentifier<'prefix, PathDepth>) -> Result<&PathSegment<'a>, RemovePrefixError<'prefix, PathDepth>>
+	{
+		use RemovePrefixError::*;
+		
+		let option = self.remove(&prefix);
+		match option
+		{
+			None => return Err(MissingPrefix(prefix)),
+			
+			Some(remainder) => match remainder.len()
+			{
+				0 => Err(Empty(prefix)),
+				
+				1 => Ok(remainder.get_unchecked_safe(0)),
+				
+				more_than_one @ _ => Err(MoreThanOne(MoreThanOneError { count: new_non_zero_usize(more_than_one) }, prefix))
+			}
+		}
+	}
+	
+	/// Removes 'prefix' returning remaning path segments if possible.
+	///
+	/// Scheme, query and hash_fragment must all match exactly.
+	/// Hierarchy type must match exactly, and, if present, so must authority.
+	/// If other has more path segments than self, no match will be returned.
+	#[inline(always)]
+	pub fn remove<'prefix>(&self, prefix: &AbsoluteInternationalizedResourceIdentifier<'prefix, PathDepth>) -> Option<&[PathSegment<'a>]>
+	{
+		if self.scheme != prefix.scheme
+		{
+			return None
+		}
+		if self.query != prefix.query
+		{
+			return None
+		}
+		if self.hash_fragment != prefix.hash_fragment
+		{
+			return None
+		}
+		
+		use Hierarchy::*;
+		
+		match (&self.hierarchy, &prefix.hierarchy)
+		{
+			(AuthorityAndAbsolutePath { authority, absolute_path }, AuthorityAndAbsolutePath { authority: other_authority, absolute_path: other_absolute_path} ) =>
+			{
+				if authority != other_authority
+				{
+					return None
+				}
+				absolute_path.remove(other_absolute_path)
+			},
+			
+			(RootlessPath(non_empty_path), RootlessPath(prefix)) => non_empty_path.remove(prefix),
+			
+			(AbsolutePath(non_empty_path), AbsolutePath(prefix)) => non_empty_path.remove(prefix),
+			
+			(EmptyPath, EmptyPath) =>
+			{
+				static Empty: [PathSegment<'static>; 0] = [];
+				Some(&Empty[..])
+			},
+			
+			_ => None,
+		}
+	}
+	
 	/// Http.
 	#[inline(always)]
 	pub const fn http<A, P, const M: usize>(authority: A, path_segments: [P; M]) -> Self

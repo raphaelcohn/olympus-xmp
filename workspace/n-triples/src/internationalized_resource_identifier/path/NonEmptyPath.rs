@@ -88,4 +88,15 @@ impl<'a, const PathDepth: usize> NonEmptyPath<'a, PathDepth>
 	{
 		NonEmptyPathParseState::new(constructor).parse(first_character_of_first_path_segment, remaining_utf8_bytes).map_err(error)
 	}
+	
+	/// Removes `other`.
+	#[inline(always)]
+	pub fn remove(&self, prefix: &NonEmptyPath<PathDepth>) -> Option<&[PathSegment<'a>]>
+	{
+		if self.first_non_empty_path_segment != prefix.first_non_empty_path_segment
+		{
+			return None
+		}
+		self.remaining_path_segments.remove(&prefix.remaining_path_segments)
+	}
 }
