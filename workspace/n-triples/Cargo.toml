@@ -21,4 +21,4 @@ version = "0.0.0"
 [dependencies]
 chrono = "0.4.19"
 memchr = "2.4.1"
-swiss-army-knife = "^0.0.36"
+swiss-army-knife = "^0.0.37"

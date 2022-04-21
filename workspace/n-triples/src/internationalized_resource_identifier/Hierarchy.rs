@@ -123,14 +123,13 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 	
 	/// Appends a path segment.
 	///
-	/// Not const, but potentially could be.
 	/// If the hierarchy is `Hierarchy::EmptyPath`, it is converted according to the argument `convert_empty_path_to_absolute`:-
 	///
 	/// * If `true`, empty path becomes an absolute path.
 	/// * If `false`, empty path becomes a rootless path.
 	///
 	/// Failure:-
-	/// * Can fail with an `Err()` if there is not enough memory.
+	/// * Can fail with an `Err()` if there is not enough heap memory.
 	/// * If the `path_segment` is empty and the hierarchy is `Hierarchy::EmptyPath`.
 	#[inline(always)]
 	pub fn with_path_segment<const convert_empty_path_to_absolute: bool>(&mut self, path_segment: PathSegment<'a>) -> Result<(), WithPathSegmentError>
@@ -146,12 +145,7 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 			
 			EmptyPath =>
 			{
-				if path_segment.is_empty()
-				{
-					return Err(WithPathSegmentError::HierarchyIsEmptyPathAndPathSegmentIsEmpty)
-				}
-				
-				let first_non_empty_path_segment = NonEmptyPathSegment::try_from(path_segment).map_err(|()| WithPathSegmentError::HierarchyIsEmptyPathAndPathSegmentIsEmpty)?;
+				let first_non_empty_path_segment = NonEmptyPathSegment::try_from(path_segment).map_err(|_| WithPathSegmentError::HierarchyIsEmptyPathAndPathSegmentIsEmpty)?;
 				let non_empty_path = NonEmptyPath::new_minimal(first_non_empty_path_segment);
 				
 				*self = if convert_empty_path_to_absolute
@@ -166,6 +160,59 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 		}
 		
 		Ok(())
+	}
+	
+	/// Appends a path segment if there is space on the stack.
+	///
+	/// If the hierarchy is `Hierarchy::EmptyPath`, it is converted according to the argument `convert_empty_path_to_absolute`:-
+	///
+	/// * If `true`, empty path becomes an absolute path.
+	/// * If `false`, empty path becomes a rootless path.
+	///
+	/// Failure:-
+	/// * Can fail with an `Err()` if there is not enough memory on the stack.
+	/// * If the `path_segment` is empty and the hierarchy is `Hierarchy::EmptyPath`.
+	#[inline(always)]
+	pub const fn with_path_segment_const<const convert_empty_path_to_absolute: bool>(&mut self, path_segment: PathSegment<'a>) -> Result<(), PathSegment<'a>>
+	{
+		use Hierarchy::*;
+		match self
+		{
+			AuthorityAndAbsolutePath { absolute_path, .. } => absolute_path.with_path_segment_const(path_segment),
+			
+			AbsolutePath(non_empty_path) => non_empty_path.with_path_segment_const(path_segment),
+			
+			RootlessPath(non_empty_path) => non_empty_path.with_path_segment_const(path_segment),
+			
+			EmptyPath =>
+			{
+				let first_non_empty_path_segment =
+				{
+					if path_segment.is_empty()
+					{
+						return Err(path_segment)
+					}
+					unsafe { NonEmptyPathSegment::from_unchecked(path_segment) }
+				};
+				
+				let non_empty_path = NonEmptyPath::new_minimal(first_non_empty_path_segment);
+				
+				let hierarchy = if convert_empty_path_to_absolute
+				{
+					AbsolutePath(non_empty_path)
+				}
+				else
+				{
+					RootlessPath(non_empty_path)
+				};
+				
+				// This is safe, as `EmptyPath` does not require a drop.
+				let write_pointer = self as *mut Self;
+				unsafe { write_pointer.write(hierarchy) }
+				
+				Ok(())
+			}
+		}
 	}
 	
 	/// `ihier-part = "//" iauthority ipath-abempty / ipath-absolute / ipath-rootless / ipath-empty`.

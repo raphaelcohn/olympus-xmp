@@ -24,8 +24,8 @@ calamine = "0.18.0"
 indexmap = "1.8.1"
 json = "0.12.4"
 memchr = "2.4.1"
-swiss-army-knife = "^0.0.36"
+swiss-army-knife = "^0.0.37"
 
 [dependencies]
 memchr = "2.4.1"
-swiss-army-knife = "^0.0.36"
+swiss-army-knife = "^0.0.37"

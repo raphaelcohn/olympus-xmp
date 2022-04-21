@@ -53,9 +53,9 @@ impl UCHARParser
 		{
 			_0 ..= _9 => _0,
 			
-			A ..= F => A,
+			A ..= F => A - 10,
 			
-			a ..= f => a,
+			a ..= f => a - 10,
 			
 			_ => return Err(UCHARParseError::InvalidHexDigit(potential_hex_digit)),
 		};

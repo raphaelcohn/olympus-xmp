@@ -2,21 +2,26 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-/// Constructs a new instance without checking the provided `value` is correct.
-///
-/// Used for constructing constants.
-pub trait FromUnchecked<T>: Sized
+/// An error.
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+pub enum IntoArrayError<T: Debug, const N: usize>
 {
-	/// Used for constructing constants.
-	unsafe fn from_unchecked(value: T) -> Self;
+	#[allow(missing_docs)]
+	HasSpilledToHeap(ConstSmallVec<T, N>),
+	
+	#[allow(missing_docs)]
+	StackTooShort(ConstSmallVec<T, N>),
 }
 
-impl<T> const FromUnchecked<T> for T
-where T: ~const From<T>
+impl<T: Debug, const N: usize> Display for IntoArrayError<T, N>
 {
 	#[inline(always)]
-	unsafe fn from_unchecked(value: T) -> Self
+	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
 	{
-		T::from(value)
+		Debug::fmt(self, f)
 	}
+}
+
+impl<T: Debug, const N: usize> error::Error for IntoArrayError<T, N>
+{
 }

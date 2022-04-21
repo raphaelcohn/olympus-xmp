@@ -47,6 +47,24 @@ impl<'a> const FromUnchecked<Cow<'a, str>> for HostName<'a>
 	}
 }
 
+impl<'a> const FromUnchecked<&'a str> for HostName<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(value: &'a str) -> Self
+	{
+		Self(Cow::Borrowed(value))
+	}
+}
+
+impl<'a> const FromUnchecked<String> for HostName<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(value: String) -> Self
+	{
+		Self(Cow::Owned(value))
+	}
+}
+
 impl<'a> Into<Cow<'a, str>> for HostName<'a>
 {
 	#[inline(always)]

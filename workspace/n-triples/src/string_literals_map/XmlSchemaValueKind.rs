@@ -2,21 +2,15 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-/// Constructs a new instance without checking the provided `value` is correct.
-///
-/// Used for constructing constants.
-pub trait FromUnchecked<T>: Sized
+#[allow(missing_docs)]
+#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+pub enum XmlSchemaValueKind
 {
-	/// Used for constructing constants.
-	unsafe fn from_unchecked(value: T) -> Self;
-}
-
-impl<T> const FromUnchecked<T> for T
-where T: ~const From<T>
-{
-	#[inline(always)]
-	unsafe fn from_unchecked(value: T) -> Self
-	{
-		T::from(value)
-	}
+	String,
+	
+	Boolean,
+	
+	Integer,
+	
+	DateTime,
 }

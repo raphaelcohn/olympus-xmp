@@ -15,6 +15,24 @@ impl<'a> const FromUnchecked<Cow<'a, str>> for BlankNodeLabel<'a>
 	}
 }
 
+impl<'a> const FromUnchecked<&'a str> for BlankNodeLabel<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(value: &'a str) -> Self
+	{
+		Self(Cow::Borrowed(value))
+	}
+}
+
+impl<'a> const FromUnchecked<String> for BlankNodeLabel<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(value: String) -> Self
+	{
+		Self(Cow::Owned(value))
+	}
+}
+
 impl<'a> TryToOwnInPlace for BlankNodeLabel<'a>
 {
 	#[inline(always)]

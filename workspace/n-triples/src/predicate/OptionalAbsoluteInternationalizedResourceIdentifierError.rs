@@ -4,25 +4,14 @@
 
 /// An error.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub enum OnlyOneError<E: error::Error>
+pub struct OptionalAbsoluteInternationalizedResourceIdentifierError<'predicate>
 {
-	#[allow(missing_docs)]
-	Missing,
-	
-	#[allow(missing_docs)]
-	ZeroOrOne(ZeroOrOneError<E>),
+	predicate: Predicate<'predicate>,
+
+	cause: MoreThanOneError,
 }
 
-impl<E: error::Error> From<E> for OnlyOneError<E>
-{
-	#[inline(always)]
-	fn from(cause: E) -> Self
-	{
-		OnlyOneError::ZeroOrOne(ZeroOrOneError::Parse(cause))
-	}
-}
-
-impl<E: error::Error> Display for OnlyOneError<E>
+impl<'predicate> Display for OptionalAbsoluteInternationalizedResourceIdentifierError<'predicate>
 {
 	#[inline(always)]
 	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
@@ -31,18 +20,11 @@ impl<E: error::Error> Display for OnlyOneError<E>
 	}
 }
 
-impl<E: 'static + error::Error> error::Error for OnlyOneError<E>
+impl<'predicate> error::Error for OptionalAbsoluteInternationalizedResourceIdentifierError<'predicate>
 {
 	#[inline(always)]
 	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		use OnlyOneError::*;
-		
-		match self
-		{
-			ZeroOrOne(cause) => Some(cause),
-			
-			_ => None,
-		}
+		Some(&self.cause)
 	}
 }

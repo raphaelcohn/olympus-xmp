@@ -167,13 +167,20 @@ impl<'a, const PathDepth: usize> PathSegments<'a, PathDepth>
 	
 	/// Appends a path segment.
 	///
-	/// Not const, but potentially could be.
-	///
-	/// Can fail with an `Err()` if there is not enough memory.
+	/// Can fail with an `Err()` if there is not enough heap memory.
 	#[inline(always)]
 	pub fn with_path_segment(&mut self, path_segment: PathSegment<'a>) -> Result<(), TryReserveError>
 	{
 		self.0.try_reserve_push(path_segment)
+	}
+	
+	/// Appends a path segment.
+	///
+	/// Can fail with an `Err()` if there is not enough memory to allocate on the stack, i.e. the length (`len()`) is already equal to `PathDepth`.
+	#[inline(always)]
+	pub const fn with_path_segment_const(&mut self, path_segment: PathSegment<'a>) -> Result<(), PathSegment<'a>>
+	{
+		self.0.try_stack_push(path_segment)
 	}
 	
 	/// Removes `other`.

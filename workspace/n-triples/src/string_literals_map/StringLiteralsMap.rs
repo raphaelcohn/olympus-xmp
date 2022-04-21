@@ -83,126 +83,45 @@ impl<'a: 'string_literals_map, 'string_literals_map, const PathDepth: usize> Str
 {
 	#[allow(missing_docs)]
 	#[inline(always)]
-	pub fn xml_schema_string(&'string_literals_map self) -> Result<&'string_literals_map str, OnlyOneError<Infallible>>
+	pub fn optional_xml_schema_value_as_domain_type<SP: StrParser<'string_literals_map>, DomainType: TryFrom<SP::Item, Error=TryFromError>, TryFromError: 'static + error::Error>(&'string_literals_map self, parser: XmlSchemaValueParser<'string_literals_map, SP, PathDepth>) -> Result<Option<DomainType>, OptionalXmlSchemaValueError<StringLiteralToDomainTypeParseError<SP::Error, TryFromError>>>
+	where <SP as StrParser<'string_literals_map>>::Error: 'static,
 	{
-		self.get_xml_schema_strings().only_one::<Infallible>()
+		self.xml_schema_values_as_domain_type(parser).zero_or_one()
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
-	pub fn xml_schema_boolean(&'string_literals_map self) -> Result<bool, OnlyOneError<ParseBoolError>>
+	pub fn only_one_xml_schema_value_as_domain_type<SP: StrParser<'string_literals_map>, DomainType: TryFrom<SP::Item, Error=TryFromError>, TryFromError: 'static + error::Error>(&'string_literals_map self, parser: XmlSchemaValueParser<'string_literals_map, SP, PathDepth>) -> Result<DomainType, OnlyOneXmlSchemaValueError<StringLiteralToDomainTypeParseError<SP::Error, TryFromError>>>
+	where <SP as StrParser<'string_literals_map>>::Error: 'static,
 	{
-		Self::xml_schema_result(self.get_xml_schema_booleans())
+		self.xml_schema_values_as_domain_type(parser).only_one()
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
-	pub fn xml_schema_integer(&'string_literals_map self) -> Result<i64, OnlyOneError<ParseIntError>>
+	pub fn xml_schema_values_as_domain_type<SP: StrParser<'string_literals_map>, DomainType: TryFrom<SP::Item, Error=TryFromError>, TryFromError: error::Error>(&'string_literals_map self, parser: XmlSchemaValueParser<'string_literals_map, SP, PathDepth>) -> StringLiteralsMapValuesIterator<'a, 'string_literals_map, TryFromStrParser<'string_literals_map, SP, DomainType, TryFromError>>
 	{
-		Self::xml_schema_result(self.get_xml_schema_integers())
+		parser.parse_domain_type(self)
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
-	pub fn xml_schema_date_time(&'string_literals_map self) -> Result<DateTime<FixedOffset>, OnlyOneError<ParseDateTimeError>>
+	pub fn optional_xml_schema_value<SP: StrParser<'string_literals_map>>(&'string_literals_map self, parser: XmlSchemaValueParser<'string_literals_map, SP, PathDepth>) -> Result<Option<SP::Item>, OptionalXmlSchemaValueError<SP::Error>>
 	{
-		Self::xml_schema_result(self.get_xml_schema_date_time())
-	}
-	
-	#[inline(always)]
-	fn xml_schema_result<O, E: error::Error>(iterator: StringLiteralsMapValuesIterator<'a, 'string_literals_map, Result<O, E>, impl Copy + FnOnce(&'string_literals_map str) -> Result<O, E>>) -> Result<O, OnlyOneError<E>>
-	{
-		match iterator.only_one::<E>()
-		{
-			Ok(Ok(value)) => Ok(value),
-			
-			Ok(Err(parse_error)) => Err(OnlyOneError::from(parse_error)),
-			
-			Err(error) => Err(error)
-		}
+		self.xml_schema_values(parser).zero_or_one()
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
-	pub fn optional_xml_schema_string(&'string_literals_map self) -> Result<Option<&'string_literals_map str>, ZeroOrOneError<Infallible>>
+	pub fn only_one_xml_schema_value<SP: StrParser<'string_literals_map>>(&'string_literals_map self, parser: XmlSchemaValueParser<'string_literals_map, SP, PathDepth>) -> Result<SP::Item, OnlyOneXmlSchemaValueError<SP::Error>>
 	{
-		self.get_xml_schema_strings().zero_or_one::<Infallible>()
+		self.xml_schema_values(parser).only_one()
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
-	pub fn optional_xml_schema_boolean(&'string_literals_map self) -> Result<Option<bool>, ZeroOrOneError<ParseBoolError>>
+	pub fn xml_schema_values<SP: StrParser<'string_literals_map>>(&'string_literals_map self, parser: XmlSchemaValueParser<'string_literals_map, SP, PathDepth>) -> StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP>
 	{
-		Self::optional_xml_schema_result(self.get_xml_schema_booleans())
-	}
-	
-	#[allow(missing_docs)]
-	#[inline(always)]
-	pub fn optional_xml_schema_integer(&'string_literals_map self) -> Result<Option<i64>, ZeroOrOneError<ParseIntError>>
-	{
-		Self::optional_xml_schema_result(self.get_xml_schema_integers())
-	}
-	
-	#[allow(missing_docs)]
-	#[inline(always)]
-	pub fn optional_xml_schema_date_time(&'string_literals_map self) -> Result<Option<DateTime<FixedOffset>>, ZeroOrOneError<ParseDateTimeError>>
-	{
-		Self::optional_xml_schema_result(self.get_xml_schema_date_time())
-	}
-	
-	#[inline(always)]
-	fn optional_xml_schema_result<O, E: error::Error>(iterator: StringLiteralsMapValuesIterator<'a, 'string_literals_map, Result<O, E>, impl Copy + FnOnce(&'string_literals_map str) -> Result<O, E>>) -> Result<Option<O>, ZeroOrOneError<E>>
-	{
-		match iterator.zero_or_one()
-		{
-			Ok(None) => Ok(None),
-			
-			Ok(Some(Ok(ok))) => Ok(Some(ok)),
-			
-			Ok(Some(Err(error))) => Err(ZeroOrOneError::Parse(error)),
-			
-			Err(error) => Err(error),
-		}
-	}
-	
-	#[allow(missing_docs)]
-	#[inline(always)]
-	pub fn get_xml_schema_strings(&'string_literals_map self) -> StringLiteralsMapValuesIterator<'a, 'string_literals_map, &'string_literals_map str, impl Copy + FnOnce(&'string_literals_map str) -> &'string_literals_map str>
-	{
-		self.get_inner(AbsoluteInternationalizedResourceIdentifier::<PathDepth>::XmlSchemaString, |value| value)
-	}
-	
-	#[allow(missing_docs)]
-	#[inline(always)]
-	pub fn get_xml_schema_booleans(&'string_literals_map self) -> StringLiteralsMapValuesIterator<'a, 'string_literals_map, Result<bool, ParseBoolError>, impl Copy + FnOnce(&'string_literals_map str) -> Result<bool, ParseBoolError>>
-	{
-		self.get_inner(AbsoluteInternationalizedResourceIdentifier::<PathDepth>::XmlSchemaBoolean, bool::from_str)
-	}
-	
-	#[allow(missing_docs)]
-	#[inline(always)]
-	pub fn get_xml_schema_integers(&'string_literals_map self) -> StringLiteralsMapValuesIterator<'a, 'string_literals_map, Result<i64, ParseIntError>, impl Copy + FnOnce(&'string_literals_map str) -> Result<i64, ParseIntError>>
-	{
-		self.get_inner(AbsoluteInternationalizedResourceIdentifier::<PathDepth>::XmlSchemaInteger, i64::from_str)
-	}
-	
-	#[allow(missing_docs)]
-	#[inline(always)]
-	pub fn get_xml_schema_date_time(&'string_literals_map self) -> StringLiteralsMapValuesIterator<'a, 'string_literals_map, Result<DateTime<FixedOffset>, ParseDateTimeError>, impl Copy + FnOnce(&'string_literals_map str) -> Result<DateTime<FixedOffset>, ParseDateTimeError>>
-	{
-		self.get_inner(AbsoluteInternationalizedResourceIdentifier::<PathDepth>::XmlSchemaDateTime, DateTime::parse_from_rfc3339)
-	}
-	
-	#[inline(always)]
-	fn get_inner<Item, Parser: Copy + FnOnce(&'string_literals_map str) -> Item>(&'string_literals_map self, key: AbsoluteInternationalizedResourceIdentifier<'static, PathDepth>, parser: Parser) -> StringLiteralsMapValuesIterator<'a, 'string_literals_map, Item, Parser>
-	{
-		const Empty: &'static [Cow<'static, str>] = &[];
-		
-		match self.get(unsafe { transmute(&key) })
-		{
-			None => StringLiteralsMapValuesIterator(Empty, parser),
-			
-			Some(non_empty) => StringLiteralsMapValuesIterator(non_empty.as_slice(), parser),
-		}
+		parser.parse_from_str_like(self)
 	}
 }

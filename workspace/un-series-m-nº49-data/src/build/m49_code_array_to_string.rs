@@ -2,21 +2,14 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-/// Constructs a new instance without checking the provided `value` is correct.
-///
-/// Used for constructing constants.
-pub trait FromUnchecked<T>: Sized
-{
-	/// Used for constructing constants.
-	unsafe fn from_unchecked(value: T) -> Self;
-}
-
-impl<T> const FromUnchecked<T> for T
-where T: ~const From<T>
+#[inline(always)]
+fn m49_code_array_to_string(m49_code: M49CodeArray) -> String
 {
 	#[inline(always)]
-	unsafe fn from_unchecked(value: T) -> Self
+	fn char<const index: u8>(m49_code: M49CodeArray) -> char
 	{
-		T::from(value)
+		m49_code.get_unchecked_value_safe(index) as char
 	}
+	
+	format!("{}{}{}", char::<0>(m49_code), char::<1>(m49_code), char::<2>(m49_code))
 }

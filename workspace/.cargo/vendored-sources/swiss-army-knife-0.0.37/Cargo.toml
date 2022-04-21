@@ -12,7 +12,7 @@
 [package]
 edition = "2021"
 name = "swiss-army-knife"
-version = "0.0.36"
+version = "0.0.37"
 authors = ["Raphael Cohn <raphael.cohn@stormmq.com>"]
 exclude = ["*"]
 include = [

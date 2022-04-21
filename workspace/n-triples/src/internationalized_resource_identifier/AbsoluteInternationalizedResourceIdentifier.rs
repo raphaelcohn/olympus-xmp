@@ -209,14 +209,13 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 	
 	/// Appends a path segment.
 	///
-	/// Not const, but potentially could be.
 	/// If the hierarchy is `Hierarchy::EmptyPath`, it is converted according to the argument `convert_empty_path_to_absolute`:-
 	///
 	/// * If `true`, empty path becomes an absolute path.
 	/// * If `false`, empty path becomes a rootless path.
 	///
 	/// Failure:-
-	/// * Can fail with an `Err()` if there is not enough memory.
+	/// * Can fail with an `Err()` if there is not enough heap memory.
 	/// * If the `path_segment` is empty and the hierarchy is `Hierarchy::EmptyPath`.
 	#[inline(always)]
 	pub fn with_path_segment<P, const convert_empty_path_to_absolute: bool>(mut self, path_segment: P) -> Result<Self, WithPathSegmentError>
@@ -225,6 +224,34 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 		let path_segment = unsafe { PathSegment::from_unchecked(path_segment) };
 		self.hierarchy.with_path_segment::<convert_empty_path_to_absolute>(path_segment)?;
 		Ok(self)
+	}
+	
+	/// Appends a path segment if there is space on the stack.
+	///
+	/// If the hierarchy is `Hierarchy::EmptyPath`, it is converted according to the argument `convert_empty_path_to_absolute`:-
+	///
+	/// * If `true`, empty path becomes an absolute path.
+	/// * If `false`, empty path becomes a rootless path.
+	///
+	/// Panics on Failure:-
+	/// * If there is not enough memory on the stack.
+	/// * If the `path_segment` is empty and the hierarchy is `Hierarchy::EmptyPath`.
+	#[inline(always)]
+	pub const fn with_path_segment_const<P, const convert_empty_path_to_absolute: bool>(mut self, path_segment: P) -> Self
+	where PathSegment<'a>: ~const FromUnchecked<P>
+	{
+		let path_segment = unsafe { PathSegment::from_unchecked(path_segment) };
+		let result = self.hierarchy.with_path_segment_const::<convert_empty_path_to_absolute>(path_segment);
+		// NOTE: This rather odd construction, rather than using `if let Err(error) = result` or `match result`, is because of a bug in Rust const logic; the compiler thinks the `result` object has not been dropped, but the borrow checker thinks it has been partly moved.
+		if result.is_err()
+		{
+			panic!("Out of stack memory or empty path segment passed to a Hierarchy::EmptyPath");
+		}
+		else
+		{
+			let _ = ManuallyDrop::new(result);
+		}
+		self
 	}
 	
 	/// Replace query.
@@ -456,6 +483,9 @@ impl<const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'static
 	
 	/// `http://www.w3.org/2004/02/skos/core#broader`.
 	pub const SimpleKnowledgeOrganizationSchemeCoreBroader: Self = Self::http_www_w3_org_2004_02_simple_knowledge_organization_scheme_core("broader");
+	
+	/// `http://www.w3.org/2004/02/skos/core#exactMatch`.
+	pub const SimpleKnowledgeOrganizationSchemeCoreExactMatch: Self = Self::http_www_w3_org_2004_02_simple_knowledge_organization_scheme_core("exactMatch");
 	
 	/// `http://www.w3.org/2001/XMLSchema#boolean`.
 	pub const XmlSchemaBoolean: Self = Self::http_www_w3_org_2001_xml_schema("boolean");

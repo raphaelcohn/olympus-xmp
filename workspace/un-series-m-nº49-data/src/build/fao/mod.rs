@@ -8,14 +8,18 @@ use n_triples::Subject;
 use n_triples::internationalized_resource_identifier::AbsoluteInternationalizedResourceIdentifier;
 use n_triples::internationalized_resource_identifier::RemovePrefixError;
 use n_triples::parser::NTriplesParseError;
-use n_triples::predicate::MoreThanOneError;
+use n_triples::predicate::GetXmlSchemaValueError;
+use n_triples::predicate::OptionalAbsoluteInternationalizedResourceIdentifierError;
 use n_triples::predicate::Predicate;
 use n_triples::predicate::Predicates;
-use n_triples::predicate::OnlyOneXmlSchemaStringLiteralError;
-use n_triples::predicate::OptionalXmlSchemaStringLiteralError;
+use n_triples::string_literals_map::ParseDateTimeError;
+use n_triples::string_literals_map::OnlyOneXmlSchemaValueError;
+use n_triples::string_literals_map::OptionalXmlSchemaValueError;
+use std::convert::Infallible;
+use std::num::ParseIntError;
+use std::str::ParseBoolError;
 use std::path::Path;
 use super::StaticM49Code;
-use super::m49_code_string;
 use swiss_army_knife::get_unchecked::GetUnchecked;
 
 

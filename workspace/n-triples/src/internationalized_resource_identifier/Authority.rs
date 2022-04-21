@@ -68,12 +68,30 @@ impl<'a> const FromUnchecked<&'a str> for Authority<'a>
 	}
 }
 
+impl<'a> const FromUnchecked<HostName<'a>> for Authority<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(host_name: HostName<'a>) -> Self
+	{
+		Self::new_for_host_name(host_name)
+	}
+}
+
 impl<'a> const From<HostName<'a>> for Authority<'a>
 {
 	#[inline(always)]
 	fn from(host_name: HostName<'a>) -> Self
 	{
 		Self::new_for_host_name(host_name)
+	}
+}
+
+impl<'a> const FromUnchecked<Host<'a>> for Authority<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(host: Host<'a>) -> Self
+	{
+		Self::new_for_host(host)
 	}
 }
 

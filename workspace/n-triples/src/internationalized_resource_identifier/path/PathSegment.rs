@@ -45,6 +45,24 @@ impl<'a> const FromUnchecked<Cow<'a, str>> for PathSegment<'a>
 	}
 }
 
+impl<'a> const FromUnchecked<&'a str> for PathSegment<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(value: &'a str) -> Self
+	{
+		Self(Cow::Borrowed(value))
+	}
+}
+
+impl<'a> const FromUnchecked<String> for PathSegment<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(value: String) -> Self
+	{
+		Self(Cow::Owned(value))
+	}
+}
+
 impl<'a> const From<NonEmptyPathSegment<'a>> for PathSegment<'a>
 {
 	#[inline(always)]

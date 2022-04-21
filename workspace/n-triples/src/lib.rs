@@ -34,6 +34,7 @@
 #![feature(const_option)]
 #![feature(const_ptr_offset)]
 #![feature(const_ptr_read)]
+#![feature(const_ptr_write)]
 #![feature(const_refs_to_cell)]
 #![feature(const_trait_impl)]
 #![feature(const_try)]

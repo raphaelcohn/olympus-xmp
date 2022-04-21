@@ -2,27 +2,18 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-/// An error.
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub enum ZeroOrOneError<E: error::Error>
+/// A parse error.
+#[derive(Debug)]
+pub enum StringLiteralToDomainTypeParseError<StrParseError: error::Error, TryFromError: error::Error>
 {
 	#[allow(missing_docs)]
-	TooMany(MoreThanOneError),
-	
+	StrParse(StrParseError),
+
 	#[allow(missing_docs)]
-	Parse(E),
+	TryFrom(TryFromError)
 }
 
-impl<E: error::Error> From<E> for ZeroOrOneError<E>
-{
-	#[inline(always)]
-	fn from(cause: E) -> Self
-	{
-		ZeroOrOneError::Parse(cause)
-	}
-}
-
-impl<E: error::Error> Display for ZeroOrOneError<E>
+impl<StrParseError: error::Error, TryFromError: error::Error> Display for StringLiteralToDomainTypeParseError<StrParseError, TryFromError>
 {
 	#[inline(always)]
 	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
@@ -31,18 +22,18 @@ impl<E: error::Error> Display for ZeroOrOneError<E>
 	}
 }
 
-impl<E: 'static + error::Error> error::Error for ZeroOrOneError<E>
+impl<StrParseError: 'static + error::Error, TryFromError: 'static + error::Error> error::Error for StringLiteralToDomainTypeParseError<StrParseError, TryFromError>
 {
 	#[inline(always)]
 	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		use ZeroOrOneError::*;
+		use StringLiteralToDomainTypeParseError::*;
 		
 		match self
 		{
-			TooMany(cause) => Some(cause),
+			StrParse(cause) => Some(cause),
 			
-			Parse(cause) => Some(cause),
+			TryFrom(cause) => Some(cause),
 		}
 	}
 }

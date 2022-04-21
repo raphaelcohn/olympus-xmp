@@ -74,20 +74,29 @@ impl<'a> const Deref for NonEmptyPathSegment<'a>
 	}
 }
 
-impl<'a> TryFrom<PathSegment<'a>> for NonEmptyPathSegment<'a>
+impl<'a> const FromUnchecked<PathSegment<'a>> for NonEmptyPathSegment<'a>
 {
-	type Error = ();
+	#[inline(always)]
+	unsafe fn from_unchecked(value: PathSegment<'a>) -> Self
+	{
+		transmute(value)
+	}
+}
+
+impl<'a> const TryFrom<PathSegment<'a>> for NonEmptyPathSegment<'a>
+{
+	type Error = PathSegment<'a>;
 	
 	#[inline(always)]
 	fn try_from(value: PathSegment<'a>) -> Result<Self, Self::Error>
 	{
 		if value.is_empty()
 		{
-			Err(())
+			Err(value)
 		}
 		else
 		{
-			Ok(Self(value.0))
+			Ok(unsafe { transmute(value) })
 		}
 	}
 }

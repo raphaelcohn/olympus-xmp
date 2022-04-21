@@ -2,48 +2,48 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-/// Error.
+/// An error.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub enum OnlyOneXmlSchemaStringLiteralError<'a>
+pub enum OptionalXmlSchemaValueError<StrParseError: error::Error>
 {
 	#[allow(missing_docs)]
-	String(OnlyOneError<Infallible>, Predicate<'a>),
+	TooMany
+	{
+		cause: MoreThanOneError,
+		
+		xml_schema_value_kind: XmlSchemaValueKind,
+	},
 	
 	#[allow(missing_docs)]
-	Boolean(OnlyOneError<ParseBoolError>, Predicate<'a>),
-	
-	#[allow(missing_docs)]
-	Integer(OnlyOneError<ParseIntError>, Predicate<'a>),
-	
-	#[allow(missing_docs)]
-	DateTime(OnlyOneError<ParseDateTimeError>, Predicate<'a>),
+	StrParse
+	{
+		cause: StrParseError,
+		
+		xml_schema_value_kind: XmlSchemaValueKind,
+	},
 }
 
-impl<'a> Display for OnlyOneXmlSchemaStringLiteralError<'a>
+impl<StrParseError: error::Error> Display for OptionalXmlSchemaValueError<StrParseError>
 {
 	#[inline(always)]
-	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
 	{
-		Debug::fmt(self, f)
+		Debug::fmt(self, formatter)
 	}
 }
 
-impl<'a> error::Error for OnlyOneXmlSchemaStringLiteralError<'a>
+impl<StrParseError: 'static + error::Error> error::Error for OptionalXmlSchemaValueError<StrParseError>
 {
 	#[inline(always)]
 	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		use OnlyOneXmlSchemaStringLiteralError::*;
+		use OptionalXmlSchemaValueError::*;
 		
 		match self
 		{
-			String(cause, _) => Some(cause),
+			TooMany { cause, .. } => Some(cause),
 			
-			Boolean(cause, _) => Some(cause),
-			
-			Integer(cause, _) => Some(cause),
-			
-			DateTime(cause, _) => Some(cause),
+			StrParse { cause, .. } => Some(cause),
 		}
 	}
 }

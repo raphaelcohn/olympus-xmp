@@ -5,5 +5,5 @@
 #[inline(always)]
 fn write_key(file: &mut File, key: M49CodeArray) -> io::Result<()>
 {
-	write!(file, "b\"{}\"", m49_code_string(key))
+	write!(file, "b\"{}\"", m49_code_array_to_string(key))
 }

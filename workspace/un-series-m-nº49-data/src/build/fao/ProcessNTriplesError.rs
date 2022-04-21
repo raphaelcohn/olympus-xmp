@@ -3,22 +3,34 @@
 
 
 #[derive(Debug, Clone, Eq, PartialEq)]
-enum ProcessNTriplesError<'a>
+enum ProcessNTriplesError<'predicate>
 {
 	NTriplesParse(NTriplesParseError),
 	
-	MoreThanOne(MoreThanOneError),
-	
 	MissingPredicatesForSubject,
 	
-	OnlyOneXmlSchemaStringLiteral(OnlyOneXmlSchemaStringLiteralError<'a>),
+	OnlyOneString(GetXmlSchemaValueError<'predicate, OnlyOneXmlSchemaValueError<Infallible>>),
 	
-	OptionalXmlSchemaStringLiteral(OptionalXmlSchemaStringLiteralError<'a>),
-
-	RemovePrefix(RemovePrefixError<'a, PathDepth>),
+	OnlyOneBoolean(GetXmlSchemaValueError<'predicate, OnlyOneXmlSchemaValueError<ParseBoolError>>),
+	
+	OnlyOneInteger(GetXmlSchemaValueError<'predicate, OnlyOneXmlSchemaValueError<ParseIntError>>),
+	
+	OnlyOneDateTime(GetXmlSchemaValueError<'predicate, OnlyOneXmlSchemaValueError<ParseDateTimeError>>),
+	
+	OptionalString(GetXmlSchemaValueError<'predicate, OptionalXmlSchemaValueError<Infallible>>),
+	
+	OptionalBoolean(GetXmlSchemaValueError<'predicate, OptionalXmlSchemaValueError<ParseBoolError>>),
+	
+	OptionalInteger(GetXmlSchemaValueError<'predicate, OptionalXmlSchemaValueError<ParseIntError>>),
+	
+	OptionalDateTime(GetXmlSchemaValueError<'predicate, OptionalXmlSchemaValueError<ParseDateTimeError>>),
+	
+	OptionalAbsoluteInternationalizedResourceIdentifier(OptionalAbsoluteInternationalizedResourceIdentifierError<'predicate>),
+	
+	RemovePrefix(RemovePrefixError<'predicate, PathDepth>),
 }
 
-impl<'a> From<NTriplesParseError> for ProcessNTriplesError<'a>
+impl<'predicate> From<NTriplesParseError> for ProcessNTriplesError<'predicate>
 {
 	#[inline(always)]
 	fn from(cause: NTriplesParseError) -> Self
@@ -27,37 +39,91 @@ impl<'a> From<NTriplesParseError> for ProcessNTriplesError<'a>
 	}
 }
 
-impl<'a> From<MoreThanOneError> for ProcessNTriplesError<'a>
+impl<'predicate> From<GetXmlSchemaValueError<'predicate, OnlyOneXmlSchemaValueError<Infallible>>> for ProcessNTriplesError<'predicate>
 {
 	#[inline(always)]
-	fn from(cause: MoreThanOneError) -> Self
+	fn from(cause: GetXmlSchemaValueError<'predicate, OnlyOneXmlSchemaValueError<Infallible>>) -> Self
 	{
-		ProcessNTriplesError::MoreThanOne(cause)
+		ProcessNTriplesError::OnlyOneString(cause)
 	}
 }
 
-impl<'a> From<OnlyOneXmlSchemaStringLiteralError<'a>> for ProcessNTriplesError<'a>
+impl<'predicate> From<GetXmlSchemaValueError<'predicate, OnlyOneXmlSchemaValueError<ParseBoolError>>> for ProcessNTriplesError<'predicate>
 {
 	#[inline(always)]
-	fn from(cause: OnlyOneXmlSchemaStringLiteralError<'a>) -> Self
+	fn from(cause: GetXmlSchemaValueError<'predicate, OnlyOneXmlSchemaValueError<ParseBoolError>>) -> Self
 	{
-		ProcessNTriplesError::OnlyOneXmlSchemaStringLiteral(cause)
+		ProcessNTriplesError::OnlyOneBoolean(cause)
 	}
 }
 
-impl<'a> From<OptionalXmlSchemaStringLiteralError<'a>> for ProcessNTriplesError<'a>
+impl<'predicate> From<GetXmlSchemaValueError<'predicate, OnlyOneXmlSchemaValueError<ParseIntError>>> for ProcessNTriplesError<'predicate>
 {
 	#[inline(always)]
-	fn from(cause: OptionalXmlSchemaStringLiteralError<'a>) -> Self
+	fn from(cause: GetXmlSchemaValueError<'predicate, OnlyOneXmlSchemaValueError<ParseIntError>>) -> Self
 	{
-		ProcessNTriplesError::OptionalXmlSchemaStringLiteral(cause)
+		ProcessNTriplesError::OnlyOneInteger(cause)
 	}
 }
 
-impl<'a> From<RemovePrefixError<'a, PathDepth>> for ProcessNTriplesError<'a>
+impl<'predicate> From<GetXmlSchemaValueError<'predicate, OnlyOneXmlSchemaValueError<ParseDateTimeError>>> for ProcessNTriplesError<'predicate>
 {
 	#[inline(always)]
-	fn from(cause: RemovePrefixError<'a, PathDepth>) -> Self
+	fn from(cause: GetXmlSchemaValueError<'predicate, OnlyOneXmlSchemaValueError<ParseDateTimeError>>) -> Self
+	{
+		ProcessNTriplesError::OnlyOneDateTime(cause)
+	}
+}
+
+impl<'predicate> From<GetXmlSchemaValueError<'predicate, OptionalXmlSchemaValueError<Infallible>>> for ProcessNTriplesError<'predicate>
+{
+	#[inline(always)]
+	fn from(cause: GetXmlSchemaValueError<'predicate, OptionalXmlSchemaValueError<Infallible>>) -> Self
+	{
+		ProcessNTriplesError::OptionalString(cause)
+	}
+}
+
+impl<'predicate> From<GetXmlSchemaValueError<'predicate, OptionalXmlSchemaValueError<ParseBoolError>>> for ProcessNTriplesError<'predicate>
+{
+	#[inline(always)]
+	fn from(cause: GetXmlSchemaValueError<'predicate, OptionalXmlSchemaValueError<ParseBoolError>>) -> Self
+	{
+		ProcessNTriplesError::OptionalBoolean(cause)
+	}
+}
+
+impl<'predicate> From<GetXmlSchemaValueError<'predicate, OptionalXmlSchemaValueError<ParseIntError>>> for ProcessNTriplesError<'predicate>
+{
+	#[inline(always)]
+	fn from(cause: GetXmlSchemaValueError<'predicate, OptionalXmlSchemaValueError<ParseIntError>>) -> Self
+	{
+		ProcessNTriplesError::OptionalInteger(cause)
+	}
+}
+
+impl<'predicate> From<GetXmlSchemaValueError<'predicate, OptionalXmlSchemaValueError<ParseDateTimeError>>> for ProcessNTriplesError<'predicate>
+{
+	#[inline(always)]
+	fn from(cause: GetXmlSchemaValueError<'predicate, OptionalXmlSchemaValueError<ParseDateTimeError>>) -> Self
+	{
+		ProcessNTriplesError::OptionalDateTime(cause)
+	}
+}
+
+impl<'predicate> From<OptionalAbsoluteInternationalizedResourceIdentifierError<'predicate>> for ProcessNTriplesError<'predicate>
+{
+	#[inline(always)]
+	fn from(cause: OptionalAbsoluteInternationalizedResourceIdentifierError<'predicate>) -> Self
+	{
+		ProcessNTriplesError::OptionalAbsoluteInternationalizedResourceIdentifier(cause)
+	}
+}
+
+impl<'predicate> From<RemovePrefixError<'predicate, PathDepth>> for ProcessNTriplesError<'predicate>
+{
+	#[inline(always)]
+	fn from(cause: RemovePrefixError<'predicate, PathDepth>) -> Self
 	{
 		ProcessNTriplesError::RemovePrefix(cause)
 	}

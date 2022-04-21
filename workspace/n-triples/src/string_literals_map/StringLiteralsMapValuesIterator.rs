@@ -4,11 +4,11 @@
 
 /// An iterator.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub struct StringLiteralsMapValuesIterator<'a: 'string_literals_map, 'string_literals_map, Item, Parser: Copy + FnOnce(&'string_literals_map str) -> Item>(&'string_literals_map [Cow<'a, str>], Parser);
+pub struct StringLiteralsMapValuesIterator<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map>>(&'string_literals_map [Cow<'a, str>], PhantomData<SP>);
 
-impl<'a: 'string_literals_map, 'string_literals_map, Item, Parser: Copy + FnOnce(&'string_literals_map str) -> Item> Iterator for StringLiteralsMapValuesIterator<'a, 'string_literals_map, Item, Parser>
+impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map>> Iterator for StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP>
 {
-	type Item = Item;
+	type Item = Result<SP::Item, SP::Error>;
 	
 	#[inline(always)]
 	fn next(&mut self) -> Option<Self::Item>
@@ -22,7 +22,8 @@ impl<'a: 'string_literals_map, 'string_literals_map, Item, Parser: Copy + FnOnce
 		let next = self.0.get_unchecked_safe(0);
 		let next = next.deref();
 		*(&mut self.0) = self.0.get_unchecked_range_safe(1 .. );
-		Some((self.1)(next))
+		
+		Some(SP::parse(next))
 	}
 	
 	#[inline(always)]
@@ -33,7 +34,7 @@ impl<'a: 'string_literals_map, 'string_literals_map, Item, Parser: Copy + FnOnce
 	}
 }
 
-impl<'a: 'string_literals_map, 'string_literals_map, Item, Parser: Copy + FnOnce(&'string_literals_map str) -> Item> DoubleEndedIterator for StringLiteralsMapValuesIterator<'a, 'string_literals_map, Item, Parser>
+impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map>> DoubleEndedIterator for StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP>
 {
 	#[inline(always)]
 	fn next_back(&mut self) -> Option<Self::Item>
@@ -48,11 +49,11 @@ impl<'a: 'string_literals_map, 'string_literals_map, Item, Parser: Copy + FnOnce
 		let next_back = self.0.get_unchecked_safe(last_index);
 		let next_back = next_back.deref();
 		*(&mut self.0) = self.0.get_unchecked_range_safe(..last_index);
-		Some((self.1)(next_back))
+		Some(SP::parse(next_back))
 	}
 }
 
-impl<'a: 'string_literals_map, 'string_literals_map, Item, Parser: Copy + FnOnce(&'string_literals_map str) -> Item> ExactSizeIterator for StringLiteralsMapValuesIterator<'a, 'string_literals_map, Item, Parser>
+impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map>> ExactSizeIterator for StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP>
 {
 	#[inline(always)]
 	fn len(&self) -> usize
@@ -61,52 +62,73 @@ impl<'a: 'string_literals_map, 'string_literals_map, Item, Parser: Copy + FnOnce
 	}
 }
 
-unsafe impl<'a: 'string_literals_map, 'string_literals_map, Item, Parser: Copy + FnOnce(&'string_literals_map str) -> Item> TrustedLen for StringLiteralsMapValuesIterator<'a, 'string_literals_map, Item, Parser>
+unsafe impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map>> const TrustedLen for StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP>
 {
 }
 
-impl<'a: 'string_literals_map, 'string_literals_map, Item, Parser: Copy + FnOnce(&'string_literals_map str) -> Item> FusedIterator for StringLiteralsMapValuesIterator<'a, 'string_literals_map, Item, Parser>
+impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map>> const FusedIterator for StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP>
 {
 }
 
-impl<'a: 'string_literals_map, 'string_literals_map, Item, Parser: Copy + FnOnce(&'string_literals_map str) -> Item> StringLiteralsMapValuesIterator<'a, 'string_literals_map, Item, Parser>
+impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map>> const Default for StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP>
 {
+	#[inline(always)]
+	fn default() -> Self
+	{
+		Self::Empty
+	}
+}
+
+impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map>> StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP>
+{
+	#[inline(always)]
+	const fn new(slice: &'string_literals_map [Cow<'a, str>]) -> Self
+	{
+		Self(slice, PhantomData)
+	}
+	
+	const Empty: Self =
+	{
+		const EmptySlice: &'static [Cow<'static, str>] = &[];
+		Self::new(EmptySlice)
+	};
+	
 	#[allow(missing_docs)]
 	#[inline(always)]
-	pub fn zero_or_one<E: error::Error>(mut self) -> Result<Option<Item>, ZeroOrOneError<E>>
+	pub fn zero_or_one(self) -> Result<Option<SP::Item>, OptionalXmlSchemaValueError<SP::Error>>
 	{
-		use ZeroOrOneError::*;
-		match self.len()
-		{
-			0 => Ok(None),
-			
-			1 =>
-			{
-				let next = self.next();
-				Ok(Some(unsafe { next.unwrap_unchecked() }))
-			}
-			
-			length @ _ => Err(TooMany(MoreThanOneError { count: new_non_zero_usize(length) }))
-		}
+		self.zero_or_one_inner(Ok(None), Some, |error| error)
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
-	pub fn only_one<E: error::Error>(mut self) -> Result<Item, OnlyOneError<E>>
+	pub fn only_one(self) -> Result<SP::Item, OnlyOneXmlSchemaValueError<SP::Error>>
 	{
-		use ZeroOrOneError::*;
-		use OnlyOneError::*;
+		use OnlyOneXmlSchemaValueError::*;
+		self.zero_or_one_inner(Err(Missing { xml_schema_value_kind: SP::Kind }), |item| item, |error| Optional(error))
+	}
+	
+	#[allow(missing_docs)]
+	#[inline(always)]
+	fn zero_or_one_inner<R, Error>(mut self, zero: Result<R, Error>, constructor: impl FnOnce(SP::Item) -> R, error: impl FnOnce(OptionalXmlSchemaValueError<SP::Error>) -> Error) -> Result<R, Error>
+	{
+		use OptionalXmlSchemaValueError::*;
 		match self.len()
 		{
-			0 => Err(Missing),
+			0 => zero,
 			
 			1 =>
 			{
 				let next = self.next();
-				Ok(unsafe { next.unwrap_unchecked() })
+				match unsafe { next.unwrap_unchecked() }
+				{
+					Err(cause) => Err(error(StrParse { cause, xml_schema_value_kind: SP::Kind })),
+					
+					Ok(item) => Ok(constructor(item))
+				}
 			}
 			
-			length @ _ => Err(ZeroOrOne(TooMany(MoreThanOneError { count: new_non_zero_usize(length) })))
+			length @ _ => Err(error(TooMany { cause: MoreThanOneError { count: new_non_zero_usize(length) }, xml_schema_value_kind: SP::Kind }))
 		}
 	}
 }

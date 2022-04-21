@@ -101,9 +101,9 @@ impl PercentEncodedByteProvider
 		{
 			_0 ..= _9 => _0,
 			
-			A ..= F => A,
+			A ..= F => A - 10,
 			
-			a ..= f => a,
+			a ..= f => a - 10,
 			
 			_ => return Err(PercentDecodeError::InvalidHexDigit { decoded_byte_number: decoded_byte_number as u8, relative_index, invalid: potential_hex_digit }),
 		};

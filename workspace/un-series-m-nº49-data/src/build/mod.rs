@@ -7,6 +7,7 @@ use std::fs::File;
 use std::io;
 use std::io::Write;
 use std::path::Path;
+use std::str::from_utf8_unchecked;
 use swiss_army_knife::get_unchecked::GetUnchecked;
 
 
@@ -32,7 +33,8 @@ mod term;
 
 
 include!("generate_rust_code.rs");
-include!("m49_code_string.rs");
+include!("m49_code_array_to_string.rs");
 include!("M49CodeArray.rs");
+include!("static_m49_code_to_static_str.rs");
 include!("StaticM49Code.rs");
 include!("write_key.rs");
