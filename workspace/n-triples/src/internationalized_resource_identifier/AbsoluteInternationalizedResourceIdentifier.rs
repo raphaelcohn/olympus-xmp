@@ -4,7 +4,19 @@
 
 /// Represents an `IRIREF`.
 ///
-/// This is raw; it is not validated according to RFC 3987.
+///
+/// # `file` scheme parsing.
+///
+/// Note that parsing does not support some of the non-standard `file` scheme variants defined in RFC 3987, Appendix E, specifically:-
+///
+/// * Appendix E.2, DOS and Windows Drive Letters.
+/// 	* Support for this could be added as a special case but there is no place in the domain design to currently put a drive letter.
+/// * Appendix E.3, UNC Strings.
+/// 	* Support for this could be added as a special case but then requires changes to the parsing of Internet Protocol Version 6 addresses to support percent-encoding of `[` and `]`.
+/// * Appendix E.4, Backslash as Separator.
+/// 	* Support for this is very painful.
+///
+/// Appendix E.1, User Information, is supported.
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct AbsoluteInternationalizedResourceIdentifier<'a, const PathDepth: usize>
 {
@@ -83,22 +95,22 @@ impl<'a, const PathDepth: usize> TryFrom<&'a str> for AbsoluteInternationalizedR
 	{
 		use AbsoluteInternationalizedResourceIdentifierComponentsParseError::*;
 		
-		let (scheme, has_authority_and_absolute_path_with_dns_host_name, remaining_utf8_bytes) = Scheme::parse(string.as_bytes()).map_err(SchemeParse)?;
-		let (hierarchy, parse_next) = Hierarchy::parse(has_authority_and_absolute_path_with_dns_host_name, remaining_utf8_bytes).map_err(HierarchyParse)?;
+		let (scheme, scheme_specific_parsing_rule, remaining_utf8_bytes) = Scheme::parse(string.as_bytes()).map_err(SchemeParse)?;
+		let (hierarchy, parse_next) = Hierarchy::parse(scheme_specific_parsing_rule, remaining_utf8_bytes).map_err(HierarchyParse)?;
 		
 		use ParseNextAfterHierarchy::*;
 		let (query, hash_fragment) = match parse_next
 		{
-			Query { remaining_utf8_bytes } => match self::Query::parse(remaining_utf8_bytes)
+			Query { remaining_utf8_bytes } => match self::Query::parse(remaining_utf8_bytes, scheme_specific_parsing_rule)
 			{
 				Err(error) => return Err(QueryParse(error)),
 				
 				Ok((query, None)) => (Some(query), None),
 				
-				Ok((query, Some(remaining_utf8_bytes))) => (Some(query), Some(HashFragment::parse(remaining_utf8_bytes)?)),
+				Ok((query, Some(remaining_utf8_bytes))) => (Some(query), Some(HashFragment::parse(remaining_utf8_bytes, scheme_specific_parsing_rule)?)),
 			}
 			
-			NoQueryFragment { remaining_utf8_bytes} => (None, Some(HashFragment::parse(remaining_utf8_bytes)?)),
+			NoQueryFragment { remaining_utf8_bytes} => (None, Some(HashFragment::parse(remaining_utf8_bytes, scheme_specific_parsing_rule)?)),
 			
 			NoQueryNoFragment => (None, None),
 		};
@@ -159,14 +171,7 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 		
 		match (&self.hierarchy, &prefix.hierarchy)
 		{
-			(AuthorityAndAbsolutePath { authority, absolute_path }, AuthorityAndAbsolutePath { authority: other_authority, absolute_path: other_absolute_path} ) =>
-			{
-				if authority != other_authority
-				{
-					return None
-				}
-				absolute_path.remove(other_absolute_path)
-			},
+			(AuthorityAndAbsolutePath(authority_and_absolute_path), AuthorityAndAbsolutePath(prefix)) => authority_and_absolute_path.remove(prefix),
 			
 			(RootlessPath(non_empty_path), RootlessPath(prefix)) => non_empty_path.remove(prefix),
 			
@@ -224,6 +229,16 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 		let path_segment = unsafe { PathSegment::from_unchecked(path_segment) };
 		self.hierarchy.with_path_segment::<convert_empty_path_to_absolute>(path_segment)?;
 		Ok(self)
+	}
+	
+	/// Convenience wrapper for `with_path_segment_const()` which assumes `convert_empty_path_to_absolute` is `true`.
+	///
+	/// Makes for more elegant construction of const literals.
+	#[inline(always)]
+	pub const fn append<P>(self, path_segment: P) -> Self
+	where PathSegment<'a>: ~const FromUnchecked<P>
+	{
+		self.with_path_segment_const::<P, true>(path_segment)
 	}
 	
 	/// Appends a path segment if there is space on the stack.

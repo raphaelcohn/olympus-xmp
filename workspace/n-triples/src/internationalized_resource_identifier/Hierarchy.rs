@@ -7,17 +7,15 @@
 pub enum Hierarchy<'a, const PathDepth: usize>
 {
 	/// If not empty, then starts with `/`.
-	AuthorityAndAbsolutePath
-	{
-		/// Authority.
-		authority: Authority<'a>,
-		
-		/// Zero or more; each path segment can be empty.
-		absolute_path: PathSegments<'a, PathDepth>,
-	},
+	///
+	/// Only valid option for http and https schemes.
+	/// One of two valid options (the other being `AbsolutePath`) for file schemes.
+	AuthorityAndAbsolutePath(AuthorityAndAbsolutePath<'a, PathDepth>),
 	
 	/// Starts `/`.
 	/// Minimum is `/X`, where `X` is a valid character.
+	///
+	/// One of two valid options (the other being `AuthorityAndAbsolutePath`) for file schemes.
 	AbsolutePath(NonEmptyPath<'a, PathDepth>),
 
 	/// Does not start `/`.
@@ -36,7 +34,7 @@ impl<'a, const PathDepth: usize> Display for Hierarchy<'a, PathDepth>
 		use Hierarchy::*;
 		match self
 		{
-			AuthorityAndAbsolutePath { authority, absolute_path } => write!(f, "//{}{}", authority, absolute_path),
+			AuthorityAndAbsolutePath(authority_and_absolute_path) => write!(f, "//{}", authority_and_absolute_path),
 			
 			AbsolutePath(non_empty_path) => write!(f, "/{}", non_empty_path),
 			
@@ -56,11 +54,7 @@ impl<'a, const PathDepth: usize> TryToOwnInPlace for Hierarchy<'a, PathDepth>
 		
 		match self
 		{
-			AuthorityAndAbsolutePath { authority, absolute_path } =>
-			{
-				authority.try_to_own_in_place()?;
-				absolute_path.try_to_own_in_place()
-			}
+			AuthorityAndAbsolutePath(authority_and_absolute_path) => authority_and_absolute_path.try_to_own_in_place(),
 			
 			AbsolutePath(non_empty_path) => non_empty_path.try_to_own_in_place(),
 			
@@ -84,7 +78,7 @@ impl<'a, const PathDepth: usize> TryToOwn for Hierarchy<'a, PathDepth>
 		(
 			match self
 			{
-				AuthorityAndAbsolutePath { authority, absolute_path } => AuthorityAndAbsolutePath { authority: authority.try_to_own()?, absolute_path: absolute_path.try_to_own()? },
+				AuthorityAndAbsolutePath(authority_and_absolute_path) => AuthorityAndAbsolutePath(authority_and_absolute_path.try_to_own()?),
 				
 				AbsolutePath(non_empty_path) => AbsolutePath(non_empty_path.try_to_own()?),
 				
@@ -137,7 +131,7 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 		use Hierarchy::*;
 		match self
 		{
-			AuthorityAndAbsolutePath { absolute_path, .. } => absolute_path.with_path_segment(path_segment)?,
+			AuthorityAndAbsolutePath(authority_and_absolute_path) => authority_and_absolute_path.with_path_segment(path_segment)?,
 			
 			AbsolutePath(non_empty_path) => non_empty_path.with_path_segment(path_segment)?,
 			
@@ -178,7 +172,7 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 		use Hierarchy::*;
 		match self
 		{
-			AuthorityAndAbsolutePath { absolute_path, .. } => absolute_path.with_path_segment_const(path_segment),
+			AuthorityAndAbsolutePath(authority_and_absolute_path) => authority_and_absolute_path.with_path_segment_const(path_segment),
 			
 			AbsolutePath(non_empty_path) => non_empty_path.with_path_segment_const(path_segment),
 			
@@ -223,7 +217,7 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 	/// `isegment       = *ipchar`.
 	/// `isegment-nz    = 1*ipchar`.
 	#[inline(always)]
-	fn parse(has_authority_and_absolute_path_with_dns_host_name: bool, mut remaining_utf8_bytes: &'a [u8]) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
+	fn parse(scheme_specific_parsing_rule: &SchemeSpecificParsingRule, mut remaining_utf8_bytes: &'a [u8]) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
 	{
 		use Utf8CharacterLength::*;
 		use Hierarchy::*;
@@ -231,11 +225,11 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 		
 		let character = StringSoFar::decode_next_utf8_validity_already_checked_mandatory(&mut remaining_utf8_bytes, DidNotExpectEndParsingFirstCharacter)?;
 		
-		if has_authority_and_absolute_path_with_dns_host_name
+		if scheme_specific_parsing_rule.hierarchy_starts_with_slash()
 		{
 			return if character == SlashChar
 			{
-				Self::parse_iauthority_ipath_abempty_or_ipath_absolute(has_authority_and_absolute_path_with_dns_host_name, remaining_utf8_bytes)
+				Self::parse_iauthority_ipath_abempty_or_ipath_absolute(scheme_specific_parsing_rule, remaining_utf8_bytes)
 			}
 			else
 			{
@@ -249,7 +243,7 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 			
 			HashChar => Ok((EmptyPath, ParseNextAfterHierarchy::fragment_no_query(remaining_utf8_bytes))),
 			
-			SlashChar => Self::parse_iauthority_ipath_abempty_or_ipath_absolute(has_authority_and_absolute_path_with_dns_host_name, remaining_utf8_bytes),
+			SlashChar => Self::parse_iauthority_ipath_abempty_or_ipath_absolute(scheme_specific_parsing_rule, remaining_utf8_bytes),
 			
 			ipchar_iunreserved_without_ucschar!() => Self::parse_ipath_rootless(Self::decoded(character, One), remaining_utf8_bytes),
 			ipchar_iunreserved_with_ucschar_2!()  => Self::parse_ipath_rootless(Self::decoded(character, Two), remaining_utf8_bytes),
@@ -264,17 +258,17 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 	}
 	
 	#[inline(always)]
-	fn parse_iauthority_ipath_abempty_or_ipath_absolute(has_authority_and_absolute_path_with_dns_host_name: bool, mut remaining_utf8_bytes: &'a [u8]) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
+	fn parse_iauthority_ipath_abempty_or_ipath_absolute(scheme_specific_parsing_rule: &SchemeSpecificParsingRule, mut remaining_utf8_bytes: &'a [u8]) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
 	{
 		use Utf8CharacterLength::*;
 		use HierarchyParseError::*;
 		
 		let character = StringSoFar::decode_next_utf8_validity_already_checked_mandatory(&mut remaining_utf8_bytes, DidNotExpectEndParsingSecondCharacter)?;
-		if has_authority_and_absolute_path_with_dns_host_name
+		if scheme_specific_parsing_rule.hierarchy_is_authority_and_absolute_path()
 		{
 			return if character == SlashChar
 			{
-				Self::parse_iauthority_ipath_abempty(has_authority_and_absolute_path_with_dns_host_name, remaining_utf8_bytes)
+				Self::parse_iauthority_ipath_abempty(scheme_specific_parsing_rule, remaining_utf8_bytes)
 			}
 			else
 			{
@@ -284,7 +278,7 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 		
 		match character
 		{
-			SlashChar => Self::parse_iauthority_ipath_abempty(has_authority_and_absolute_path_with_dns_host_name, remaining_utf8_bytes),
+			SlashChar => Self::parse_iauthority_ipath_abempty(scheme_specific_parsing_rule, remaining_utf8_bytes),
 			
 			ipchar_iunreserved_without_ucschar!() => Self::parse_ipath_absolute(Self::decoded(character, One), remaining_utf8_bytes),
 			ipchar_iunreserved_with_ucschar_2!()  => Self::parse_ipath_absolute(Self::decoded(character, Two), remaining_utf8_bytes),
@@ -309,7 +303,7 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 	#[inline(always)]
 	fn parse_ipath_rootless(first_character_of_first_path_segment: (bool, char, Utf8CharacterLength), remaining_utf8_bytes: &'a [u8]) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
 	{
-		Self::parse_non_empty_path(first_character_of_first_path_segment, remaining_utf8_bytes, Hierarchy::RootlessPath, HierarchyParseError::IPathRootlessParse)
+		Self::parse_non_empty_path(first_character_of_first_path_segment, remaining_utf8_bytes, Hierarchy::RootlessPath, HierarchyParseError::RootlessPathParse)
 	}
 	
 	/// First segment can not be empty, and must start `/<something>`.
@@ -323,7 +317,7 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 	#[inline(always)]
 	fn parse_ipath_absolute(first_character_of_first_path_segment: (bool, char, Utf8CharacterLength), remaining_utf8_bytes: &'a [u8]) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
 	{
-		Self::parse_non_empty_path(first_character_of_first_path_segment, remaining_utf8_bytes, Hierarchy::AbsolutePath, HierarchyParseError::IPathAbsoluteParse)
+		Self::parse_non_empty_path(first_character_of_first_path_segment, remaining_utf8_bytes, Hierarchy::AbsolutePath, HierarchyParseError::AbsolutePathParse)
 	}
 	
 	#[inline(always)]
@@ -345,44 +339,10 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 	/// * "//segment/"
 	/// * "//segment////segment"
 	#[inline(always)]
-	fn parse_iauthority_ipath_abempty(has_authority_and_absolute_path_with_dns_host_name: bool, remaining_utf8_bytes: &'a [u8]) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
+	fn parse_iauthority_ipath_abempty(scheme_specific_parsing_rule: &SchemeSpecificParsingRule, remaining_utf8_bytes: &'a [u8]) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
 	{
-		let mut absolute_path = PathSegments::default();
-		
-		let (authority, parse_next) = match memchr3(QuestionMark, Hash, Slash, remaining_utf8_bytes)
-		{
-			None =>
-			{
-				let authority = Authority::parse(has_authority_and_absolute_path_with_dns_host_name, remaining_utf8_bytes)?;
-				(authority, ParseNextAfterHierarchy::NoQueryNoFragment)
-			}
-			
-			Some(index) =>
-			{
-				let authority_bytes = remaining_utf8_bytes.before_index(index);
-				let authority = Authority::parse(has_authority_and_absolute_path_with_dns_host_name, authority_bytes)?;
-				
-				let after_authority_bytes = remaining_utf8_bytes.after_index(index);
-				
-				let parse_next_after_hierarchy = match remaining_utf8_bytes.get_unchecked_value_safe(index)
-				{
-					// means there's just iauthority followed by an empty path then a query
-					QuestionMark => ParseNextAfterHierarchy::query(remaining_utf8_bytes),
-					
-					// means there's just iauthority followed by an empty path then an empty query then a fragment
-					Hash => ParseNextAfterHierarchy::fragment_no_query(after_authority_bytes),
-					
-					// after_authority_bytes is the start of the absolute path.
-					Slash => absolute_path.parse(after_authority_bytes)?,
-					
-					_ => unreachable_code_const("memchr3")
-				};
-				
-				(authority, parse_next_after_hierarchy)
-			}
-		};
-		
-		Ok((Hierarchy::AuthorityAndAbsolutePath { authority, absolute_path }, parse_next))
+		let (authority_and_absolute_path, parse_next) = AuthorityAndAbsolutePath::parse(scheme_specific_parsing_rule, remaining_utf8_bytes)?;
+		Ok((Hierarchy::AuthorityAndAbsolutePath(authority_and_absolute_path), parse_next))
 	}
 	
 	#[inline(always)]

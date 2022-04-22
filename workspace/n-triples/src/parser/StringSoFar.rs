@@ -79,6 +79,19 @@ impl<'a> StringSoFar<'a>
 	}
 	
 	#[inline(always)]
+	pub(super) fn to_cow_bytes(self) -> Cow<'a, [u8]>
+	{
+		use StringSoFar::*;
+		
+		match self
+		{
+			Heap(string) => Cow::Owned(string.into_bytes()),
+			
+			Stack { from, slice_length, .. } => Cow::Borrowed(Self::to_bytes(from, slice_length))
+		}
+	}
+	
+	#[inline(always)]
 	pub(super) fn push_forcing_heap_UCHAR4(&mut self, remaining_bytes: &mut &[u8]) -> Result<(), OutOfMemoryOrUCHARParseError>
 	{
 		self.push_forcing_heap_UCHAR(remaining_bytes, UCHARParser::parse_UCHAR4)

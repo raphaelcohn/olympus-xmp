@@ -81,6 +81,24 @@ impl<'a> const FromUnchecked<String> for Query<'a>
 	}
 }
 
+impl<'a> const FromUnchecked<&'a [u8]> for Query<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(value: &'a [u8]) -> Self
+	{
+		Self::from_unchecked(from_utf8_unchecked(value))
+	}
+}
+
+impl<'a, const Count: usize> const FromUnchecked<&'a [u8; Count]> for Query<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(value: &'a [u8; Count]) -> Self
+	{
+		Self::from_unchecked(from_utf8_unchecked(value))
+	}
+}
+
 impl<'a> Into<Cow<'a, str>> for Query<'a>
 {
 	#[inline(always)]
@@ -124,11 +142,17 @@ impl<'a> Query<'a>
 	/// `iquery   = *( ipchar / iprivate / "/" / "?" )`.
 	/// `iprivate = %xE000-F8FF / %xF0000-FFFFD / %x100000-10FFFD`.
 	#[inline(always)]
-	fn parse(mut remaining_utf8_bytes: &'a [u8]) -> Result<(Self, Option<&'a [u8]>), QueryParseError>
+	fn parse(mut remaining_utf8_bytes: &'a [u8], scheme_specific_parsing_rule: &SchemeSpecificParsingRule) -> Result<(Self, Option<&'a [u8]>), QueryParseError>
 	{
-		use QueryParseError::InvalidCharacterInQuery;
+		use QueryParseError::*;
 		
 		let remaining_utf8_bytes = &mut remaining_utf8_bytes;
+		
+		if scheme_specific_parsing_rule.query_should_not_be_present(remaining_utf8_bytes)
+		{
+			return Err(QueryNotAllowedForScheme)
+		}
+		
 		let mut string = StringSoFar::new_stack(remaining_utf8_bytes);
 		
 		let hash_fragment_remaining_utf8_bytes = loop

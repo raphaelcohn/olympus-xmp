@@ -13,7 +13,7 @@ pub enum PathSegmentParseError
 	OutOfMemory(TryReserveError),
 	
 	#[allow(missing_docs)]
-	OutOfMemoryOrInvalidUtf8PercentDecodeParse(OutOfMemoryOrInvalidUtf8PercentDecodeParseError),
+	InvalidUtf8PercentDecodeParse(InvalidUtf8ParseError<PercentDecodeError>),
 }
 
 impl const From<TryReserveError> for PathSegmentParseError
@@ -25,12 +25,13 @@ impl const From<TryReserveError> for PathSegmentParseError
 	}
 }
 
-impl const From<OutOfMemoryOrInvalidUtf8PercentDecodeParseError> for PathSegmentParseError
+impl From<OutOfMemoryOrInvalidUtf8PercentDecodeParseError> for PathSegmentParseError
 {
 	#[inline(always)]
 	fn from(cause: OutOfMemoryOrInvalidUtf8PercentDecodeParseError) -> Self
 	{
-		PathSegmentParseError::OutOfMemoryOrInvalidUtf8PercentDecodeParse(cause)
+		use PathSegmentParseError::*;
+		cause.into_either(OutOfMemory, InvalidUtf8PercentDecodeParse)
 	}
 }
 
@@ -54,7 +55,7 @@ impl error::Error for PathSegmentParseError
 		{
 			OutOfMemory(cause) => Some(cause),
 			
-			OutOfMemoryOrInvalidUtf8PercentDecodeParse(cause) => Some(cause),
+			InvalidUtf8PercentDecodeParse(cause) => Some(cause),
 			
 			_ => None,
 		}

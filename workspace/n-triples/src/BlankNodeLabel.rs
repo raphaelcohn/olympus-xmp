@@ -33,6 +33,24 @@ impl<'a> const FromUnchecked<String> for BlankNodeLabel<'a>
 	}
 }
 
+impl<'a> const FromUnchecked<&'a [u8]> for BlankNodeLabel<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(value: &'a [u8]) -> Self
+	{
+		Self::from_unchecked(from_utf8_unchecked(value))
+	}
+}
+
+impl<'a, const Count: usize> const FromUnchecked<&'a [u8; Count]> for BlankNodeLabel<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(value: &'a [u8; Count]) -> Self
+	{
+		Self::from_unchecked(from_utf8_unchecked(value))
+	}
+}
+
 impl<'a> TryToOwnInPlace for BlankNodeLabel<'a>
 {
 	#[inline(always)]

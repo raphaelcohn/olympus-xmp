@@ -34,6 +34,7 @@ use swiss_army_knife::get_unchecked::GetUnchecked;
 use swiss_army_knife::non_zero::new_non_zero_usize;
 
 
+include!("Integer.rs");
 include!("MoreThanOneError.rs");
 include!("OnlyOneXmlSchemaValueError.rs");
 include!("OptionalXmlSchemaValueError.rs");
@@ -43,4 +44,3 @@ include!("StringLiteralToDomainTypeParseError.rs");
 include!("StrParser.rs");
 include!("TryFromStrParser.rs");
 include!("XmlSchemaValueKind.rs");
-include!("XmlSchemaValueParser.rs");

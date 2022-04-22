@@ -59,10 +59,46 @@ impl<'a> TryToOwn for Authority<'a>
 	}
 }
 
+impl<'a> const FromUnchecked<Cow<'a, str>> for Authority<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(host_name: Cow<'a, str>) -> Self
+	{
+		Self::new_for_host(Host::from_unchecked(host_name))
+	}
+}
+
 impl<'a> const FromUnchecked<&'a str> for Authority<'a>
 {
 	#[inline(always)]
 	unsafe fn from_unchecked(host_name: &'a str) -> Self
+	{
+		Self::new_for_host(Host::from_unchecked(host_name))
+	}
+}
+
+impl<'a> const FromUnchecked<String> for Authority<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(host_name: String) -> Self
+	{
+		Self::new_for_host(Host::from_unchecked(host_name))
+	}
+}
+
+impl<'a> const FromUnchecked<&'a [u8]> for Authority<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(host_name: &'a [u8]) -> Self
+	{
+		Self::new_for_host(Host::from_unchecked(host_name))
+	}
+}
+
+impl<'a, const Count: usize> const FromUnchecked<&'a [u8; Count]> for Authority<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(host_name: &'a [u8; Count]) -> Self
 	{
 		Self::new_for_host(Host::from_unchecked(host_name))
 	}
@@ -151,15 +187,18 @@ impl<'a> Authority<'a>
 	pub const fn with<const PathDepth: usize>(self, path_segments: PathSegments<'a, PathDepth>) -> Hierarchy<'a, PathDepth>
 	{
 		Hierarchy::AuthorityAndAbsolutePath
-		{
-			authority: self,
-			absolute_path: path_segments,
-		}
+		(
+			AuthorityAndAbsolutePath
+			{
+				authority: self,
+				absolute_path: path_segments,
+			}
+		)
 	}
 	
 	/// `iauthority = [ iuserinfo "@" ] ihost [ ":" port ]`.
 	#[inline(always)]
-	fn parse(has_authority_and_absolute_path_with_dns_host_name: bool, authority_bytes: &'a [u8]) -> Result<Self, AuthorityParseError>
+	fn parse(scheme_specific_parsing_rule: &SchemeSpecificParsingRule, authority_bytes: &'a [u8]) -> Result<Self, AuthorityParseError>
 	{
 		// Frustrating, as requires a long scan (`memchr`) which will nearly always return `None` as user information is very rare.
 		// The alternative is to assume there is no user_host data, then throwaway what we've pased so far if an `@` is encountered.
@@ -174,9 +213,24 @@ impl<'a> Authority<'a>
 			}
 		};
 		
-		let (host, port_bytes_including_colon) = Host::parse(has_authority_and_absolute_path_with_dns_host_name, ihost_and_port_bytes)?;
+		let (host, port_bytes_including_colon) = Host::parse(scheme_specific_parsing_rule, ihost_and_port_bytes)?;
 		
-		let port = Self::parse_port(port_bytes_including_colon)?;
+		use PortParsingRule::*;
+		let port = match scheme_specific_parsing_rule.port_rule
+		{
+			Allowed { default_port} => Self::parse_port(port_bytes_including_colon, Some(default_port))?,
+			
+			Denied => if port_bytes_including_colon.is_empty()
+			{
+				None
+			}
+			else
+			{
+				return Err(AuthorityParseError::PortParse(PortParseError::APortIsNotPermittedForThisScheme))
+			},
+			
+			Unknown => Self::parse_port(port_bytes_including_colon, None)?,
+		};
 		
 		Ok
 		(
@@ -197,7 +251,7 @@ impl<'a> Authority<'a>
 	
 	/// `port = *DIGIT`.
 	#[inline(always)]
-	fn parse_port(port_bytes_including_colon: &[u8]) -> Result<Option<NonZeroU16>, PortParseError>
+	fn parse_port(port_bytes_including_colon: &[u8], default_port: Option<NonZeroU16>) -> Result<Option<NonZeroU16>, PortParseError>
 	{
 		use PortParseError::*;
 	
@@ -236,12 +290,12 @@ impl<'a> Authority<'a>
 		
 		let raw_value = match port_bytes_including_colon.len()
 		{
-			0 => return Ok(None),
+			0 => return Ok(default_port),
 			
 			1 =>
 			{
 				guard_starts_with_colon(port_bytes_including_colon)?;
-				return Ok(None)
+				return Ok(default_port)
 			}
 			
 			2 =>

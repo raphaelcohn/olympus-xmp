@@ -4,17 +4,19 @@
 
 #[allow(missing_docs)]
 #[derive(Default, Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub struct TryFromStrParser<'string_literals_map, SP: StrParser<'string_literals_map>, DomainType: TryFrom<SP::Item, Error=TryFromError>, TryFromError: 'static + error::Error>(PhantomData<(&'string_literals_map (), SP, DomainType, TryFromError)>)
-where <SP as StrParser<'string_literals_map>>::Error: 'static;
+pub struct TryFromStrParser<'string_literals_map, SP: StrParser<'string_literals_map, PathDepth>, DomainType: TryFrom<SP::Item, Error=TryFromError>, TryFromError: 'static + error::Error, const PathDepth: usize>(PhantomData<(&'string_literals_map (), SP, DomainType, TryFromError)>)
+where <SP as StrParser<'string_literals_map, PathDepth>>::Error: 'static;
 
-impl<'string_literals_map, SP: StrParser<'string_literals_map>, DomainType: TryFrom<SP::Item, Error=TryFromError>, TryFromError: 'static + error::Error> StrParser<'string_literals_map> for TryFromStrParser<'string_literals_map, SP, DomainType, TryFromError>
-where <SP as StrParser<'string_literals_map>>::Error: 'static
+impl<'string_literals_map, SP: StrParser<'string_literals_map, PathDepth>, DomainType: TryFrom<SP::Item, Error=TryFromError>, TryFromError: 'static + error::Error, const PathDepth: usize> StrParser<'string_literals_map, PathDepth> for TryFromStrParser<'string_literals_map, SP, DomainType, TryFromError, PathDepth>
+where <SP as StrParser<'string_literals_map, PathDepth>>::Error: 'static
 {
 	type Item = DomainType;
 	
 	type Error = StringLiteralToDomainTypeParseError<SP::Error, TryFromError>;
 	
 	const Kind: XmlSchemaValueKind = SP::Kind;
+	
+	const Key: AbsoluteInternationalizedResourceIdentifier<'static, PathDepth> = SP::Key;
 	
 	#[inline(always)]
 	fn parse(value: &'string_literals_map str) -> Result<Self::Item, Self::Error>

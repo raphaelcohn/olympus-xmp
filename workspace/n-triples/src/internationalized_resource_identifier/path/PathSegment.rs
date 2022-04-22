@@ -63,6 +63,24 @@ impl<'a> const FromUnchecked<String> for PathSegment<'a>
 	}
 }
 
+impl<'a> const FromUnchecked<&'a [u8]> for PathSegment<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(value: &'a [u8]) -> Self
+	{
+		Self::from_unchecked(from_utf8_unchecked(value))
+	}
+}
+
+impl<'a, const Count: usize> const FromUnchecked<&'a [u8; Count]> for PathSegment<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(value: &'a [u8; Count]) -> Self
+	{
+		Self::from_unchecked(from_utf8_unchecked(value))
+	}
+}
+
 impl<'a> const From<NonEmptyPathSegment<'a>> for PathSegment<'a>
 {
 	#[inline(always)]

@@ -10,10 +10,10 @@ pub enum HostNameParseError
 	InvalidCharacterInHostName(char),
 	
 	#[allow(missing_docs)]
-	OutOfMemoryMakingAsciiLowerCase(TryReserveError),
+	OutOfMemory(TryReserveError),
 	
 	#[allow(missing_docs)]
-	OutOfMemoryOrInvalidUtf8PercentDecodeParse(OutOfMemoryOrInvalidUtf8PercentDecodeParseError),
+	InvalidUtf8PercentDecodeParse(InvalidUtf8ParseError<PercentDecodeError>),
 }
 
 impl const From<TryReserveError> for HostNameParseError
@@ -21,16 +21,17 @@ impl const From<TryReserveError> for HostNameParseError
 	#[inline(always)]
 	fn from(cause: TryReserveError) -> Self
 	{
-		HostNameParseError::OutOfMemoryMakingAsciiLowerCase(cause)
+		HostNameParseError::OutOfMemory(cause)
 	}
 }
 
-impl const From<OutOfMemoryOrInvalidUtf8PercentDecodeParseError> for HostNameParseError
+impl From<OutOfMemoryOrInvalidUtf8PercentDecodeParseError> for HostNameParseError
 {
 	#[inline(always)]
 	fn from(cause: OutOfMemoryOrInvalidUtf8PercentDecodeParseError) -> Self
 	{
-		HostNameParseError::OutOfMemoryOrInvalidUtf8PercentDecodeParse(cause)
+		use HostNameParseError::*;
+		cause.into_either(OutOfMemory, InvalidUtf8PercentDecodeParse)
 	}
 }
 
@@ -52,9 +53,9 @@ impl error::Error for HostNameParseError
 		
 		match self
 		{
-			OutOfMemoryMakingAsciiLowerCase(cause) => Some(cause),
+			OutOfMemory(cause) => Some(cause),
 			
-			OutOfMemoryOrInvalidUtf8PercentDecodeParse(cause) => Some(cause),
+			InvalidUtf8PercentDecodeParse(cause) => Some(cause),
 			
 			_ => None,
 		}

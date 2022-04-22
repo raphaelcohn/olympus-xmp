@@ -23,13 +23,13 @@ use super::NaiveIetfBcp47LanguageTag;
 use super::Objects;
 use super::PathDepth;
 use super::internationalized_resource_identifier::AbsoluteInternationalizedResourceIdentifier;
+use super::string_literals_map::Integer;
 use super::string_literals_map::MoreThanOneError;
 use super::string_literals_map::OnlyOneXmlSchemaValueError;
 use super::string_literals_map::OptionalXmlSchemaValueError;
 use super::string_literals_map::ParseDateTimeError;
 use super::string_literals_map::StringLiteralsMap;
 use super::string_literals_map::StrParser;
-use super::string_literals_map::XmlSchemaValueParser;
 
 
 include!("GetXmlSchemaValueError.rs");

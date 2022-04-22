@@ -26,6 +26,9 @@ pub enum HostParseError
 	
 	#[allow(missing_docs)]
 	StartsWithADigitButIsNotAnInternetProtocolVersion4Address,
+
+	#[allow(missing_docs)]
+	AnEmptyHostNameIsNotPermittedForThisScheme,
 }
 
 impl const From<HostNameParseError> for HostParseError

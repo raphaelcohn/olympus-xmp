@@ -10,7 +10,7 @@ impl<'a: 'b, 'b, const PathDepth: usize> IntoIterator for &'b PathSegments<'a, P
 {
 	type Item = &'b PathSegment<'a>;
 	
-	type IntoIter = std::slice::Iter<'b, PathSegment<'a>>;
+	type IntoIter = Iter<'b, PathSegment<'a>>;
 	
 	#[inline(always)]
 	fn into_iter(self) -> Self::IntoIter
@@ -50,6 +50,78 @@ impl<'a, const PathDepth: usize> DerefMut for PathSegments<'a, PathDepth>
 	fn deref_mut(&mut self) -> &mut Self::Target
 	{
 		self.0.deref_mut()
+	}
+}
+
+impl<'a, const PathDepth: usize> AsRef<[PathSegment<'a>]> for PathSegments<'a, PathDepth>
+{
+	#[inline(always)]
+	fn as_ref(&self) -> &[PathSegment<'a>]
+	{
+		self.deref()
+	}
+}
+
+impl<'a, const PathDepth: usize> AsMut<[PathSegment<'a>]> for PathSegments<'a, PathDepth>
+{
+	#[inline(always)]
+	fn as_mut(&mut self) -> &mut [PathSegment<'a>]
+	{
+		self.deref_mut()
+	}
+}
+
+impl<'a, const PathDepth: usize> Borrow<[PathSegment<'a>]> for PathSegments<'a, PathDepth>
+{
+	#[inline(always)]
+	fn borrow(&self) -> &[PathSegment<'a>]
+	{
+		self.deref()
+	}
+}
+
+impl<'a, const PathDepth: usize> BorrowMut<[PathSegment<'a>]> for PathSegments<'a, PathDepth>
+{
+	#[inline(always)]
+	fn borrow_mut(&mut self) -> &mut [PathSegment<'a>]
+	{
+		self.deref_mut()
+	}
+}
+
+impl<'a, const PathDepth: usize> AsRef<ConstSmallVec<PathSegment<'a>, PathDepth>> for PathSegments<'a, PathDepth>
+{
+	#[inline(always)]
+	fn as_ref(&self) -> &ConstSmallVec<PathSegment<'a>, PathDepth>
+	{
+		&self.0
+	}
+}
+
+impl<'a, const PathDepth: usize> AsMut<ConstSmallVec<PathSegment<'a>, PathDepth>> for PathSegments<'a, PathDepth>
+{
+	#[inline(always)]
+	fn as_mut(&mut self) -> &mut ConstSmallVec<PathSegment<'a>, PathDepth>
+	{
+		&mut self.0
+	}
+}
+
+impl<'a, const PathDepth: usize> Borrow<ConstSmallVec<PathSegment<'a>, PathDepth>> for PathSegments<'a, PathDepth>
+{
+	#[inline(always)]
+	fn borrow(&self) -> &ConstSmallVec<PathSegment<'a>, PathDepth>
+	{
+		&self.0
+	}
+}
+
+impl<'a, const PathDepth: usize> BorrowMut<ConstSmallVec<PathSegment<'a>, PathDepth>> for PathSegments<'a, PathDepth>
+{
+	#[inline(always)]
+	fn borrow_mut(&mut self) -> &mut ConstSmallVec<PathSegment<'a>, PathDepth>
+	{
+		&mut self.0
 	}
 }
 
@@ -133,21 +205,12 @@ impl<'a, const PathDepth: usize> const From<ConstSmallVec<PathSegment<'a>, PathD
 	}
 }
 
-impl<'a, const PathDepth: usize> Borrow<[PathSegment<'a>]> for PathSegments<'a, PathDepth>
+impl<'a, const PathDepth: usize> From<PathSegments<'a, PathDepth>> for ConstSmallVec<PathSegment<'a>, PathDepth>
 {
 	#[inline(always)]
-	fn borrow(&self) -> &[PathSegment<'a>]
+	fn from(value: PathSegments<'a, PathDepth>) -> Self
 	{
-		self.deref()
-	}
-}
-
-impl<'a, const PathDepth: usize> AsRef<[PathSegment<'a>]> for PathSegments<'a, PathDepth>
-{
-	#[inline(always)]
-	fn as_ref(&self) -> &[PathSegment<'a>]
-	{
-		self.deref()
+		value.0
 	}
 }
 
@@ -185,7 +248,7 @@ impl<'a, const PathDepth: usize> PathSegments<'a, PathDepth>
 	
 	/// Removes `other`.
 	#[inline(always)]
-	pub fn remove(&self, prefix: &PathSegments<PathDepth>) -> Option<&[PathSegment<'a>]>
+	pub fn remove<'prefix>(&self, prefix: &PathSegments<'prefix, PathDepth>) -> Option<&[PathSegment<'a>]>
 	{
 		let this = self.0.deref();
 		let other = prefix.0.deref();

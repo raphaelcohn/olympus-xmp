@@ -4,38 +4,34 @@
 
 /// A parse error.
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub enum UserInformationParseError
+pub enum AuthorityAndAbsolutePathParseError
 {
 	#[allow(missing_docs)]
-	InvalidCharacterInUserInformation(char),
+	AuthorityParse(AuthorityParseError),
 	
 	#[allow(missing_docs)]
-	OutOfMemory(TryReserveError),
-	
-	#[allow(missing_docs)]
-	InvalidUtf8PercentDecodeParse(InvalidUtf8ParseError<PercentDecodeError>),
+	AbsolutePathParse(PathSegmentsParseError),
 }
 
-impl const From<TryReserveError> for UserInformationParseError
+impl const From<AuthorityParseError> for AuthorityAndAbsolutePathParseError
 {
 	#[inline(always)]
-	fn from(cause: TryReserveError) -> Self
+	fn from(cause: AuthorityParseError) -> Self
 	{
-		UserInformationParseError::OutOfMemory(cause)
+		AuthorityAndAbsolutePathParseError::AuthorityParse(cause)
 	}
 }
 
-impl From<OutOfMemoryOrInvalidUtf8PercentDecodeParseError> for UserInformationParseError
+impl const From<PathSegmentsParseError> for AuthorityAndAbsolutePathParseError
 {
 	#[inline(always)]
-	fn from(cause: OutOfMemoryOrInvalidUtf8PercentDecodeParseError) -> Self
+	fn from(cause: PathSegmentsParseError) -> Self
 	{
-		use UserInformationParseError::*;
-		cause.into_either(OutOfMemory, InvalidUtf8PercentDecodeParse)
+		AuthorityAndAbsolutePathParseError::AbsolutePathParse(cause)
 	}
 }
 
-impl Display for UserInformationParseError
+impl Display for AuthorityAndAbsolutePathParseError
 {
 	#[inline(always)]
 	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
@@ -44,20 +40,18 @@ impl Display for UserInformationParseError
 	}
 }
 
-impl error::Error for UserInformationParseError
+impl error::Error for AuthorityAndAbsolutePathParseError
 {
 	#[inline(always)]
 	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		use UserInformationParseError::*;
+		use AuthorityAndAbsolutePathParseError::*;
 		
 		match self
 		{
-			OutOfMemory(cause) => Some(cause),
+			AuthorityParse(cause) => Some(cause),
 			
-			InvalidUtf8PercentDecodeParse(cause) => Some(cause),
-			
-			_ => None,
+			AbsolutePathParse(cause) => Some(cause),
 		}
 	}
 }

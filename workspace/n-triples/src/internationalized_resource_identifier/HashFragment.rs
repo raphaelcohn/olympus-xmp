@@ -81,6 +81,24 @@ impl<'a> const FromUnchecked<String> for HashFragment<'a>
 	}
 }
 
+impl<'a> const FromUnchecked<&'a [u8]> for HashFragment<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(value: &'a [u8]) -> Self
+	{
+		Self::from_unchecked(from_utf8_unchecked(value))
+	}
+}
+
+impl<'a, const Count: usize> const FromUnchecked<&'a [u8; Count]> for HashFragment<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(value: &'a [u8; Count]) -> Self
+	{
+		Self::from_unchecked(from_utf8_unchecked(value))
+	}
+}
+
 impl<'a> Into<Cow<'a, str>> for HashFragment<'a>
 {
 	#[inline(always)]
@@ -123,11 +141,17 @@ impl<'a> HashFragment<'a>
 {
 	/// `ifragment  = *( ipchar / "/" / "?" )`.
 	#[inline(always)]
-	fn parse(mut remaining_utf8_bytes: &'a [u8]) -> Result<Self, HashFragmentParseError>
+	fn parse(mut remaining_utf8_bytes: &'a [u8], scheme_specific_parsing_rule: &SchemeSpecificParsingRule) -> Result<Self, HashFragmentParseError>
 	{
-		use HashFragmentParseError::InvalidCharacterInHashFragment;
+		use HashFragmentParseError::*;
 		
 		let remaining_utf8_bytes = &mut remaining_utf8_bytes;
+		
+		if scheme_specific_parsing_rule.hash_fragment_should_not_be_present(remaining_utf8_bytes)
+		{
+			return Err(HashFragmentNotAllowedForScheme)
+		}
+		
 		let mut string = StringSoFar::new_stack(remaining_utf8_bytes);
 		
 		loop

@@ -13,6 +13,10 @@ use path::NonEmptyPathParseError;
 use path::PathSegment;
 use path::PathSegments;
 use path::PathSegmentsParseError;
+use scheme_specific_parsing_rules::EmptyHostNameRule;
+use scheme_specific_parsing_rules::HierarchyVariantRule;
+use scheme_specific_parsing_rules::PortParsingRule;
+use scheme_specific_parsing_rules::SchemeSpecificParsingRule;
 use std::borrow::Borrow;
 use std::borrow::Cow;
 use std::cmp::min;
@@ -101,7 +105,12 @@ pub mod internet_protocol_version_4_address;
 pub mod path;
 
 
+mod scheme_specific_parsing_rules;
+
+
 include!("Authority.rs");
+include!("AuthorityAndAbsolutePath.rs");
+include!("AuthorityAndAbsolutePathParseError.rs");
 include!("AuthorityParseError.rs");
 include!("AbsoluteInternationalizedResourceIdentifierComponentsParseError.rs");
 include!("AbsoluteInternationalizedResourceIdentifierParseError.rs");

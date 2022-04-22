@@ -3,7 +3,9 @@
 
 
 use std::collections::HashMap;
+use std::num::{IntErrorKind, NonZeroU16};
 use std::ops::Deref;
+use swiss_army_knife::non_zero::new_non_zero_u16;
 use n_triples::internationalized_resource_identifier::path::PathSegment;
 use n_triples::internationalized_resource_identifier::Authority;
 use n_triples::internationalized_resource_identifier::Hierarchy;
@@ -35,15 +37,7 @@ fn process_n_triples(m49_code: StaticM49Code, n_triples_file_bytes: &'static [u8
 {
 	type Url = Predicate<'static>;
 	
-	const StatsClassFaoUniroma2It: HostName = unsafe { HostName::from_unchecked("stats-class.fao.uniroma2.it") };
-	
-	
-	#[inline(always)]
-	const fn path_segment<P>(path_segment: P) -> PathSegment<'static>
-	where PathSegment<'static>: ~const FromUnchecked<P>,
-	{
-		unsafe { PathSegment::from_unchecked(path_segment) }
-	}
+	const StatsClassFaoUniroma2It: HostName = host_name("stats-class.fao.uniroma2.it");
 	
 	const geo: PathSegment = path_segment("geo");
 	const m49: PathSegment = path_segment("m49");
@@ -58,32 +52,32 @@ fn process_n_triples(m49_code: StaticM49Code, n_triples_file_bytes: &'static [u8
 	const Geo: Url = Predicate::http(StatsClassFaoUniroma2It, [geo]);
 	
 	// `http://stats-class.fao.uniroma2.it/geo/m49`.
-	const Geom49: Url = Geo.with_path_segment_const::<_, true>(m49);
+	const Geom49: Url = Geo.append(m49);
 	
 	// `http://stats-class.fao.uniroma2.it/ontologies/geopolitical`.
 	const FaoOntologiesGeopolitical: Url = Predicate::http(StatsClassFaoUniroma2It, ["ontologies", "geopolitical"]);
 	
 	// `http://stats-class.fao.uniroma2.it/geo/M49`.
-	const SchemeGeoM49: Url = Geo.with_path_segment_const::<_, true>(M49);
+	const SchemeGeoM49: Url = Geo.append(M49);
 	
 	// `http://stats-class.fao.uniroma2.it/geo/M49/SDG-groups`.
-	const SchemeGeoM49SocialDevelopmentGoalsGroups: Url = SchemeGeoM49.with_path_segment_const::<_, true>(SDG_groups);
+	const SchemeGeoM49SocialDevelopmentGoalsGroups: Url = SchemeGeoM49.append(SDG_groups);
 	
 	// `http://stats-class.fao.uniroma2.it/geo/M49/FAO`.
 	// This is not a scheme but the parent of several versioned schemes.
-	const GeoM49Fao: Url = SchemeGeoM49.with_path_segment_const::<_, true>(FAO);
+	const GeoM49Fao: Url = SchemeGeoM49.append(FAO);
 	
 	// `http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-07`.
-	const SchemeGeoM49Fao201907: Url = GeoM49Fao.with_path_segment_const::<_, true>(_2019_07);
+	const SchemeGeoM49Fao201907: Url = GeoM49Fao.append(_2019_07);
 	
 	// `http://stats-class.fao.uniroma2.it/geo/M49/FAO/2019-12`.
-	const SchemeGeoM49Fao201912: Url = GeoM49Fao.with_path_segment_const::<_, true>(_2019_12);
+	const SchemeGeoM49Fao201912: Url = GeoM49Fao.append(_2019_12);
 	
 	// `http://stats-class.fao.uniroma2.it/geo/M49/FAO/current`.
-	const SchemeGeoM49FaoCurrent: Url = GeoM49Fao.with_path_segment_const::<_, true>(current);
+	const SchemeGeoM49FaoCurrent: Url = GeoM49Fao.append(current);
 	
 	// `http://stats-class.fao.uniroma2.it/geo/m49/<m49_code>`.
-	let subject = Subject::AbsoluteInternationalizedResourceIdentifier(Geom49.with_path_segment_const::<_, true>(static_m49_code_to_static_str(m49_code)));
+	let subject = Subject::AbsoluteInternationalizedResourceIdentifier(Geom49.append(m49_code));
 	
 	let n_triples = NTriples::parse(n_triples_file_bytes)?;
 	let predicates = n_triples.predicates(&subject).ok_or(ProcessNTriplesError::MissingPredicatesForSubject)?;
@@ -338,10 +332,31 @@ fn process_n_triples(m49_code: StaticM49Code, n_triples_file_bytes: &'static [u8
 		eprintln!("AltLabel {} => {:?}", language, v);
 	}
 	
+	#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+	struct Year(NonZeroU16);
+	
+	impl TryFrom<Integer> for Year
+	{
+		type Error = Infallible;
+		
+		#[inline(always)]
+		fn try_from(value: Integer) -> Result<Self, Self::Error>
+		{
+			if value < 1900 || value > 9999
+			{
+				panic!("Year out of range")
+			}
+			else
+			{
+				Ok(Self(new_non_zero_u16(value as u16)))
+			}
+		}
+	}
+	
 	// Usually 1900.
 	// Seem to exist only for countries.
 	const ValidSince: Url = FaoOntologiesGeopolitical.with_hash_fragment_const("validSince");
-	let valid_since = predicates.get_optional_xml_schema_integer(ValidSince)?;
+	let valid_since = predicates.get_optional_xml_schema_integer_as_domain_type::<Year>(ValidSince)?;
 	eprintln!("Valid Since {:?}", valid_since);
 	
 	// Usually 9999.

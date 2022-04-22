@@ -9,72 +9,72 @@ pub trait Predicates<'a: 'string_literals_map, 'string_literals_map, 'predicate>
 	#[inline(always)]
 	fn get_only_one_xml_schema_string(&'string_literals_map self, predicate: Predicate<'predicate>) -> Result<&'string_literals_map str, GetXmlSchemaValueError<'predicate, OnlyOneXmlSchemaValueError<Infallible>>>
 	{
-		self.get_only_one_xml_schema_value(predicate, XmlSchemaValueParser::String)
+		self.get_only_one_xml_schema_value::<&'string_literals_map str>(predicate)
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
 	fn get_only_one_xml_schema_boolean(&'string_literals_map self, predicate: Predicate<'predicate>) -> Result<bool, GetXmlSchemaValueError<'predicate, OnlyOneXmlSchemaValueError<ParseBoolError>>>
 	{
-		self.get_only_one_xml_schema_value(predicate, XmlSchemaValueParser::Boolean)
+		self.get_only_one_xml_schema_value::<bool>(predicate)
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
-	fn get_only_one_xml_schema_integer(&'string_literals_map self, predicate: Predicate<'predicate>) -> Result<i64, GetXmlSchemaValueError<'predicate, OnlyOneXmlSchemaValueError<ParseIntError>>>
+	fn get_only_one_xml_schema_integer(&'string_literals_map self, predicate: Predicate<'predicate>) -> Result<Integer, GetXmlSchemaValueError<'predicate, OnlyOneXmlSchemaValueError<ParseIntError>>>
 	{
-		self.get_only_one_xml_schema_value(predicate, XmlSchemaValueParser::Integer)
+		self.get_only_one_xml_schema_value::<Integer>(predicate)
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
 	fn get_only_one_xml_schema_date_time(&'string_literals_map self, predicate: Predicate<'predicate>) -> Result<DateTime<FixedOffset>, GetXmlSchemaValueError<'predicate, OnlyOneXmlSchemaValueError<ParseDateTimeError>>>
 	{
-		self.get_only_one_xml_schema_value(predicate, XmlSchemaValueParser::DateTime)
+		self.get_only_one_xml_schema_value::<DateTime<FixedOffset>>(predicate)
 	}
 	
 	#[doc(hidden)]
 	#[inline(always)]
-	fn get_only_one_xml_schema_value<SP: StrParser<'string_literals_map>>(&'string_literals_map self, predicate: Predicate<'predicate>, parser: XmlSchemaValueParser<'string_literals_map, SP, PathDepth>) -> Result<SP::Item, GetXmlSchemaValueError<'predicate, OnlyOneXmlSchemaValueError<SP::Error>>>
-	where <SP as StrParser<'string_literals_map>>::Error: 'static
+	fn get_only_one_xml_schema_value<SP: StrParser<'string_literals_map, PathDepth>>(&'string_literals_map self, predicate: Predicate<'predicate>) -> Result<SP::Item, GetXmlSchemaValueError<'predicate, OnlyOneXmlSchemaValueError<SP::Error>>>
+	where <SP as StrParser<'string_literals_map, PathDepth>>::Error: 'static
 	{
-		self.get_string_literals_by_absolute_internationalized_resource_identifier(&predicate).only_one_xml_schema_value(parser).map_err(|error| GetXmlSchemaValueError::new(predicate, error))
+		self.get_string_literals_by_absolute_internationalized_resource_identifier(&predicate).only_one_xml_schema_value::<SP>().map_err(|error| GetXmlSchemaValueError::new(predicate, error))
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
 	fn get_optional_xml_schema_string(&'string_literals_map self, predicate: Predicate<'predicate>) -> Result<Option<&'string_literals_map str>, GetXmlSchemaValueError<'predicate, OptionalXmlSchemaValueError<Infallible>>>
 	{
-		self.get_optional_xml_schema_value(predicate, XmlSchemaValueParser::String)
+		self.get_optional_xml_schema_value::<&'string_literals_map str>(predicate)
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
 	fn get_optional_xml_schema_boolean(&'string_literals_map self, predicate: Predicate<'predicate>) -> Result<Option<bool>, GetXmlSchemaValueError<'predicate, OptionalXmlSchemaValueError<ParseBoolError>>>
 	{
-		self.get_optional_xml_schema_value(predicate, XmlSchemaValueParser::Boolean)
+		self.get_optional_xml_schema_value::<bool>(predicate)
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
-	fn get_optional_xml_schema_integer(&'string_literals_map self, predicate: Predicate<'predicate>) -> Result<Option<i64>, GetXmlSchemaValueError<'predicate, OptionalXmlSchemaValueError<ParseIntError>>>
+	fn get_optional_xml_schema_integer(&'string_literals_map self, predicate: Predicate<'predicate>) -> Result<Option<Integer>, GetXmlSchemaValueError<'predicate, OptionalXmlSchemaValueError<ParseIntError>>>
 	{
-		self.get_optional_xml_schema_value(predicate, XmlSchemaValueParser::Integer)
+		self.get_optional_xml_schema_value::<Integer>(predicate)
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
 	fn get_optional_xml_schema_date_time(&'string_literals_map self, predicate: Predicate<'predicate>) -> Result<Option<DateTime<FixedOffset>>, GetXmlSchemaValueError<'predicate, OptionalXmlSchemaValueError<ParseDateTimeError>>>
 	{
-		self.get_optional_xml_schema_value(predicate, XmlSchemaValueParser::DateTime)
+		self.get_optional_xml_schema_value::<DateTime<FixedOffset>>(predicate)
 	}
 	
 	#[doc(hidden)]
 	#[inline(always)]
-	fn get_optional_xml_schema_value<SP: StrParser<'string_literals_map>>(&'string_literals_map self, predicate: Predicate<'predicate>, parser: XmlSchemaValueParser<'string_literals_map, SP, PathDepth>) -> Result<Option<SP::Item>, GetXmlSchemaValueError<'predicate, OptionalXmlSchemaValueError<SP::Error>>>
-	where <SP as StrParser<'string_literals_map>>::Error: 'static
+	fn get_optional_xml_schema_value<SP: StrParser<'string_literals_map, PathDepth>>(&'string_literals_map self, predicate: Predicate<'predicate>) -> Result<Option<SP::Item>, GetXmlSchemaValueError<'predicate, OptionalXmlSchemaValueError<SP::Error>>>
+	where <SP as StrParser<'string_literals_map, PathDepth>>::Error: 'static
 	{
-		self.get_string_literals_by_absolute_internationalized_resource_identifier(&predicate).optional_xml_schema_value(parser).map_err(|error| GetXmlSchemaValueError::new(predicate, error))
+		self.get_string_literals_by_absolute_internationalized_resource_identifier(&predicate).optional_xml_schema_value::<SP>().map_err(|error| GetXmlSchemaValueError::new(predicate, error))
 	}
 	
 	#[allow(missing_docs)]

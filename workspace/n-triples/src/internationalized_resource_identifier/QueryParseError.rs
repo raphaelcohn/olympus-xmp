@@ -13,7 +13,10 @@ pub enum QueryParseError
 	OutOfMemory(TryReserveError),
 	
 	#[allow(missing_docs)]
-	OutOfMemoryOrInvalidUtf8PercentDecodeParse(OutOfMemoryOrInvalidUtf8PercentDecodeParseError),
+	InvalidUtf8PercentDecodeParse(InvalidUtf8ParseError<PercentDecodeError>),
+
+	#[allow(missing_docs)]
+	QueryNotAllowedForScheme,
 }
 
 impl const From<TryReserveError> for QueryParseError
@@ -25,12 +28,13 @@ impl const From<TryReserveError> for QueryParseError
 	}
 }
 
-impl const From<OutOfMemoryOrInvalidUtf8PercentDecodeParseError> for QueryParseError
+impl From<OutOfMemoryOrInvalidUtf8PercentDecodeParseError> for QueryParseError
 {
 	#[inline(always)]
 	fn from(cause: OutOfMemoryOrInvalidUtf8PercentDecodeParseError) -> Self
 	{
-		QueryParseError::OutOfMemoryOrInvalidUtf8PercentDecodeParse(cause)
+		use QueryParseError::*;
+		cause.into_either(OutOfMemory, InvalidUtf8PercentDecodeParse)
 	}
 }
 
@@ -54,7 +58,7 @@ impl error::Error for QueryParseError
 		{
 			OutOfMemory(cause) => Some(cause),
 			
-			OutOfMemoryOrInvalidUtf8PercentDecodeParse(cause) => Some(cause),
+			InvalidUtf8PercentDecodeParse(cause) => Some(cause),
 			
 			_ => None,
 		}

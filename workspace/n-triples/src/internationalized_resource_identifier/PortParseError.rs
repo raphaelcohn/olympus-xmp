@@ -20,6 +20,9 @@ pub enum PortParseError
 	
 	/// The logic limiting the number to 5 bytes (u16) is deeply embedded in the parser and should not be changed.
 	IsGreaterThan65535(NonZeroU32),
+	
+	#[allow(missing_docs)]
+	APortIsNotPermittedForThisScheme,
 }
 
 impl Display for PortParseError

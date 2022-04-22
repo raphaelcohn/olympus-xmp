@@ -13,6 +13,15 @@ pub struct NonEmptyPath<'a, const PathDepth: usize>
 	pub remaining_path_segments: PathSegments<'a, PathDepth>,
 }
 
+impl<'a, const PathDepth: usize> const From<NonEmptyPathSegment<'a>> for NonEmptyPath<'a, PathDepth>
+{
+	#[inline(always)]
+	fn from(first_non_empty_path_segment: NonEmptyPathSegment<'a>) -> Self
+	{
+		Self::new_minimal(first_non_empty_path_segment)
+	}
+}
+
 impl<'a, const PathDepth: usize> Display for NonEmptyPath<'a, PathDepth>
 {
 	#[inline(always)]
@@ -98,7 +107,7 @@ impl<'a, const PathDepth: usize> NonEmptyPath<'a, PathDepth>
 	
 	/// Removes `other`.
 	#[inline(always)]
-	pub fn remove(&self, prefix: &NonEmptyPath<PathDepth>) -> Option<&[PathSegment<'a>]>
+	pub fn remove<'prefix>(&self, prefix: &NonEmptyPath<'prefix, PathDepth>) -> Option<&[PathSegment<'a>]>
 	{
 		if self.first_non_empty_path_segment != prefix.first_non_empty_path_segment
 		{

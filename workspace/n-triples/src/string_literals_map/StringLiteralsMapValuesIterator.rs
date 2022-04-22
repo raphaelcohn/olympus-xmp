@@ -4,9 +4,9 @@
 
 /// An iterator.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
-pub struct StringLiteralsMapValuesIterator<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map>>(&'string_literals_map [Cow<'a, str>], PhantomData<SP>);
+pub struct StringLiteralsMapValuesIterator<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map, PathDepth>, const PathDepth: usize>(&'string_literals_map [Cow<'a, str>], PhantomData<SP>);
 
-impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map>> Iterator for StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP>
+impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map, PathDepth>, const PathDepth: usize> Iterator for StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP, PathDepth>
 {
 	type Item = Result<SP::Item, SP::Error>;
 	
@@ -34,7 +34,7 @@ impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_liter
 	}
 }
 
-impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map>> DoubleEndedIterator for StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP>
+impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map, PathDepth>, const PathDepth: usize> DoubleEndedIterator for StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP, PathDepth>
 {
 	#[inline(always)]
 	fn next_back(&mut self) -> Option<Self::Item>
@@ -53,7 +53,7 @@ impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_liter
 	}
 }
 
-impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map>> ExactSizeIterator for StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP>
+impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map, PathDepth>, const PathDepth: usize> ExactSizeIterator for StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP, PathDepth>
 {
 	#[inline(always)]
 	fn len(&self) -> usize
@@ -62,15 +62,15 @@ impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_liter
 	}
 }
 
-unsafe impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map>> const TrustedLen for StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP>
+unsafe impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map, PathDepth>, const PathDepth: usize> const TrustedLen for StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP, PathDepth>
 {
 }
 
-impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map>> const FusedIterator for StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP>
+impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map, PathDepth>, const PathDepth: usize> const FusedIterator for StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP, PathDepth>
 {
 }
 
-impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map>> const Default for StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP>
+impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map, PathDepth>, const PathDepth: usize> const Default for StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP, PathDepth>
 {
 	#[inline(always)]
 	fn default() -> Self
@@ -79,7 +79,7 @@ impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_liter
 	}
 }
 
-impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map>> StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP>
+impl<'a: 'string_literals_map, 'string_literals_map, SP: StrParser<'string_literals_map, PathDepth>, const PathDepth: usize> StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP, PathDepth>
 {
 	#[inline(always)]
 	const fn new(slice: &'string_literals_map [Cow<'a, str>]) -> Self

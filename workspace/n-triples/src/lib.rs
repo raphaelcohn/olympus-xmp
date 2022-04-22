@@ -76,6 +76,7 @@ use std::fmt::Display;
 use std::fmt::Formatter;
 use std::mem::transmute;
 use std::ops::Deref;
+use std::str::from_utf8_unchecked;
 use string_literals_map::StringLiteralsMap;
 use try_to_own::TryToOwn;
 use try_to_own::TryToOwnInPlace;

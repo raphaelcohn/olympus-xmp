@@ -4,7 +4,7 @@
 
 /// A parse error.
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub enum OutOfMemoryOrInvalidUtf8PercentDecodeParseError
+pub(crate) enum OutOfMemoryOrInvalidUtf8PercentDecodeParseError
 {
 	#[allow(missing_docs)]
 	OutOfMemory(TryReserveError),
@@ -52,6 +52,21 @@ impl error::Error for OutOfMemoryOrInvalidUtf8PercentDecodeParseError
 			OutOfMemory(cause) => Some(cause),
 			
 			InvalidPercentEncodedUtf8Parse(cause) => Some(cause),
+		}
+	}
+}
+
+impl OutOfMemoryOrInvalidUtf8PercentDecodeParseError
+{
+	#[inline(always)]
+	pub(crate) fn into_either<E: error::Error>(self, out_of_memory: impl FnOnce(TryReserveError) -> E, invalid_percent_encoded_utf8_parse: impl FnOnce(InvalidUtf8ParseError<PercentDecodeError>) -> E) -> E
+	{
+		use OutOfMemoryOrInvalidUtf8PercentDecodeParseError::*;
+		match self
+		{
+			OutOfMemory(error) => out_of_memory(error),
+			
+			InvalidPercentEncodedUtf8Parse(error) => invalid_percent_encoded_utf8_parse(error),
 		}
 	}
 }

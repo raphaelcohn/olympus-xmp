@@ -34,10 +34,46 @@ impl<'a> Display for Host<'a>
 	}
 }
 
+impl<'a> const FromUnchecked<Cow<'a, str>> for Host<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(host_name: Cow<'a, str>) -> Self
+	{
+		Self::from(HostName::from_unchecked(host_name))
+	}
+}
+
 impl<'a> const FromUnchecked<&'a str> for Host<'a>
 {
 	#[inline(always)]
 	unsafe fn from_unchecked(host_name: &'a str) -> Self
+	{
+		Self::from(HostName::from_unchecked(host_name))
+	}
+}
+
+impl<'a> const FromUnchecked<String> for Host<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(host_name: String) -> Self
+	{
+		Self::from(HostName::from_unchecked(host_name))
+	}
+}
+
+impl<'a> const FromUnchecked<&'a [u8]> for Host<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(host_name: &'a [u8]) -> Self
+	{
+		Self::from(HostName::from_unchecked(host_name))
+	}
+}
+
+impl<'a, const Count: usize> const FromUnchecked<&'a [u8; Count]> for Host<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(host_name: &'a [u8; Count]) -> Self
 	{
 		Self::from(HostName::from_unchecked(host_name))
 	}
@@ -111,13 +147,29 @@ impl<'a> Host<'a>
 	/// `dec-octet      = DIGIT  / %x31-39 DIGIT / "1" 2DIGIT / "2" %x30-34 DIGIT / "25" %x30-35` (ie `0-9 | 10-99 | 100-199 | 200-249 | 250-255`).
 	/// `iunreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~" / ucschar`.
 	#[inline(always)]
-	fn parse(has_authority_and_absolute_path_with_dns_host_name: bool, ihost_and_port_bytes: &'a [u8]) -> Result<(Self, &'a [u8]), HostParseError>
+	fn parse(scheme_specific_parsing_rule: &SchemeSpecificParsingRule, ihost_and_port_bytes: &'a [u8]) -> Result<(Self, &'a [u8]), HostParseError>
 	{
+		use HostParseError::*;
+		
 		let length = ihost_and_port_bytes.len();
 		
 		if length == 0
 		{
-			return Ok((Host::Name(HostName::Empty), b""))
+			#[inline(always)]
+			const fn empty(host_name: HostName<'static>) -> Result<(Host<'static>, &'static [u8]), HostParseError>
+			{
+				Ok((Host::Name(host_name), b""))
+			}
+			
+			use EmptyHostNameRule::*;
+			return match scheme_specific_parsing_rule.empty_host_name_rule
+			{
+				ConvertsToLocalhost => empty(HostName::localhost),
+				
+				Unknown => empty(HostName::Empty),
+				
+				Denied => Err(AnEmptyHostNameIsNotPermittedForThisScheme),
+			}
 		}
 		
 		if ihost_and_port_bytes.get_unchecked_value_safe(0) == OpenSquareBracket
@@ -126,14 +178,12 @@ impl<'a> Host<'a>
 		}
 		
 		// Either a name or an IPv4 address.
-		if has_authority_and_absolute_path_with_dns_host_name
+		if scheme_specific_parsing_rule.authority_host_name_must_be_suitable_for_domain_name_system()
 		{
 			return match ihost_and_port_bytes.get_unchecked_value_safe(0)
 			{
 				_0 ..= _9 =>
 				{
-					use HostParseError::StartsWithADigitButIsNotAnInternetProtocolVersion4Address;
-					
 					if InternetProtocolVersion4AddressParser::could_be_an_internet_protocol_version_4_address(length)
 					{
 						let (possible_octet0_byte1, is_period) = InternetProtocolVersion4AddressParser::get_byte_and_check_if_it_is_period_index_1(ihost_and_port_bytes);

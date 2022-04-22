@@ -83,45 +83,56 @@ impl<'a: 'string_literals_map, 'string_literals_map, const PathDepth: usize> Str
 {
 	#[allow(missing_docs)]
 	#[inline(always)]
-	pub fn optional_xml_schema_value_as_domain_type<SP: StrParser<'string_literals_map>, DomainType: TryFrom<SP::Item, Error=TryFromError>, TryFromError: 'static + error::Error>(&'string_literals_map self, parser: XmlSchemaValueParser<'string_literals_map, SP, PathDepth>) -> Result<Option<DomainType>, OptionalXmlSchemaValueError<StringLiteralToDomainTypeParseError<SP::Error, TryFromError>>>
-	where <SP as StrParser<'string_literals_map>>::Error: 'static,
+	pub fn optional_xml_schema_value_as_domain_type<SP: StrParser<'string_literals_map, PathDepth>, DomainType: TryFrom<SP::Item, Error=TryFromError>, TryFromError: 'static + error::Error>(&'string_literals_map self) -> Result<Option<DomainType>, OptionalXmlSchemaValueError<StringLiteralToDomainTypeParseError<SP::Error, TryFromError>>>
+	where <SP as StrParser<'string_literals_map, PathDepth>>::Error: 'static,
 	{
-		self.xml_schema_values_as_domain_type(parser).zero_or_one()
+		self.xml_schema_values_as_domain_type::<SP, DomainType, TryFromError>().zero_or_one()
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
-	pub fn only_one_xml_schema_value_as_domain_type<SP: StrParser<'string_literals_map>, DomainType: TryFrom<SP::Item, Error=TryFromError>, TryFromError: 'static + error::Error>(&'string_literals_map self, parser: XmlSchemaValueParser<'string_literals_map, SP, PathDepth>) -> Result<DomainType, OnlyOneXmlSchemaValueError<StringLiteralToDomainTypeParseError<SP::Error, TryFromError>>>
-	where <SP as StrParser<'string_literals_map>>::Error: 'static,
+	pub fn only_one_xml_schema_value_as_domain_type<SP: StrParser<'string_literals_map, PathDepth>, DomainType: TryFrom<SP::Item, Error=TryFromError>, TryFromError: 'static + error::Error>(&'string_literals_map self) -> Result<DomainType, OnlyOneXmlSchemaValueError<StringLiteralToDomainTypeParseError<SP::Error, TryFromError>>>
+	where <SP as StrParser<'string_literals_map, PathDepth>>::Error: 'static,
 	{
-		self.xml_schema_values_as_domain_type(parser).only_one()
+		self.xml_schema_values_as_domain_type::<SP, DomainType, TryFromError>().only_one()
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
-	pub fn xml_schema_values_as_domain_type<SP: StrParser<'string_literals_map>, DomainType: TryFrom<SP::Item, Error=TryFromError>, TryFromError: error::Error>(&'string_literals_map self, parser: XmlSchemaValueParser<'string_literals_map, SP, PathDepth>) -> StringLiteralsMapValuesIterator<'a, 'string_literals_map, TryFromStrParser<'string_literals_map, SP, DomainType, TryFromError>>
+	pub fn xml_schema_values_as_domain_type<SP: StrParser<'string_literals_map, PathDepth>, DomainType: TryFrom<SP::Item, Error=TryFromError>, TryFromError: error::Error>(&'string_literals_map self) -> StringLiteralsMapValuesIterator<'a, 'string_literals_map, TryFromStrParser<'string_literals_map, SP, DomainType, TryFromError, PathDepth>, PathDepth>
 	{
-		parser.parse_domain_type(self)
+		self.parse::<TryFromStrParser::<SP, DomainType, TryFromError, PathDepth>>()
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
-	pub fn optional_xml_schema_value<SP: StrParser<'string_literals_map>>(&'string_literals_map self, parser: XmlSchemaValueParser<'string_literals_map, SP, PathDepth>) -> Result<Option<SP::Item>, OptionalXmlSchemaValueError<SP::Error>>
+	pub fn optional_xml_schema_value<SP: StrParser<'string_literals_map, PathDepth>>(&'string_literals_map self) -> Result<Option<SP::Item>, OptionalXmlSchemaValueError<SP::Error>>
 	{
-		self.xml_schema_values(parser).zero_or_one()
+		self.xml_schema_values::<SP>().zero_or_one()
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
-	pub fn only_one_xml_schema_value<SP: StrParser<'string_literals_map>>(&'string_literals_map self, parser: XmlSchemaValueParser<'string_literals_map, SP, PathDepth>) -> Result<SP::Item, OnlyOneXmlSchemaValueError<SP::Error>>
+	pub fn only_one_xml_schema_value<SP: StrParser<'string_literals_map, PathDepth>>(&'string_literals_map self) -> Result<SP::Item, OnlyOneXmlSchemaValueError<SP::Error>>
 	{
-		self.xml_schema_values(parser).only_one()
+		self.xml_schema_values::<SP>().only_one()
 	}
 	
 	#[allow(missing_docs)]
 	#[inline(always)]
-	pub fn xml_schema_values<SP: StrParser<'string_literals_map>>(&'string_literals_map self, parser: XmlSchemaValueParser<'string_literals_map, SP, PathDepth>) -> StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP>
+	pub fn xml_schema_values<SP: StrParser<'string_literals_map, PathDepth>>(&'string_literals_map self) -> StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP, PathDepth>
 	{
-		parser.parse_from_str_like(self)
+		self.parse::<SP>()
+	}
+	
+	#[inline(always)]
+	fn parse<SP2: StrParser<'string_literals_map, PathDepth>>(&'string_literals_map self) -> StringLiteralsMapValuesIterator<'a, 'string_literals_map, SP2, PathDepth>
+	{
+		match self.get(unsafe { transmute(&SP2::Key) })
+		{
+			None => StringLiteralsMapValuesIterator::Empty,
+			
+			Some(non_empty) => StringLiteralsMapValuesIterator::new(non_empty.as_slice()),
+		}
 	}
 }

@@ -12,6 +12,7 @@ use n_triples::predicate::GetXmlSchemaValueError;
 use n_triples::predicate::OptionalAbsoluteInternationalizedResourceIdentifierError;
 use n_triples::predicate::Predicate;
 use n_triples::predicate::Predicates;
+use n_triples::string_literals_map::Integer;
 use n_triples::string_literals_map::ParseDateTimeError;
 use n_triples::string_literals_map::OnlyOneXmlSchemaValueError;
 use n_triples::string_literals_map::OptionalXmlSchemaValueError;
@@ -24,5 +25,7 @@ use swiss_army_knife::get_unchecked::GetUnchecked;
 
 
 include!("generate_rust_code.rs");
+include!("host_name.rs");
 include!("NTriplesFiles.rs");
+include!("path_segment.rs");
 include!("ProcessNTriplesError.rs");

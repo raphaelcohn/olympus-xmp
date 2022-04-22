@@ -74,6 +74,51 @@ impl<'a> const Deref for NonEmptyPathSegment<'a>
 	}
 }
 
+impl<'a> const FromUnchecked<Cow<'a, str>> for NonEmptyPathSegment<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(value: Cow<'a, str>) -> Self
+	{
+		Self(value)
+	}
+}
+
+impl<'a> const FromUnchecked<&'a str> for NonEmptyPathSegment<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(value: &'a str) -> Self
+	{
+		Self(Cow::Borrowed(value))
+	}
+}
+
+impl<'a> const FromUnchecked<String> for NonEmptyPathSegment<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(value: String) -> Self
+	{
+		Self(Cow::Owned(value))
+	}
+}
+
+impl<'a> const FromUnchecked<&'a [u8]> for NonEmptyPathSegment<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(value: &'a [u8]) -> Self
+	{
+		Self::from_unchecked(from_utf8_unchecked(value))
+	}
+}
+
+impl<'a, const Count: usize> const FromUnchecked<&'a [u8; Count]> for NonEmptyPathSegment<'a>
+{
+	#[inline(always)]
+	unsafe fn from_unchecked(value: &'a [u8; Count]) -> Self
+	{
+		Self::from_unchecked(from_utf8_unchecked(value))
+	}
+}
+
 impl<'a> const FromUnchecked<PathSegment<'a>> for NonEmptyPathSegment<'a>
 {
 	#[inline(always)]
