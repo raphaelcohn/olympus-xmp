@@ -6,15 +6,6 @@
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct PathSegment<'a>(Cow<'a, str>);
 
-impl<'a> Display for PathSegment<'a>
-{
-	#[inline(always)]
-	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
-	{
-		write!(f, "{}", self.0.as_ref())
-	}
-}
-
 impl<'a> TryToOwnInPlace for PathSegment<'a>
 {
 	#[inline(always)]
@@ -125,6 +116,39 @@ impl<'a> const Deref for PathSegment<'a>
 	fn deref(&self) -> &Self::Target
 	{
 		self.0.deref()
+	}
+}
+
+impl<'a> Display for PathSegment<'a>
+{
+	#[inline(always)]
+	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
+	{
+		self.display_fmt(f)
+	}
+}
+
+impl<'a> PercentEncodable<'a> for PathSegment<'a>
+{
+	#[inline(always)]
+	fn as_str(&self) -> &'a str
+	{
+		self.0.as_ref()
+	}
+	
+	#[inline(always)]
+	fn percent_encode_ascii(ascii_byte: u8) -> bool
+	{
+		match ascii_byte
+		{
+			A ..= Z | a ..= z | _0 ..= _9 | Hyphen | Period | Underscore | Tilde => false,
+			
+			ExclamationMark | DollarSign | Ampersand | Apostrophe | OpenRoundBracket | CloseRoundBracket | Asterisk | PlusSign | Comma | Semicolon | EqualsSign => false,
+			
+			Colon | AtSign => false,
+			
+			_ => true,
+		}
 	}
 }
 

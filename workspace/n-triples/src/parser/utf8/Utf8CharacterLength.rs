@@ -44,6 +44,16 @@ impl const Into<usize> for Utf8CharacterLength
 	}
 }
 
+impl const Into<NonZeroUsize> for Utf8CharacterLength
+{
+	#[inline(always)]
+	fn into(self) -> NonZeroUsize
+	{
+		let into: usize = self.into();
+		new_non_zero_usize(into)
+	}
+}
+
 impl Utf8CharacterLength
 {
 	#[inline(always)]

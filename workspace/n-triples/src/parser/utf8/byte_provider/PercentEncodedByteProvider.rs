@@ -2,7 +2,7 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-struct PercentEncodedByteProvider;
+pub(super) struct PercentEncodedByteProvider;
 
 impl ByteProvider for PercentEncodedByteProvider
 {
@@ -17,13 +17,26 @@ impl ByteProvider for PercentEncodedByteProvider
 	const FourSliceLength: NonZeroUsize = Self::slice_length_non_zero_usize(Four);
 	
 	#[inline(always)]
-	fn two(bytes: &[u8]) -> Result<u32, Self::Error>
+	fn first(bytes: &[u8]) -> Result<u8, InvalidUtf8ParseError<Self::Error>>
 	{
-		Self::percent_then_byte::<{One}>(bytes)
+		use InvalidUtf8ParseError::*;
+		
+		if bytes.len() < Self::OneSliceLength.get()
+		{
+			return Err(DidNotExpectEndParsing(One))
+		}
+		
+		Self::byte::<{One}>(bytes).map_err(Inner)
 	}
 	
 	#[inline(always)]
-	fn three(bytes: &[u8]) -> Result<(u32, u32), Self::Error>
+	fn two(bytes: &[u8]) -> Result<u8, Self::Error>
+	{
+		Self::percent_then_byte::<{Two}>(bytes)
+	}
+	
+	#[inline(always)]
+	fn three(bytes: &[u8]) -> Result<(u8, u8), Self::Error>
 	{
 		Ok
 		(
@@ -35,7 +48,7 @@ impl ByteProvider for PercentEncodedByteProvider
 	}
 	
 	#[inline(always)]
-	fn four(bytes: &[u8]) -> Result<(u32, u32, u32), Self::Error>
+	fn four(bytes: &[u8]) -> Result<(u8, u8, u8), Self::Error>
 	{
 		Ok
 		(
@@ -52,19 +65,17 @@ impl PercentEncodedByteProvider
 {
 	/// Assumes that the initial `%` (percent sign) has already been removed from the `remaining_bytes` buffer.
 	#[inline(always)]
-	fn decode_next_percent_encoded_utf8(remaining_bytes: &mut &[u8]) -> Result<(char, Utf8CharacterLength), InvalidUtf8ParseError<PercentDecodeError>>
+	pub(super) fn decode_next_percent_encoded_utf8(remaining_percent_encoded_bytes: &mut &[u8]) -> Result<(char, Utf8CharacterLength), InvalidUtf8ParseError<PercentDecodeError>>
 	{
-		let bytes = *remaining_bytes;
-		if bytes.len() < Self::OneSliceLength.get()
-		{
-			return Err(InvalidUtf8ParseError::DidNotExpectEndParsingOneByteUtf8Character)
-		}
-		let first = Self::byte::<{One}>(bytes)?;
-		Ok(Self::decode_internal(first, remaining_bytes)?)
+		let bytes = *remaining_percent_encoded_bytes;
+		
+		let (character, utf8_character_length, remaining_bytes) = Self::decode_internal(bytes)?;
+		*remaining_percent_encoded_bytes = remaining_bytes;
+		Ok((character, utf8_character_length))
 	}
 	
 	#[inline(always)]
-	fn percent_then_byte<const decoded_byte_number: Utf8CharacterLength>(bytes: &[u8]) -> Result<u32, PercentDecodeError>
+	fn percent_then_byte<const decoded_byte_number: Utf8CharacterLength>(bytes: &[u8]) -> Result<u8, PercentDecodeError>
 	{
 		debug_assert!(bytes.len() >= Self::slice_length_non_zero_usize(decoded_byte_number).get());
 		
@@ -79,14 +90,14 @@ impl PercentEncodedByteProvider
 	}
 	
 	#[inline(always)]
-	fn byte<const decoded_byte_number: Utf8CharacterLength>(bytes: &[u8]) -> Result<u32, PercentDecodeError>
+	fn byte<const decoded_byte_number: Utf8CharacterLength>(bytes: &[u8]) -> Result<u8, PercentDecodeError>
 	{
 		debug_assert!(bytes.len() >= Self::slice_length_non_zero_usize(decoded_byte_number).get());
 		
 		let upper_nibble = Self::hex_digit::<decoded_byte_number, 0>(bytes)?;
 		let lower_nibble = Self::hex_digit::<decoded_byte_number, 1>(bytes)?;
 		let byte = upper_nibble | lower_nibble;
-		Ok(byte as u32)
+		Ok(byte)
 	}
 	
 	#[inline(always)]

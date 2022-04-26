@@ -2,29 +2,33 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use Utf8CharacterLength::*;
+pub use byte_provider::InvalidUtf8ParseError;
+pub use byte_provider::PercentDecodeError;
+use byte_provider::BytesByteProvider;
+use byte_provider::PercentEncodedByteProvider;
+use crate::x7F;
+use encode_utf8::EncodeUtf8;
+use encode_utf8::PercentEncodeUtf8;
+use encode_utf8::TryReserveEncodeUtf8;
+use encode_utf8::UnreservedEncodeUtf8;
+use utf8_sequence::Utf8SequenceEnum;
+use std::borrow::Cow;
 use std::collections::TryReserveError;
 use std::convert::Infallible;
-use std::error;
 use std::fmt::Debug;
-use std::num::NonZeroU8;
 use std::num::NonZeroUsize;
-use swiss_army_knife::a_to_z::_0;
-use swiss_army_knife::a_to_z::_9;
-use swiss_army_knife::a_to_z::A;
-use swiss_army_knife::a_to_z::F;
-use swiss_army_knife::a_to_z::a;
-use swiss_army_knife::a_to_z::f;
-use swiss_army_knife::a_to_z::Percent;
-use swiss_army_knife::get_unchecked::GetUnchecked;
-use swiss_army_knife::non_zero::new_non_zero_u8;
 use swiss_army_knife::non_zero::new_non_zero_usize;
-use super::InvalidUtf8ParseError;
-use super::PercentDecodeError;
 
 
-include!("ByteProvider.rs");
-include!("BytesByteProvider.rs");
+mod byte_provider;
+
+
+mod encode_utf8;
+
+
+mod utf8_sequence;
+
+
 include!("decode_next_percent_encoded_utf8.rs");
 include!("decode_next_utf8.rs");
 include!("decode_next_utf8_validity_already_checked.rs");
@@ -33,10 +37,10 @@ include!("encode_utf8_bytes_2.rs");
 include!("encode_utf8_bytes_3.rs");
 include!("encode_utf8_bytes_4.rs");
 include!("encode_utf8_not_reserving_space.rs");
+include!("encode_utf8_percent_encoded.rs");
 include!("encode_utf8_push_unchecked.rs");
 include!("encode_utf8_reserving_space.rs");
-include!("EncodeUtf8.rs");
-include!("PercentEncodedByteProvider.rs");
+include!("is_ascii_character.rs");
 include!("Shift6.rs");
 include!("Shift12.rs");
 include!("Shift18.rs");
@@ -44,7 +48,6 @@ include!("TAG_CONT.rs");
 include!("TAG_FOUR_B.rs");
 include!("TAG_THREE_B.rs");
 include!("TAG_TWO_B.rs");
-include!("UnreservedEncodeUtf8.rs");
 include!("Utf8CharacterLength.rs");
 include!("x0F.rs");
 include!("x1F.rs");

@@ -7,19 +7,10 @@
 pub enum InvalidUtf8ParseError<E: error::Error>
 {
 	#[allow(missing_docs)]
-	DidNotExpectEndParsingOneByteUtf8Character,
+	DidNotExpectEndParsing(Utf8CharacterLength),
 	
 	#[allow(missing_docs)]
-	DidNotExpectEndParsingTwoByteUtf8Character,
-	
-	#[allow(missing_docs)]
-	DidNotExpectEndParsingThreeByteUtf8Character,
-	
-	#[allow(missing_docs)]
-	DidNotExpectEndParsingFourByteUtf8Character,
-	
-	#[allow(missing_docs)]
-	InvalidStartToUtf8Sequence,
+	OverlyLongUtf8Sequence,
 	
 	#[allow(missing_docs)]
 	InvalidUtf8CodePoint(CharTryFromError),
@@ -43,6 +34,15 @@ impl From<PercentDecodeError> for InvalidUtf8ParseError<PercentDecodeError>
 	fn from(cause: PercentDecodeError) -> Self
 	{
 		InvalidUtf8ParseError::Inner(cause)
+	}
+}
+
+impl<E: error::Error> From<CharTryFromError> for InvalidUtf8ParseError<E>
+{
+	#[inline(always)]
+	fn from(cause: CharTryFromError) -> Self
+	{
+		InvalidUtf8ParseError::InvalidUtf8CodePoint(cause)
 	}
 }
 

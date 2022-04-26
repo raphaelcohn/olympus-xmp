@@ -209,14 +209,14 @@ impl<'a> Authority<'a>
 			Some(index) =>
 			{
 				let user_info_bytes = authority_bytes.before_index(index);
-				(Some(UserInformation::parse(user_info_bytes)?), authority_bytes.after_index(index))
+				(Some(UserInformation::parse(user_info_bytes, scheme_specific_parsing_rule)?), authority_bytes.after_index(index))
 			}
 		};
 		
 		let (host, port_bytes_including_colon) = Host::parse(scheme_specific_parsing_rule, ihost_and_port_bytes)?;
 		
 		use PortParsingRule::*;
-		let port = match scheme_specific_parsing_rule.port_rule
+		let port = match scheme_specific_parsing_rule.authority_rule.port_rule
 		{
 			Allowed { default_port} => Self::parse_port(port_bytes_including_colon, Some(default_port))?,
 			

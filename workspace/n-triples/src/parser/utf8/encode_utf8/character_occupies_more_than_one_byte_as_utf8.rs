@@ -3,7 +3,7 @@
 
 
 #[inline(always)]
-pub(crate) fn decode_next_utf8_validity_already_checked(remaining_utf8_bytes: &mut &[u8]) -> Option<(char, Utf8SequenceEnum)>
+const fn character_occupies_more_than_one_byte_as_utf8(character: char) -> bool
 {
-	BytesByteProvider::decode_next_utf8_validity_already_checked(remaining_utf8_bytes)
+	(character as u32) >= MAX_ONE_B
 }

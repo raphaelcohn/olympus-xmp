@@ -14,3 +14,15 @@ pub(super) enum PortParsingRule
 	
 	Unknown,
 }
+
+impl PortParsingRule
+{
+	#[inline(always)]
+	const fn allowed(default_port: u16) -> Self
+	{
+		PortParsingRule::Allowed
+		{
+			default_port: new_non_zero_u16(default_port)
+		}
+	}
+}

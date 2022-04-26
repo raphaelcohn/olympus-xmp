@@ -3,7 +3,7 @@
 
 
 #[inline(always)]
-pub(crate) fn decode_next_utf8_validity_already_checked(remaining_utf8_bytes: &mut &[u8]) -> Option<(char, Utf8SequenceEnum)>
+pub(crate) const fn is_ascii_character(character: char) -> bool
 {
-	BytesByteProvider::decode_next_utf8_validity_already_checked(remaining_utf8_bytes)
+	character <= x7F
 }

@@ -162,7 +162,7 @@ impl<'a> Host<'a>
 			}
 			
 			use EmptyHostNameRule::*;
-			return match scheme_specific_parsing_rule.empty_host_name_rule
+			return match scheme_specific_parsing_rule.authority_rule.empty_host_name_rule
 			{
 				ConvertsToLocalhost => empty(HostName::localhost),
 				

@@ -2,8 +2,4 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[inline(always)]
-pub(crate) fn decode_next_utf8_validity_already_checked(remaining_utf8_bytes: &mut &[u8]) -> Option<(char, Utf8SequenceEnum)>
-{
-	BytesByteProvider::decode_next_utf8_validity_already_checked(remaining_utf8_bytes)
-}
+const MAX_THREE_B: u32 = 0x10000;

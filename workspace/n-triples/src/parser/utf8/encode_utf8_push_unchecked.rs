@@ -5,5 +5,5 @@
 #[inline(always)]
 pub(super) fn encode_utf8_push_unchecked<const length: usize>(buffer: &mut Vec<u8>, offset: usize, encoded_utf8_bytes: [u8; length])
 {
-	UnreservedEncodeUtf8::push_unchecked::<length>(buffer, offset, encoded_utf8_bytes)
+	UnreservedEncodeUtf8::new(buffer, offset).push_unchecked::<length>(encoded_utf8_bytes)
 }

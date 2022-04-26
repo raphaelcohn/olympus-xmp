@@ -8,10 +8,22 @@
 pub enum Scheme<'a>
 {
 	#[allow(missing_docs)]
+	coap,
+	
+	#[allow(missing_docs)]
+	coaps,
+	
+	#[allow(missing_docs)]
+	dns,
+	
+	#[allow(missing_docs)]
 	file,
 	
 	#[allow(missing_docs)]
 	ftp,
+	
+	#[allow(missing_docs)]
+	git,
 	
 	#[allow(missing_docs)]
 	http,
@@ -20,11 +32,14 @@ pub enum Scheme<'a>
 	https,
 	
 	#[allow(missing_docs)]
+	mailto,
+	
+	#[allow(missing_docs)]
 	ws,
 
 	#[allow(missing_docs)]
 	wss,
-
+	
 	/// Will have been forced to be a lower case ASCII string.
 	Unknown(Cow<'a, [u8]>),
 }
@@ -70,13 +85,23 @@ impl<'a> const FromUnchecked<&'a [u8]> for Scheme<'a>
 		
 		match value
 		{
+			b"coap" => coap,
+			
+			b"coaps" => coaps,
+			
+			b"dns" => dns,
+			
 			b"file" => file,
 			
 			b"ftp" => ftp,
 			
+			b"git" => git,
+			
 			b"http" => http,
 			
 			b"https" => https,
+			
+			b"mailto" => mailto,
 			
 			b"ws" => ws,
 			
@@ -95,13 +120,23 @@ impl<'a> Display for Scheme<'a>
 		use Scheme::*;
 		match self
 		{
+			coap => write!(f, "coap"),
+			
+			coaps => write!(f, "coaps"),
+			
+			dns => write!(f, "dns"),
+			
 			file => write!(f, "file"),
 			
 			ftp => write!(f, "ftp"),
 			
+			git => write!(f, "git"),
+			
 			http => write!(f, "http"),
 			
 			https => write!(f, "https"),
+			
+			mailto => write!(f, "mailto"),
 			
 			ws => write!(f, "ws"),
 			
@@ -159,13 +194,23 @@ impl<'a> Scheme<'a>
 		
 		let (scheme, has_authority_and_absolute_path_with_dns_host_name) = match raw_scheme.as_ref()
 		{
+			b"coap" => (file, &SchemeSpecificParsingRule::coap),
+			
+			b"coaps" => (file, &SchemeSpecificParsingRule::coaps),
+			
+			b"dns" => (file, &SchemeSpecificParsingRule::dns),
+			
 			b"file" => (file, &SchemeSpecificParsingRule::file),
 			
 			b"ftp" => (file, &SchemeSpecificParsingRule::ftp),
 			
+			b"git" => (http, &SchemeSpecificParsingRule::git),
+			
 			b"http" => (http, &SchemeSpecificParsingRule::http),
 			
 			b"https" => (https, &SchemeSpecificParsingRule::https),
+			
+			b"mailto" => (https, &SchemeSpecificParsingRule::mailto),
 			
 			b"ws" => (ws, &SchemeSpecificParsingRule::ws),
 			

@@ -2,36 +2,43 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-trait EncodeUtf8
+pub(super) trait EncodeUtf8
 {
 	type R: Sized;
 	
-	fn push_unchecked<const length: usize>(buffer: &mut Vec<u8>, offset: usize, encoded_utf8_bytes: [u8; length]) -> Self::R;
+	fn push_unchecked<const length: usize>(self, encoded_utf8_bytes: [u8; length]) -> Self::R;
 	
 	#[inline(always)]
-	fn encode_utf8(buffer: &mut Vec<u8>, character: char, offset: usize) -> Self::R
+	fn encode_utf8(self, character: char) -> Self::R
 	{
-		const MAX_ONE_B: u32 = 0x80;
-		const MAX_TWO_B: u32 = 0x800;
-		const MAX_THREE_B: u32 = 0x10000;
-		
 		let code = character as u32;
 		
 		if code < MAX_ONE_B
 		{
-			Self::push_unchecked::<_>(buffer, offset, encode_utf8_bytes_1(code))
-		}
-		else if code < MAX_TWO_B
-		{
-			Self::push_unchecked::<_>(buffer, offset, encode_utf8_bytes_2(code))
-		}
-		else if code < MAX_THREE_B
-		{
-			Self::push_unchecked::<_>(buffer, offset, encode_utf8_bytes_3(code))
+			self.push_unchecked::<_>(encode_utf8_bytes_1(code))
 		}
 		else
 		{
-			Self::push_unchecked::<_>(buffer, offset, encode_utf8_bytes_4(code))
+			self.encode_utf8_of_two_or_more_bytes(code)
+		}
+	}
+	
+	#[inline(always)]
+	fn encode_utf8_of_two_or_more_bytes(self, code: u32) -> Self::R
+	{
+		debug_assert!(character_occupies_more_than_one_byte_as_utf8(code as char));
+		
+		if code < MAX_TWO_B
+		{
+			self.push_unchecked::<_>(encode_utf8_bytes_2(code))
+		}
+		else if code < MAX_THREE_B
+		{
+			self.push_unchecked::<_>(encode_utf8_bytes_3(code))
+		}
+		else
+		{
+			self.push_unchecked::<_>(encode_utf8_bytes_4(code))
 		}
 	}
 }

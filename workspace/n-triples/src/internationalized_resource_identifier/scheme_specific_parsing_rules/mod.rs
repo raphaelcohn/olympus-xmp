@@ -6,6 +6,7 @@ use std::num::NonZeroU16;
 use swiss_army_knife::non_zero::new_non_zero_u16;
 
 
+include!("AuthorityRule.rs");
 include!("EmptyHostNameRule.rs");
 include!("HierarchyVariantRule.rs");
 include!("PortParsingRule.rs");

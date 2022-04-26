@@ -48,6 +48,7 @@
 #![feature(maybe_uninit_array_assume_init)]
 #![feature(trusted_len)]
 #![feature(once_cell)]
+#![feature(arbitrary_enum_discriminant)]
 
 
 //! #n-triples.

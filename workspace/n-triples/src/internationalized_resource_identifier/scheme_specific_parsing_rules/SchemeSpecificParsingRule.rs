@@ -11,9 +11,7 @@ pub(super) struct SchemeSpecificParsingRule
 	
 	hash_fragment_allowed: bool,
 	
-	pub(super) empty_host_name_rule: EmptyHostNameRule,
-	
-	pub(super) port_rule: PortParsingRule,
+	pub(super) authority_rule: AuthorityRule,
 }
 
 impl SchemeSpecificParsingRule
@@ -22,54 +20,58 @@ impl SchemeSpecificParsingRule
 	
 	const HttpsDefaultPort: u16 = 443;
 	
-	pub(super) const file: Self = Self::may_have_authority(HierarchyVariantRule::AuthorityAndAbsolutePathOrAbsolutePathOnly, false, false, EmptyHostNameRule::ConvertsToLocalhost, PortParsingRule::Denied);
+	pub(super) const coap: Self = Self::web_socket_like(5683);
 	
-	pub(super) const ftp: Self = Self::authority_and_absolute_path_only(21, false, false);
+	pub(super) const coaps: Self = Self::web_socket_like(5684);
+	
+	pub(super) const dns: Self = Self::web_socket_like(53);
+	
+	pub(super) const git: Self = Self::web_socket_like(443);
+	
+	pub(super) const file: Self = Self::new(HierarchyVariantRule::AuthorityAndAbsolutePathOrAbsolutePathOnly, false, false, AuthorityRule::new(true, EmptyHostNameRule::ConvertsToLocalhost, PortParsingRule::Denied));
+	
+	pub(super) const ftp: Self = Self::new(HierarchyVariantRule::AuthorityAndAbsolutePathOnly, false, false, AuthorityRule::new(true, EmptyHostNameRule::Denied, PortParsingRule::allowed(21)));
 	
 	pub(super) const http: Self = Self::http_like(Self::HttpDefaultPort);
 	
 	pub(super) const https: Self = Self::http_like(Self::HttpsDefaultPort);
 	
+	// TODO: This variant can never have a host or a port, so the authority_rule is irrelevant.
+	pub(super) const mailto: Self = Self::new(HierarchyVariantRule::RootlessOnly, true, false, AuthorityRule::Denied);
+	
 	pub(super) const ws: Self = Self::web_socket_like(Self::HttpDefaultPort);
 	
 	pub(super) const wss: Self = Self::web_socket_like(Self::HttpsDefaultPort);
 	
-	pub(super) const Unknown: Self = Self::new(HierarchyVariantRule::Unknown, true, true, EmptyHostNameRule::Unknown, PortParsingRule::Unknown);
+	pub(super) const Unknown: Self = Self::new(HierarchyVariantRule::Unknown, true, true, AuthorityRule::new(true, EmptyHostNameRule::Unknown, PortParsingRule::Unknown));
 	
 	#[inline(always)]
 	const fn http_like(default_port: u16) -> Self
 	{
-		Self::authority_and_absolute_path_only(default_port, true, true)
+		Self::http_or_web_socket_like(default_port, true, true)
 	}
 	
 	#[inline(always)]
 	const fn web_socket_like(default_port: u16) -> Self
 	{
-		Self::authority_and_absolute_path_only(default_port, true, false)
+		Self::http_or_web_socket_like(default_port, false, false)
 	}
 	
 	#[inline(always)]
-	const fn authority_and_absolute_path_only(default_port: u16, query_allowed: bool, hash_fragment_allowed: bool) -> Self
+	const fn http_or_web_socket_like(default_port: u16, hash_fragment_allowed: bool, user_information_allowed: bool) -> Self
 	{
-		Self::may_have_authority(HierarchyVariantRule::AuthorityAndAbsolutePathOnly, query_allowed, hash_fragment_allowed, EmptyHostNameRule::Denied, PortParsingRule::Allowed { default_port: new_non_zero_u16(default_port) })
+		Self::new(HierarchyVariantRule::AuthorityAndAbsolutePathOnly, true, hash_fragment_allowed, AuthorityRule::new(user_information_allowed, EmptyHostNameRule::Denied, PortParsingRule::allowed(default_port)))
 	}
 	
 	#[inline(always)]
-	const fn may_have_authority(hierachy_variant_rule: HierarchyVariantRule, query_allowed: bool, hash_fragment_allowed: bool, empty_host_name_rule: EmptyHostNameRule, port_rule: PortParsingRule) -> Self
-	{
-		Self::new(hierachy_variant_rule, query_allowed, hash_fragment_allowed, empty_host_name_rule, port_rule)
-	}
-	
-	#[inline(always)]
-	const fn new(hierachy_variant_rule: HierarchyVariantRule, query_allowed: bool, hash_fragment_allowed: bool, empty_host_name_rule: EmptyHostNameRule, port_rule: PortParsingRule) -> Self
+	const fn new(hierachy_variant_rule: HierarchyVariantRule, query_allowed: bool, hash_fragment_allowed: bool, authority_rule: AuthorityRule) -> Self
 	{
 		Self
 		{
 			hierachy_variant_rule,
+			authority_rule,
 			query_allowed,
 			hash_fragment_allowed,
-			empty_host_name_rule,
-			port_rule
 		}
 	}
 	

@@ -6,12 +6,43 @@
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct HashFragment<'a>(Cow<'a, str>);
 
+impl<'a> PercentEncodable<'a> for HashFragment<'a>
+{
+	#[inline(always)]
+	fn as_str(&self) -> &'a str
+	{
+		self.0.as_ref()
+	}
+	
+	#[inline(always)]
+	fn percent_encode_ascii(ascii_byte: u8) -> bool
+	{
+		match ascii_byte
+		{
+			A ..= Z  | a ..= z | _0 ..= _9 | Hyphen | Period | Underscore | Tilde => false,
+			
+			ExclamationMark | DollarSign | Ampersand | Apostrophe | OpenRoundBracket | CloseRoundBracket | Asterisk | PlusSign | Comma | Semicolon | EqualsSign => false,
+			
+			Colon | AtSign => false,
+			
+			Slash | QuestionMark => false,
+			
+			_ => true,
+		}
+	}
+}
+
 impl<'a> Display for HashFragment<'a>
 {
 	#[inline(always)]
 	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result
 	{
-		write!(f, "{}", self.0.as_ref())
+		match self.percent_encoded_and_suitable_for_an_uniform_resource_identifier()
+		{
+			Ok(percent_encoded_string) => f.write_str(percent_encoded_string.as_ref()),
+			
+			Err(_) => Err(fmt::Error),
+		}
 	}
 }
 

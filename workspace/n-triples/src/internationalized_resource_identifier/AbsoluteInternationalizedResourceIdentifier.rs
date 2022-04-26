@@ -17,6 +17,20 @@
 /// 	* Support for this is very painful.
 ///
 /// Appendix E.1, User Information, is supported.
+///
+///
+/// # `ftp` scheme parsing.
+///
+/// Whilst only draft RFCs exist, these do not permit `;` except in the final path segment.
+/// This logic permits `;` in any path segment.
+///
+///
+/// # `mailto` scheme parsing.
+///
+/// The `mailto` RFC 6068, Section 2, Syntax of a 'mailto' URI, permits an empty rootless path (`mailtoURI = "mailto:" [ to ] [ hfields ];  to = addr-spec *("," addr-spec )`).
+/// This is not permitted as per RFC 3987, Section 2; this logic follows the latter for now.
+/// Furthermore, normalization of domain names in email addresses is not performed.
+///
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct AbsoluteInternationalizedResourceIdentifier<'a, const PathDepth: usize>
 {

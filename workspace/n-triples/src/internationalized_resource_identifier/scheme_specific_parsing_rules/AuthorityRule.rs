@@ -2,8 +2,28 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[inline(always)]
-pub(crate) fn decode_next_utf8_validity_already_checked(remaining_utf8_bytes: &mut &[u8]) -> Option<(char, Utf8SequenceEnum)>
+#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+struct AuthorityRule
 {
-	BytesByteProvider::decode_next_utf8_validity_already_checked(remaining_utf8_bytes)
+	user_information_allowed: bool,
+	
+	pub(super) empty_host_name_rule: EmptyHostNameRule,
+	
+	pub(super) port_rule: PortParsingRule,
+}
+
+impl AuthorityRule
+{
+	const Denied: Self = Self::new(false, EmptyHostNameRule::Denied, PortParsingRule::Denied);
+	
+	#[inline(always)]
+	const fn new(user_information_allowed: bool, empty_host_name_rule: EmptyHostNameRule, port_rule: PortParsingRule) -> Self
+	{
+		Self
+		{
+			user_information_allowed,
+			empty_host_name_rule,
+			port_rule
+		}
+	}
 }

@@ -7,6 +7,9 @@
 pub enum UserInformationParseError
 {
 	#[allow(missing_docs)]
+	SchemeDoesNotSupportUserInformation,
+	
+	#[allow(missing_docs)]
 	InvalidCharacterInUserInformation(char),
 	
 	#[allow(missing_docs)]

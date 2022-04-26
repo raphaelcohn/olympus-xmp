@@ -4,7 +4,7 @@
 
 /// Optimized implementation that avoids making an allocation check and forcing callers to test for being out of memory when they know there is enough.
 #[inline(always)]
-pub(super) unsafe fn encode_utf8_not_reserving_space(buffer_with_capacity_but_length_zero: &mut Vec<u8>, character: char, offset: usize)
+pub(super) unsafe fn encode_utf8_not_reserving_space(buffer_with_capacity_but_length_zero: &mut Vec<u8>, offset: usize, character: char)
 {
-	UnreservedEncodeUtf8::encode_utf8(buffer_with_capacity_but_length_zero, character, offset)
+	UnreservedEncodeUtf8::new(buffer_with_capacity_but_length_zero, offset).encode_utf8(character)
 }

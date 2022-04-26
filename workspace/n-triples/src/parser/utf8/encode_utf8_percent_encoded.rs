@@ -3,7 +3,7 @@
 
 
 #[inline(always)]
-pub(crate) fn decode_next_utf8_validity_already_checked(remaining_utf8_bytes: &mut &[u8]) -> Option<(char, Utf8SequenceEnum)>
+pub(crate) fn encode_utf8_percent_encoded(string: &str, percent_encode_ascii: impl Copy + FnOnce(u8) -> bool) -> Result<Cow<str>, TryReserveError>
 {
-	BytesByteProvider::decode_next_utf8_validity_already_checked(remaining_utf8_bytes)
+	PercentEncodeUtf8::encode(string, percent_encode_ascii)
 }

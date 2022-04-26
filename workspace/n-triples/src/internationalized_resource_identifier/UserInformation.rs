@@ -41,11 +41,16 @@ impl<'a> UserInformation<'a>
 	/// `iuserinfo      = *( iunreserved / pct-encoded / sub-delims / ":" )`
 	/// `iunreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~" / ucschar`.
 	#[inline(always)]
-	fn parse(mut user_info_bytes: &'a [u8]) -> Result<Self, UserInformationParseError>
+	fn parse(mut user_info_bytes: &'a [u8], scheme_specific_parsing_rule: &SchemeSpecificParsingRule) -> Result<Self, UserInformationParseError>
 	{
 		use UserInformationParseError::*;
 		
 		let remaining_utf8_bytes = &mut user_info_bytes;
+		if scheme_specific_parsing_rule.user_information_should_not_be_present(remaining_utf8_bytes)
+		{
+			return Err(SchemeDoesNotSupportUserInformation)
+		}
+		
 		let mut string = StringSoFar::new_stack(remaining_utf8_bytes);
 		loop
 		{

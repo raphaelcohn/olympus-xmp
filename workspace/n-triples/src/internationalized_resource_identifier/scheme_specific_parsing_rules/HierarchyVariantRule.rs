@@ -9,6 +9,8 @@ pub(super) enum HierarchyVariantRule
 	
 	AuthorityAndAbsolutePathOrAbsolutePathOnly,
 	
+	RootlessOnly,
+	
 	Unknown,
 }
 

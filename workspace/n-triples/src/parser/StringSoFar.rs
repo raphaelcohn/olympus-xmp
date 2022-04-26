@@ -28,7 +28,7 @@ impl<'a> StringSoFar<'a>
 	#[inline(always)]
 	pub(super) fn decode_next_utf8_validity_already_checked(remaining_utf8_bytes: &mut &[u8]) -> Option<char>
 	{
-		decode_next_utf8_validity_already_checked(remaining_utf8_bytes).map(|(character, _utf8_character_length)| character)
+		decode_next_utf8_validity_already_checked(remaining_utf8_bytes).map(|(character, _utf8_sequence)| character)
 	}
 	
 	#[inline(always)]
@@ -106,7 +106,7 @@ impl<'a> StringSoFar<'a>
 	#[inline(always)]
 	pub(super) fn push_forcing_heap_ascii_to_lower_case(&mut self, character: char) -> Result<(), TryReserveError>
 	{
-		debug_assert!(Self::is_ascii(character));
+		debug_assert!(is_ascii_character(character));
 		
 		self.push_forcing_heap_ascii(character.to_ascii_lowercase())
 	}
@@ -114,7 +114,7 @@ impl<'a> StringSoFar<'a>
 	#[inline(always)]
 	pub(super) fn push_forcing_heap_ascii(&mut self, character: char) -> Result<(), TryReserveError>
 	{
-		debug_assert!(Self::is_ascii(character));
+		debug_assert!(is_ascii_character(character));
 		
 		use StringSoFar::*;
 		match self
@@ -198,7 +198,7 @@ impl<'a> StringSoFar<'a>
 		fn from_stack_to_heap(from: NonNull<u8>, slice_length: usize, character: char) -> Result<String, TryReserveError>
 		{
 			const CharacterSize: usize = size_of::<char>();
-			StringSoFar::use_new_buffer::<_, CharacterSize>(from, slice_length, |buffer| unsafe { encode_utf8_not_reserving_space(buffer, character, slice_length) })
+			StringSoFar::use_new_buffer::<_, CharacterSize>(from, slice_length, |buffer| unsafe { encode_utf8_not_reserving_space(buffer, slice_length, character) })
 		}
 		
 		use StringSoFar::*;
@@ -218,7 +218,7 @@ impl<'a> StringSoFar<'a>
 	#[inline(always)]
 	pub(super) fn push_ascii(&mut self, character: char) -> Result<(), TryReserveError>
 	{
-		debug_assert!(Self::is_ascii(character));
+		debug_assert!(is_ascii_character(character));
 		
 		use StringSoFar::*;
 		match self
@@ -253,7 +253,7 @@ impl<'a> StringSoFar<'a>
 	#[inline(always)]
 	fn string_push_ascii(string: &mut String, character: char) -> Result<(), TryReserveError>
 	{
-		debug_assert!(Self::is_ascii(character));
+		debug_assert!(is_ascii_character(character));
 		Self::encode_utf8_push_unchecked::<1>(string, encode_utf8_bytes_1(character as u32))
 	}
 	
@@ -294,12 +294,12 @@ impl<'a> StringSoFar<'a>
 	#[inline(always)]
 	fn from_stack_to_heap_ascii(from: NonNull<u8>, slice_length: usize, character: char) -> Result<String, TryReserveError>
 	{
-		debug_assert!(Self::is_ascii(character));
+		debug_assert!(is_ascii_character(character));
 		
 		Self::use_new_buffer::<_, 1>(from, slice_length, |buffer| encode_utf8_push_unchecked::<1>(buffer, slice_length, encode_utf8_bytes_1(character as u32)))
 	}
 	
-	/// NOTE: the buffer passed to buffer_user with have a `.len()` of `0`.
+	/// NOTE: the buffer passed to buffer_user with have a `.len()` of `0` but a `.capacity()` of at least `slice_length + CharacterSize`.
 	#[inline(always)]
 	fn use_new_buffer<BU: FnOnce(&mut Vec<u8>) -> (), const CharacterSize: usize>(from: NonNull<u8>, slice_length: usize, buffer_user: BU) -> Result<String, TryReserveError>
 	{
@@ -309,7 +309,7 @@ impl<'a> StringSoFar<'a>
 		{
 			let to_pointer: *mut u8 = buffer.as_mut_ptr();
 			let from_pointer = from.as_ptr() as *const u8;
-			// NOTE: Explicitly does NOT call buffer.set_len(slice_length), as this is done in `encode_utf8_not_reserving_space()` below.
+			// NOTE: Explicitly does NOT call buffer.set_len(slice_length), as this is done in `encode_utf8_not_reserving_space()`.
 			unsafe { to_pointer.copy_from_nonoverlapping(from_pointer, slice_length); }
 		}
 		
@@ -337,11 +337,5 @@ impl<'a> StringSoFar<'a>
 	fn to_bytes(from: NonNull<u8>, slice_length: usize) -> &'a [u8]
 	{
 		unsafe { from_raw_parts(from.as_ptr(), slice_length) }
-	}
-	
-	#[inline(always)]
-	const fn is_ascii(character: char) -> bool
-	{
-		character <= x7F
 	}
 }
