@@ -54,8 +54,6 @@ impl<'a> UserInformation<'a>
 		let mut string = StringSoFar::new_stack(remaining);
 		loop
 		{
-			use Utf8CharacterLength::*;
-			
 			match remaining.decode_next_utf8_validity_already_checked()
 			{
 				None => return Ok(Self(string.to_cow())),

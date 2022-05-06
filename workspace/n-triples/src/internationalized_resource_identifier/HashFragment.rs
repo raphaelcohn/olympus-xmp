@@ -187,8 +187,6 @@ impl<'a> HashFragment<'a>
 		
 		loop
 		{
-			use Utf8CharacterLength::*;
-			
 			match remaining_string.decode_next_utf8_validity_already_checked()
 			{
 				None => break,

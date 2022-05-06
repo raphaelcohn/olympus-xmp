@@ -169,8 +169,6 @@ impl<'a> PathSegment<'a>
 	#[inline(always)]
 	fn decode_percent_encoded_path_segment_common<R>(mut string: StringSoFar<'a>, remaining: &mut &'a str, constructor: impl FnOnce(Cow<'a, str>) -> R) -> Result<R, PathSegmentParseError>
 	{
-		use Utf8CharacterLength::*;
-		
 		loop
 		{
 			match remaining.decode_next_utf8_validity_already_checked()

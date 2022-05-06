@@ -5,12 +5,10 @@
 use crate::FromUnchecked;
 use crate::Hash;
 use crate::QuestionMark;
-use crate::parser::GetUncheckedExt;
 use crate::parser::OutOfMemoryOrInvalidUtf8PercentDecodeParseError;
 use crate::parser::StringSoFar;
 use crate::parser::utf8::InvalidUtf8ParseError;
 use crate::parser::utf8::PercentDecodeError;
-use crate::parser::utf8::Utf8CharacterLength;
 use crate::parser::utf8::ValidatedDecodeUtf8Sequences;
 use crate::parser::utf8::utf8_sequence::Utf8SequenceAndCharacter;
 use crate::parser::utf8::utf8_sequence::Utf8SequenceEnum;

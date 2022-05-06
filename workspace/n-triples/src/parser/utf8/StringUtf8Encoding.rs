@@ -62,7 +62,6 @@ pub trait StringUtf8Encoding
 	}
 	
 	#[allow(missing_docs)]
-	#[inline(always)]
 	fn push_utf8_sequence<U8S: Utf8Sequence>(&mut self, utf8_sequence: U8S) -> Result<(), TryReserveError>;
 	
 	#[allow(missing_docs)]

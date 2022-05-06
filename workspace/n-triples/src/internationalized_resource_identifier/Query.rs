@@ -183,7 +183,6 @@ impl<'a> Query<'a>
 		
 		let hash_fragment_remaining_utf8_bytes = loop
 		{
-			use Utf8CharacterLength::*;
 			match remaining_string.decode_next_utf8_validity_already_checked()
 			{
 				None => break None,

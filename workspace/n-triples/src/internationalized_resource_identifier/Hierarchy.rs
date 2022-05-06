@@ -219,7 +219,6 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 	#[inline(always)]
 	fn parse(scheme_specific_parsing_rule: &SchemeSpecificParsingRule, mut remaining_utf8_bytes: &'a str) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
 	{
-		use Utf8CharacterLength::*;
 		use Hierarchy::*;
 		use HierarchyParseError::*;
 		
@@ -260,7 +259,6 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 	#[inline(always)]
 	fn parse_iauthority_ipath_abempty_or_ipath_absolute(scheme_specific_parsing_rule: &SchemeSpecificParsingRule, mut remaining_utf8_bytes: &'a str) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
 	{
-		use Utf8CharacterLength::*;
 		use HierarchyParseError::*;
 		
 		let Utf8SequenceAndCharacter(utf8_sequence, character) = Self::decode_next_utf8_validity_already_checked_mandatory(&mut remaining_utf8_bytes, DidNotExpectEndParsingSecondCharacter)?;
