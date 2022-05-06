@@ -2,8 +2,9 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+#[allow(missing_docs)]
 #[inline(always)]
-pub(crate) const fn is_ascii_character(character: char) -> bool
+pub const fn is_ascii_character(character: char) -> bool
 {
-	character <= x7F
+	character < x80Char
 }

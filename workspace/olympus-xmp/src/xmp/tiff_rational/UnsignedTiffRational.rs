@@ -108,7 +108,7 @@ impl<'a> XmpAttributeValue<'a> for UnsignedTiffRational
 		use UnsignedTiffRationalParseError::*;
 		let bytes = value.as_bytes();
 		
-		let index = memchr(Slash, bytes).ok_or(MissingDenominator)?;
+		let index = bytes.memchr(Slash).ok_or(MissingDenominator)?;
 		
 		#[inline(always)]
 		fn parse_unsigned_integer<AUR: AsUsizeRange<u8>, U: FromStr<Err=ParseIntError>>(bytes: &[u8], range: AUR,  error: impl FnOnce(ParseIntError) -> UnsignedTiffRationalParseError) -> Result<U, UnsignedTiffRationalParseError>

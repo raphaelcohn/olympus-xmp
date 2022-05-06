@@ -41,34 +41,34 @@ impl<'a> UserInformation<'a>
 	/// `iuserinfo      = *( iunreserved / pct-encoded / sub-delims / ":" )`
 	/// `iunreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~" / ucschar`.
 	#[inline(always)]
-	fn parse(mut user_info_bytes: &'a [u8], scheme_specific_parsing_rule: &SchemeSpecificParsingRule) -> Result<Self, UserInformationParseError>
+	fn parse(mut user_info_string: &'a str, scheme_specific_parsing_rule: &SchemeSpecificParsingRule) -> Result<Self, UserInformationParseError>
 	{
 		use UserInformationParseError::*;
 		
-		let remaining_utf8_bytes = &mut user_info_bytes;
-		if scheme_specific_parsing_rule.user_information_should_not_be_present(remaining_utf8_bytes)
+		let remaining = &mut user_info_string;
+		if scheme_specific_parsing_rule.user_information_should_not_be_present()
 		{
 			return Err(SchemeDoesNotSupportUserInformation)
 		}
 		
-		let mut string = StringSoFar::new_stack(remaining_utf8_bytes);
+		let mut string = StringSoFar::new_stack(remaining);
 		loop
 		{
 			use Utf8CharacterLength::*;
 			
-			match StringSoFar::decode_next_utf8_validity_already_checked(remaining_utf8_bytes)
+			match remaining.decode_next_utf8_validity_already_checked()
 			{
 				None => return Ok(Self(string.to_cow())),
 				
-				Some(character) => match character
+				Some(Utf8SequenceAndCharacter(utf8_sequence, character)) => match character
 				{
-					iunreserved_without_ucschar!() => string.push(character, One)?,
-					iunreserved_with_ucschar_2!()  => string.push(character, Two)?,
-					iunreserved_with_ucschar_3!()  => string.push(character, Three)?,
-					iunreserved_with_ucschar_4!()  => string.push(character, Four)?,
-					pct_encoded!()                 => string.push_forcing_heap_percent_encoded::<false>(remaining_utf8_bytes)?,
-					sub_delims!()                  => string.push(character, One)?,
-					ColonChar                      => string.push(character, One)?,
+					iunreserved_without_ucschar!() => string.push_ascii_character(character)?,
+					iunreserved_with_ucschar_2!()  => string.push_utf8_sequence_enum_2(utf8_sequence)?,
+					iunreserved_with_ucschar_3!()  => string.push_utf8_sequence_enum_3(utf8_sequence)?,
+					iunreserved_with_ucschar_4!()  => string.push_utf8_sequence_enum_4(utf8_sequence)?,
+					pct_encoded!()                 => string.push_forcing_heap_percent_encoded::<false>(remaining)?,
+					sub_delims!()                  => string.push_ascii_character(character)?,
+					ColonChar                      => string.push_ascii_character(character)?,
 					
 					_ => return Err(InvalidCharacterInUserInformation(character)),
 				},

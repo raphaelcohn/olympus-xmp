@@ -2,8 +2,9 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+#[allow(missing_docs)]
 #[inline(always)]
-pub(crate) fn encode_utf8_percent_encoded(string: &str, percent_encode_ascii: impl Copy + FnOnce(u8) -> bool) -> Result<Cow<str>, TryReserveError>
+pub fn encode_utf8_percent_encoded(string: &str, percent_encode_ascii: impl Copy + FnOnce(u8) -> bool) -> Result<Cow<str>, TryReserveError>
 {
 	PercentEncodeUtf8::encode(string, percent_encode_ascii)
 }

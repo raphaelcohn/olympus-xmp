@@ -115,7 +115,7 @@ impl<'a, const PathDepth: usize> TryFrom<&'a str> for AbsoluteInternationalizedR
 		use ParseNextAfterHierarchy::*;
 		let (query, hash_fragment) = match parse_next
 		{
-			Query { remaining_utf8_bytes } => match self::Query::parse(remaining_utf8_bytes, scheme_specific_parsing_rule)
+			Query { remaining: remaining_utf8_bytes } => match self::Query::parse(remaining_utf8_bytes, scheme_specific_parsing_rule)
 			{
 				Err(error) => return Err(QueryParse(error)),
 				
@@ -124,7 +124,7 @@ impl<'a, const PathDepth: usize> TryFrom<&'a str> for AbsoluteInternationalizedR
 				Ok((query, Some(remaining_utf8_bytes))) => (Some(query), Some(HashFragment::parse(remaining_utf8_bytes, scheme_specific_parsing_rule)?)),
 			}
 			
-			NoQueryFragment { remaining_utf8_bytes} => (None, Some(HashFragment::parse(remaining_utf8_bytes, scheme_specific_parsing_rule)?)),
+			NoQueryFragment { remaining: remaining_utf8_bytes } => (None, Some(HashFragment::parse(remaining_utf8_bytes, scheme_specific_parsing_rule)?)),
 			
 			NoQueryNoFragment => (None, None),
 		};
@@ -436,23 +436,31 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 		
 		loop
 		{
-			let (character, utf8_character_length) = decode_next_utf8(remaining_bytes)?.ok_or(DidNotExpectEndParsingBody)?;
-			match character
+			let Utf8SequenceAndCharacter(utf8_sequence, character) = remaining_bytes.decode_next_utf8()?.ok_or(DidNotExpectEndParsingBody)?;
+			use Utf8SequenceEnum::*;
+			match utf8_sequence
 			{
-				CloseAngleBracketChar => break,
-				
-				invalid @ (x00 ..= x20 | '<' | '"' | '{' | '}' | '|' | '`') => return Err(InvalidCharacter(invalid)),
-				
-				'\\' => match get_0(remaining_bytes).ok_or(EndOfFileParsingEscapeSequence)?
+				One([one]) => match one
 				{
-					u => string.push_forcing_heap_UCHAR4(remaining_bytes).map_err(InvalidUCHAR4EscapeSequence)?,
+					CloseAngleBracket => break,
 					
-					U => string.push_forcing_heap_UCHAR8(remaining_bytes).map_err(InvalidUCHAR8EscapeSequence)?,
+					invalid @ (0x00 ..= 0x20 | b'<' | b'"' | b'{' | b'}' | b'|' | b'`') => return Err(InvalidCharacter(invalid as char)),
 					
-					invalid => return Err(InvalidEscapeSequence(invalid)),
+					b'\\' => match get_0(remaining_bytes).ok_or(EndOfFileParsingEscapeSequence)?
+					{
+						u => string.push_forcing_heap_UCHAR4(remaining_bytes).map_err(InvalidUCHAR4EscapeSequence)?,
+						
+						U => string.push_forcing_heap_UCHAR8(remaining_bytes).map_err(InvalidUCHAR8EscapeSequence)?,
+						
+						invalid => return Err(InvalidEscapeSequence(invalid)),
+					}
 				}
 				
-				character @ _ => string.push(character, utf8_character_length)?,
+				Two(utf8_sequence) => string.push_utf8_sequence(utf8_sequence)?,
+				
+				Three(utf8_sequence) => string.push_utf8_sequence(utf8_sequence)?,
+				
+				Four(utf8_sequence) => string.push_utf8_sequence(utf8_sequence)?,
 			}
 		}
 		

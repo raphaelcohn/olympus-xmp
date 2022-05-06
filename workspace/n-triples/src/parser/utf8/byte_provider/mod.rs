@@ -2,6 +2,7 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+use crate::FromUnchecked;
 use std::char::CharTryFromError;
 use std::convert::Infallible;
 use std::error;
@@ -11,6 +12,7 @@ use std::fmt::Display;
 use std::fmt::Formatter;
 use std::num::NonZeroU8;
 use std::num::NonZeroUsize;
+use std::str::from_utf8_unchecked;
 use super::Utf8CharacterLength;
 use super::Utf8CharacterLength::*;
 use super::utf8_sequence::Utf8Sequence;
@@ -18,6 +20,8 @@ use super::utf8_sequence::Utf8Sequence1;
 use super::utf8_sequence::Utf8Sequence2;
 use super::utf8_sequence::Utf8Sequence3;
 use super::utf8_sequence::Utf8Sequence4;
+use super::utf8_sequence::Utf8SequenceAndCharacter;
+use super::utf8_sequence::Utf8SequenceCrate;
 use super::utf8_sequence::Utf8SequenceEnum;
 use super::utf8_sequence::Utf8SequenceNonConst;
 use swiss_army_knife::a_to_z::f;

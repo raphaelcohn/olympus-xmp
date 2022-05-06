@@ -169,7 +169,7 @@ impl<'a> XmpAttributeValue<'a> for XmpDateTime
 		{
 			const InclusiveFromIndex: usize = 0 + FourDigitWidth + SeparatorWidth + TwoDigitWidth + SeparatorWidth + TwoDigitWidth + SeparatorWidth + TwoDigitWidth + SeparatorWidth + TwoDigitWidth + SeparatorWidth + TwoDigitWidth + SeparatorWidth;
 			let remaining_bytes = bytes.get_unchecked_range_safe(InclusiveFromIndex .. );
-			match memchr3(Z, PlusSign, MinusSign, remaining_bytes)
+			match remaining_bytes.memchr3(Z, PlusSign, MinusSign)
 			{
 				None =>
 				{

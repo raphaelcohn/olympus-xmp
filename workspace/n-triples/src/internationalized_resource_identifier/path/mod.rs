@@ -11,9 +11,11 @@ use crate::parser::StringSoFar;
 use crate::parser::utf8::InvalidUtf8ParseError;
 use crate::parser::utf8::PercentDecodeError;
 use crate::parser::utf8::Utf8CharacterLength;
+use crate::parser::utf8::ValidatedDecodeUtf8Sequences;
+use crate::parser::utf8::utf8_sequence::Utf8SequenceAndCharacter;
+use crate::parser::utf8::utf8_sequence::Utf8SequenceEnum;
 use crate::try_to_own::TryToOwn;
 use crate::try_to_own::TryToOwnInPlace;
-use memchr::memchr3;
 use std::borrow::Borrow;
 use std::borrow::BorrowMut;
 use std::borrow::Cow;
@@ -61,6 +63,7 @@ use swiss_army_knife::a_to_z::_0;
 use swiss_army_knife::a_to_z::_9;
 use swiss_army_knife::const_small_vec::ConstSmallVec;
 use swiss_army_knife::get_unchecked::GetUnchecked;
+use swiss_army_knife::memchr::MemoryCharacter;
 use swiss_army_knife::unreachable_code_const;
 
 

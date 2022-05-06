@@ -22,29 +22,29 @@ impl<'a> StringLiteral<'a>
 		
 		loop
 		{
-			const xA: char = 0xA as char;
-			const xD: char = 0xD as char;
+			let Utf8SequenceAndCharacter(utf8_sequence, character) = remaining_bytes.decode_next_utf8()?.ok_or(DidNotExpectEndParsingBody)?;
 			
-			let (character, utf8_character_length) = decode_next_utf8(remaining_bytes)?.ok_or(DidNotExpectEndParsingBody)?;
+			use Utf8SequenceEnum::*;
+			
 			match character
 			{
-				'"' => break,
+				One([DoubleQuote]) => break,
 				
-				'\\' => match get_0(remaining_bytes).ok_or(EndOfFileParsingEscapeSequence)?
+				One([Backslash]) => match get_0(remaining_bytes).ok_or(EndOfFileParsingEscapeSequence)?
 				{
-					t => string.push_forcing_heap_ascii('\t')?,
+					t => string.push_forcing_heap_ascii_byte::<false>(Tab)?,
 					
-					b => string.push_forcing_heap_ascii('\x08')?,
+					b => string.push_forcing_heap_ascii_byte::<false>(Backspace)?,
 					
-					n => string.push_forcing_heap_ascii('\n')?,
+					n => string.push_forcing_heap_ascii_byte::<false>(LineFeed)?,
 					
-					r => string.push_forcing_heap_ascii('\r')?,
+					r => string.push_forcing_heap_ascii_byte::<false>(CarriageReturn)?,
 					
-					f => string.push_forcing_heap_ascii('\x0A')?,
+					f => string.push_forcing_heap_ascii_byte::<false>(FormFeed)?,
 					
-					b'"' => string.push_forcing_heap_ascii('"')?,
+					DoubleQuote => string.push_forcing_heap_ascii_byte::<false>(DoubleQuote)?,
 					
-					b'\\' => string.push_forcing_heap_ascii('\'')?,
+					Backslash => string.push_forcing_heap_ascii_byte::<false>(Backslash)?,
 					
 					u => string.push_forcing_heap_UCHAR4(remaining_bytes).map_err(InvalidUCHAR4EscapeSequence)?,
 					
@@ -53,9 +53,13 @@ impl<'a> StringLiteral<'a>
 					invalid => return Err(InvalidEscapeSequence(invalid)),
 				},
 				
-				invalid @ (xA | xD) => return Err(InvalidCharacter(invalid)),
+				One([invalid @ LineFeed | CarriageReturn]) => return Err(InvalidCharacter(invalid as char)),
 				
-				character @ _ => string.push(character, utf8_character_length)?,
+				Two(utf8_sequence) => string.push_utf8_sequence(utf8_sequence)?,
+				
+				Three(utf8_sequence) => string.push_utf8_sequence(utf8_sequence)?,
+				
+				Four(utf8_sequence) => string.push_utf8_sequence(utf8_sequence)?,
 			}
 		}
 		
@@ -82,7 +86,7 @@ impl<'a> StringLiteral<'a>
 			AtSign =>
 			{
 				let haystack = *remaining_bytes;
-				let index = memchr2(Space, Tab, haystack).ok_or(DidNotExpectEndParsingLanguageTag)?;
+				let index = haystack.memchr2(Space, Tab).ok_or(DidNotExpectEndParsingLanguageTag)?;
 				
 				let naive_ietf_bcp_47_language_tag_bytes = haystack.before_index(index);
 				*remaining_bytes = haystack.after_index(index);

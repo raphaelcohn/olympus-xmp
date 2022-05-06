@@ -17,40 +17,62 @@ pub(super) enum StringSoFar<'a>
 	},
 }
 
+macro_rules! push_utf8_sequence_enum_n
+{
+	($self: ident, $utf8_sequence: ident, $member: ident) =>
+	{
+		{
+			debug_assert_eq!($utf8_sequence.utf8_character_length(), Utf8CharacterLength::$member);
+			
+			match $utf8_sequence
+			{
+				Utf8SequenceEnum::$member(utf8_sequence) => self.push_utf8_sequence(utf8_sequence),
+				
+				_ => unsafe { unreachable_unchecked() }
+			}
+		}
+	}
+}
+
 impl<'a> StringSoFar<'a>
 {
 	#[inline(always)]
-	pub(super) fn decode_next_utf8_validity_already_checked_mandatory<E: error::Error>(remaining_utf8_bytes: &mut &'a [u8], error: E) -> Result<char, E>
+	pub(super) fn new_percent_encoded_non_empty_path_segment(first_character_of_first_path_segment: (bool, Utf8SequenceEnum), mut remaining_percent_encoded_path_segment: &'a str) -> Self
 	{
-		StringSoFar::decode_next_utf8_validity_already_checked(remaining_utf8_bytes).ok_or(error)
+		let (was_percent_encoded, utf8_sequence) = first_character_of_first_path_segment;
+		
+		if was_percent_encoded
+		{
+			Self::new_heap(utf8_sequence)?
+		}
+		else
+		{
+			Self::new_stack_rewind_buffer(utf8_sequence, remaining_percent_encoded_path_segment)
+		}
 	}
 	
 	#[inline(always)]
-	pub(super) fn decode_next_utf8_validity_already_checked(remaining_utf8_bytes: &mut &[u8]) -> Option<char>
+	pub(super) fn new_stack(remaining_utf8_bytes: &mut &'a impl AsRef<[u8]>) -> Self
 	{
-		decode_next_utf8_validity_already_checked(remaining_utf8_bytes).map(|(character, _utf8_sequence)| character)
+		Self::new_stack_internal((*remaining_utf8_bytes).as_ref().as_ptr(), 0)
 	}
 	
 	#[inline(always)]
-	pub(super) fn new_heap(character: char, utf8_character_length: Utf8CharacterLength) -> Result<Self, TryReserveError>
+	fn new_heap(utf8_sequence: Utf8SequenceEnum) -> Result<Self, TryReserveError>
 	{
 		let mut string = String::new();
-		Self::string_push_character_of_known_length(&mut string, character, utf8_character_length)?;
+		string.push_utf8_sequence_enum(utf8_sequence)?;
 		Ok(StringSoFar::Heap(string))
 	}
 	
 	#[inline(always)]
-	pub(super) fn new_stack(remaining_bytes: &mut &'a [u8]) -> Self
+	fn new_stack_rewind_buffer(utf8_sequence: Utf8SequenceEnum, remaining_utf8_bytes: &str) -> Self
 	{
-		Self::new_stack_internal((*remaining_bytes).as_ptr(), 0)
-	}
-	
-	#[inline(always)]
-	pub(super) fn new_stack_rewind_buffer(remaining_utf8_bytes: &[u8], utf8_character_length: Utf8CharacterLength) -> Self
-	{
+		let utf8_character_length = utf8_sequence_and_character.utf8_character_length();
+		
 		let rewound_buffer = remaining_utf8_bytes.rewind_buffer(utf8_character_length);
 		
-		let slice_length = utf8_character_length.add_from_bytes(remaining_utf8_bytes);
+		let slice_length = utf8_character_length.add_from_str(remaining_utf8_bytes);
 		Self::new_stack_internal(rewound_buffer, slice_length)
 	}
 	
@@ -92,6 +114,66 @@ impl<'a> StringSoFar<'a>
 	}
 	
 	#[inline(always)]
+	pub(super) fn push_ascii_character(&mut self, ascii_character: char) -> Result<(), TryReserveError>
+	{
+		debug_assert!(is_ascii_character(ascii_character));
+		self.push_ascii_byte(ascii_character as u8)
+	}
+	
+	#[inline(always)]
+	pub(super) fn push_ascii_byte(&mut self, ascii_byte: u8) -> Result<(), TryReserveError>
+	{
+		debug_assert!(is_ascii_byte(ascii_byte));
+		
+		use StringSoFar::*;
+		match self
+		{
+			Heap(string) => string.push_utf8_ascii_byte(ascii_byte),
+			
+			Stack { slice_length, .. } =>
+			{
+				*slice_length = *slice_length + 1;
+				Ok(())
+			},
+		}
+	}
+	
+	#[inline(always)]
+	pub(super) fn push_utf8_sequence_enum_2(&mut self, utf8_sequence: Utf8SequenceEnum) -> Result<(), TryReserveError>
+	{
+		push_utf8_sequence_enum_n!(self, utf8_sequence, Two)
+	}
+	
+	#[inline(always)]
+	pub(super) fn push_utf8_sequence_enum_3(&mut self, utf8_sequence: Utf8SequenceEnum) -> Result<(), TryReserveError>
+	{
+		push_utf8_sequence_enum_n!(self, utf8_sequence, Three)
+	}
+	
+	#[inline(always)]
+	pub(super) fn push_utf8_sequence_enum_4(&mut self, utf8_sequence: Utf8SequenceEnum) -> Result<(), TryReserveError>
+	{
+		push_utf8_sequence_enum_n!(self, utf8_sequence, Four)
+	}
+	
+	#[inline(always)]
+	pub(super) fn push_utf8_sequence<U8S: Utf8Sequence>(&mut self, utf8_sequence: U8S) -> Result<(), TryReserveError>
+	{
+		use StringSoFar::*;
+		match self
+		{
+			Heap(string) => string.push_utf8_sequence(utf8_sequence),
+			
+			Stack { slice_length, .. } =>
+			{
+				let old_slice_length = *slice_length;
+				*slice_length = old_slice_length + U8S::UsizeLength;
+				Ok(())
+			}
+		}
+	}
+	
+	#[inline(always)]
 	pub(super) fn push_forcing_heap_UCHAR4(&mut self, remaining_bytes: &mut &[u8]) -> Result<(), OutOfMemoryOrUCHARParseError>
 	{
 		self.push_forcing_heap_UCHAR(remaining_bytes, UCHARParser::parse_UCHAR4)
@@ -104,26 +186,35 @@ impl<'a> StringSoFar<'a>
 	}
 	
 	#[inline(always)]
-	pub(super) fn push_forcing_heap_ascii_to_lower_case(&mut self, character: char) -> Result<(), TryReserveError>
+	pub(super) fn push_forcing_heap_ascii_character<const to_ascii_lower_case: bool>(&mut self, ascii_character: char) -> Result<(), TryReserveError>
 	{
-		debug_assert!(is_ascii_character(character));
-		
-		self.push_forcing_heap_ascii(character.to_ascii_lowercase())
+		debug_assert!(is_ascii_character(ascii_character));
+		self.push_forcing_heap_ascii_byte::<to_ascii_lower_case>(ascii_character as u8)
 	}
 	
 	#[inline(always)]
-	pub(super) fn push_forcing_heap_ascii(&mut self, character: char) -> Result<(), TryReserveError>
+	pub(super) fn push_forcing_heap_ascii_byte<const to_ascii_lower_case: bool>(&mut self, ascii_byte: u8) -> Result<(), TryReserveError>
 	{
-		debug_assert!(is_ascii_character(character));
+		debug_assert!(is_ascii_byte(ascii_byte));
+		
+		let ascii_byte = if to_ascii_lower_case
+		{
+			to_lower_case_ascii_byte(ascii_byte)
+		}
+		else
+		{
+			ascii_byte
+		};
 		
 		use StringSoFar::*;
 		match self
 		{
-			Heap(string) => Self::string_push_character_of_known_length(string, character, Utf8CharacterLength::One),
+			Heap(string) => string.push_utf8_sequence([ascii_byte]),
 			
 			Stack { from, slice_length, .. } =>
 			{
-				let string = Self::from_stack_to_heap_ascii(*from, *slice_length, character)?;
+				let utf8_sequences = Self::utf8_sequences(from, slice_length);
+				let string = String::from_utf8_unchecked_with_utf8_sequence(utf8_sequences, [ascii_byte])?;
 				*self = Heap(string);
 				Ok(())
 			}
@@ -131,53 +222,31 @@ impl<'a> StringSoFar<'a>
 	}
 	
 	#[inline(always)]
-	pub(super) fn push_forcing_heap_percent_encoded<const to_ascii_lower_case: bool>(&mut self, remaining_utf8_bytes: &mut &'a [u8]) -> Result<(), OutOfMemoryOrInvalidUtf8PercentDecodeParseError>
+	pub(super) fn push_forcing_heap_percent_encoded<const to_ascii_lower_case: bool>(&mut self, remaining_utf8_bytes: &mut &'a str) -> Result<(), OutOfMemoryOrInvalidUtf8PercentDecodeParseError>
 	{
-		#[inline(always)]
-		fn from_stack_to_heap_n<const length: usize>(from: NonNull<u8>, slice_length: usize, encoded_utf8_bytes: [u8; length]) -> Result<String, TryReserveError>
-		{
-			StringSoFar::use_new_buffer::<_, length>(from, slice_length, |buffer| encode_utf8_push_unchecked(buffer, slice_length, encoded_utf8_bytes))
-		}
-		
-		let (character, utf8_character_length) = decode_next_percent_encoded_utf8(remaining_utf8_bytes)?;
-		
-		let character = if to_ascii_lower_case
-		{
-			if utf8_character_length == Utf8CharacterLength::One
-			{
-				character.to_ascii_lowercase()
-			}
-			else
-			{
-				character
-			}
-		}
-		else
-		{
-			character
-		};
+		let utf8_sequence_and_character = remaining_utf8_bytes.decode_next_percent_encoded_utf8::<to_ascii_lower_case>()?;
 		
 		use StringSoFar::*;
+		let utf8_sequence = utf8_sequence_and_character.0;
 		match self
 		{
-			Heap(string) => Self::string_push_character_of_known_length(string, character, utf8_character_length)?,
+			Heap(string) => string.push_utf8_sequence_enum(utf8_sequence)?,
 			
 			Stack { from, slice_length, .. } =>
 			{
-				use Utf8CharacterLength::*;
-				
-				let from = *from;
-				let slice_length = *slice_length;
-				let string = match utf8_character_length
+				let utf8_sequences = Self::utf8_sequences(from, slice_length);
+				use Utf8SequenceEnum::*;
+				let string = match utf8_sequence
 				{
-					One => from_stack_to_heap_n::<1>(from, slice_length, encode_utf8_bytes_1(character as u32)),
+					One(utf8_sequence) => String::from_utf8_unchecked_with_utf8_sequence(utf8_sequences, utf8_sequence),
 					
-					Two => from_stack_to_heap_n::<2>(from, slice_length, encode_utf8_bytes_2(character as u32)),
+					Two(utf8_sequence) => String::from_utf8_unchecked_with_utf8_sequence(utf8_sequences, utf8_sequence),
 					
-					Three => from_stack_to_heap_n::<3>(from, slice_length, encode_utf8_bytes_3(character as u32)),
+					Three(utf8_sequence) => String::from_utf8_unchecked_with_utf8_sequence(utf8_sequences, utf8_sequence),
 					
-					Four => from_stack_to_heap_n::<4>(from, slice_length, encode_utf8_bytes_4(character as u32)),
+					Four(utf8_sequence) => String::from_utf8_unchecked_with_utf8_sequence(utf8_sequences, utf8_sequence),
 				}?;
+				
 				*self = Heap(string);
 			}
 		}
@@ -187,28 +256,23 @@ impl<'a> StringSoFar<'a>
 	#[inline(always)]
 	fn push_forcing_heap_UCHAR(&mut self, remaining_bytes: &mut &[u8], parse_UCHAR: impl FnOnce(&mut &[u8]) -> Result<char, UCHARParseError>) -> Result<(), OutOfMemoryOrUCHARParseError>
 	{
-		self.push_forcing_heap(parse_UCHAR(remaining_bytes)?)?;
+		let character = parse_UCHAR(remaining_bytes)?;
+		self.push_forcing_heap(character)?;
 		Ok(())
 	}
 	
 	#[inline(always)]
 	fn push_forcing_heap(&mut self, character: char) -> Result<(), TryReserveError>
 	{
-		#[inline(always)]
-		fn from_stack_to_heap(from: NonNull<u8>, slice_length: usize, character: char) -> Result<String, TryReserveError>
-		{
-			const CharacterSize: usize = size_of::<char>();
-			StringSoFar::use_new_buffer::<_, CharacterSize>(from, slice_length, |buffer| unsafe { encode_utf8_not_reserving_space(buffer, slice_length, character) })
-		}
-		
 		use StringSoFar::*;
 		match self
 		{
-			Heap(string) => Self::string_push_character(string, character),
+			Heap(string) => string.push_utf8_character(character),
 			
 			Stack { from, slice_length, .. } =>
 			{
-				let string = from_stack_to_heap(*from, *slice_length, character)?;
+				let utf8_sequences = Self::utf8_sequences(from, slice_length);
+				let string = String::from_utf8_unchecked_with_character(utf8_sequences, character)?;
 				*self = Heap(string);
 				Ok(())
 			}
@@ -216,114 +280,11 @@ impl<'a> StringSoFar<'a>
 	}
 	
 	#[inline(always)]
-	pub(super) fn push_ascii(&mut self, character: char) -> Result<(), TryReserveError>
+	fn utf8_sequences(from: &mut NonNull<u8>, slice_length: &mut usize) -> &[u8]
 	{
-		debug_assert!(is_ascii_character(character));
-		
-		use StringSoFar::*;
-		match self
-		{
-			Heap(string) => Self::string_push_ascii(string, character),
-			
-			Stack { slice_length, .. } =>
-			{
-				*slice_length = *slice_length + 1;
-				Ok(())
-			},
-		}
-	}
-	
-	#[inline(always)]
-	pub(super) fn push(&mut self, character: char, utf8_character_length: Utf8CharacterLength) -> Result<(), TryReserveError>
-	{
-		use StringSoFar::*;
-		match self
-		{
-			Heap(string) => Self::string_push_character_of_known_length(string, character, utf8_character_length),
-			
-			Stack { slice_length, .. } =>
-			{
-				let old_slice_length = *slice_length;
-				*slice_length = utf8_character_length.add(old_slice_length);
-				Ok(())
-			}
-		}
-	}
-	
-	#[inline(always)]
-	fn string_push_ascii(string: &mut String, character: char) -> Result<(), TryReserveError>
-	{
-		debug_assert!(is_ascii_character(character));
-		Self::encode_utf8_push_unchecked::<1>(string, encode_utf8_bytes_1(character as u32))
-	}
-	
-	#[inline(always)]
-	fn string_push_character_of_known_length(string: &mut String, character: char, utf8_character_length: Utf8CharacterLength) -> Result<(), TryReserveError>
-	{
-		use Utf8CharacterLength::*;
-		
-		match utf8_character_length
-		{
-			One => Self::string_push_ascii(string, character),
-			
-			Two => Self::encode_utf8_push_unchecked::<2>(string, encode_utf8_bytes_2(character as u32)),
-			
-			Three => Self::encode_utf8_push_unchecked::<3>(string, encode_utf8_bytes_3(character as u32)),
-			
-			Four => Self::encode_utf8_push_unchecked::<4>(string, encode_utf8_bytes_4(character as u32)),
-		}
-	}
-	
-	#[inline(always)]
-	fn encode_utf8_push_unchecked<const length: usize>(string: &mut String, encoded_utf8_bytes: [u8; length]) -> Result<(), TryReserveError>
-	{
-		let offset = string.len();
-		let buffer = unsafe { string.as_mut_vec() };
-		buffer.try_reserve(length)?;
-		encode_utf8_push_unchecked::<length>(buffer, offset, encoded_utf8_bytes);
-		Ok(())
-	}
-	
-	#[inline(always)]
-	fn string_push_character(string: &mut String, character: char) -> Result<(), TryReserveError>
-	{
-		let buffer = unsafe { string.as_mut_vec() };
-		encode_utf8_reserving_space(buffer, character)
-	}
-	
-	#[inline(always)]
-	fn from_stack_to_heap_ascii(from: NonNull<u8>, slice_length: usize, character: char) -> Result<String, TryReserveError>
-	{
-		debug_assert!(is_ascii_character(character));
-		
-		Self::use_new_buffer::<_, 1>(from, slice_length, |buffer| encode_utf8_push_unchecked::<1>(buffer, slice_length, encode_utf8_bytes_1(character as u32)))
-	}
-	
-	/// NOTE: the buffer passed to buffer_user with have a `.len()` of `0` but a `.capacity()` of at least `slice_length + CharacterSize`.
-	#[inline(always)]
-	fn use_new_buffer<BU: FnOnce(&mut Vec<u8>) -> (), const CharacterSize: usize>(from: NonNull<u8>, slice_length: usize, buffer_user: BU) -> Result<String, TryReserveError>
-	{
-		let minimum_capacity = slice_length + CharacterSize;
-		let mut buffer = Self::new_buffer(minimum_capacity)?;
-		
-		{
-			let to_pointer: *mut u8 = buffer.as_mut_ptr();
-			let from_pointer = from.as_ptr() as *const u8;
-			// NOTE: Explicitly does NOT call buffer.set_len(slice_length), as this is done in `encode_utf8_not_reserving_space()`.
-			unsafe { to_pointer.copy_from_nonoverlapping(from_pointer, slice_length); }
-		}
-		
-		buffer_user(&mut buffer);
-		
-		Ok(unsafe { String::from_utf8_unchecked(buffer) })
-	}
-	
-	#[inline(always)]
-	fn new_buffer(minimum_capacity: usize) -> Result<Vec<u8>, TryReserveError>
-	{
-		let mut buffer = Vec::new();
-		buffer.try_reserve(minimum_capacity)?;
-		Ok(buffer)
+		let from = (*from).as_ptr();
+		let slice_length = *slice_length;
+		unsafe { from_raw_parts(from, slice_length) }
 	}
 	
 	#[inline(always)]

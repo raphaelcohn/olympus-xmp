@@ -2,8 +2,5 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[inline(always)]
-const fn character_occupies_more_than_one_byte_as_utf8(character: char) -> bool
-{
-	(character as u32) >= MAX_ONE_B
-}
+/// `0b1000_0000`.
+const TAG_CONT: u8 = x80;

@@ -19,5 +19,5 @@ edition = '2021'
 version = "0.0.0"
 
 [dependencies]
-memchr = "2.4.1"
+memchr = "2.5.0"
 swiss-army-knife = "^0.0.37"

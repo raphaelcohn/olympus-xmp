@@ -4,18 +4,6 @@
 
 pub(super) trait GetUncheckedExt<T>: GetUnchecked<T>
 {
-	#[inline(always)]
-	fn before_index(&self, index: usize) -> &[T]
-	{
-		self.get_unchecked_range_safe(.. index)
-	}
-	
-	#[inline(always)]
-	fn after_index(&self, index: usize) -> &[T]
-	{
-		self.get_unchecked_range_safe((index + 1) ..)
-	}
-	
 	fn rewind_buffer(&self, utf8_character_length: Utf8CharacterLength) -> *const T;
 }
 

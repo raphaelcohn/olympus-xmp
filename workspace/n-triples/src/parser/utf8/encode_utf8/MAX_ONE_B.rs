@@ -2,4 +2,4 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-const MAX_ONE_B: u32 = 0x80;
+const MAX_ONE_B: u32 = x80 as u32;

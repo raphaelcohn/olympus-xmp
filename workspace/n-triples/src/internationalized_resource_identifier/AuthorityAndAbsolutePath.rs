@@ -98,35 +98,35 @@ impl<'a, const PathDepth: usize> AuthorityAndAbsolutePath<'a, PathDepth>
 	/// * "//segment/"
 	/// * "//segment////segment"
 	#[inline(always)]
-	fn parse(scheme_specific_parsing_rule: &SchemeSpecificParsingRule, remaining_utf8_bytes: &'a [u8]) -> Result<(Self, ParseNextAfterHierarchy<'a>), AuthorityAndAbsolutePathParseError>
+	fn parse(scheme_specific_parsing_rule: &SchemeSpecificParsingRule, remaining_string: &'a str) -> Result<(Self, ParseNextAfterHierarchy<'a>), AuthorityAndAbsolutePathParseError>
 	{
 		let mut absolute_path = PathSegments::default();
 		
-		let (authority, parse_next) = match memchr3(QuestionMark, Hash, Slash, remaining_utf8_bytes)
+		let (authority, parse_next) = match remaining_string.memchr3(QuestionMark, Hash, Slash)
 		{
 			None =>
 			{
-				let authority = Authority::parse(scheme_specific_parsing_rule, remaining_utf8_bytes)?;
+				let authority = Authority::parse(scheme_specific_parsing_rule, remaining_string)?;
 				(authority, ParseNextAfterHierarchy::NoQueryNoFragment)
 			}
 			
 			Some(index) =>
 			{
-				let authority_bytes = remaining_utf8_bytes.before_index(index);
-				let authority = Authority::parse(scheme_specific_parsing_rule, authority_bytes)?;
+				let authority_string = remaining_string.before_index(index);
+				let authority = Authority::parse(scheme_specific_parsing_rule, authority_string)?;
 				
-				let after_authority_bytes = remaining_utf8_bytes.after_index(index);
+				let after_authority = remaining_string.after_index(index);
 				
-				let parse_next_after_hierarchy = match remaining_utf8_bytes.get_unchecked_value_safe(index)
+				let parse_next_after_hierarchy = match remaining_string.get_unchecked_value_safe(index)
 				{
-					// means there's just iauthority followed by an empty path then a query
-					QuestionMark => ParseNextAfterHierarchy::query(remaining_utf8_bytes),
+					// means there's just iauthority followed by an empty path then a query.
+					QuestionMark => ParseNextAfterHierarchy::query(remaining_string),
 					
-					// means there's just iauthority followed by an empty path then an empty query then a fragment
-					Hash => ParseNextAfterHierarchy::fragment_no_query(after_authority_bytes),
+					// means there's just iauthority followed by an empty path then an empty query then a fragment.
+					Hash => ParseNextAfterHierarchy::fragment_no_query(after_authority),
 					
 					// after_authority_bytes is the start of the absolute path.
-					Slash => absolute_path.parse(after_authority_bytes)?,
+					Slash => absolute_path.parse(after_authority)?,
 					
 					_ => unreachable_code_const("memchr3")
 				};

@@ -2,4 +2,8 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-const TAG_TWO_B: u8 = 0b1100_0000;
+/// Const methods that are crate-private.
+pub(super) trait Utf8SequenceCrate: Utf8Sequence
+{
+	fn slice_length<BP: ByteProvider>() -> NonZeroUsize;
+}

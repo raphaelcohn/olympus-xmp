@@ -27,7 +27,7 @@ impl PercentEncodeUtf8
 			}
 			else
 			{
-				// TODO: We get byte again and call do UtfSequence1::is() again, unnecessarily.
+				// TODO: We get byte again and call do Utf8Sequence1::is() again, unnecessarily.
 				return Self::encode_assuming_remainder_should_be_percent_encoded(index, bytes, percent_encode_ascii)
 			}
 		}
@@ -60,13 +60,13 @@ impl PercentEncodeUtf8
 		let mut current_pointer = original_pointer;
 		loop
 		{
-			match decode_next_utf8_validity_already_checked(remaining_utf8_bytes)
+			match remaining_utf8_bytes.decode_next_utf8_validity_already_checked()
 			{
 				None => break,
 				
-				Some(character_and_utf8_sequence) =>
+				Some(utf8_sequence_and_character) =>
 				{
-					current_pointer = Self::write_character(current_pointer, percent_encode_ascii, character_and_utf8_sequence);
+					current_pointer = Self::write_character(current_pointer, percent_encode_ascii, utf8_sequence_and_character);
 				}
 			}
 		}
@@ -81,8 +81,10 @@ impl PercentEncodeUtf8
 	}
 	
 	#[inline(always)]
-	fn write_character(current_pointer: NonNull<u8>, percent_encode_ascii: impl Copy + FnOnce(u8) -> bool, (character, utf8_sequence): (char, Utf8SequenceEnum)) -> NonNull<u8>
+	fn write_character(current_pointer: NonNull<u8>, percent_encode_ascii: impl Copy + FnOnce(u8) -> bool, utf8_sequence_and_character: Utf8SequenceAndCharacter) -> NonNull<u8>
 	{
+		let Utf8SequenceAndCharacter(utf8_sequence, _) = utf8_sequence_and_character;
+		
 		use Utf8SequenceEnum::*;
 		match utf8_sequence
 		{
@@ -110,7 +112,6 @@ impl PercentEncodeUtf8
 				let current_pointer = Self::write_percent_encoded_byte(current_pointer, utf8_sequence[0]);
 				let current_pointer = Self::write_percent_encoded_byte(current_pointer, utf8_sequence[1]);
 				Self::write_percent_encoded_byte(current_pointer, utf8_sequence[2])
-				
 			}
 			
 			Four(utf8_sequence) =>
@@ -175,6 +176,6 @@ impl PercentEncodeUtf8
 			nibble + correction
 		}
 		
-		[Percent, Self::nibble_to_byte(byte >> 4), Self::nibble_to_byte(byte & 0b1111)]
+		[Percent, nibble_to_byte(byte >> 4), nibble_to_byte(byte & 0b1111)]
 	}
 }

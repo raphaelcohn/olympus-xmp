@@ -198,25 +198,26 @@ impl<'a> Authority<'a>
 	
 	/// `iauthority = [ iuserinfo "@" ] ihost [ ":" port ]`.
 	#[inline(always)]
-	fn parse(scheme_specific_parsing_rule: &SchemeSpecificParsingRule, authority_bytes: &'a [u8]) -> Result<Self, AuthorityParseError>
+	fn parse(scheme_specific_parsing_rule: &SchemeSpecificParsingRule, authority_string: &'a str) -> Result<Self, AuthorityParseError>
 	{
 		// Frustrating, as requires a long scan (`memchr`) which will nearly always return `None` as user information is very rare.
 		// The alternative is to assume there is no user_host data, then throwaway what we've pased so far if an `@` is encountered.
-		let (user_information, ihost_and_port_bytes) = match memchr(AtSign, authority_bytes)
+		let (user_information, ihost_and_port_string) = match authority_string.memchr(AtSign)
 		{
-			None => (None, authority_bytes),
+			None => (None, authority_string),
 			
 			Some(index) =>
 			{
-				let user_info_bytes = authority_bytes.before_index(index);
-				(Some(UserInformation::parse(user_info_bytes, scheme_specific_parsing_rule)?), authority_bytes.after_index(index))
+				let user_info_string = authority_string.before_index(index);
+				let ihost_and_port_string = authority_string.after_index(index);
+				(Some(UserInformation::parse(user_info_string, scheme_specific_parsing_rule)?), ihost_and_port_string)
 			}
 		};
 		
-		let (host, port_bytes_including_colon) = Host::parse(scheme_specific_parsing_rule, ihost_and_port_bytes)?;
+		let (host, port_bytes_including_colon) = Host::parse(scheme_specific_parsing_rule, ihost_and_port_string)?;
 		
 		use PortParsingRule::*;
-		let port = match scheme_specific_parsing_rule.authority_rule.port_rule
+		let port = match scheme_specific_parsing_rule.port_rule()
 		{
 			Allowed { default_port} => Self::parse_port(port_bytes_including_colon, Some(default_port))?,
 			

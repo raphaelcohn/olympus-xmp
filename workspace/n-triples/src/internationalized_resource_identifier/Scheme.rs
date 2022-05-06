@@ -232,7 +232,7 @@ impl<'a> Scheme<'a>
 		{
 			byte @ A ..= Z => Self::push_lower_case(&mut string, byte)?,
 			
-			byte @ a ..= z => string.push_ascii(byte as char)?,
+			byte @ a ..= z => string.push_ascii_byte(byte)?,
 			
 			invalid @ _ => return Err(InvalidFirstCharacter(invalid))
 		}
@@ -252,7 +252,7 @@ impl<'a> Scheme<'a>
 				
 				byte @ A ..= Z => Self::push_lower_case(&mut string, byte)?,
 				
-				byte @ (_0 ..= _9 | a ..= z | PlusSign | MinusSign | Period) => string.push_ascii(byte as char)?,
+				byte @ (_0 ..= _9 | a ..= z | PlusSign | MinusSign | Period) => string.push_ascii_byte(byte)?,
 				
 				invalid @ _ => return Err(InvalidSubsequentCharacter(invalid))
 			}
@@ -261,9 +261,9 @@ impl<'a> Scheme<'a>
 	}
 	
 	#[inline(always)]
-	fn push_lower_case(string: &mut StringSoFar<'a>, byte: u8) -> Result<(), SchemeParseError>
+	fn push_lower_case(string: &mut StringSoFar<'a>, upper_case_ascii_byte: u8) -> Result<(), SchemeParseError>
 	{
-		string.push_forcing_heap_ascii_to_lower_case(byte as char).map_err(SchemeParseError::OutOfMemoryMakingAsciiLowerCase)
+		string.push_forcing_heap_ascii_byte::<true>(upper_case_ascii_byte).map_err(SchemeParseError::OutOfMemoryMakingAsciiLowerCase)
 	}
 	
 	#[inline(always)]

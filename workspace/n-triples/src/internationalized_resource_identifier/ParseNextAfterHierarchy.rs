@@ -7,12 +7,12 @@ enum ParseNextAfterHierarchy<'a>
 {
 	Query
 	{
-		remaining_utf8_bytes: &'a [u8],
+		remaining: &'a str,
 	},
 	
 	NoQueryFragment
 	{
-		remaining_utf8_bytes: &'a [u8],
+		remaining: &'a str,
 	},
 	
 	NoQueryNoFragment,
@@ -21,14 +21,14 @@ enum ParseNextAfterHierarchy<'a>
 impl<'a> ParseNextAfterHierarchy<'a>
 {
 	#[inline(always)]
-	const fn query(remaining_utf8_bytes: &'a [u8]) -> Self
+	const fn query(remaining: &'a str) -> Self
 	{
-		ParseNextAfterHierarchy::Query { remaining_utf8_bytes }
+		ParseNextAfterHierarchy::Query { remaining }
 	}
 	
 	#[inline(always)]
-	const fn fragment_no_query(remaining_utf8_bytes: &'a [u8]) -> Self
+	const fn fragment_no_query(remaining: &'a str) -> Self
 	{
-		ParseNextAfterHierarchy::NoQueryFragment { remaining_utf8_bytes }
+		ParseNextAfterHierarchy::NoQueryFragment { remaining }
 	}
 }

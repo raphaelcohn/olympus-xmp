@@ -11,7 +11,7 @@ pub(super) struct SchemeSpecificParsingRule
 	
 	hash_fragment_allowed: bool,
 	
-	pub(super) authority_rule: AuthorityRule,
+	authority_rule: AuthorityRule,
 }
 
 impl SchemeSpecificParsingRule
@@ -94,14 +94,32 @@ impl SchemeSpecificParsingRule
 	}
 	
 	#[inline(always)]
-	pub(super) const fn query_should_not_be_present(&self, remaining_utf8_bytes: &[u8]) -> bool
+	pub(super) const fn query_should_not_be_present(&self, remaining_string: &str) -> bool
 	{
-		!self.query_allowed && !remaining_utf8_bytes.is_empty()
+		!self.query_allowed && !remaining_string.is_empty()
 	}
 	
 	#[inline(always)]
-	pub(super) const fn hash_fragment_should_not_be_present(&self, remaining_utf8_bytes: &[u8]) -> bool
+	pub(super) const fn user_information_should_not_be_present(&self) -> bool
 	{
-		!self.hash_fragment_allowed && !remaining_utf8_bytes.is_empty()
+		!self.authority_rule.user_information_allowed
+	}
+	
+	#[inline(always)]
+	pub(super) const fn hash_fragment_should_not_be_present(&self, remaining_string: &str) -> bool
+	{
+		!self.hash_fragment_allowed && !remaining_string.is_empty()
+	}
+	
+	#[inline(always)]
+	pub(super) const fn port_rule(&self) -> PortParsingRule
+	{
+		self.authority_rule.port_rule
+	}
+	
+	#[inline(always)]
+	pub(super) const fn empty_host_name_rule(&self) -> EmptyHostNameRule
+	{
+		self.authority_rule.empty_host_name_rule
 	}
 }

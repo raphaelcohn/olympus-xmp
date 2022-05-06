@@ -2,8 +2,5 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[inline(always)]
-pub(super) fn encode_utf8_reserving_space(buffer: &mut Vec<u8>, character: char) -> Result<(), TryReserveError>
-{
-	TryReserveEncodeUtf8::new(buffer, buffer.len()).encode_utf8(character)
-}
+/// `0b1100_0000`.
+const TAG_TWO_B: u8 = xC0;

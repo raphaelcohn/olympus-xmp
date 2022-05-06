@@ -271,32 +271,34 @@ impl<'a, const PathDepth: usize> PathSegments<'a, PathDepth>
 	
 	/// Assumes that on input `remaining_utf8_bytes` is positioned just to the right of any `Slash`, i.e. `Slash` would be at `remaining_utf8_bytes[-1]`.
 	#[inline(always)]
-	pub(super) fn parse(&mut self, mut remaining_utf8_bytes: &'a [u8]) -> Result<ParseNextAfterHierarchy<'a>, PathSegmentsParseError>
+	pub(super) fn parse(&mut self, mut remaining: &'a str) -> Result<ParseNextAfterHierarchy<'a>, PathSegmentsParseError>
 	{
 		let parse_next_after_hierarchy = loop
 		{
-			match memchr3(QuestionMark, Hash, Slash, remaining_utf8_bytes)
+			match remaining.memchr3(QuestionMark, Hash, Slash)
 			{
 				None =>
 				{
-					self.decode_percent_encoded_path_segment(remaining_utf8_bytes)?;
+					let percent_encoded_path_segment = remaining;
+					self.decode_percent_encoded_path_segment(percent_encoded_path_segment)?;
 					break ParseNextAfterHierarchy::NoQueryNoFragment
 				}
 				
 				Some(index) =>
 				{
-					self.decode_percent_encoded_path_segment(remaining_utf8_bytes.before_index(index))?;
-					let after_path_segment_bytes = remaining_utf8_bytes.after_index(index);
+					let percent_encoded_path_segment = remaining.before_index(index);
+					self.decode_percent_encoded_path_segment(percent_encoded_path_segment)?;
+					let after_path_segment = remaining.after_index(index);
 					
-					match remaining_utf8_bytes.get_unchecked_value_safe(index)
+					match remaining.get_unchecked_value_safe(index)
 					{
-						QuestionMark => break ParseNextAfterHierarchy::query(after_path_segment_bytes),
+						QuestionMark => break ParseNextAfterHierarchy::query(after_path_segment),
 						
-						Hash => break ParseNextAfterHierarchy::fragment_no_query(after_path_segment_bytes),
+						Hash => break ParseNextAfterHierarchy::fragment_no_query(after_path_segment),
 						
 						Slash =>
 						{
-							remaining_utf8_bytes = after_path_segment_bytes;
+							remaining = after_path_segment;
 						}
 						
 						_ => unreachable_code_const("memchr3"),
@@ -308,11 +310,11 @@ impl<'a, const PathDepth: usize> PathSegments<'a, PathDepth>
 	}
 	
 	#[inline(always)]
-	fn decode_percent_encoded_path_segment(&mut self, percent_encoded_path_segment_utf8_bytes: &'a [u8]) -> Result<(), PathSegmentsParseError>
+	fn decode_percent_encoded_path_segment(&mut self, percent_encoded_path_segment: &'a str) -> Result<(), PathSegmentsParseError>
 	{
 		use PathSegmentsParseError::*;
 		
-		let path_segment = PathSegment::decode_percent_encoded_path_segment(percent_encoded_path_segment_utf8_bytes).map_err(PathSegmentParse)?;
+		let path_segment = PathSegment::decode_percent_encoded_path_segment(percent_encoded_path_segment).map_err(PathSegmentParse)?;
 		self.0.try_reserve_push(path_segment).map_err(OutOfMemory)
 	}
 }

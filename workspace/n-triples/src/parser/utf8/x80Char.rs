@@ -2,8 +2,4 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-#[inline(always)]
-pub(crate) fn decode_next_percent_encoded_utf8(remaining_bytes: &mut &[u8]) -> Result<(char, Utf8CharacterLength), InvalidUtf8ParseError<PercentDecodeError>>
-{
-	PercentEncodedByteProvider::decode_next_percent_encoded_utf8(remaining_bytes)
-}
+const x80Char: char = x80 as char;

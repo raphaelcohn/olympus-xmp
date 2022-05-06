@@ -26,5 +26,5 @@ ietf-bcp-47-language-tag-database = { version = "^0.0.0", path = "../ietf-bcp-47
 arrayvec = { version = "0.7.0", features = ["std", "serde"] }
 either = { version = "1.6.1", features = ["use_std", "serde"] }
 unroll = "0.1.5"
-memchr = "2.4.1"
+memchr = "2.5.0"
 swiss-army-knife = "^0.0.37"

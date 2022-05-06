@@ -147,11 +147,11 @@ impl<'a> Host<'a>
 	/// `dec-octet      = DIGIT  / %x31-39 DIGIT / "1" 2DIGIT / "2" %x30-34 DIGIT / "25" %x30-35` (ie `0-9 | 10-99 | 100-199 | 200-249 | 250-255`).
 	/// `iunreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~" / ucschar`.
 	#[inline(always)]
-	fn parse(scheme_specific_parsing_rule: &SchemeSpecificParsingRule, ihost_and_port_bytes: &'a [u8]) -> Result<(Self, &'a [u8]), HostParseError>
+	fn parse(scheme_specific_parsing_rule: &SchemeSpecificParsingRule, ihost_and_port_string: &'a str) -> Result<(Self, &'a [u8]), HostParseError>
 	{
 		use HostParseError::*;
 		
-		let length = ihost_and_port_bytes.len();
+		let length = ihost_and_port_string.len();
 		
 		if length == 0
 		{
@@ -162,7 +162,7 @@ impl<'a> Host<'a>
 			}
 			
 			use EmptyHostNameRule::*;
-			return match scheme_specific_parsing_rule.authority_rule.empty_host_name_rule
+			return match scheme_specific_parsing_rule.empty_host_name_rule()
 			{
 				ConvertsToLocalhost => empty(HostName::localhost),
 				
@@ -171,6 +171,8 @@ impl<'a> Host<'a>
 				Denied => Err(AnEmptyHostNameIsNotPermittedForThisScheme),
 			}
 		}
+		
+		let ihost_and_port_bytes = ihost_and_port_string.as_bytes();
 		
 		if ihost_and_port_bytes.get_unchecked_value_safe(0) == OpenSquareBracket
 		{
@@ -214,7 +216,7 @@ impl<'a> Host<'a>
 					}
 				}
 				
-				_ => Self::parse_name_lower_case(ihost_and_port_bytes),
+				_ => Self::parse_name::<true>(ihost_and_port_string),
 			}
 		}
 		
@@ -226,35 +228,28 @@ impl<'a> Host<'a>
 			let (possible_octet0_byte1, is_period_so_is_either_an_internet_protocol_version_4_address_or_invalid_ireg_name) = InternetProtocolVersion4AddressParser::get_byte_and_check_if_it_is_period_index_1(ihost_and_port_bytes);
 			if is_period_so_is_either_an_internet_protocol_version_4_address_or_invalid_ireg_name
 			{
-				return Self::construct_internet_protocol_version_4_address_or_fallback_to_parse_name(ihost_and_port_bytes, InternetProtocolVersion4AddressParser::parse_knowing_octet_1_is_0_to_9(ihost_and_port_bytes))
+				return Self::construct_internet_protocol_version_4_address_or_fallback_to_parse_name(ihost_and_port_string, InternetProtocolVersion4AddressParser::parse_knowing_octet_1_is_0_to_9(ihost_and_port_bytes))
 			}
 			
 			let (possible_octet0_byte2, is_period_so_is_either_an_internet_protocol_version_4_address_or_invalid_ireg_name) = InternetProtocolVersion4AddressParser::get_byte_and_check_if_it_is_period_index_2(ihost_and_port_bytes);
 			if is_period_so_is_either_an_internet_protocol_version_4_address_or_invalid_ireg_name
 			{
-				return Self::construct_internet_protocol_version_4_address_or_fallback_to_parse_name(ihost_and_port_bytes, InternetProtocolVersion4AddressParser::parse_knowing_octet_1_is_10_to_99(ihost_and_port_bytes, possible_octet0_byte1))
+				return Self::construct_internet_protocol_version_4_address_or_fallback_to_parse_name(ihost_and_port_string, InternetProtocolVersion4AddressParser::parse_knowing_octet_1_is_10_to_99(ihost_and_port_bytes, possible_octet0_byte1))
 			}
 			
 			if InternetProtocolVersion4AddressParser::get_byte_and_check_if_it_is_period_index_3(ihost_and_port_bytes)
 			{
-				return Self::construct_internet_protocol_version_4_address_or_fallback_to_parse_name(ihost_and_port_bytes, InternetProtocolVersion4AddressParser::parse_knowing_octet_1_is_100_to_255(ihost_and_port_bytes, possible_octet0_byte1, possible_octet0_byte2))
+				return Self::construct_internet_protocol_version_4_address_or_fallback_to_parse_name(ihost_and_port_string, InternetProtocolVersion4AddressParser::parse_knowing_octet_1_is_100_to_255(ihost_and_port_bytes, possible_octet0_byte1, possible_octet0_byte2))
 			}
 		}
 		
-		Self::parse_name(ihost_and_port_bytes)
+		Self::parse_name::<false>(ihost_and_port_string)
 	}
 	
 	#[inline(always)]
-	fn parse_name_lower_case(ihost_and_port_bytes: &'a [u8]) -> Result<(Self, &'a [u8]), HostParseError>
+	fn parse_name<const to_ascii_lower_case: bool>(ihost_and_port_string: &'a str) -> Result<(Self, &'a [u8]), HostParseError>
 	{
-		let (host_name, port_bytes_including_colon) = HostName::parse_name_lower_case(ihost_and_port_bytes)?;
-		Ok((Host::Name(host_name), port_bytes_including_colon))
-	}
-	
-	#[inline(always)]
-	fn parse_name(ihost_and_port_bytes: &'a [u8]) -> Result<(Self, &'a [u8]), HostParseError>
-	{
-		let (host_name, port_bytes_including_colon) = HostName::parse(ihost_and_port_bytes)?;
+		let (host_name, port_bytes_including_colon) = HostName::parse::<to_ascii_lower_case>(ihost_and_port_string)?;
 		Ok((Host::Name(host_name), port_bytes_including_colon))
 	}
 	
@@ -300,7 +295,7 @@ impl<'a> Host<'a>
 		let from_index = length - slice_length;
 		let slice = ihost_and_port_bytes.get_unchecked_range_safe(from_index .. );
 		
-		match memrchr(CloseSquareBracket, slice)
+		match slice.memrchr(CloseSquareBracket)
 		{
 			None => return Err(HostParseError::IpLiteralIsNotClosedBySquareBracket),
 			
@@ -343,13 +338,13 @@ impl<'a> Host<'a>
 	}
 	
 	#[inline(always)]
-	fn construct_internet_protocol_version_4_address_or_fallback_to_parse_name(ihost_and_port_bytes: &'a [u8], result: Result<(Ipv4Addr, &'a [u8]), InternetProtocolVersion4AddressParseError>) -> Result<(Self, &'a [u8]), HostParseError>
+	fn construct_internet_protocol_version_4_address_or_fallback_to_parse_name(ihost_and_port_string: &'a str, result: Result<(Ipv4Addr, &'a [u8]), InternetProtocolVersion4AddressParseError>) -> Result<(Self, &'a [u8]), HostParseError>
 	{
 		match result
 		{
 			Ok(inner) => Self::construct_internet_protocol_version_4_address_common(inner),
 			
-			Err(_) => Self::parse_name(ihost_and_port_bytes)
+			Err(_) => Self::parse_name(ihost_and_port_string)
 		}
 	}
 	

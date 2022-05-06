@@ -85,7 +85,7 @@ impl<'a> UnfoldedLinesIterator<'a>
 	
 	fn next_line_feed_index(&mut self) -> Option<usize>
 	{
-		memchr(LineFeed, self.buffer)
+		self.buffer.memchr(LineFeed)
 	}
 	
 	fn empty_buffer(&mut self) -> &'a str

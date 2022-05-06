@@ -8,7 +8,6 @@ use hours_and_minutes::Hour;
 use hours_and_minutes::Minute;
 use hours_and_minutes::HourMinute;
 use hours_and_minutes::TimeZone;
-use memchr::memchr3;
 use std::convert::TryFrom;
 use std::error;
 use std::fmt;

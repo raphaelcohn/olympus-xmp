@@ -2,7 +2,8 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-pub(super) type Utf8Sequence3 = [u8; 3];
+/// UTF-8 sequence of 3 bytes.
+pub type Utf8Sequence3 = [u8; 3];
 
 impl Utf8Sequence for Utf8Sequence3
 {
@@ -33,12 +34,6 @@ impl Utf8Sequence for Utf8Sequence3
 	}
 	
 	#[inline(always)]
-	fn slice_length<BP: ByteProvider>() -> NonZeroUsize
-	{
-		BP::ThreeSliceLength
-	}
-	
-	#[inline(always)]
 	fn try_into_char(self) -> Result<char, CharTryFromError>
 	{
 		char::try_from(self.into_raw_unicode_code_point())
@@ -48,6 +43,38 @@ impl Utf8Sequence for Utf8Sequence3
 	unsafe fn unchecked_into_char(self) -> char
 	{
 		char::from_u32_unchecked(self.into_raw_unicode_code_point())
+	}
+	
+	#[inline(always)]
+	fn encode_character(character: char) -> Self
+	{
+		Self::encode_u32(character as u32)
+	}
+	
+	#[inline(always)]
+	fn encode_u32(code: u32) -> Self
+	{
+		[
+			(code >> Shift12 & x0F) as u8 | TAG_THREE_B,
+			(code >> Shift6 & x3F) as u8 | TAG_CONT,
+			(code & x3F) as u8 | TAG_CONT
+		]
+	}
+	
+	#[inline(always)]
+	fn write_unchecked(self, to: NonNull<u8>)
+	{
+		let pointer = to.as_ptr().cast::<Self>();
+		unsafe { pointer.write(self) }
+	}
+}
+
+impl const Utf8SequenceCrate for Utf8Sequence3
+{
+	#[inline(always)]
+	fn slice_length<BP: ByteProvider>() -> NonZeroUsize
+	{
+		BP::ThreeSliceLength
 	}
 }
 

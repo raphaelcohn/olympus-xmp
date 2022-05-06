@@ -6,7 +6,6 @@ use super::XmpAttributeValue;
 use super::XmpAttributeValueParseError;
 use gcd::binary_u32;
 use gcd::binary_u64;
-use memchr::memchr;
 use std::cmp::Ordering;
 use std::error;
 use std::fmt;
@@ -23,6 +22,7 @@ use std::str::FromStr;
 use swiss_army_knife::a_to_z::Slash;
 use swiss_army_knife::get_unchecked::AsUsizeRange;
 use swiss_army_knife::get_unchecked::GetUnchecked;
+use swiss_army_knife::memchr::MemoryCharacter;
 use swiss_army_knife::non_zero::new_non_zero_u32;
 
 

@@ -2,7 +2,8 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-pub(super) type Utf8Sequence1 = [u8; 1];
+/// UTF-8 sequence of 1 byte.
+pub type Utf8Sequence1 = [u8; 1];
 
 impl Utf8Sequence for Utf8Sequence1
 {
@@ -20,19 +21,13 @@ impl Utf8Sequence for Utf8Sequence1
 	#[inline(always)]
 	fn is(first: u8) -> bool
 	{
-		first & 0x80 == 0x00
+		first & x80 == 0x00
 	}
 	
 	#[inline(always)]
 	fn into_raw_unicode_code_point(self) -> u32
 	{
 		self[0] as u32
-	}
-	
-	#[inline(always)]
-	fn slice_length<BP: ByteProvider>() -> NonZeroUsize
-	{
-		BP::OneSliceLength
 	}
 	
 	#[inline(always)]
@@ -45,6 +40,36 @@ impl Utf8Sequence for Utf8Sequence1
 	unsafe fn unchecked_into_char(self) -> char
 	{
 		char::from_u32_unchecked(self.into_raw_unicode_code_point())
+	}
+	
+	#[inline(always)]
+	fn encode_character(character: char) -> Self
+	{
+		Self::encode_u32(character as u32)
+	}
+	
+	#[inline(always)]
+	fn encode_u32(code: u32) -> Self
+	{
+		[
+			code as u8
+		]
+	}
+	
+	#[inline(always)]
+	fn write_unchecked(self, to: NonNull<u8>)
+	{
+		let pointer = to.as_ptr().cast::<Self>();
+		unsafe { pointer.write(self) }
+	}
+}
+
+impl const Utf8SequenceCrate for Utf8Sequence1
+{
+	#[inline(always)]
+	fn slice_length<BP: ByteProvider>() -> NonZeroUsize
+	{
+		BP::OneSliceLength
 	}
 }
 

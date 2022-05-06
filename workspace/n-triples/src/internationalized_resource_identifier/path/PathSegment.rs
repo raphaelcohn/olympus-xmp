@@ -131,7 +131,7 @@ impl<'a> Display for PathSegment<'a>
 impl<'a> PercentEncodable<'a> for PathSegment<'a>
 {
 	#[inline(always)]
-	fn as_str(&self) -> &'a str
+	fn as_str(&self) -> &str
 	{
 		self.0.as_ref()
 	}
@@ -155,11 +155,11 @@ impl<'a> PercentEncodable<'a> for PathSegment<'a>
 impl<'a> PathSegment<'a>
 {
 	#[inline(always)]
-	fn decode_percent_encoded_path_segment(mut percent_encoded_path_segment_utf8_bytes: &'a [u8]) -> Result<Self, PathSegmentParseError>
+	fn decode_percent_encoded_path_segment(mut percent_encoded_path_segment: &'a str) -> Result<Self, PathSegmentParseError>
 	{
-		let remaining_percent_encoded_path_segment_utf8_bytes = &mut percent_encoded_path_segment_utf8_bytes;
-		let string = StringSoFar::new_stack(remaining_percent_encoded_path_segment_utf8_bytes);
-		Self::decode_percent_encoded_path_segment_common(string, remaining_percent_encoded_path_segment_utf8_bytes, Self)
+		let percent_encoded_path_segment = &mut percent_encoded_path_segment;
+		let string = StringSoFar::new_stack(percent_encoded_path_segment);
+		Self::decode_percent_encoded_path_segment_common(string, percent_encoded_path_segment, Self)
 	}
 	
 	/// [RFC 3987, Section 2.2](https://datatracker.ietf.org/doc/html/rfc3987#section-2.2).
@@ -167,25 +167,25 @@ impl<'a> PathSegment<'a>
 	/// `isegment    = *ipchar`.
 	/// `isegment-nz = 1*ipchar`.
 	#[inline(always)]
-	fn decode_percent_encoded_path_segment_common<R>(mut string: StringSoFar<'a>, remaining_percent_encoded_path_segment_utf8_bytes: &mut &'a [u8], constructor: impl FnOnce(Cow<'a, str>) -> R) -> Result<R, PathSegmentParseError>
+	fn decode_percent_encoded_path_segment_common<R>(mut string: StringSoFar<'a>, remaining: &mut &'a str, constructor: impl FnOnce(Cow<'a, str>) -> R) -> Result<R, PathSegmentParseError>
 	{
 		use Utf8CharacterLength::*;
 		
 		loop
 		{
-			match StringSoFar::decode_next_utf8_validity_already_checked(remaining_percent_encoded_path_segment_utf8_bytes)
+			match remaining.decode_next_utf8_validity_already_checked()
 			{
 				None => break,
 				
-				Some(character) => match character
+				Some(Utf8SequenceAndCharacter(utf8_sequence, character)) => match character
 				{
-					ipchar_iunreserved_without_ucschar!() => string.push(character, One)?,
-					ipchar_iunreserved_with_ucschar_2!()  => string.push(character, Two)?,
-					ipchar_iunreserved_with_ucschar_3!()  => string.push(character, Three)?,
-					ipchar_iunreserved_with_ucschar_4!()  => string.push(character, Four)?,
-					ipchar_pct_encoded!()                 => string.push_forcing_heap_percent_encoded::<false>(remaining_percent_encoded_path_segment_utf8_bytes)?,
-					ipchar_sub_delims!()                  => string.push(character, One)?,
-					ipchar_other!()                       => string.push(character, One)?,
+					ipchar_iunreserved_without_ucschar!() => string.push_ascii_character(character)?,
+					ipchar_iunreserved_with_ucschar_2!()  => string.push_utf8_sequence_enum_2(utf8_sequence)?,
+					ipchar_iunreserved_with_ucschar_3!()  => string.push_utf8_sequence_enum_3(utf8_sequence)?,
+					ipchar_iunreserved_with_ucschar_4!()  => string.push_utf8_sequence_enum_4(utf8_sequence)?,
+					ipchar_pct_encoded!()                 => string.push_forcing_heap_percent_encoded::<false>(remaining)?,
+					ipchar_sub_delims!()                  => string.push_ascii_character(character)?,
+					ipchar_other!()                       => string.push_ascii_character(character)?,
 					
 					_ => return Err(PathSegmentParseError::InvalidCharacter(character)),
 				}

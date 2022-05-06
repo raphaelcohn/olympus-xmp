@@ -44,7 +44,7 @@ impl UnknownStringVariantParseError
 		let (expected_index, expected_prefix, needle) = Self::expected_prefix_and_needle(prefix_suffixed_with_needle);
 		
 		let bytes = raw.as_bytes();
-		match memrchr(needle, bytes)
+		match bytes.memrchr(needle)
 		{
 			Some(actual_index) =>
 			{

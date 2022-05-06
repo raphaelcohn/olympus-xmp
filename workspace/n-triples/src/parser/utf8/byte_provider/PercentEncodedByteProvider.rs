@@ -63,17 +63,6 @@ impl ByteProvider for PercentEncodedByteProvider
 
 impl PercentEncodedByteProvider
 {
-	/// Assumes that the initial `%` (percent sign) has already been removed from the `remaining_bytes` buffer.
-	#[inline(always)]
-	pub(super) fn decode_next_percent_encoded_utf8(remaining_percent_encoded_bytes: &mut &[u8]) -> Result<(char, Utf8CharacterLength), InvalidUtf8ParseError<PercentDecodeError>>
-	{
-		let bytes = *remaining_percent_encoded_bytes;
-		
-		let (character, utf8_character_length, remaining_bytes) = Self::decode_internal(bytes)?;
-		*remaining_percent_encoded_bytes = remaining_bytes;
-		Ok((character, utf8_character_length))
-	}
-	
 	#[inline(always)]
 	fn percent_then_byte<const decoded_byte_number: Utf8CharacterLength>(bytes: &[u8]) -> Result<u8, PercentDecodeError>
 	{

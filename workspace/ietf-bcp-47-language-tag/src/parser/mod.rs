@@ -2,7 +2,6 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use memchr::memchr;
 use std::error;
 use std::fmt;
 use std::fmt::Debug;
@@ -20,6 +19,7 @@ use super::restricted_byte::RestrictedByte;
 use super::restricted_byte::Singleton;
 use swiss_army_knife::a_to_z::Hyphen;
 use swiss_army_knife::get_unchecked::GetUnchecked;
+use swiss_army_knife::memchr::MemoryCharacter;
 
 
 #[macro_use]

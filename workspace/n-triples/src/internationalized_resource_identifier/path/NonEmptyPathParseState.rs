@@ -23,24 +23,26 @@ impl<'a, F: FnOnce(NonEmptyPath<'a, PathDepth>) -> Hierarchy<'a, PathDepth>, con
 	}
 	
 	#[inline(always)]
-	fn parse(mut self, first_character_of_first_path_segment: (bool, char, Utf8CharacterLength), remaining_utf8_bytes: &'a [u8]) -> Result<(Hierarchy<'a, PathDepth>, ParseNextAfterHierarchy<'a>), NonEmptyPathParseError>
+	fn parse(mut self, first_character_of_first_path_segment: (bool, Utf8SequenceEnum), remaining: &'a str) -> Result<(Hierarchy<'a, PathDepth>, ParseNextAfterHierarchy<'a>), NonEmptyPathParseError>
 	{
-		let (first_non_empty_path_segment, remaining_utf8_bytes) = match memchr3(QuestionMark, Hash, Slash, remaining_utf8_bytes)
+		let (first_non_empty_path_segment, remaining_utf8_bytes) = match remaining.memchr3(QuestionMark, Hash, Slash)
 		{
 			// everything from `character` to the end is the first path segment.
 			None =>
 			{
-				let first_non_empty_path_segment = NonEmptyPathSegment::decode_percent_encoded_path_segment_remainder(first_character_of_first_path_segment, remaining_utf8_bytes)?;
+				let remaining_percent_encoded_path_segment = remaining;
+				let first_non_empty_path_segment = NonEmptyPathSegment::decode_percent_encoded_path_segment_remainder(first_character_of_first_path_segment, remaining_percent_encoded_path_segment)?;
 				return self.finish(first_non_empty_path_segment, ParseNextAfterHierarchy::NoQueryNoFragment)
 			}
 			
 			// everything from `character` to the index is the first path segment.
 			Some(index) =>
 			{
-				let first_non_empty_path_segment = NonEmptyPathSegment::decode_percent_encoded_path_segment_remainder(first_character_of_first_path_segment, remaining_utf8_bytes.before_index(index))?;
-				let after_first_non_empty_path_segment_bytes = remaining_utf8_bytes.after_index(index);
+				let remaining_percent_encoded_path_segment = remaining.before_index(index);
+				let first_non_empty_path_segment = NonEmptyPathSegment::decode_percent_encoded_path_segment_remainder(first_character_of_first_path_segment, remaining_percent_encoded_path_segment)?;
+				let after_first_non_empty_path_segment_bytes = remaining.after_index(index);
 				
-				match remaining_utf8_bytes.get_unchecked_value_safe(index)
+				match remaining.get_unchecked_value_safe(index)
 				{
 					QuestionMark => return self.finish(first_non_empty_path_segment, ParseNextAfterHierarchy::query(after_first_non_empty_path_segment_bytes)),
 					

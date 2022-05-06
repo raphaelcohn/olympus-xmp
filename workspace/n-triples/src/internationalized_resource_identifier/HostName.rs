@@ -11,7 +11,7 @@ pub struct HostName<'a>(Cow<'a, str>);
 impl<'a> PercentEncodable<'a> for HostName<'a>
 {
 	#[inline(always)]
-	fn as_str(&self) -> &'a str
+	fn as_str(&self) -> &str
 	{
 		self.0.as_ref()
 	}
@@ -147,75 +147,43 @@ impl<'a> HostName<'a>
 {
 	/// `ireg-name = *( iunreserved / pct-encoded / sub-delims )`.
 	#[inline(always)]
-	fn parse_name_lower_case(mut remaining_utf8_bytes: &'a [u8]) -> Result<(Self, &'a [u8]), HostNameParseError>
+	fn parse<const to_ascii_lower_case: bool>(mut ihost_and_port_string: &'a str) -> Result<(Self, &'a [u8]), HostNameParseError>
 	{
 		use HostNameParseError::*;
 		
-		let remaining_utf8_bytes = &mut remaining_utf8_bytes;
+		let remaining_utf8_bytes = &mut ihost_and_port_string;
 		let mut string = StringSoFar::new_stack(remaining_utf8_bytes);
 		
 		use Utf8CharacterLength::*;
 		let port_bytes_including_colon = loop
 		{
-			match StringSoFar::decode_next_utf8_validity_already_checked(remaining_utf8_bytes)
+			match remaining_utf8_bytes.decode_next_utf8_validity_already_checked()
 			{
 				None => break b"" as &[u8],
 				
-				Some(character) => match character
+				Some(Utf8SequenceAndCharacter(utf8_sequence, character)) => match character
 				{
 					ColonChar                                                                         => break
 					{
 						let bytes = *remaining_utf8_bytes;
-						unsafe { from_raw_parts((bytes).rewind_buffer(One), One.add_from_bytes(bytes)) }
+						unsafe { from_raw_parts((bytes).rewind_buffer(One), One.add_from_str(bytes)) }
 					},
 					
-					AChar ..= ZChar                                                                   => string.push_forcing_heap_ascii_to_lower_case(character)?,
-					aChar ..= zChar | DIGIT!() | HyphenChar | PeriodChar | UnderscoreChar | TildeChar => string.push_ascii(character)?,
-					iunreserved_with_ucschar_2!()                                                     => string.push(character, Two)?,
-					iunreserved_with_ucschar_3!()                                                     => string.push(character, Three)?,
-					iunreserved_with_ucschar_4!()                                                     => string.push(character, Four)?,
-					pct_encoded!()                                                                    => string.push_forcing_heap_percent_encoded::<true>(remaining_utf8_bytes)?,
-					sub_delims!()                                                                     => string.push(character, One)?,
-					
-					_ => return Err(InvalidCharacterInHostName(character)),
-				},
-			}
-		};
-		
-		Ok((Self(string.to_cow()), port_bytes_including_colon))
-	}
-	
-	/// `ireg-name = *( iunreserved / pct-encoded / sub-delims )`.
-	#[inline(always)]
-	fn parse(mut remaining_utf8_bytes: &'a [u8]) -> Result<(Self, &'a [u8]), HostNameParseError>
-	{
-		use HostNameParseError::*;
-		
-		let remaining_utf8_bytes = &mut remaining_utf8_bytes;
-		let mut string = StringSoFar::new_stack(remaining_utf8_bytes);
-		
-		use Utf8CharacterLength::*;
-		let port_bytes_including_colon = loop
-		{
-			match StringSoFar::decode_next_utf8_validity_already_checked(remaining_utf8_bytes)
-			{
-				None => break b"" as &[u8],
-				
-				Some(character) => match character
-				{
-					ColonChar                                                                         => break
+					AChar ..= ZChar                                                                   => if to_ascii_lower_case
 					{
-						let bytes = *remaining_utf8_bytes;
-						unsafe { from_raw_parts((bytes).rewind_buffer(One), One.add_from_bytes(bytes)) }
+						string.push_ascii_character(character)?
+					}
+					else
+					{
+						string.push_forcing_heap_ascii_character::<true>(character)?
 					},
 					
-					AChar ..= ZChar                                                                   => string.push_ascii(character)?,
-					aChar ..= zChar | DIGIT!() | HyphenChar | PeriodChar | UnderscoreChar | TildeChar => string.push_ascii(character)?,
-					iunreserved_with_ucschar_2!()                                                     => string.push(character, Two)?,
-					iunreserved_with_ucschar_3!()                                                     => string.push(character, Three)?,
-					iunreserved_with_ucschar_4!()                                                     => string.push(character, Four)?,
+					aChar ..= zChar | DIGIT!() | HyphenChar | PeriodChar | UnderscoreChar | TildeChar => string.push_ascii_character(character)?,
+					iunreserved_with_ucschar_2!()                                                     => string.push_utf8_sequence_enum_2(utf8_sequence)?,
+					iunreserved_with_ucschar_3!()                                                     => string.push_utf8_sequence_enum_3(utf8_sequence)?,
+					iunreserved_with_ucschar_4!()                                                     => string.push_utf8_sequence_enum_4(utf8_sequence)?,
 					pct_encoded!()                                                                    => string.push_forcing_heap_percent_encoded::<false>(remaining_utf8_bytes)?,
-					sub_delims!()                                                                     => string.push(character, One)?,
+					sub_delims!()                                                                     => string.push_ascii_character(character)?,
 					
 					_ => return Err(InvalidCharacterInHostName(character)),
 				},

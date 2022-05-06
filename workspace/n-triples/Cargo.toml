@@ -20,5 +20,5 @@ version = "0.0.0"
 
 [dependencies]
 chrono = "0.4.19"
-memchr = "2.4.1"
+memchr = "2.5.0"
 swiss-army-knife = {  version = "^0.0.38", path = "/Users/raph/Documents/repositories/lemonrock/linux-support/workspace/swiss-army-knife" }

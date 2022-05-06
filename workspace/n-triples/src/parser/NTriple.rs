@@ -129,7 +129,7 @@ impl<'a> NTriple<'a>
 		{
 			match get_0(&mut remaining_bytes)
 			{
-				Some(Hash) => return Ok(memchr(LineFeed, remaining_bytes).map(|index| remaining_bytes.after_index(index))),
+				Some(Hash) => return Ok(remaining_bytes.memchr(LineFeed).map(|index| remaining_bytes.after_index(index))),
 				
 				Some(LineFeed) => return Ok(Some(remaining_bytes)),
 				

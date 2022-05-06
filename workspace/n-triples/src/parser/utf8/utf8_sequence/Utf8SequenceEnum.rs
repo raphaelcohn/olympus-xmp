@@ -2,17 +2,43 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+/// An UTF-8 sequence.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 #[repr(u8)]
-pub(super) enum Utf8SequenceEnum
+pub enum Utf8SequenceEnum
 {
+	#[allow(missing_docs)]
 	One(Utf8Sequence1) = One.into(),
 	
+	#[allow(missing_docs)]
 	Two(Utf8Sequence2) = Two.into(),
 	
+	#[allow(missing_docs)]
 	Three(Utf8Sequence3) = Three.into(),
 	
+	#[allow(missing_docs)]
 	Four(Utf8Sequence4) = Four.into(),
+}
+
+impl const Default for Utf8SequenceEnum
+{
+	#[inline(always)]
+	fn default() -> Self
+	{
+		Utf8SequenceEnum::One([0x00])
+	}
+}
+
+impl const From<char> for Utf8SequenceEnum
+{
+	#[inline(always)]
+	fn from(character: char) -> Self
+	{
+		use crate::parser::utf8::encode_utf8::encode_utf8_callback;
+		use Utf8SequenceEnum::*;
+		
+		encode_utf8_callback(character, (), |_, utf8_sequence_1| One(utf8_sequence_1), |_, utf8_sequence_2| Two(utf8_sequence_2), |_, utf8_sequence_3| Three(utf8_sequence_3), |_, utf8_sequence_4| Four(utf8_sequence_4))
+	}
 }
 
 impl const From<Utf8Sequence1> for Utf8SequenceEnum
@@ -60,7 +86,7 @@ impl Utf8SequenceEnum
 	}
 	
 	#[inline(always)]
-	const fn utf8_character_length(&self) -> Utf8CharacterLength
+	pub const fn utf8_character_length(&self) -> Utf8CharacterLength
 	{
 		unsafe { transmute(discriminant(self)) }
 	}

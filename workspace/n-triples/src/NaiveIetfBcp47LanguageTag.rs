@@ -142,9 +142,9 @@ impl<'a> NaiveIetfBcp47LanguageTag<'a>
 				{
 					Hyphen => break true,
 					
-					A ..= Z => string.push_forcing_heap_ascii_to_lower_case(byte as char)?,
+					A ..= Z => string.push_forcing_heap_ascii_byte::<true>(byte)?,
 					
-					a ..= z => string.push_ascii(byte as char)?,
+					a ..= z => string.push_ascii_byte(byte)?,
 					
 					_ => return Err(NaiveIetfBcp47LanguageTagParseError::InvalidCharacter(byte))
 				}
@@ -167,11 +167,11 @@ impl<'a> NaiveIetfBcp47LanguageTag<'a>
 				{
 					Hyphen => break true,
 					
-					_0 ..= _9 => string.push_ascii(byte as char)?,
+					_0 ..= _9 => string.push_ascii_byte(byte)?,
 					
-					A ..= Z => string.push_forcing_heap_ascii_to_lower_case(byte as char)?,
+					A ..= Z => string.push_forcing_heap_ascii_byte::<true>(byte)?,
 					
-					a ..= z => string.push_ascii(byte as char)?,
+					a ..= z => string.push_ascii_byte(byte)?,
 					
 					_ => return Err(NaiveIetfBcp47LanguageTagParseError::InvalidCharacter(byte))
 				}

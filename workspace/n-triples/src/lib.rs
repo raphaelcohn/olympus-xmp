@@ -50,7 +50,6 @@
 #![feature(once_cell)]
 #![feature(arbitrary_enum_discriminant)]
 
-
 //! #n-triples.
 //!
 //! Domain model and parser for RDF N-triples [version 1.1](https://www.w3.org/TR/n-triples/).
@@ -66,7 +65,8 @@ use parser::NTriplesParseError;
 use parser::Object;
 use parser::StringLiteral;
 use parser::StringSoFar;
-use parser::utf8::decode_next_utf8;
+use parser::utf8::UnvalidatedDecodeUtf8Sequences;
+use parser::utf8::utf8_sequence::Utf8SequenceAndCharacter;
 use predicate::Predicate;
 use std::borrow::Cow;
 use std::collections::HashMap;

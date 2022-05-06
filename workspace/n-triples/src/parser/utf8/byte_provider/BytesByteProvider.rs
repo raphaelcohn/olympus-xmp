@@ -61,39 +61,10 @@ impl ByteProvider for BytesByteProvider
 impl BytesByteProvider
 {
 	#[inline(always)]
-	pub(super) fn decode_next_utf8_validity_already_checked(remaining_utf8_bytes: &mut &[u8]) -> Option<(char, Utf8SequenceEnum)>
-	{
-		let bytes = *remaining_utf8_bytes;
-		
-		if bytes.is_empty()
-		{
-			return None
-		}
-		
-		let (character, utf8_sequence, remaining_bytes) = Self::decode_internal_utf8_validity_already_checked(bytes);
-		*remaining_utf8_bytes = remaining_bytes;
-		Some((character, utf8_sequence))
-	}
-	
-	#[inline(always)]
-	pub(super) fn decode_next_utf8(remaining_utf8_bytes: &mut &[u8]) -> Result<Option<(char, Utf8CharacterLength)>, InvalidUtf8ParseError<Infallible>>
-	{
-		let bytes = *remaining_utf8_bytes;
-		
-		if bytes.is_empty()
-		{
-			return Ok(None)
-		}
-		
-		let (character, utf8_character_length, remaining_bytes) = Self::decode_internal(*remaining_utf8_bytes)?;
-		*remaining_utf8_bytes = remaining_bytes;
-		Ok(Some((character, utf8_character_length)))
-	}
-	
-	#[inline(always)]
 	fn get_byte<const decoded_byte_number: Utf8CharacterLength>(bytes: &[u8]) -> u8
 	{
-		let index: usize = decoded_byte_number.into() - 1;
+		let into: usize = decoded_byte_number.into();
+		let index = into - 1;
 		debug_assert!(index < bytes.len());
 		
 		bytes.get_unchecked_value_safe(index)

@@ -19,24 +19,6 @@ pub enum InvalidUtf8ParseError<E: error::Error>
 	Inner(E),
 }
 
-impl From<Infallible> for InvalidUtf8ParseError<Infallible>
-{
-	#[inline(always)]
-	fn from(cause: Infallible) -> Self
-	{
-		InvalidUtf8ParseError::Inner(cause)
-	}
-}
-
-impl From<PercentDecodeError> for InvalidUtf8ParseError<PercentDecodeError>
-{
-	#[inline(always)]
-	fn from(cause: PercentDecodeError) -> Self
-	{
-		InvalidUtf8ParseError::Inner(cause)
-	}
-}
-
 impl<E: error::Error> From<CharTryFromError> for InvalidUtf8ParseError<E>
 {
 	#[inline(always)]

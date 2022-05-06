@@ -26,5 +26,5 @@ json = "0.12.4"
 swiss-army-knife = "^0.0.37"
 
 [dependencies]
-memchr = "2.4.1"
+memchr = "2.5.0"
 swiss-army-knife = "^0.0.37"

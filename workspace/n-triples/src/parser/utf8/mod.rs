@@ -2,21 +2,25 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+use byte_provider::ByteProvider;
 pub use byte_provider::InvalidUtf8ParseError;
 pub use byte_provider::PercentDecodeError;
 use byte_provider::BytesByteProvider;
 use byte_provider::PercentEncodedByteProvider;
-use crate::x7F;
-use encode_utf8::EncodeUtf8;
+use encode_utf8::encode_utf8_callback;
 use encode_utf8::PercentEncodeUtf8;
-use encode_utf8::TryReserveEncodeUtf8;
-use encode_utf8::UnreservedEncodeUtf8;
+use utf8_sequence::Utf8Sequence;
+use utf8_sequence::Utf8SequenceAndCharacter;
 use utf8_sequence::Utf8SequenceEnum;
 use std::borrow::Cow;
 use std::collections::TryReserveError;
 use std::convert::Infallible;
 use std::fmt::Debug;
+use std::mem::transmute;
 use std::num::NonZeroUsize;
+use swiss_army_knife::a_to_z::A;
+use swiss_army_knife::a_to_z::Z;
+use swiss_army_knife::non_zero::new_non_null;
 use swiss_army_knife::non_zero::new_non_zero_usize;
 
 
@@ -26,30 +30,17 @@ mod byte_provider;
 mod encode_utf8;
 
 
-mod utf8_sequence;
+/// UTF-8 sequence.
+pub mod utf8_sequence;
 
 
-include!("decode_next_percent_encoded_utf8.rs");
-include!("decode_next_utf8.rs");
-include!("decode_next_utf8_validity_already_checked.rs");
-include!("encode_utf8_bytes_1.rs");
-include!("encode_utf8_bytes_2.rs");
-include!("encode_utf8_bytes_3.rs");
-include!("encode_utf8_bytes_4.rs");
-include!("encode_utf8_not_reserving_space.rs");
 include!("encode_utf8_percent_encoded.rs");
-include!("encode_utf8_push_unchecked.rs");
-include!("encode_utf8_reserving_space.rs");
+include!("is_ascii_byte.rs");
 include!("is_ascii_character.rs");
-include!("Shift6.rs");
-include!("Shift12.rs");
-include!("Shift18.rs");
-include!("TAG_CONT.rs");
-include!("TAG_FOUR_B.rs");
-include!("TAG_THREE_B.rs");
-include!("TAG_TWO_B.rs");
+include!("StringUtf8Encoding.rs");
+include!("to_lower_case_ascii_byte.rs");
 include!("Utf8CharacterLength.rs");
-include!("x0F.rs");
-include!("x1F.rs");
-include!("x3F.rs");
-include!("x07.rs");
+include!("x80.rs");
+include!("x80Char.rs");
+include!("UnvalidatedDecodeUtf8Sequences.rs");
+include!("ValidatedDecodeUtf8Sequences.rs");

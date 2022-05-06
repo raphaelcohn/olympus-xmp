@@ -34,7 +34,6 @@
 //! ISO country and country code domain types.
 
 
-use memchr::memrchr;
 use std::convert::TryFrom;
 use std::error;
 use std::fmt;
@@ -49,6 +48,7 @@ use Iso3166Dash1AlphaCountryCode::*;
 use Iso3166Dash1NumericCountryCode::*;
 use swiss_army_knife::a_to_z::A;
 use swiss_army_knife::a_to_z::Z;
+use swiss_army_knife::memchr::MemoryCharacter;
 use swiss_army_knife::get_unchecked::GetUnchecked;
 
 

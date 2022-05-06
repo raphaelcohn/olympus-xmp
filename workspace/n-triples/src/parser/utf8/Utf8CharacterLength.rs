@@ -2,9 +2,10 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+#[allow(missing_docs)]
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 #[repr(u8)]
-pub(crate) enum Utf8CharacterLength
+pub enum Utf8CharacterLength
 {
 	One = 1,
 
@@ -57,9 +58,9 @@ impl const Into<NonZeroUsize> for Utf8CharacterLength
 impl Utf8CharacterLength
 {
 	#[inline(always)]
-	pub(crate) const fn add_from_bytes(self, bytes: &[u8]) -> usize
+	pub(crate) const fn add_from_str(self, remaining_utf8_bytes: &str) -> usize
 	{
-		self.add(bytes.len())
+		self.add(remaining_utf8_bytes.len())
 	}
 	
 	#[inline(always)]

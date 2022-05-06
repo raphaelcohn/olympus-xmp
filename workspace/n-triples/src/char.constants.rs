@@ -4,10 +4,14 @@
 
 const AChar: char = 'A';
 const AtSignChar: char = '@';
+const BackslashChar: char = '\\';
+const CarriageReturnChar: char = 0xD as char;
+const DoubleQuoteChar: char = '"';
 const CloseAngleBracketChar: char = '>';
 const ColonChar: char = ':';
 const HashChar: char = '#';
 const HyphenChar: char = '-';
+const LineFeedChar: char = 0xA as char;
 const PercentChar: char = '%';
 const PeriodChar: char = '.';
 const QuestionMarkChar: char = '?';
@@ -61,7 +65,6 @@ const x5FFFD: char = '\u{5FFFD}';
 const x60000: char = '\u{60000}';
 const x6FFFD: char = '\u{6FFFD}';
 const x70000: char = '\u{70000}';
-const x7F: char = 0x7F as char;
 const x7FFFD: char = '\u{7FFFD}';
 const x80000: char = '\u{80000}';
 const x8FFFD: char = '\u{8FFFD}';

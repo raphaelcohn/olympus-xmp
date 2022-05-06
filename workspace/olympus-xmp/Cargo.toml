@@ -24,7 +24,7 @@ email_address = "0.2.1"
 gcd = "2.1.0"
 ietf-bcp-47-language-tag = { version = "^0.0.0", path = "../ietf-bcp-47-language-tag" }
 iso-3166-1-country = { version = "^0.0.0", path = "../iso-3166-1-country" }
-memchr = "2.4.1"
+memchr = "2.5.0"
 phonenumber = "0.3.1"
 swiss-army-knife = "^0.0.37"
 xml-rs = "0.8"

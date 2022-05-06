@@ -22,7 +22,7 @@ impl<'a, const needle: u8> Iterator for MemchrIterator<'a, needle>
 			Some(bytes) => bytes,
 		};
 		
-		match memchr(needle, bytes)
+		match bytes.memchr(needle)
 		{
 			None =>
 			{

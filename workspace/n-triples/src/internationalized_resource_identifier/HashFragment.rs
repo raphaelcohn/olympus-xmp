@@ -9,7 +9,7 @@ pub struct HashFragment<'a>(Cow<'a, str>);
 impl<'a> PercentEncodable<'a> for HashFragment<'a>
 {
 	#[inline(always)]
-	fn as_str(&self) -> &'a str
+	fn as_str(&self) -> &str
 	{
 		self.0.as_ref()
 	}
@@ -172,38 +172,38 @@ impl<'a> HashFragment<'a>
 {
 	/// `ifragment  = *( ipchar / "/" / "?" )`.
 	#[inline(always)]
-	fn parse(mut remaining_utf8_bytes: &'a [u8], scheme_specific_parsing_rule: &SchemeSpecificParsingRule) -> Result<Self, HashFragmentParseError>
+	fn parse(mut remaining_string: &'a str, scheme_specific_parsing_rule: &SchemeSpecificParsingRule) -> Result<Self, HashFragmentParseError>
 	{
 		use HashFragmentParseError::*;
 		
-		let remaining_utf8_bytes = &mut remaining_utf8_bytes;
+		let remaining_string = &mut remaining_string;
 		
-		if scheme_specific_parsing_rule.hash_fragment_should_not_be_present(remaining_utf8_bytes)
+		if scheme_specific_parsing_rule.hash_fragment_should_not_be_present(remaining_string)
 		{
 			return Err(HashFragmentNotAllowedForScheme)
 		}
 		
-		let mut string = StringSoFar::new_stack(remaining_utf8_bytes);
+		let mut string = StringSoFar::new_stack(remaining_string);
 		
 		loop
 		{
 			use Utf8CharacterLength::*;
 			
-			match StringSoFar::decode_next_utf8_validity_already_checked(remaining_utf8_bytes)
+			match remaining_string.decode_next_utf8_validity_already_checked()
 			{
 				None => break,
 				
-				Some(character) => match character
+				Some(Utf8SequenceAndCharacter(utf8_sequence, character)) => match character
 				{
-					ipchar_iunreserved_without_ucschar!() => string.push(character, One)?,
-					ipchar_iunreserved_with_ucschar_2!()  => string.push(character, Two)?,
-					ipchar_iunreserved_with_ucschar_3!()  => string.push(character, Three)?,
-					ipchar_iunreserved_with_ucschar_4!()  => string.push(character, Four)?,
-					ipchar_pct_encoded!()                 => string.push_forcing_heap_percent_encoded::<false>(remaining_utf8_bytes)?,
-					ipchar_sub_delims!()                  => string.push(character, One)?,
-					ipchar_other!()                       => string.push(character, One)?,
+					ipchar_iunreserved_without_ucschar!() => string.push_ascii_character(character)?,
+					ipchar_iunreserved_with_ucschar_2!()  => string.push_utf8_sequence_enum_2(utf8_sequence)?,
+					ipchar_iunreserved_with_ucschar_3!()  => string.push_utf8_sequence_enum_3(utf8_sequence)?,
+					ipchar_iunreserved_with_ucschar_4!()  => string.push_utf8_sequence_enum_4(utf8_sequence)?,
+					ipchar_pct_encoded!()                 => string.push_forcing_heap_percent_encoded::<false>(remaining_string)?,
+					ipchar_sub_delims!()                  => string.push_ascii_character(character)?,
+					ipchar_other!()                       => string.push_ascii_character(character)?,
 					
-					SlashChar | QuestionMarkChar          => string.push(character, One)?,
+					SlashChar | QuestionMarkChar          => string.push_ascii_character(character)?,
 					
 					_ => return Err(InvalidCharacterInHashFragment(character)),
 				},
