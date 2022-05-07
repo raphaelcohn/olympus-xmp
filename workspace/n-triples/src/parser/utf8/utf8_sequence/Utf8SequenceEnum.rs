@@ -29,7 +29,7 @@ impl const Default for Utf8SequenceEnum
 	}
 }
 
-impl const From<char> for Utf8SequenceEnum
+impl From<char> for Utf8SequenceEnum
 {
 	#[inline(always)]
 	fn from(character: char) -> Self
@@ -82,7 +82,7 @@ impl Utf8SequenceEnum
 	#[inline(always)]
 	pub(super) const fn occupies_more_than_one_byte(&self) -> bool
 	{
-		self.utf8_character_length() != One
+		matches!(self.utf8_character_length(), One)
 	}
 	
 	#[inline(always)]

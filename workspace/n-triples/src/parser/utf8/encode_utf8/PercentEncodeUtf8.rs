@@ -2,6 +2,8 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+use std::mem::transmute;
+
 #[derive(Default, Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub(super) struct PercentEncodeUtf8;
 
@@ -10,41 +12,38 @@ impl PercentEncodeUtf8
 	#[inline(always)]
 	pub(super) fn encode(string: &str, percent_encode_ascii: impl Copy + FnOnce(u8) -> bool) -> Result<Cow<str>, TryReserveError>
 	{
-		let mut bytes = string.as_bytes();
-		
-		let mut index = 0;
-		let bytes_length = bytes.len();
+		let bytes_length = string.len();
 		for index in 0 .. bytes_length
 		{
-			let byte = bytes.get_unchecked_value_safe(index);
+			let byte = string.get_unchecked_value_safe(index);
 			if Utf8Sequence1::is(byte)
 			{
 				if percent_encode_ascii(byte)
 				{
 					// TODO: We get byte again and call percent_encode_ascii() again, unnecessarily.
-					return Self::encode_assuming_remainder_should_be_percent_encoded(index, bytes, percent_encode_ascii)
+					return Self::encode_assuming_remainder_should_be_percent_encoded(index, string, percent_encode_ascii)
 				}
 			}
 			else
 			{
 				// TODO: We get byte again and call do Utf8Sequence1::is() again, unnecessarily.
-				return Self::encode_assuming_remainder_should_be_percent_encoded(index, bytes, percent_encode_ascii)
+				return Self::encode_assuming_remainder_should_be_percent_encoded(index, string, percent_encode_ascii)
 			}
 		}
 		Ok(Cow::Borrowed(string))
 	}
 	
 	#[inline(always)]
-	fn encode_assuming_remainder_should_be_percent_encoded(from_index: usize, bytes: &[u8], percent_encode_ascii: impl Copy + FnOnce(u8) -> bool) -> Result<Cow<str>, TryReserveError>
+	fn encode_assuming_remainder_should_be_percent_encoded(from_index: usize, string: &str, percent_encode_ascii: impl Copy + FnOnce(u8) -> bool) -> Result<Cow<str>, TryReserveError>
 	{
-		let remaining_bytes = bytes.get_unchecked_range_safe(from_index .. );
+		let mut remaining_string = string.get_unchecked_range_safe(from_index .. );
 		
 		let ascii_bytes_length = from_index;
 		
-		let buffer =
+		let mut buffer =
 		{
 			let mut buffer = Vec::new();
-			let maximum_memory_if_every_byte_needs_percent_encoding = remaining_bytes.len() * PercentEncodedUtf8ByteSize;
+			let maximum_memory_if_every_byte_needs_percent_encoding = remaining_string.len() * PercentEncodedUtf8ByteSize;
 			buffer.try_reserve(ascii_bytes_length + maximum_memory_if_every_byte_needs_percent_encoding)?;
 			buffer
 		};
@@ -52,11 +51,11 @@ impl PercentEncodeUtf8
 		let original_pointer =
 		{
 			let copy_to = buffer.as_mut_ptr();
-			unsafe { bytes.as_ptr().copy_to(copy_to, ascii_bytes_length) };
+			unsafe { string.as_ptr().copy_to(copy_to, ascii_bytes_length) };
 			new_non_null(unsafe { copy_to.add(ascii_bytes_length) })
 		};
 		
-		let remaining_utf8_bytes = &mut remaining_bytes;
+		let remaining_utf8_bytes = &mut remaining_string;
 		let mut current_pointer = original_pointer;
 		loop
 		{
@@ -73,7 +72,7 @@ impl PercentEncodeUtf8
 		
 		{
 			let length = ascii_bytes_length + Self::pointer_difference_in_bytes(current_pointer, original_pointer);
-			unsafe { buffer.set_length(length) };
+			buffer.set_length(length);
 		}
 		
 		buffer.shrink_to_fit();
@@ -154,7 +153,7 @@ impl PercentEncodeUtf8
 	}
 	
 	#[inline(always)]
-	const fn pointer_difference_in_bytes(current_pointer: NonNull<u8>, original_pointer: NonNull<u8>) -> usize
+	fn pointer_difference_in_bytes(current_pointer: NonNull<u8>, original_pointer: NonNull<u8>) -> usize
 	{
 		(current_pointer.as_ptr() as usize) - (original_pointer.as_ptr() as usize)
 	}

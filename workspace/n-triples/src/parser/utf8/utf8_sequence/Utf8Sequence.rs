@@ -3,7 +3,7 @@
 
 
 /// UTF-8 sequence of 1, 2, 3 or 4 bytes.
-pub trait Utf8Sequence: Sized
+pub trait Utf8Sequence: Copy + Eq + Ord + Hash + Debug + Default
 {
 	/// Length.
 	const Length: Utf8CharacterLength;
@@ -37,4 +37,10 @@ pub trait Utf8Sequence: Sized
 	
 	/// Rust limitation: This method is the same in all implementations, but Rust does not permit `const impl` traits to have default function implementations.
 	fn write_unchecked(self, to: NonNull<u8>);
+	
+	/// Rust limitation: This method is the same in all implementations, but Rust does not permit `const impl` traits to have default function implementations.
+	fn into_unchecked_utf8_sequence_and_character(self) -> Utf8SequenceAndCharacter;
+	
+	/// Rust limitation: This method is the same in all implementations, but Rust does not permit `const impl` traits to have default function implementations.
+	fn try_into_utf8_sequence_and_character(self) -> Result<Utf8SequenceAndCharacter, CharTryFromError>;
 }

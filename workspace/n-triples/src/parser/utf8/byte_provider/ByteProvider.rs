@@ -34,8 +34,8 @@ pub(super) trait ByteProvider: Sized
 		};
 		
 		#[inline(always)]
-		const fn parse_more_than_one<BP: ByteProvider, U8SNC: Utf8SequenceNonConst>(first: u8, bytes: &[u8]) -> (Utf8SequenceAndCharacter, NonZeroUsize)
-		where Utf8SequenceEnum: ~const From<U8SNC>
+		fn parse_more_than_one<BP: ByteProvider, U8SNC: Utf8SequenceNonConst>(first: u8, bytes: &[u8]) -> (Utf8SequenceAndCharacter, NonZeroUsize)
+		where Utf8SequenceEnum: From<U8SNC>
 		{
 			let slice_length = U8SNC::slice_length::<BP>();
 			debug_assert!(bytes.len() >= slice_length.get());
@@ -45,12 +45,12 @@ pub(super) trait ByteProvider: Sized
 			let utf8_sequence = U8SNC::construct(first, remainder);
 			debug_assert!(utf8_sequence.try_into_char().is_ok());
 			
-			(unsafe { Utf8SequenceAndCharacter::from_unchecked(utf8_sequence) }, slice_length)
+			(utf8_sequence.into_unchecked_utf8_sequence_and_character(), slice_length)
 		}
 		
-		let (utf8_sequence_and_character, slice_length, character) = if Utf8Sequence1::is(first)
+		let (utf8_sequence_and_character, slice_length) = if Utf8Sequence1::is(first)
 		{
-			(unsafe { Utf8SequenceAndCharacter::from_unchecked([first]) }, Utf8Sequence1::slice_length::<Self>(), first as char)
+			(unsafe { Utf8SequenceAndCharacter::from_unchecked([first]) }, Utf8Sequence1::slice_length::<Self>())
 		}
 		else if Utf8Sequence2::is(first)
 		{
@@ -84,12 +84,12 @@ pub(super) trait ByteProvider: Sized
 			
 			let remainder = U8SNC::parse::<BP>(bytes).map_err(InvalidUtf8ParseError::Inner)?;
 			let utf8_sequence = U8SNC::construct(first, remainder);
-			Ok((Utf8SequenceAndCharacter::try_from(utf8_sequence)?, slice_length))
+			Ok((utf8_sequence.try_into_utf8_sequence_and_character()?, slice_length))
 		}
 		
 		let first = Self::first(bytes)?;
 		
-		let (utf8_sequence_and_character, slice_length, character) = if Utf8Sequence1::is(first)
+		let (utf8_sequence_and_character, slice_length) = if Utf8Sequence1::is(first)
 		{
 			// Different logic to if branches below as:-
 			// (a) there is no need to check the slice length

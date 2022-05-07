@@ -7,6 +7,7 @@ use std::collections::TryReserveError;
 use std::mem::size_of;
 use std::ptr::NonNull;
 use super::x80;
+use super::ValidatedDecodeUtf8Sequences;
 use super::utf8_sequence::Utf8Sequence;
 use super::utf8_sequence::Utf8Sequence1;
 use super::utf8_sequence::Utf8Sequence2;

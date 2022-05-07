@@ -344,7 +344,7 @@ impl<'a> Host<'a>
 		{
 			Ok(inner) => Self::construct_internet_protocol_version_4_address_common(inner),
 			
-			Err(_) => Self::parse_name(ihost_and_port_string)
+			Err(_) => Self::parse_name::<false>(ihost_and_port_string)
 		}
 	}
 	

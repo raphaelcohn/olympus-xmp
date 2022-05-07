@@ -5,6 +5,7 @@
 use crate::FromUnchecked;
 use std::fmt::Debug;
 use std::char::CharTryFromError;
+use std::hash::Hash;
 use std::mem::discriminant;
 use std::mem::transmute;
 use std::num::NonZeroUsize;

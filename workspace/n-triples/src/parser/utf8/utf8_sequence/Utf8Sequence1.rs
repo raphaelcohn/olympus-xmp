@@ -5,7 +5,7 @@
 /// UTF-8 sequence of 1 byte.
 pub type Utf8Sequence1 = [u8; 1];
 
-impl Utf8Sequence for Utf8Sequence1
+impl const Utf8Sequence for Utf8Sequence1
 {
 	const Length: Utf8CharacterLength = One;
 	
@@ -62,6 +62,18 @@ impl Utf8Sequence for Utf8Sequence1
 		let pointer = to.as_ptr().cast::<Self>();
 		unsafe { pointer.write(self) }
 	}
+	
+	#[inline(always)]
+	fn into_unchecked_utf8_sequence_and_character(self) -> Utf8SequenceAndCharacter
+	{
+		unsafe { Utf8SequenceAndCharacter::from_unchecked(self) }
+	}
+	
+	#[inline(always)]
+	fn try_into_utf8_sequence_and_character(self) -> Result<Utf8SequenceAndCharacter, CharTryFromError>
+	{
+		Utf8SequenceAndCharacter::try_from(self)
+	}
 }
 
 impl const Utf8SequenceCrate for Utf8Sequence1
@@ -76,7 +88,7 @@ impl const Utf8SequenceCrate for Utf8Sequence1
 impl Utf8SequenceNonConst for Utf8Sequence1
 {
 	#[inline(always)]
-	fn parse<BP: ByteProvider>(bytes: &[u8]) -> Result<<Self as Utf8Sequence>::Remainder, BP::Error>
+	fn parse<BP: ByteProvider>(_bytes: &[u8]) -> Result<<Self as Utf8Sequence>::Remainder, BP::Error>
 	{
 		Ok(())
 	}

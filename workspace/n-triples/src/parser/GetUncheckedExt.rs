@@ -18,3 +18,12 @@ impl<T> GetUncheckedExt<T> for [T]
 		rewound_buffer
 	}
 }
+
+impl GetUncheckedExt<u8> for str
+{
+	#[inline(always)]
+	fn rewind_buffer(&self, utf8_character_length: Utf8CharacterLength) -> *const u8
+	{
+		self.as_bytes().rewind_buffer(utf8_character_length)
+	}
+}

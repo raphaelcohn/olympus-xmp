@@ -25,7 +25,7 @@ impl HierarchyVariantRule
 		{
 			AuthorityAndAbsolutePathOnly | AuthorityAndAbsolutePathOrAbsolutePathOnly => true,
 			
-			Unknown => false,
+			RootlessOnly | Unknown => false,
 		}
 	}
 	
@@ -38,7 +38,7 @@ impl HierarchyVariantRule
 		{
 			AuthorityAndAbsolutePathOnly => true,
 			
-			AuthorityAndAbsolutePathOrAbsolutePathOnly | Unknown => false,
+			AuthorityAndAbsolutePathOrAbsolutePathOnly | RootlessOnly | Unknown => false,
 		}
 	}
 }

@@ -22,7 +22,7 @@ impl<'a> ValidatedDecodeUtf8Sequences for &'a str
 		}
 		
 		let (utf8_sequence_and_character, remaining_string) = BytesByteProvider::decode_internal_utf8_validity_already_checked(string);
-		*remaining_validated_utf8_bytes = remaining_string;
+		*self = remaining_string;
 		Some(utf8_sequence_and_character)
 	}
 }

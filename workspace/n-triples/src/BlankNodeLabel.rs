@@ -97,7 +97,7 @@ impl<'a> BlankNodeLabel<'a>
 				
 				HyphenChar => string.push_ascii_byte(Hyphen)?,
 				
-				Colon => string.push_ascii_byte(Colon)?,
+				ColonChar => string.push_ascii_byte(Colon)?,
 				
 				AChar ..= ZChar | aChar ..= zChar => string.push_ascii_character(character)?,
 				

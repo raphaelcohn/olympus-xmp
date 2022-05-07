@@ -172,22 +172,22 @@ impl<'a> HashFragment<'a>
 {
 	/// `ifragment  = *( ipchar / "/" / "?" )`.
 	#[inline(always)]
-	fn parse(mut remaining_string: &'a str, scheme_specific_parsing_rule: &SchemeSpecificParsingRule) -> Result<Self, HashFragmentParseError>
+	fn parse(mut remaining: &'a str, scheme_specific_parsing_rule: &SchemeSpecificParsingRule) -> Result<Self, HashFragmentParseError>
 	{
 		use HashFragmentParseError::*;
 		
-		let remaining_string = &mut remaining_string;
+		let remaining = &mut remaining;
 		
-		if scheme_specific_parsing_rule.hash_fragment_should_not_be_present(remaining_string)
+		if scheme_specific_parsing_rule.hash_fragment_should_not_be_present(remaining)
 		{
 			return Err(HashFragmentNotAllowedForScheme)
 		}
 		
-		let mut string = StringSoFar::new_stack(remaining_string);
+		let mut string = StringSoFar::new_stack(remaining);
 		
 		loop
 		{
-			match remaining_string.decode_next_utf8_validity_already_checked()
+			match remaining.decode_next_utf8_validity_already_checked()
 			{
 				None => break,
 				
@@ -197,7 +197,7 @@ impl<'a> HashFragment<'a>
 					ipchar_iunreserved_with_ucschar_2!()  => string.push_utf8_sequence_enum_2(utf8_sequence)?,
 					ipchar_iunreserved_with_ucschar_3!()  => string.push_utf8_sequence_enum_3(utf8_sequence)?,
 					ipchar_iunreserved_with_ucschar_4!()  => string.push_utf8_sequence_enum_4(utf8_sequence)?,
-					ipchar_pct_encoded!()                 => string.push_forcing_heap_percent_encoded::<false>(remaining_string)?,
+					ipchar_pct_encoded!()                 => string.push_forcing_heap_percent_encoded::<false>(remaining)?,
 					ipchar_sub_delims!()                  => string.push_ascii_character(character)?,
 					ipchar_other!()                       => string.push_ascii_character(character)?,
 					

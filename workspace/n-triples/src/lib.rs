@@ -27,8 +27,10 @@
 
 #![feature(adt_const_params)]
 #![feature(allocator_api)]
+#![feature(const_char_convert)]
 #![feature(const_convert)]
 #![feature(const_deref)]
+#![feature(const_discriminant)]
 #![feature(const_maybe_uninit_write)]
 #![feature(const_mut_refs)]
 #![feature(const_option)]

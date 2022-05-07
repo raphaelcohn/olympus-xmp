@@ -26,7 +26,7 @@ macro_rules! push_utf8_sequence_enum_n
 			
 			match $utf8_sequence
 			{
-				Utf8SequenceEnum::$member(utf8_sequence) => self.push_utf8_sequence(utf8_sequence),
+				Utf8SequenceEnum::$member(utf8_sequence) => $self.push_utf8_sequence(utf8_sequence),
 				
 				_ => unsafe { unreachable_unchecked() }
 			}
@@ -37,22 +37,22 @@ macro_rules! push_utf8_sequence_enum_n
 impl<'a> StringSoFar<'a>
 {
 	#[inline(always)]
-	pub(super) fn new_percent_encoded_non_empty_path_segment(first_character_of_first_path_segment: (bool, Utf8SequenceEnum), mut remaining_percent_encoded_path_segment: &'a str) -> Self
+	pub(super) fn new_percent_encoded_non_empty_path_segment(first_character_of_first_path_segment: (bool, Utf8SequenceEnum), remaining_percent_encoded_path_segment: &'a str) -> Result<Self, TryReserveError>
 	{
 		let (was_percent_encoded, utf8_sequence) = first_character_of_first_path_segment;
 		
 		if was_percent_encoded
 		{
-			Self::new_heap(utf8_sequence)?
+			Self::new_heap(utf8_sequence)
 		}
 		else
 		{
-			Self::new_stack_rewind_buffer(utf8_sequence, remaining_percent_encoded_path_segment)
+			Ok(Self::new_stack_rewind_buffer(utf8_sequence, remaining_percent_encoded_path_segment))
 		}
 	}
 	
 	#[inline(always)]
-	pub(super) fn new_stack(remaining_utf8_bytes: &mut &'a impl AsRef<[u8]>) -> Self
+	pub(super) fn new_stack(remaining_utf8_bytes: &mut impl AsRef<[u8]>) -> Self
 	{
 		Self::new_stack_internal((*remaining_utf8_bytes).as_ref().as_ptr(), 0)
 	}
@@ -66,13 +66,13 @@ impl<'a> StringSoFar<'a>
 	}
 	
 	#[inline(always)]
-	fn new_stack_rewind_buffer(utf8_sequence: Utf8SequenceEnum, remaining_utf8_bytes: &str) -> Self
+	fn new_stack_rewind_buffer(utf8_sequence: Utf8SequenceEnum, remaining: &str) -> Self
 	{
-		let utf8_character_length = utf8_sequence_and_character.utf8_character_length();
+		let utf8_character_length = utf8_sequence.utf8_character_length();
 		
-		let rewound_buffer = remaining_utf8_bytes.rewind_buffer(utf8_character_length);
+		let rewound_buffer = remaining.rewind_buffer(utf8_character_length);
 		
-		let slice_length = utf8_character_length.add_from_str(remaining_utf8_bytes);
+		let slice_length = utf8_character_length.add_from_str(remaining);
 		Self::new_stack_internal(rewound_buffer, slice_length)
 	}
 	
@@ -280,7 +280,7 @@ impl<'a> StringSoFar<'a>
 	}
 	
 	#[inline(always)]
-	fn utf8_sequences(from: &mut NonNull<u8>, slice_length: &mut usize) -> &[u8]
+	fn utf8_sequences(from: &mut NonNull<u8>, slice_length: &mut usize) -> &'a [u8]
 	{
 		let from = (*from).as_ptr();
 		let slice_length = *slice_length;

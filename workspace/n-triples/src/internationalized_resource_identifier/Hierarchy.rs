@@ -217,18 +217,18 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 	/// `isegment       = *ipchar`.
 	/// `isegment-nz    = 1*ipchar`.
 	#[inline(always)]
-	fn parse(scheme_specific_parsing_rule: &SchemeSpecificParsingRule, mut remaining_utf8_bytes: &'a str) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
+	fn parse(scheme_specific_parsing_rule: &SchemeSpecificParsingRule, mut remaining_string: &'a str) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
 	{
 		use Hierarchy::*;
 		use HierarchyParseError::*;
 		
-		let Utf8SequenceAndCharacter(utf8_sequence, character) = Self::decode_next_utf8_validity_already_checked_mandatory(&mut remaining_utf8_bytes, DidNotExpectEndParsingFirstCharacter)?;
+		let Utf8SequenceAndCharacter(utf8_sequence, character) = Self::decode_next_utf8_validity_already_checked_mandatory(&mut remaining_string, DidNotExpectEndParsingFirstCharacter)?;
 		
 		if scheme_specific_parsing_rule.hierarchy_starts_with_slash()
 		{
 			return if character == SlashChar
 			{
-				Self::parse_iauthority_ipath_abempty_or_ipath_absolute(scheme_specific_parsing_rule, remaining_utf8_bytes)
+				Self::parse_iauthority_ipath_abempty_or_ipath_absolute(scheme_specific_parsing_rule, remaining_string)
 			}
 			else
 			{
@@ -238,35 +238,35 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 		
 		match character
 		{
-			QuestionMarkChar => Ok((EmptyPath, ParseNextAfterHierarchy::query(remaining_utf8_bytes))),
+			QuestionMarkChar => Ok((EmptyPath, ParseNextAfterHierarchy::query(remaining_string))),
 			
-			HashChar => Ok((EmptyPath, ParseNextAfterHierarchy::fragment_no_query(remaining_utf8_bytes))),
+			HashChar => Ok((EmptyPath, ParseNextAfterHierarchy::fragment_no_query(remaining_string))),
 			
-			SlashChar => Self::parse_iauthority_ipath_abempty_or_ipath_absolute(scheme_specific_parsing_rule, remaining_utf8_bytes),
+			SlashChar => Self::parse_iauthority_ipath_abempty_or_ipath_absolute(scheme_specific_parsing_rule, remaining_string),
 			
-			ipchar_iunreserved_without_ucschar!() => Self::parse_ipath_rootless(Self::decoded(utf8_sequence, character), remaining_utf8_bytes),
-			ipchar_iunreserved_with_ucschar_2!()  => Self::parse_ipath_rootless(Self::decoded(utf8_sequence, character), remaining_utf8_bytes),
-			ipchar_iunreserved_with_ucschar_3!()  => Self::parse_ipath_rootless(Self::decoded(utf8_sequence, character), remaining_utf8_bytes),
-			ipchar_iunreserved_with_ucschar_4!()  => Self::parse_ipath_rootless(Self::decoded(utf8_sequence, character), remaining_utf8_bytes),
-			ipchar_pct_encoded!()                 => Self::parse_ipath_rootless(Self::decode_percent_encoded(&mut remaining_utf8_bytes, InvalidPercentEncodedUtf8ParseFirstCharacter)?, remaining_utf8_bytes),
-			ipchar_sub_delims!()                  => Self::parse_ipath_rootless(Self::decoded(utf8_sequence, character), remaining_utf8_bytes),
-			ipchar_other!()                       => Self::parse_ipath_rootless(Self::decoded(utf8_sequence, character), remaining_utf8_bytes),
+			ipchar_iunreserved_without_ucschar!() => Self::parse_ipath_rootless(Self::decoded(utf8_sequence, character), remaining_string),
+			ipchar_iunreserved_with_ucschar_2!()  => Self::parse_ipath_rootless(Self::decoded(utf8_sequence, character), remaining_string),
+			ipchar_iunreserved_with_ucschar_3!()  => Self::parse_ipath_rootless(Self::decoded(utf8_sequence, character), remaining_string),
+			ipchar_iunreserved_with_ucschar_4!()  => Self::parse_ipath_rootless(Self::decoded(utf8_sequence, character), remaining_string),
+			ipchar_pct_encoded!()                 => Self::parse_ipath_rootless(Self::decode_percent_encoded(&mut remaining_string, InvalidPercentEncodedUtf8ParseFirstCharacter)?, remaining_string),
+			ipchar_sub_delims!()                  => Self::parse_ipath_rootless(Self::decoded(utf8_sequence, character), remaining_string),
+			ipchar_other!()                       => Self::parse_ipath_rootless(Self::decoded(utf8_sequence, character), remaining_string),
 			
 			_ => Err(InvalidFirstCharacter(character)),
 		}
 	}
 	
 	#[inline(always)]
-	fn parse_iauthority_ipath_abempty_or_ipath_absolute(scheme_specific_parsing_rule: &SchemeSpecificParsingRule, mut remaining_utf8_bytes: &'a str) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
+	fn parse_iauthority_ipath_abempty_or_ipath_absolute(scheme_specific_parsing_rule: &SchemeSpecificParsingRule, mut remaining_string: &'a str) -> Result<(Self, ParseNextAfterHierarchy<'a>), HierarchyParseError>
 	{
 		use HierarchyParseError::*;
 		
-		let Utf8SequenceAndCharacter(utf8_sequence, character) = Self::decode_next_utf8_validity_already_checked_mandatory(&mut remaining_utf8_bytes, DidNotExpectEndParsingSecondCharacter)?;
+		let Utf8SequenceAndCharacter(utf8_sequence, character) = Self::decode_next_utf8_validity_already_checked_mandatory(&mut remaining_string, DidNotExpectEndParsingSecondCharacter)?;
 		if scheme_specific_parsing_rule.hierarchy_is_authority_and_absolute_path()
 		{
 			return if character == SlashChar
 			{
-				Self::parse_iauthority_ipath_abempty(scheme_specific_parsing_rule, remaining_utf8_bytes)
+				Self::parse_iauthority_ipath_abempty(scheme_specific_parsing_rule, remaining_string)
 			}
 			else
 			{
@@ -276,15 +276,15 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 		
 		match character
 		{
-			SlashChar => Self::parse_iauthority_ipath_abempty(scheme_specific_parsing_rule, remaining_utf8_bytes),
+			SlashChar => Self::parse_iauthority_ipath_abempty(scheme_specific_parsing_rule, remaining_string),
 			
-			ipchar_iunreserved_without_ucschar!() => Self::parse_ipath_absolute(Self::decoded(utf8_sequence, character), remaining_utf8_bytes),
-			ipchar_iunreserved_with_ucschar_2!()  => Self::parse_ipath_absolute(Self::decoded(utf8_sequence, character), remaining_utf8_bytes),
-			ipchar_iunreserved_with_ucschar_3!()  => Self::parse_ipath_absolute(Self::decoded(utf8_sequence, character), remaining_utf8_bytes),
-			ipchar_iunreserved_with_ucschar_4!()  => Self::parse_ipath_absolute(Self::decoded(utf8_sequence, character), remaining_utf8_bytes),
-			ipchar_pct_encoded!()                 => Self::parse_ipath_absolute(Self::decode_percent_encoded(&mut remaining_utf8_bytes, InvalidPercentEncodedUtf8ParseSecondCharacter)?, remaining_utf8_bytes),
-			ipchar_sub_delims!()                  => Self::parse_ipath_absolute(Self::decoded(utf8_sequence, character), remaining_utf8_bytes),
-			ipchar_other!()                       => Self::parse_ipath_absolute(Self::decoded(utf8_sequence, character), remaining_utf8_bytes),
+			ipchar_iunreserved_without_ucschar!() => Self::parse_ipath_absolute(Self::decoded(utf8_sequence, character), remaining_string),
+			ipchar_iunreserved_with_ucschar_2!()  => Self::parse_ipath_absolute(Self::decoded(utf8_sequence, character), remaining_string),
+			ipchar_iunreserved_with_ucschar_3!()  => Self::parse_ipath_absolute(Self::decoded(utf8_sequence, character), remaining_string),
+			ipchar_iunreserved_with_ucschar_4!()  => Self::parse_ipath_absolute(Self::decoded(utf8_sequence, character), remaining_string),
+			ipchar_pct_encoded!()                 => Self::parse_ipath_absolute(Self::decode_percent_encoded(&mut remaining_string, InvalidPercentEncodedUtf8ParseSecondCharacter)?, remaining_string),
+			ipchar_sub_delims!()                  => Self::parse_ipath_absolute(Self::decoded(utf8_sequence, character), remaining_string),
+			ipchar_other!()                       => Self::parse_ipath_absolute(Self::decoded(utf8_sequence, character), remaining_string),
 			
 			_ => Err(InvalidSecondCharacter(character)),
 		}
@@ -351,15 +351,15 @@ impl<'a, const PathDepth: usize> Hierarchy<'a, PathDepth>
 	}
 	
 	#[inline(always)]
-	pub(super) fn decode_next_utf8_validity_already_checked_mandatory<E: error::Error>(remaining_utf8_bytes: &mut &'a str, error: E) -> Result<Utf8SequenceAndCharacter, E>
+	pub(super) fn decode_next_utf8_validity_already_checked_mandatory<E: error::Error>(remaining_string: &mut &'a str, error: E) -> Result<Utf8SequenceAndCharacter, E>
 	{
 		remaining_string.decode_next_utf8_validity_already_checked().ok_or(error)
 	}
 	
 	#[inline(always)]
-	fn decode_percent_encoded(remaining_utf8_bytes: &mut &str, error: impl FnOnce(InvalidUtf8ParseError<PercentDecodeError>) -> HierarchyParseError) -> Result<(bool, Utf8SequenceAndCharacter), HierarchyParseError>
+	fn decode_percent_encoded(remaining_string: &mut &str, error: impl FnOnce(InvalidUtf8ParseError<PercentDecodeError>) -> HierarchyParseError) -> Result<(bool, Utf8SequenceAndCharacter), HierarchyParseError>
 	{
-		let utf8_sequence = remaining_utf8_bytes.decode_next_percent_encoded_utf8::<false>().map_err(error)?;
+		let utf8_sequence = remaining_string.decode_next_percent_encoded_utf8::<false>().map_err(error)?;
 		Ok((true, utf8_sequence))
 	}
 }

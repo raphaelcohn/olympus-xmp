@@ -36,25 +36,25 @@ impl<'a> UnvalidatedDecodeUtf8Sequences for &'a [u8]
 	#[inline(always)]
 	fn decode_next_utf8(&mut self) -> Result<Option<Utf8SequenceAndCharacter>, InvalidUtf8ParseError<Infallible>>
 	{
-		let bytes = *remaining_utf8_bytes;
+		let bytes = *self;
 		
 		if bytes.is_empty()
 		{
 			return Ok(None)
 		}
 		
-		let (utf8_sequence_and_character, remaining_bytes) = BytesByteProvider::decode_internal::<false>(*remaining_utf8_bytes)?;
-		*remaining_utf8_bytes = remaining_bytes;
+		let (utf8_sequence_and_character, remaining_bytes) = BytesByteProvider::decode_internal::<false>(*self)?;
+		*self = remaining_bytes;
 		Ok(Some(utf8_sequence_and_character))
 	}
 	
 	#[inline(always)]
 	fn decode_next_percent_encoded_utf8<const to_ascii_lower_case: bool>(&mut self) -> Result<Utf8SequenceAndCharacter, InvalidUtf8ParseError<PercentDecodeError>>
 	{
-		let bytes = *remaining_percent_encoded_bytes;
+		let bytes = *self;
 		
 		let (utf8_sequence_and_character, remaining_bytes) = PercentEncodedByteProvider::decode_internal::<to_ascii_lower_case>(bytes)?;
-		*remaining_percent_encoded_bytes = remaining_bytes;
+		*self = remaining_bytes;
 		Ok(utf8_sequence_and_character)
 	}
 }

@@ -58,9 +58,9 @@ impl const Into<NonZeroUsize> for Utf8CharacterLength
 impl Utf8CharacterLength
 {
 	#[inline(always)]
-	pub(crate) const fn add_from_str(self, remaining_utf8_bytes: &str) -> usize
+	pub(crate) const fn add_from_str(self, remaining: &str) -> usize
 	{
-		self.add(remaining_utf8_bytes.len())
+		self.add(remaining.len())
 	}
 	
 	#[inline(always)]

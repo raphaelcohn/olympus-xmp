@@ -22,11 +22,11 @@ impl<'a> StringLiteral<'a>
 		
 		loop
 		{
-			let Utf8SequenceAndCharacter(utf8_sequence, character) = remaining_bytes.decode_next_utf8()?.ok_or(DidNotExpectEndParsingBody)?;
+			let Utf8SequenceAndCharacter(utf8_sequence, _) = remaining_bytes.decode_next_utf8()?.ok_or(DidNotExpectEndParsingBody)?;
 			
 			use Utf8SequenceEnum::*;
 			
-			match character
+			match utf8_sequence
 			{
 				One([DoubleQuote]) => break,
 				
@@ -50,10 +50,14 @@ impl<'a> StringLiteral<'a>
 					
 					U => string.push_forcing_heap_UCHAR8(remaining_bytes).map_err(InvalidUCHAR8EscapeSequence)?,
 					
-					invalid => return Err(InvalidEscapeSequence(invalid)),
+					invalid @ _ => return Err(InvalidEscapeSequence(invalid)),
 				},
 				
-				One([invalid @ LineFeed | CarriageReturn]) => return Err(InvalidCharacter(invalid as char)),
+				One([LineFeed]) => return Err(InvalidCharacter(LineFeed as char)),
+				
+				One([CarriageReturn]) => return Err(InvalidCharacter(CarriageReturn as char)),
+				
+				One([ascii_byte]) => string.push_ascii_byte(ascii_byte)?,
 				
 				Two(utf8_sequence) => string.push_utf8_sequence(utf8_sequence)?,
 				

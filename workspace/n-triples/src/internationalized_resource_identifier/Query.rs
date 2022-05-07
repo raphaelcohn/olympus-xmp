@@ -168,34 +168,34 @@ impl<'a> Query<'a>
 	/// `iquery   = *( ipchar / iprivate / "/" / "?" )`.
 	/// `iprivate = %xE000-F8FF / %xF0000-FFFFD / %x100000-10FFFD`.
 	#[inline(always)]
-	fn parse(mut remaining_string: &'a str, scheme_specific_parsing_rule: &SchemeSpecificParsingRule) -> Result<(Self, Option<&'a [u8]>), QueryParseError>
+	fn parse(mut remaining: &'a str, scheme_specific_parsing_rule: &SchemeSpecificParsingRule) -> Result<(Self, Option<&'a str>), QueryParseError>
 	{
 		use QueryParseError::*;
 		
-		let remaining_string = &mut remaining_string;
+		let remaining = &mut remaining;
 		
-		if scheme_specific_parsing_rule.query_should_not_be_present(remaining_string)
+		if scheme_specific_parsing_rule.query_should_not_be_present(remaining)
 		{
 			return Err(QueryNotAllowedForScheme)
 		}
 		
-		let mut string = StringSoFar::new_stack(remaining_string);
+		let mut string = StringSoFar::new_stack(remaining);
 		
 		let hash_fragment_remaining_utf8_bytes = loop
 		{
-			match remaining_string.decode_next_utf8_validity_already_checked()
+			match remaining.decode_next_utf8_validity_already_checked()
 			{
 				None => break None,
 				
 				Some(Utf8SequenceAndCharacter(utf8_sequence, character)) => match character
 				{
-					HashChar => break Some(*remaining_string),
+					HashChar => break Some(*remaining),
 					
 					ipchar_iunreserved_without_ucschar!() => string.push_ascii_character(character)?,
 					ipchar_iunreserved_with_ucschar_2!()  => string.push_utf8_sequence_enum_2(utf8_sequence)?,
 					ipchar_iunreserved_with_ucschar_3!()  => string.push_utf8_sequence_enum_3(utf8_sequence)?,
 					ipchar_iunreserved_with_ucschar_4!()  => string.push_utf8_sequence_enum_4(utf8_sequence)?,
-					ipchar_pct_encoded!()                 => string.push_forcing_heap_percent_encoded::<false>(remaining_string)?,
+					ipchar_pct_encoded!()                 => string.push_forcing_heap_percent_encoded::<false>(remaining)?,
 					ipchar_sub_delims!()                  => string.push_ascii_character(character)?,
 					ipchar_other!()                       => string.push_ascii_character(character)?,
 					iprivate_3!()                         => string.push_utf8_sequence_enum_3(utf8_sequence)?,

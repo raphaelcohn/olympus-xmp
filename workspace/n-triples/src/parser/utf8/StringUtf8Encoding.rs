@@ -3,7 +3,7 @@
 
 
 /// An extension trait for pushing and encoding UTF-8 onto a `String`.
-pub trait StringUtf8Encoding
+pub trait StringUtf8Encoding: Sized
 {
 	#[allow(missing_docs)]
 	#[inline(always)]

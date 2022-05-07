@@ -110,21 +110,22 @@ impl<'a, const PathDepth: usize> TryFrom<&'a str> for AbsoluteInternationalizedR
 		use AbsoluteInternationalizedResourceIdentifierComponentsParseError::*;
 		
 		let (scheme, scheme_specific_parsing_rule, remaining_utf8_bytes) = Scheme::parse(string.as_bytes()).map_err(SchemeParse)?;
-		let (hierarchy, parse_next) = Hierarchy::parse(scheme_specific_parsing_rule, remaining_utf8_bytes).map_err(HierarchyParse)?;
+		let remaining_string = unsafe { from_utf8_unchecked(remaining_utf8_bytes) };
+		let (hierarchy, parse_next) = Hierarchy::parse(scheme_specific_parsing_rule, remaining_string).map_err(HierarchyParse)?;
 		
 		use ParseNextAfterHierarchy::*;
 		let (query, hash_fragment) = match parse_next
 		{
-			Query { remaining: remaining_utf8_bytes } => match self::Query::parse(remaining_utf8_bytes, scheme_specific_parsing_rule)
+			Query { remaining } => match self::Query::parse(remaining, scheme_specific_parsing_rule)
 			{
 				Err(error) => return Err(QueryParse(error)),
 				
 				Ok((query, None)) => (Some(query), None),
 				
-				Ok((query, Some(remaining_utf8_bytes))) => (Some(query), Some(HashFragment::parse(remaining_utf8_bytes, scheme_specific_parsing_rule)?)),
+				Ok((query, Some(remaining))) => (Some(query), Some(HashFragment::parse(remaining, scheme_specific_parsing_rule)?)),
 			}
 			
-			NoQueryFragment { remaining: remaining_utf8_bytes } => (None, Some(HashFragment::parse(remaining_utf8_bytes, scheme_specific_parsing_rule)?)),
+			NoQueryFragment { remaining } => (None, Some(HashFragment::parse(remaining, scheme_specific_parsing_rule)?)),
 			
 			NoQueryNoFragment => (None, None),
 		};
@@ -436,7 +437,7 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 		
 		loop
 		{
-			let Utf8SequenceAndCharacter(utf8_sequence, character) = remaining_bytes.decode_next_utf8()?.ok_or(DidNotExpectEndParsingBody)?;
+			let Utf8SequenceAndCharacter(utf8_sequence, _) = remaining_bytes.decode_next_utf8()?.ok_or(DidNotExpectEndParsingBody)?;
 			use Utf8SequenceEnum::*;
 			match utf8_sequence
 			{
@@ -454,6 +455,8 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 						
 						invalid => return Err(InvalidEscapeSequence(invalid)),
 					}
+					
+					_ => string.push_ascii_byte(one)?,
 				}
 				
 				Two(utf8_sequence) => string.push_utf8_sequence(utf8_sequence)?,
