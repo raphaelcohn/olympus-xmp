@@ -92,8 +92,18 @@ impl<'a, const PathDepth: usize> TryToOwn for AbsoluteInternationalizedResourceI
 			{
 				scheme: self.scheme.try_to_own()?,
 				hierarchy: self.hierarchy.try_to_own()?,
-				query: self.query.try_to_own()?,
-				hash_fragment: self.hash_fragment.try_to_own()?,
+				query: match self.query
+				{
+					Some(query) => Some(query.try_to_own()?),
+					
+					None => None,
+				},
+				hash_fragment: match self.hash_fragment
+				{
+					Some(hash_fragment) => Some(hash_fragment.try_to_own()?),
+					
+					None => None,
+				},
 			}
 		)
 	}

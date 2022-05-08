@@ -62,24 +62,6 @@ impl<'a> TryToOwn for Query<'a>
 	}
 }
 
-impl<'a> TryToOwn for Option<Query<'a>>
-{
-	type TryToOwned = Option<Query<'static>>;
-	
-	#[inline(always)]
-	fn try_to_own(self) -> Result<Self::TryToOwned, TryReserveError>
-	{
-		if let Some(value) = self
-		{
-			Ok(Some(value.try_to_own()?))
-		}
-		else
-		{
-			Ok(None)
-		}
-	}
-}
-
 impl<'a> const FromUnchecked<Cow<'a, str>> for Query<'a>
 {
 	#[inline(always)]

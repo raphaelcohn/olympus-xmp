@@ -52,20 +52,17 @@ use super::NaiveIetfBcp47LanguageTag;
 use super::Subject;
 use super::internationalized_resource_identifier::AbsoluteInternationalizedResourceIdentifier;
 use super::internationalized_resource_identifier::AbsoluteInternationalizedResourceIdentifierParseError;
-use utf8::InvalidUtf8ParseError;
-use utf8::PercentDecodeError;
-use utf8::is_ascii_byte;
-use utf8::is_ascii_character;
-use utf8::StringUtf8Encoding;
-use utf8::to_lower_case_ascii_byte;
-use utf8::Utf8CharacterLength;
-use utf8::UnvalidatedDecodeUtf8Sequences;
-use utf8::utf8_sequence::Utf8Sequence;
-use utf8::utf8_sequence::Utf8SequenceAndCharacter;
-use utf8::utf8_sequence::Utf8SequenceEnum;
-
-
-pub(super) mod utf8;
+use swiss_army_knife::utf8::InvalidUtf8ParseError;
+use swiss_army_knife::utf8::PercentDecodeError;
+use swiss_army_knife::utf8::is_ascii_byte;
+use swiss_army_knife::utf8::is_ascii_character;
+use swiss_army_knife::utf8::StringUtf8Encoding;
+use swiss_army_knife::utf8::to_lower_case_ascii_byte;
+use swiss_army_knife::utf8::Utf8CharacterLength;
+use swiss_army_knife::utf8::UnvalidatedDecodeUtf8Sequences;
+use swiss_army_knife::utf8::utf8_sequence::Utf8Sequence;
+use swiss_army_knife::utf8::utf8_sequence::Utf8SequenceAndCharacter;
+use swiss_army_knife::utf8::utf8_sequence::Utf8SequenceEnum;
 
 
 include!("BlankNodeLabelParseError.rs");

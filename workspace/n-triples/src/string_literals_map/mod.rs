@@ -26,12 +26,12 @@ use std::str::ParseBoolError;
 use super::NaiveIetfBcp47LanguageTag;
 use super::NonEmptyVec;
 use super::internationalized_resource_identifier::AbsoluteInternationalizedResourceIdentifier;
-use super::try_to_own::MutableKey;
-use super::try_to_own::MutableKeyHashMap;
-use super::try_to_own::TryToOwn;
-use super::try_to_own::TryToOwnInPlace;
 use swiss_army_knife::get_unchecked::GetUnchecked;
 use swiss_army_knife::non_zero::new_non_zero_usize;
+use swiss_army_knife::try_to_own::MutableKey;
+use swiss_army_knife::try_to_own::MutableKeyHashMap;
+use swiss_army_knife::try_to_own::TryToOwn;
+use swiss_army_knife::try_to_own::TryToOwnInPlace;
 
 
 include!("Integer.rs");

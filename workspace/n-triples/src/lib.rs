@@ -67,8 +67,6 @@ use parser::NTriplesParseError;
 use parser::Object;
 use parser::StringLiteral;
 use parser::StringSoFar;
-use parser::utf8::UnvalidatedDecodeUtf8Sequences;
-use parser::utf8::utf8_sequence::Utf8SequenceAndCharacter;
 use predicate::Predicate;
 use std::borrow::Cow;
 use std::collections::HashMap;
@@ -81,8 +79,8 @@ use std::mem::transmute;
 use std::ops::Deref;
 use std::str::from_utf8_unchecked;
 use string_literals_map::StringLiteralsMap;
-use try_to_own::TryToOwn;
-use try_to_own::TryToOwnInPlace;
+use swiss_army_knife::try_to_own::TryToOwn;
+use swiss_army_knife::try_to_own::TryToOwnInPlace;
 use swiss_army_knife::a_to_z::Colon;
 use swiss_army_knife::a_to_z::Hyphen;
 use swiss_army_knife::a_to_z::Period;
@@ -101,7 +99,10 @@ use swiss_army_knife::a_to_z::Underscore;
 use swiss_army_knife::a_to_z::OpenSquareBracket;
 use swiss_army_knife::a_to_z::CloseSquareBracket;
 use swiss_army_knife::const_small_vec::ConstSmallVec;
+use swiss_army_knife::from_unchecked::FromUnchecked;
 use swiss_army_knife::get_unchecked::GetUnchecked;
+use swiss_army_knife::utf8::UnvalidatedDecodeUtf8Sequences;
+use swiss_army_knife::utf8::utf8_sequence::Utf8SequenceAndCharacter;
 use swiss_army_knife::vec::VecExt;
 
 
@@ -122,12 +123,7 @@ pub mod predicate;
 pub mod string_literals_map;
 
 
-/// Try-to-own
-pub mod try_to_own;
-
-
 include!("BlankNodeLabel.rs");
-include!("FromUnchecked.rs");
 include!("NaiveIetfBcp47LanguageTag.rs");
 include!("NonEmptyVec.rs");
 include!("NTriples.rs");

@@ -2,18 +2,10 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-use crate::FromUnchecked;
 use crate::Hash;
 use crate::QuestionMark;
 use crate::parser::OutOfMemoryOrInvalidUtf8PercentDecodeParseError;
 use crate::parser::StringSoFar;
-use crate::parser::utf8::InvalidUtf8ParseError;
-use crate::parser::utf8::PercentDecodeError;
-use crate::parser::utf8::ValidatedDecodeUtf8Sequences;
-use crate::parser::utf8::utf8_sequence::Utf8SequenceAndCharacter;
-use crate::parser::utf8::utf8_sequence::Utf8SequenceEnum;
-use crate::try_to_own::TryToOwn;
-use crate::try_to_own::TryToOwnInPlace;
 use std::borrow::Borrow;
 use std::borrow::BorrowMut;
 use std::borrow::Cow;
@@ -60,9 +52,17 @@ use swiss_army_knife::a_to_z::z;
 use swiss_army_knife::a_to_z::_0;
 use swiss_army_knife::a_to_z::_9;
 use swiss_army_knife::const_small_vec::ConstSmallVec;
+use swiss_army_knife::from_unchecked::FromUnchecked;
 use swiss_army_knife::get_unchecked::GetUnchecked;
 use swiss_army_knife::memchr::MemoryCharacter;
+use swiss_army_knife::try_to_own::TryToOwn;
+use swiss_army_knife::try_to_own::TryToOwnInPlace;
 use swiss_army_knife::unreachable_code_const;
+use swiss_army_knife::utf8::InvalidUtf8ParseError;
+use swiss_army_knife::utf8::PercentDecodeError;
+use swiss_army_knife::utf8::ValidatedDecodeUtf8Sequences;
+use swiss_army_knife::utf8::utf8_sequence::Utf8SequenceAndCharacter;
+use swiss_army_knife::utf8::utf8_sequence::Utf8SequenceEnum;
 
 
 include!("NonEmptyPath.rs");
