@@ -25,6 +25,7 @@ use super::HierarchyParseError;
 use super::Hierarchy;
 use super::ParseNextAfterHierarchy;
 use super::PercentEncodable;
+use super::Utf8SequencesParserExt;
 use swiss_army_knife::a_to_z::Ampersand;
 use swiss_army_knife::a_to_z::Apostrophe;
 use swiss_army_knife::a_to_z::Asterisk;

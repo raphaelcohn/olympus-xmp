@@ -37,10 +37,10 @@ pub enum StringLiteralParseError
 	EndOfFileParsingEscapeSequence,
 	
 	#[allow(missing_docs)]
-	InvalidUCHAR4EscapeSequence(OutOfMemoryOrUCHARParseError),
+	InvalidUCHAR4EscapeSequence(UCHARParseError),
 	
 	#[allow(missing_docs)]
-	InvalidUCHAR8EscapeSequence(OutOfMemoryOrUCHARParseError),
+	InvalidUCHAR8EscapeSequence(UCHARParseError),
 	
 	#[allow(missing_docs)]
 	InvalidEscapeSequence(u8),

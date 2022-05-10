@@ -10,7 +10,7 @@ pub enum AbsoluteInternationalizedResourceIdentifierParseError
 	AbsoluteInternationalizedResourceNTripleEscapedIdentifierParse(AbsoluteInternationalizedResourceNTripleEscapedIdentifierParseError),
 	
 	#[allow(missing_docs)]
-	AbsoluteInternationalizedResourceIdentifierComponentsParse(AbsoluteInternationalizedResourceIdentifierComponentsParseError),
+	AbsoluteInternationalizedResourceIdentifierStringParse(AbsoluteInternationalizedResourceIdentifierStringParseError),
 }
 
 impl const From<AbsoluteInternationalizedResourceNTripleEscapedIdentifierParseError> for AbsoluteInternationalizedResourceIdentifierParseError
@@ -22,12 +22,12 @@ impl const From<AbsoluteInternationalizedResourceNTripleEscapedIdentifierParseEr
 	}
 }
 
-impl const From<AbsoluteInternationalizedResourceIdentifierComponentsParseError> for AbsoluteInternationalizedResourceIdentifierParseError
+impl const From<AbsoluteInternationalizedResourceIdentifierStringParseError> for AbsoluteInternationalizedResourceIdentifierParseError
 {
 	#[inline(always)]
-	fn from(cause: AbsoluteInternationalizedResourceIdentifierComponentsParseError) -> Self
+	fn from(cause: AbsoluteInternationalizedResourceIdentifierStringParseError) -> Self
 	{
-		AbsoluteInternationalizedResourceIdentifierParseError::AbsoluteInternationalizedResourceIdentifierComponentsParse(cause)
+		AbsoluteInternationalizedResourceIdentifierParseError::AbsoluteInternationalizedResourceIdentifierStringParse(cause)
 	}
 }
 
@@ -51,7 +51,7 @@ impl error::Error for AbsoluteInternationalizedResourceIdentifierParseError
 		{
 			AbsoluteInternationalizedResourceNTripleEscapedIdentifierParse(cause) => Some(cause),
 			
-			AbsoluteInternationalizedResourceIdentifierComponentsParse(cause) => Some(cause),
+			AbsoluteInternationalizedResourceIdentifierStringParse(cause) => Some(cause),
 		}
 	}
 }

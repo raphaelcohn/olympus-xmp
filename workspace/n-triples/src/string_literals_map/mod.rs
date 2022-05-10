@@ -2,6 +2,7 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+use crate::internationalized_resource_identifier::MoreThanOneError;
 pub use chrono::DateTime;
 pub use chrono::FixedOffset;
 pub use chrono::format::ParseError as ParseDateTimeError;
@@ -18,7 +19,6 @@ use std::iter::FusedIterator;
 use std::iter::TrustedLen;
 use std::marker::PhantomData;
 use std::mem::transmute;
-use std::num::NonZeroUsize;
 use std::num::ParseIntError;
 use std::ops::Deref;
 use std::str::FromStr;

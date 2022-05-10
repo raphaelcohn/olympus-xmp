@@ -184,7 +184,7 @@ impl<'a> HostName<'a>
 					iunreserved_with_ucschar_2!()                                                     => string.push_utf8_sequence_enum_2(utf8_sequence)?,
 					iunreserved_with_ucschar_3!()                                                     => string.push_utf8_sequence_enum_3(utf8_sequence)?,
 					iunreserved_with_ucschar_4!()                                                     => string.push_utf8_sequence_enum_4(utf8_sequence)?,
-					pct_encoded!()                                                                    => string.push_forcing_heap_percent_encoded::<_, false>(remaining_utf8_bytes)?,
+					pct_encoded!()                                                                    => string.push_forcing_heap_percent_encoded::<HostNameParseError, false>(remaining_utf8_bytes)?,
 					sub_delims!()                                                                     => string.push_ascii_character(character)?,
 					
 					_ => return Err(InvalidCharacterInHostName(character)),

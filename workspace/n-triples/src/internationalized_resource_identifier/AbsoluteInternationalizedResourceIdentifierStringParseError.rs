@@ -4,7 +4,7 @@
 
 /// A parse error.
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub enum AbsoluteInternationalizedResourceIdentifierComponentsParseError
+pub enum AbsoluteInternationalizedResourceIdentifierStringParseError
 {
 	#[allow(missing_docs)]
 	SchemeParse(SchemeParseError),
@@ -22,25 +22,25 @@ pub enum AbsoluteInternationalizedResourceIdentifierComponentsParseError
 	OutOfMemory(TryReserveError),
 }
 
-impl const From<HashFragmentParseError> for AbsoluteInternationalizedResourceIdentifierComponentsParseError
+impl const From<HashFragmentParseError> for AbsoluteInternationalizedResourceIdentifierStringParseError
 {
 	#[inline(always)]
 	fn from(cause: HashFragmentParseError) -> Self
 	{
-		AbsoluteInternationalizedResourceIdentifierComponentsParseError::HashFragmentParse(cause)
+		AbsoluteInternationalizedResourceIdentifierStringParseError::HashFragmentParse(cause)
 	}
 }
 
-impl const From<TryReserveError> for AbsoluteInternationalizedResourceIdentifierComponentsParseError
+impl const From<TryReserveError> for AbsoluteInternationalizedResourceIdentifierStringParseError
 {
 	#[inline(always)]
 	fn from(cause: TryReserveError) -> Self
 	{
-		AbsoluteInternationalizedResourceIdentifierComponentsParseError::OutOfMemory(cause)
+		AbsoluteInternationalizedResourceIdentifierStringParseError::OutOfMemory(cause)
 	}
 }
 
-impl Display for AbsoluteInternationalizedResourceIdentifierComponentsParseError
+impl Display for AbsoluteInternationalizedResourceIdentifierStringParseError
 {
 	#[inline(always)]
 	fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result
@@ -49,12 +49,12 @@ impl Display for AbsoluteInternationalizedResourceIdentifierComponentsParseError
 	}
 }
 
-impl error::Error for AbsoluteInternationalizedResourceIdentifierComponentsParseError
+impl error::Error for AbsoluteInternationalizedResourceIdentifierStringParseError
 {
 	#[inline(always)]
 	fn source(&self) -> Option<&(dyn error::Error + 'static)>
 	{
-		use AbsoluteInternationalizedResourceIdentifierComponentsParseError::*;
+		use AbsoluteInternationalizedResourceIdentifierStringParseError::*;
 		
 		match self
 		{

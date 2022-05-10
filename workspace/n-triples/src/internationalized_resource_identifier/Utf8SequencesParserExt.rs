@@ -14,7 +14,7 @@ trait Utf8SequencesParserExt<'a>: Sized
 	fn push_forcing_heap_percent_encoded<E: error::Error + From<TryReserveError> + From<InvalidUtf8ParseError<PercentDecodeError>>, const to_ascii_lower_case: bool>(&mut self, remaining_utf8_bytes: &mut &'a str) -> Result<(), E>;
 }
 
-impl<'a> Utf8SequencesParserExt for Utf8SequencesParser<'a>
+impl<'a> Utf8SequencesParserExt<'a> for Utf8SequencesParser<'a>
 {
 	#[inline(always)]
 	fn new_percent_encoded_non_empty_path_segment(first_character_of_first_path_segment: (bool, Utf8SequenceEnum), remaining_percent_encoded_path_segment: &'a str) -> Result<Self, TryReserveError>

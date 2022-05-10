@@ -4,30 +4,30 @@
 
 trait Utf8SequenceParserUchar
 {
-	fn push_forcing_heap_UCHAR4<E: error::Error, UCP: FnOnce(UCHARParseError) -> E, OOM: FnOnce(UCHARParseError) -> E>(&mut self, remaining_bytes: &mut &[u8], uchar_parse_error: UCP, out_of_memory: OOM) -> Result<(), E>;
+	fn push_forcing_heap_UCHAR4<E: error::Error, UCP: FnOnce(UCHARParseError) -> E, OOM: FnOnce(TryReserveError) -> E>(&mut self, remaining_bytes: &mut &[u8], uchar_parse_error: UCP, out_of_memory: OOM) -> Result<(), E>;
 	
-	fn push_forcing_heap_UCHAR8<E: error::Error, UCP: FnOnce(UCHARParseError) -> E, OOM: FnOnce(UCHARParseError) -> E>(&mut self, remaining_bytes: &mut &[u8], uchar_parse_error: UCP, out_of_memory: OOM) -> Result<(), E>;
+	fn push_forcing_heap_UCHAR8<E: error::Error, UCP: FnOnce(UCHARParseError) -> E, OOM: FnOnce(TryReserveError) -> E>(&mut self, remaining_bytes: &mut &[u8], uchar_parse_error: UCP, out_of_memory: OOM) -> Result<(), E>;
 	
 	#[doc(hidden)]
-	fn push_forcing_heap_UCHAR<E: error::Error, UCP: FnOnce(UCHARParseError) -> E, OOM: FnOnce(UCHARParseError) -> E, PU: FnOnce(&mut &[u8]) -> Result<char, UCHARParseError>>(&mut self, remaining_bytes: &mut &[u8], uchar_parse_error: UCP, out_of_memory: OOM, parse_UCHAR: PU) -> Result<(), E>;
+	fn push_forcing_heap_UCHAR<E: error::Error, UCP: FnOnce(UCHARParseError) -> E, OOM: FnOnce(TryReserveError) -> E, PU: FnOnce(&mut &[u8]) -> Result<char, UCHARParseError>>(&mut self, remaining_bytes: &mut &[u8], uchar_parse_error: UCP, out_of_memory: OOM, parse_UCHAR: PU) -> Result<(), E>;
 }
 
 impl<'a> Utf8SequenceParserUchar for Utf8SequencesParser<'a>
 {
 	#[inline(always)]
-	fn push_forcing_heap_UCHAR4<E: error::Error, UCP: FnOnce(UCHARParseError) -> E, OOM: FnOnce(UCHARParseError) -> E>(&mut self, remaining_bytes: &mut &[u8], uchar_parse_error: UCP, out_of_memory: OOM) -> Result<(), E>
+	fn push_forcing_heap_UCHAR4<E: error::Error, UCP: FnOnce(UCHARParseError) -> E, OOM: FnOnce(TryReserveError) -> E>(&mut self, remaining_bytes: &mut &[u8], uchar_parse_error: UCP, out_of_memory: OOM) -> Result<(), E>
 	{
 		self.push_forcing_heap_UCHAR(remaining_bytes, uchar_parse_error, out_of_memory, UCHARParser::parse_UCHAR4)
 	}
 	
 	#[inline(always)]
-	fn push_forcing_heap_UCHAR8<E: error::Error, UCP: FnOnce(UCHARParseError) -> E, OOM: FnOnce(UCHARParseError) -> E>(&mut self, remaining_bytes: &mut &[u8], uchar_parse_error: UCP, out_of_memory: OOM) -> Result<(), E>
+	fn push_forcing_heap_UCHAR8<E: error::Error, UCP: FnOnce(UCHARParseError) -> E, OOM: FnOnce(TryReserveError) -> E>(&mut self, remaining_bytes: &mut &[u8], uchar_parse_error: UCP, out_of_memory: OOM) -> Result<(), E>
 	{
 		self.push_forcing_heap_UCHAR(remaining_bytes, uchar_parse_error, out_of_memory, UCHARParser::parse_UCHAR8)
 	}
 	
 	#[inline(always)]
-	fn push_forcing_heap_UCHAR<E: error::Error, UCP: FnOnce(UCHARParseError) -> E, OOM: FnOnce(UCHARParseError) -> E, PU: FnOnce(&mut &[u8]) -> Result<char, UCHARParseError>>(&mut self, remaining_bytes: &mut &[u8], uchar_parse_error: UCP, out_of_memory: OOM, parse_UCHAR: PU) -> Result<(), E>
+	fn push_forcing_heap_UCHAR<E: error::Error, UCP: FnOnce(UCHARParseError) -> E, OOM: FnOnce(TryReserveError) -> E, PU: FnOnce(&mut &[u8]) -> Result<char, UCHARParseError>>(&mut self, remaining_bytes: &mut &[u8], uchar_parse_error: UCP, out_of_memory: OOM, parse_UCHAR: PU) -> Result<(), E>
 	{
 		let character = parse_UCHAR(remaining_bytes).map_err(uchar_parse_error)?;
 		self.push_forcing_heap(character).map_err(out_of_memory)

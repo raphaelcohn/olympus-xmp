@@ -111,13 +111,13 @@ impl<'a, const PathDepth: usize> TryToOwn for AbsoluteInternationalizedResourceI
 
 impl<'a, const PathDepth: usize> TryFrom<&'a str> for AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>
 {
-	type Error = AbsoluteInternationalizedResourceIdentifierComponentsParseError;
+	type Error = AbsoluteInternationalizedResourceIdentifierStringParseError;
 	
 	/// The resultant instance will only be owned if required.
 	#[inline(always)]
 	fn try_from(string: &'a str) -> Result<Self, Self::Error>
 	{
-		use AbsoluteInternationalizedResourceIdentifierComponentsParseError::*;
+		use AbsoluteInternationalizedResourceIdentifierStringParseError::*;
 		
 		let (scheme, scheme_specific_parsing_rule, remaining_utf8_bytes) = Scheme::parse(string.as_bytes()).map_err(SchemeParse)?;
 		let remaining_string = unsafe { from_utf8_unchecked(remaining_utf8_bytes) };
@@ -431,28 +431,28 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 		Self::http("purl.org", [PathSegment::dc, PathSegment::terms, unsafe { PathSegment::from_unchecked(term) }])
 	}
 	
-	// So the problem we have here is that we may have created a new string if processing the escape sequences.
-	// If so, then we need to return an owned implementation.
+	/// Parses a string that is a valid UTF-8 sequence.
+	///
+	/// Takes a `Cow` as a caller may have created `string` by decoding, say, a N-triples IRI, which contained embedded escape sequences.
 	#[inline(always)]
-	pub fn parse_components(string: Utf8SequencesParser<'a>) -> Result<Self, AbsoluteInternationalizedResourceIdentifierComponentsParseError>
+	pub fn parse_string(string: Cow<'a, str>) -> Result<Self, AbsoluteInternationalizedResourceIdentifierStringParseError>
 	{
-		let cow = string.to_cow();
-		let this = match cow
+		use Cow::*;
+		
+		let this = match string
 		{
-			// The input string required no escapes.
 			// Lifetime is 'a.
-			Cow::Borrowed(borrowed) => Self::try_from(borrowed)?,
+			Borrowed(borrowed) => Self::try_from(borrowed)?,
 			
-			// The input string required escapes.
 			// We have an instance of `String` which we can't return and and reference will only live as long as this method call, ie shorter than 'a.
 			// This is a frustrating situation.
 			// The only way out is to either somehow attach the `String` to Self, but that would still have us return `Self` with a lifetime of 'a, which forces the caller to carry on owning the original (unused) string.
-			Cow::Owned(owned) =>
+			Owned(owned) =>
 			{
 				let mut this = AbsoluteInternationalizedResourceIdentifier::<PathDepth>::try_from(owned.as_str())?;
 				this.try_to_own_in_place()?;
 				// This is horrible; Rust does not allow transmute on types with const generics.
-				return Ok(unsafe { std::mem::transmute_copy(&this) })
+				return Ok(unsafe { transmute_copy(&this) })
 			},
 		};
 		Ok(this)

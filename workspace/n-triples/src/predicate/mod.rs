@@ -2,6 +2,7 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
+use crate::internationalized_resource_identifier::MoreThanOneError;
 use chrono::DateTime;
 use chrono::FixedOffset;
 use std::collections::HashMap;

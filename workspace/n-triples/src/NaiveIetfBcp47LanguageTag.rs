@@ -134,7 +134,7 @@ impl<'a> NaiveIetfBcp47LanguageTag<'a>
 		let mut string = Utf8SequencesParser::new_stack(remaining_bytes);
 		let has_more_components = loop
 		{
-			match pop_first(remaining_bytes)
+			match remaining_bytes.pop_first()
 			{
 				None => break false,
 				
@@ -159,7 +159,7 @@ impl<'a> NaiveIetfBcp47LanguageTag<'a>
 		let mut string = Utf8SequencesParser::new_stack(remaining_bytes);
 		let has_more_components = loop
 		{
-			match pop_first(remaining_bytes)
+			match remaining_bytes.pop_first()
 			{
 				None => break false,
 				

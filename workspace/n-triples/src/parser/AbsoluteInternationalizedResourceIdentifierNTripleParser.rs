@@ -2,19 +2,20 @@
 // Copyright © 2022 The developers of olympus-xmp. See the COPYRIGHT file in the top-level directory of this distribution and at https://raw.githubusercontent.com/raphaelcohn/olympus-xmp/master/COPYRIGHT.
 
 
-trait AbsoluteInternationalizedResourceIdentifierNTripleParser<'a>
+trait AbsoluteInternationalizedResourceIdentifierNTripleParser<'a>: Sized
 {
 	fn parse<R>(remaining_bytes: &mut &'a [u8], constructor: impl FnOnce(Self) -> R) -> Result<R, AbsoluteInternationalizedResourceIdentifierParseError>;
 	
 	fn parse_escaped_string(remaining_bytes: &mut &'a [u8]) -> Result<Utf8SequencesParser<'a>, AbsoluteInternationalizedResourceNTripleEscapedIdentifierParseError>;
 }
 
-impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifierNTripleParser for AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>
+impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifierNTripleParser<'a> for AbsoluteInternationalizedResourceIdentifier<'a, PathDepth>
 {
 	fn parse<R>(remaining_bytes: &mut &'a [u8], constructor: impl FnOnce(Self) -> R) -> Result<R, AbsoluteInternationalizedResourceIdentifierParseError>
 	{
 		let string = Self::parse_escaped_string(remaining_bytes)?;
-		let this = Self::parse_components(string)?;
+		let string = string.to_cow();
+		let this = Self::parse_string(string)?;
 		Ok(constructor(this))
 	}
 	
