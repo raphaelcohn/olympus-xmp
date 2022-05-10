@@ -51,7 +51,7 @@ impl<'a> UserInformation<'a>
 			return Err(SchemeDoesNotSupportUserInformation)
 		}
 		
-		let mut string = StringSoFar::new_stack(remaining);
+		let mut string = Utf8SequencesParser::new_stack(remaining);
 		loop
 		{
 			match remaining.decode_next_utf8_validity_already_checked()
@@ -64,7 +64,7 @@ impl<'a> UserInformation<'a>
 					iunreserved_with_ucschar_2!()  => string.push_utf8_sequence_enum_2(utf8_sequence)?,
 					iunreserved_with_ucschar_3!()  => string.push_utf8_sequence_enum_3(utf8_sequence)?,
 					iunreserved_with_ucschar_4!()  => string.push_utf8_sequence_enum_4(utf8_sequence)?,
-					pct_encoded!()                 => string.push_forcing_heap_percent_encoded::<false>(remaining)?,
+					pct_encoded!()                 => string.push_forcing_heap_percent_encoded::<_, false>(remaining)?,
 					sub_delims!()                  => string.push_ascii_character(character)?,
 					ColonChar                      => string.push_ascii_character(character)?,
 					

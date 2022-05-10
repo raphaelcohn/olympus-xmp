@@ -152,7 +152,7 @@ impl<'a> HostName<'a>
 		use HostNameParseError::*;
 		
 		let remaining_utf8_bytes = &mut ihost_and_port_string;
-		let mut string = StringSoFar::new_stack(remaining_utf8_bytes);
+		let mut string = Utf8SequencesParser::new_stack(remaining_utf8_bytes);
 		
 		use Utf8CharacterLength::*;
 		let port_bytes_including_colon = loop
@@ -166,7 +166,9 @@ impl<'a> HostName<'a>
 					ColonChar                                                                         => break
 					{
 						let bytes = *remaining_utf8_bytes;
-						unsafe { from_raw_parts((bytes).rewind_buffer(One), One.add_from_str(bytes)) }
+						let pointer = bytes.rewind_buffer(One).as_ptr() as *const u8;
+						let length = One.add_from_str(bytes);
+						unsafe { from_raw_parts(pointer, length) }
 					},
 					
 					AChar ..= ZChar                                                                   => if to_ascii_lower_case
@@ -182,7 +184,7 @@ impl<'a> HostName<'a>
 					iunreserved_with_ucschar_2!()                                                     => string.push_utf8_sequence_enum_2(utf8_sequence)?,
 					iunreserved_with_ucschar_3!()                                                     => string.push_utf8_sequence_enum_3(utf8_sequence)?,
 					iunreserved_with_ucschar_4!()                                                     => string.push_utf8_sequence_enum_4(utf8_sequence)?,
-					pct_encoded!()                                                                    => string.push_forcing_heap_percent_encoded::<false>(remaining_utf8_bytes)?,
+					pct_encoded!()                                                                    => string.push_forcing_heap_percent_encoded::<_, false>(remaining_utf8_bytes)?,
 					sub_delims!()                                                                     => string.push_ascii_character(character)?,
 					
 					_ => return Err(InvalidCharacterInHostName(character)),

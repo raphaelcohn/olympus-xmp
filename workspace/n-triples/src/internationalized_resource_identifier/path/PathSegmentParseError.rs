@@ -25,13 +25,12 @@ impl const From<TryReserveError> for PathSegmentParseError
 	}
 }
 
-impl From<OutOfMemoryOrInvalidUtf8PercentDecodeParseError> for PathSegmentParseError
+impl const From<InvalidUtf8ParseError<PercentDecodeError>> for PathSegmentParseError
 {
 	#[inline(always)]
-	fn from(cause: OutOfMemoryOrInvalidUtf8PercentDecodeParseError) -> Self
+	fn from(cause: InvalidUtf8ParseError<PercentDecodeError>) -> Self
 	{
-		use PathSegmentParseError::*;
-		cause.into_either(OutOfMemory, InvalidUtf8PercentDecodeParse)
+		PathSegmentParseError::InvalidUtf8PercentDecodeParse(cause)
 	}
 }
 

@@ -59,14 +59,12 @@
 
 use internationalized_resource_identifier::AbsoluteInternationalizedResourceIdentifier;
 use parser::BlankNodeLabelParseError;
-use parser::get_0;
 use parser::LiteralTag;
 use parser::NaiveIetfBcp47LanguageTagParseError;
 use parser::NTriple;
 use parser::NTriplesParseError;
 use parser::Object;
 use parser::StringLiteral;
-use parser::StringSoFar;
 use predicate::Predicate;
 use std::borrow::Cow;
 use std::collections::HashMap;
@@ -100,7 +98,9 @@ use swiss_army_knife::a_to_z::OpenSquareBracket;
 use swiss_army_knife::a_to_z::CloseSquareBracket;
 use swiss_army_knife::const_small_vec::ConstSmallVec;
 use swiss_army_knife::from_unchecked::FromUnchecked;
+use swiss_army_knife::get_checked::PopFirst;
 use swiss_army_knife::get_unchecked::GetUnchecked;
+use swiss_army_knife::utf8::Utf8SequencesParser;
 use swiss_army_knife::utf8::UnvalidatedDecodeUtf8Sequences;
 use swiss_army_knife::utf8::utf8_sequence::Utf8SequenceAndCharacter;
 use swiss_army_knife::vec::VecExt;

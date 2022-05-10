@@ -25,13 +25,12 @@ impl const From<TryReserveError> for HostNameParseError
 	}
 }
 
-impl From<OutOfMemoryOrInvalidUtf8PercentDecodeParseError> for HostNameParseError
+impl const From<InvalidUtf8ParseError<PercentDecodeError>> for HostNameParseError
 {
 	#[inline(always)]
-	fn from(cause: OutOfMemoryOrInvalidUtf8PercentDecodeParseError) -> Self
+	fn from(cause: InvalidUtf8ParseError<PercentDecodeError>) -> Self
 	{
-		use HostNameParseError::*;
-		cause.into_either(OutOfMemory, InvalidUtf8PercentDecodeParse)
+		HostNameParseError::InvalidUtf8PercentDecodeParse(cause)
 	}
 }
 

@@ -13,7 +13,7 @@ pub enum AbsoluteInternationalizedResourceNTripleEscapedIdentifierParseError
 	DidNotExpectEndParsingBody,
 	
 	#[allow(missing_docs)]
-	InvalidCharacter(char),
+	InvalidAsciiByte(u8),
 	
 	#[allow(missing_docs)]
 	OutOfMemory(TryReserveError),
@@ -22,10 +22,10 @@ pub enum AbsoluteInternationalizedResourceNTripleEscapedIdentifierParseError
 	EndOfFileParsingEscapeSequence,
 	
 	#[allow(missing_docs)]
-	InvalidUCHAR4EscapeSequence(OutOfMemoryOrUCHARParseError),
+	InvalidUCHAR4EscapeSequence(UCHARParseError),
 	
 	#[allow(missing_docs)]
-	InvalidUCHAR8EscapeSequence(OutOfMemoryOrUCHARParseError),
+	InvalidUCHAR8EscapeSequence(UCHARParseError),
 	
 	#[allow(missing_docs)]
 	InvalidEscapeSequence(u8),

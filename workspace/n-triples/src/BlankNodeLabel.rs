@@ -79,12 +79,12 @@ impl<'a> BlankNodeLabel<'a>
 	fn parse<R>(remaining_bytes: &mut &'a [u8], constructor: impl FnOnce(Self) -> R) -> Result<R, BlankNodeLabelParseError>
 	{
 		use BlankNodeLabelParseError::*;
-		if get_0(remaining_bytes).ok_or(DidNotExpectEndParsingColon)? != Colon
+		if remaining_bytes.pop_first_or_error(DidNotExpectEndParsingColon)? != Colon
 		{
 			return Err(ExpectedColon)
 		}
 		
-		let mut string = StringSoFar::new_stack(remaining_bytes);
+		let mut string = Utf8SequencesParser::new_stack(remaining_bytes);
 		
 		{
 			// `(PN_CHARS_U | [0-9])`.

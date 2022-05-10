@@ -131,10 +131,10 @@ impl<'a> NaiveIetfBcp47LanguageTag<'a>
 	#[inline(always)]
 	fn parse_first_component(remaining_bytes: &mut &'a [u8]) -> Result<(Cow<'a, str>, bool), NaiveIetfBcp47LanguageTagParseError>
 	{
-		let mut string = StringSoFar::new_stack(remaining_bytes);
+		let mut string = Utf8SequencesParser::new_stack(remaining_bytes);
 		let has_more_components = loop
 		{
-			match get_0(remaining_bytes)
+			match pop_first(remaining_bytes)
 			{
 				None => break false,
 				
@@ -156,10 +156,10 @@ impl<'a> NaiveIetfBcp47LanguageTag<'a>
 	#[inline(always)]
 	fn parse_subsequent_component(remaining_bytes: &mut &'a [u8], component_index: usize) -> Result<(Cow<'a, str>, bool), NaiveIetfBcp47LanguageTagParseError>
 	{
-		let mut string = StringSoFar::new_stack(remaining_bytes);
+		let mut string = Utf8SequencesParser::new_stack(remaining_bytes);
 		let has_more_components = loop
 		{
-			match get_0(remaining_bytes)
+			match pop_first(remaining_bytes)
 			{
 				None => break false,
 				
@@ -181,7 +181,7 @@ impl<'a> NaiveIetfBcp47LanguageTag<'a>
 	}
 	
 	#[inline(always)]
-	fn finish_component(string: StringSoFar<'a>, has_more_components: bool, component_index: usize) -> Result<(Cow<'a, str>, bool), NaiveIetfBcp47LanguageTagParseError>
+	fn finish_component(string: Utf8SequencesParser<'a>, has_more_components: bool, component_index: usize) -> Result<(Cow<'a, str>, bool), NaiveIetfBcp47LanguageTagParseError>
 	{
 		let cow = string.to_cow();
 		if cow.is_empty()

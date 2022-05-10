@@ -161,7 +161,7 @@ impl<'a> Query<'a>
 			return Err(QueryNotAllowedForScheme)
 		}
 		
-		let mut string = StringSoFar::new_stack(remaining);
+		let mut string = Utf8SequencesParser::new_stack(remaining);
 		
 		let hash_fragment_remaining_utf8_bytes = loop
 		{
@@ -177,7 +177,7 @@ impl<'a> Query<'a>
 					ipchar_iunreserved_with_ucschar_2!()  => string.push_utf8_sequence_enum_2(utf8_sequence)?,
 					ipchar_iunreserved_with_ucschar_3!()  => string.push_utf8_sequence_enum_3(utf8_sequence)?,
 					ipchar_iunreserved_with_ucschar_4!()  => string.push_utf8_sequence_enum_4(utf8_sequence)?,
-					ipchar_pct_encoded!()                 => string.push_forcing_heap_percent_encoded::<false>(remaining)?,
+					ipchar_pct_encoded!()                 => string.push_forcing_heap_percent_encoded::<_, false>(remaining)?,
 					ipchar_sub_delims!()                  => string.push_ascii_character(character)?,
 					ipchar_other!()                       => string.push_ascii_character(character)?,
 					iprivate_3!()                         => string.push_utf8_sequence_enum_3(utf8_sequence)?,

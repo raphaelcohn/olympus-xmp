@@ -223,12 +223,12 @@ impl<'a> Scheme<'a>
 	}
 	
 	#[inline(always)]
-	fn parse_first_character(remaining_bytes: &mut &'a [u8]) -> Result<StringSoFar<'a>, SchemeParseError>
+	fn parse_first_character(remaining_bytes: &mut &'a [u8]) -> Result<Utf8SequencesParser<'a>, SchemeParseError>
 	{
 		use SchemeParseError::*;
-		let mut string = StringSoFar::new_stack(remaining_bytes);
+		let mut string = Utf8SequencesParser::new_stack(remaining_bytes);
 		
-		match Self::next_byte(remaining_bytes, DidNotExpectEndParsingFirstCharacter)?
+		match remaining_bytes.pop_first_or_error(DidNotExpectEndParsingFirstCharacter)?
 		{
 			byte @ A ..= Z => Self::push_lower_case(&mut string, byte)?,
 			
@@ -241,12 +241,12 @@ impl<'a> Scheme<'a>
 	}
 	
 	#[inline(always)]
-	fn parse_subequent_characters(remaining_bytes: &mut &'a [u8], mut string: StringSoFar<'a>) -> Result<Cow<'a, [u8]>, SchemeParseError>
+	fn parse_subequent_characters(remaining_bytes: &mut &'a [u8], mut string: Utf8SequencesParser<'a>) -> Result<Cow<'a, [u8]>, SchemeParseError>
 	{
 		use SchemeParseError::*;
 		loop
 		{
-			match Self::next_byte(remaining_bytes, DidNotExpectEndParsingSubsequentCharacter)?
+			match remaining_bytes.pop_first_or_error(DidNotExpectEndParsingSubsequentCharacter)?
 			{
 				Colon => break,
 				
@@ -261,14 +261,8 @@ impl<'a> Scheme<'a>
 	}
 	
 	#[inline(always)]
-	fn push_lower_case(string: &mut StringSoFar<'a>, upper_case_ascii_byte: u8) -> Result<(), SchemeParseError>
+	fn push_lower_case(string: &mut Utf8SequencesParser<'a>, upper_case_ascii_byte: u8) -> Result<(), SchemeParseError>
 	{
 		string.push_forcing_heap_ascii_byte::<true>(upper_case_ascii_byte).map_err(SchemeParseError::OutOfMemoryMakingAsciiLowerCase)
-	}
-	
-	#[inline(always)]
-	fn next_byte(remaining_bytes: &mut &'a [u8], error: SchemeParseError) -> Result<u8, SchemeParseError>
-	{
-		get_0(remaining_bytes).ok_or(error)
 	}
 }

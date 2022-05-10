@@ -28,13 +28,12 @@ impl const From<TryReserveError> for QueryParseError
 	}
 }
 
-impl From<OutOfMemoryOrInvalidUtf8PercentDecodeParseError> for QueryParseError
+impl const From<InvalidUtf8ParseError<PercentDecodeError>> for QueryParseError
 {
 	#[inline(always)]
-	fn from(cause: OutOfMemoryOrInvalidUtf8PercentDecodeParseError) -> Self
+	fn from(cause: InvalidUtf8ParseError<PercentDecodeError>) -> Self
 	{
-		use QueryParseError::*;
-		cause.into_either(OutOfMemory, InvalidUtf8PercentDecodeParse)
+		QueryParseError::InvalidUtf8PercentDecodeParse(cause)
 	}
 }
 

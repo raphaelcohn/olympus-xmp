@@ -431,59 +431,10 @@ impl<'a, const PathDepth: usize> AbsoluteInternationalizedResourceIdentifier<'a,
 		Self::http("purl.org", [PathSegment::dc, PathSegment::terms, unsafe { PathSegment::from_unchecked(term) }])
 	}
 	
-	pub(super) fn parse<R>(remaining_bytes: &mut &'a [u8], constructor: impl FnOnce(Self) -> R) -> Result<R, AbsoluteInternationalizedResourceIdentifierParseError>
-	{
-		let string = Self::parse_escaped_string(remaining_bytes)?;
-		let this = Self::parse_components(string)?;
-		Ok(constructor(this))
-	}
-	
-	#[inline(always)]
-	fn parse_escaped_string(remaining_bytes: &mut &'a [u8]) -> Result<StringSoFar<'a>, AbsoluteInternationalizedResourceNTripleEscapedIdentifierParseError>
-	{
-		use AbsoluteInternationalizedResourceNTripleEscapedIdentifierParseError::*;
-		
-		let mut string = StringSoFar::new_stack(remaining_bytes);
-		
-		loop
-		{
-			let Utf8SequenceAndCharacter(utf8_sequence, _) = remaining_bytes.decode_next_utf8()?.ok_or(DidNotExpectEndParsingBody)?;
-			use Utf8SequenceEnum::*;
-			match utf8_sequence
-			{
-				One([one]) => match one
-				{
-					CloseAngleBracket => break,
-					
-					invalid @ (0x00 ..= 0x20 | b'<' | b'"' | b'{' | b'}' | b'|' | b'`') => return Err(InvalidCharacter(invalid as char)),
-					
-					b'\\' => match get_0(remaining_bytes).ok_or(EndOfFileParsingEscapeSequence)?
-					{
-						u => string.push_forcing_heap_UCHAR4(remaining_bytes).map_err(InvalidUCHAR4EscapeSequence)?,
-						
-						U => string.push_forcing_heap_UCHAR8(remaining_bytes).map_err(InvalidUCHAR8EscapeSequence)?,
-						
-						invalid => return Err(InvalidEscapeSequence(invalid)),
-					}
-					
-					_ => string.push_ascii_byte(one)?,
-				}
-				
-				Two(utf8_sequence) => string.push_utf8_sequence(utf8_sequence)?,
-				
-				Three(utf8_sequence) => string.push_utf8_sequence(utf8_sequence)?,
-				
-				Four(utf8_sequence) => string.push_utf8_sequence(utf8_sequence)?,
-			}
-		}
-		
-		Ok(string)
-	}
-	
 	// So the problem we have here is that we may have created a new string if processing the escape sequences.
 	// If so, then we need to return an owned implementation.
 	#[inline(always)]
-	fn parse_components(string: StringSoFar<'a>) -> Result<Self, AbsoluteInternationalizedResourceIdentifierComponentsParseError>
+	pub fn parse_components(string: Utf8SequencesParser<'a>) -> Result<Self, AbsoluteInternationalizedResourceIdentifierComponentsParseError>
 	{
 		let cow = string.to_cow();
 		let this = match cow

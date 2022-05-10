@@ -4,25 +4,25 @@
 
 pub(super) trait GetUncheckedExt<T>: GetUnchecked<T>
 {
-	fn rewind_buffer(&self, utf8_character_length: Utf8CharacterLength) -> *const T;
+	fn rewind_buffer(&self, utf8_character_length: Utf8CharacterLength) -> NonNull<T>;
 }
 
 impl<T> GetUncheckedExt<T> for [T]
 {
 	#[inline(always)]
-	fn rewind_buffer(&self, utf8_character_length: Utf8CharacterLength) -> *const T
+	fn rewind_buffer(&self, utf8_character_length: Utf8CharacterLength) -> NonNull<T>
 	{
 		let pointer = self.as_ptr();
 		let slice_length = utf8_character_length.into();
 		let rewound_buffer = unsafe { pointer.sub(slice_length) };
-		rewound_buffer
+		new_non_null(rewound_buffer as *mut T)
 	}
 }
 
 impl GetUncheckedExt<u8> for str
 {
 	#[inline(always)]
-	fn rewind_buffer(&self, utf8_character_length: Utf8CharacterLength) -> *const u8
+	fn rewind_buffer(&self, utf8_character_length: Utf8CharacterLength) -> NonNull<u8>
 	{
 		self.as_bytes().rewind_buffer(utf8_character_length)
 	}

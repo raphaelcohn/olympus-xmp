@@ -4,8 +4,6 @@
 
 use crate::Hash;
 use crate::QuestionMark;
-use crate::parser::OutOfMemoryOrInvalidUtf8PercentDecodeParseError;
-use crate::parser::StringSoFar;
 use std::borrow::Borrow;
 use std::borrow::BorrowMut;
 use std::borrow::Cow;
@@ -60,6 +58,7 @@ use swiss_army_knife::try_to_own::TryToOwnInPlace;
 use swiss_army_knife::unreachable_code_const;
 use swiss_army_knife::utf8::InvalidUtf8ParseError;
 use swiss_army_knife::utf8::PercentDecodeError;
+use swiss_army_knife::utf8::Utf8SequencesParser;
 use swiss_army_knife::utf8::ValidatedDecodeUtf8Sequences;
 use swiss_army_knife::utf8::utf8_sequence::Utf8SequenceAndCharacter;
 use swiss_army_knife::utf8::utf8_sequence::Utf8SequenceEnum;

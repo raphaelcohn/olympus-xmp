@@ -48,15 +48,13 @@ impl<'a> NTriple<'a>
 	{
 		use Subject::*;
 		use SubjectParseError::*;
-		match get_0(remaining_bytes)
+		match remaining_bytes.pop_first_or_error(ALineMustStartWithASubject)?
 		{
-			Some(OpenAngleBracket) => self::AbsoluteInternationalizedResourceIdentifier::parse(remaining_bytes, AbsoluteInternationalizedResourceIdentifier).map_err(InternationalizedResourceIdentifierParse),
+			OpenAngleBracket => self::AbsoluteInternationalizedResourceIdentifier::parse(remaining_bytes, AbsoluteInternationalizedResourceIdentifier).map_err(InternationalizedResourceIdentifierParse),
 			
-			Some(Underscore) => BlankNodeLabel::parse(remaining_bytes, BlankNode).map_err(BlankNodeLabelParse),
+			Underscore => BlankNodeLabel::parse(remaining_bytes, BlankNode).map_err(BlankNodeLabelParse),
 			
-			Some(invalid) => return Err(CanNotStartWith(invalid)),
-			
-			None => return Err(ALineMustStartWithASubject),
+			invalid @ _ => return Err(CanNotStartWith(invalid)),
 		}
 	}
 	
@@ -66,15 +64,13 @@ impl<'a> NTriple<'a>
 		use PredicateParseError::*;
 		loop
 		{
-			match get_0(remaining_bytes)
+			match remaining_bytes.pop_first_or_error(ALineMustContinueWithAPredicate)?
 			{
-				Some(OpenAngleBracket) => return Predicate::parse(remaining_bytes, |predicate| predicate).map_err(PredicateParse),
+				OpenAngleBracket => return Predicate::parse(remaining_bytes, |predicate| predicate).map_err(PredicateParse),
 				
-				Some(Space | Tab) => continue,
+				Space | Tab => continue,
 				
-				Some(invalid) => return Err(CanNotStartWith(invalid)),
-				
-				None => return Err(ALineMustContinueWithAPredicate),
+				invalid @ _ => return Err(CanNotStartWith(invalid)),
 			}
 		}
 	}
@@ -86,19 +82,17 @@ impl<'a> NTriple<'a>
 		use ObjectParseError::*;
 		loop
 		{
-			match get_0(remaining_bytes)
+			match remaining_bytes.pop_first_or_error(ALineMustContinueWithAnObject)?
 			{
-				Some(OpenAngleBracket) => return self::AbsoluteInternationalizedResourceIdentifier::parse(remaining_bytes, AbsoluteInternationalizedResourceIdentifier).map_err(InternationalizedResourceIdentifierParse),
+				OpenAngleBracket => return self::AbsoluteInternationalizedResourceIdentifier::parse(remaining_bytes, AbsoluteInternationalizedResourceIdentifier).map_err(InternationalizedResourceIdentifierParse),
 				
-				Some(Underscore) => return BlankNodeLabel::parse(remaining_bytes, BlankNode).map_err(BlankNodeLabelParse),
+				Underscore => return BlankNodeLabel::parse(remaining_bytes, BlankNode).map_err(BlankNodeLabelParse),
 				
-				Some(DoubleQuote) => return StringLiteral::parse(remaining_bytes, Literal).map_err(StringLiteralParse),
+				DoubleQuote => return StringLiteral::parse(remaining_bytes, Literal).map_err(StringLiteralParse),
 				
-				Some(Space | Tab) => continue,
+				Space | Tab => continue,
 				
-				Some(invalid) => return Err(CanNotStartWith(invalid)),
-				
-				None => return Err(ALineMustContinueWithAnObject),
+				invalid @ _ => return Err(CanNotStartWith(invalid)),
 			}
 		}
 	}
@@ -109,15 +103,13 @@ impl<'a> NTriple<'a>
 		loop
 		{
 			use PeriodParseError::*;
-			match get_0(remaining_bytes)
+			match remaining_bytes.pop_first_or_error(ALineMustContinueWithAPeriod)?
 			{
-				Some(Period) => return Ok(()),
+				v => return Ok(()),
 				
-				Some(Space | Tab) => continue,
+				Space | Tab => continue,
 				
-				Some(invalid) => return Err(CanNotStartWith(invalid)),
-				
-				None => return Err(ALineMustContinueWithAPeriod),
+				invalid @ _ => return Err(CanNotStartWith(invalid)),
 			}
 		}
 	}
@@ -127,7 +119,7 @@ impl<'a> NTriple<'a>
 	{
 		loop
 		{
-			match get_0(&mut remaining_bytes)
+			match (&mut remaining_bytes).pop_first()
 			{
 				Some(Hash) => return Ok(remaining_bytes.memchr(LineFeed).map(|index| remaining_bytes.after_index(index))),
 				
@@ -141,5 +133,4 @@ impl<'a> NTriple<'a>
 			}
 		}
 	}
-	
 }

@@ -158,7 +158,7 @@ impl<'a> PathSegment<'a>
 	fn decode_percent_encoded_path_segment(mut percent_encoded_path_segment: &'a str) -> Result<Self, PathSegmentParseError>
 	{
 		let percent_encoded_path_segment = &mut percent_encoded_path_segment;
-		let string = StringSoFar::new_stack(percent_encoded_path_segment);
+		let string = Utf8SequencesParser::new_stack(percent_encoded_path_segment);
 		Self::decode_percent_encoded_path_segment_common(string, percent_encoded_path_segment, Self)
 	}
 	
@@ -167,7 +167,7 @@ impl<'a> PathSegment<'a>
 	/// `isegment    = *ipchar`.
 	/// `isegment-nz = 1*ipchar`.
 	#[inline(always)]
-	fn decode_percent_encoded_path_segment_common<R>(mut string: StringSoFar<'a>, remaining: &mut &'a str, constructor: impl FnOnce(Cow<'a, str>) -> R) -> Result<R, PathSegmentParseError>
+	fn decode_percent_encoded_path_segment_common<R>(mut string: Utf8SequencesParser<'a>, remaining: &mut &'a str, constructor: impl FnOnce(Cow<'a, str>) -> R) -> Result<R, PathSegmentParseError>
 	{
 		loop
 		{
@@ -181,7 +181,7 @@ impl<'a> PathSegment<'a>
 					ipchar_iunreserved_with_ucschar_2!()  => string.push_utf8_sequence_enum_2(utf8_sequence)?,
 					ipchar_iunreserved_with_ucschar_3!()  => string.push_utf8_sequence_enum_3(utf8_sequence)?,
 					ipchar_iunreserved_with_ucschar_4!()  => string.push_utf8_sequence_enum_4(utf8_sequence)?,
-					ipchar_pct_encoded!()                 => string.push_forcing_heap_percent_encoded::<false>(remaining)?,
+					ipchar_pct_encoded!()                 => string.push_forcing_heap_percent_encoded::<_, false>(remaining)?,
 					ipchar_sub_delims!()                  => string.push_ascii_character(character)?,
 					ipchar_other!()                       => string.push_ascii_character(character)?,
 					

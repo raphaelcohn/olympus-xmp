@@ -28,13 +28,12 @@ impl const From<TryReserveError> for HashFragmentParseError
 	}
 }
 
-impl From<OutOfMemoryOrInvalidUtf8PercentDecodeParseError> for HashFragmentParseError
+impl const From<InvalidUtf8ParseError<PercentDecodeError>> for HashFragmentParseError
 {
 	#[inline(always)]
-	fn from(cause: OutOfMemoryOrInvalidUtf8PercentDecodeParseError) -> Self
+	fn from(cause: InvalidUtf8ParseError<PercentDecodeError>) -> Self
 	{
-		use HashFragmentParseError::*;
-		cause.into_either(OutOfMemory, InvalidUtf8PercentDecodeParse)
+		HashFragmentParseError::InvalidUtf8PercentDecodeParse(cause)
 	}
 }
 

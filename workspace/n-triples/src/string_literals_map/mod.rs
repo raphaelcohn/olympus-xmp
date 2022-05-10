@@ -35,7 +35,6 @@ use swiss_army_knife::try_to_own::TryToOwnInPlace;
 
 
 include!("Integer.rs");
-include!("MoreThanOneError.rs");
 include!("OnlyOneXmlSchemaValueError.rs");
 include!("OptionalXmlSchemaValueError.rs");
 include!("StringLiteralsMap.rs");

@@ -151,7 +151,7 @@ impl<'a> NonEmptyPathSegment<'a>
 	#[inline(always)]
 	fn decode_percent_encoded_path_segment_remainder(first_character_of_first_path_segment: (bool, Utf8SequenceEnum), mut remaining_percent_encoded_path_segment: &'a str) -> Result<NonEmptyPathSegment, PathSegmentParseError>
 	{
-		let string = StringSoFar::new_percent_encoded_non_empty_path_segment(first_character_of_first_path_segment, remaining_percent_encoded_path_segment)?;
+		let string = Utf8SequencesParser::new_percent_encoded_non_empty_path_segment(first_character_of_first_path_segment, remaining_percent_encoded_path_segment)?;
 		PathSegment::decode_percent_encoded_path_segment_common(string, &mut remaining_percent_encoded_path_segment, Self)
 	}
 }

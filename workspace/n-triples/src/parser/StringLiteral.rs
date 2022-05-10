@@ -18,7 +18,7 @@ impl<'a> StringLiteral<'a>
 	{
 		use StringLiteralParseError::*;
 		
-		let mut string = StringSoFar::new_stack(remaining_bytes);
+		let mut string = Utf8SequencesParser::new_stack(remaining_bytes);
 		
 		loop
 		{
@@ -30,7 +30,7 @@ impl<'a> StringLiteral<'a>
 			{
 				One([DoubleQuote]) => break,
 				
-				One([Backslash]) => match get_0(remaining_bytes).ok_or(EndOfFileParsingEscapeSequence)?
+				One([Backslash]) => match remaining_bytes.pop_first_or_error(EndOfFileParsingEscapeSequence)?
 				{
 					t => string.push_forcing_heap_ascii_byte::<false>(Tab)?,
 					
@@ -46,9 +46,9 @@ impl<'a> StringLiteral<'a>
 					
 					Backslash => string.push_forcing_heap_ascii_byte::<false>(Backslash)?,
 					
-					u => string.push_forcing_heap_UCHAR4(remaining_bytes).map_err(InvalidUCHAR4EscapeSequence)?,
+					u => string.push_forcing_heap_UCHAR4(remaining_bytes,InvalidUCHAR4EscapeSequence, OutOfMemory)?,
 					
-					U => string.push_forcing_heap_UCHAR8(remaining_bytes).map_err(InvalidUCHAR8EscapeSequence)?,
+					U => string.push_forcing_heap_UCHAR8(remaining_bytes,InvalidUCHAR8EscapeSequence, OutOfMemory)?,
 					
 					invalid @ _ => return Err(InvalidEscapeSequence(invalid)),
 				},
@@ -68,18 +68,18 @@ impl<'a> StringLiteral<'a>
 		}
 		
 		use LiteralTag::*;
-		let literal_tag = match get_0(remaining_bytes).ok_or(DidNotExpectEndParsingLiteralTag)?
+		let literal_tag = match remaining_bytes.pop_first_or_error(DidNotExpectEndParsingLiteralTag)?
 		{
 			Space | Tab => Datatype(AbsoluteInternationalizedResourceIdentifier::http_www_w3_org_2001_xml_schema("string")),
 			
 			Caret =>
 			{
-				let subsequent = get_0(remaining_bytes).ok_or(DidNotExpectEndParsingSecondCaret)?;
+				let subsequent = remaining_bytes.pop_first_or_error(DidNotExpectEndParsingSecondCaret)?;
 				if subsequent != Caret
 				{
 					return Err(LiteralTagCaretNotFollowedByCaret(subsequent))
 				}
-				let subsequent = get_0(remaining_bytes).ok_or(DidNotExpectEndParsingOpenAngleBracket)?;
+				let subsequent = remaining_bytes.pop_first_or_error(DidNotExpectEndParsingOpenAngleBracket)?;
 				if subsequent != OpenAngleBracket
 				{
 					return Err(LiteralTagSecondCaretNotFollowedByOpenAngleBracket(subsequent))
