@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="un-series-m-nº49-data check" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+  <configuration default="false" name="internationalized-resource-identifier check" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
     <option name="command" value="check" />
-    <option name="workingDirectory" value="file://$PROJECT_DIR$/workspace/iso-3166-1-country" />
+    <option name="workingDirectory" value="file://$PROJECT_DIR$/workspace/internationalized-resource-identifier" />
     <option name="channel" value="NIGHTLY" />
     <option name="requiredFeatures" value="false" />
     <option name="allFeatures" value="false" />

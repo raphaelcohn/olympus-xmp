@@ -52,11 +52,43 @@
 #![feature(once_cell)]
 #![feature(arbitrary_enum_discriminant)]
 
+
 //! #n-triples.
 //!
 //! Domain model and parser for RDF N-triples [version 1.1](https://www.w3.org/TR/n-triples/).
 
 
+use chars::x00B7;
+use chars::x00C0;
+use chars::x00D6;
+use chars::x00D8;
+use chars::x00F6;
+use chars::x00F8;
+use chars::x02FF;
+use chars::x0300;
+use chars::x036F;
+use chars::x0370;
+use chars::x037D;
+use chars::x037F;
+use chars::x07FF;
+use chars::x0800;
+use chars::x10000;
+use chars::x1FFF;
+use chars::x200C;
+use chars::x200D;
+use chars::x203F;
+use chars::x2040;
+use chars::x2070;
+use chars::x218F;
+use chars::x2C00;
+use chars::x2FEF;
+use chars::x3001;
+use chars::xD7FF;
+use chars::xEFFFF;
+use chars::xF900;
+use chars::xFDCF;
+use chars::xFDF0;
+use chars::xFFFD;
 use internationalized_resource_identifier::AbsoluteInternationalizedResourceIdentifier;
 use parser::BlankNodeLabelParseError;
 use parser::LiteralTag;
@@ -91,6 +123,18 @@ use swiss_army_knife::a_to_z::Z;
 use swiss_army_knife::a_to_z::Hash;
 use swiss_army_knife::a_to_z::QuestionMark;
 use swiss_army_knife::a_to_z::Underscore;
+use swiss_army_knife::chars::SpaceChar;
+use swiss_army_knife::chars::TabChar;
+use swiss_army_knife::chars::PeriodChar;
+use swiss_army_knife::chars::HyphenChar;
+use swiss_army_knife::chars::_0Char;
+use swiss_army_knife::chars::_9Char;
+use swiss_army_knife::chars::UnderscoreChar;
+use swiss_army_knife::chars::ColonChar;
+use swiss_army_knife::chars::AChar;
+use swiss_army_knife::chars::ZChar;
+use swiss_army_knife::chars::aChar;
+use swiss_army_knife::chars::zChar;
 use swiss_army_knife::const_small_vec::ConstSmallVec;
 use swiss_army_knife::from_unchecked::FromUnchecked;
 use swiss_army_knife::get_checked::PopFirst;
@@ -101,8 +145,10 @@ use swiss_army_knife::utf8::utf8_sequence::Utf8SequenceAndCharacter;
 use swiss_army_knife::vec::VecExt;
 
 
+mod chars;
+
+
 /// Internationalized Resource Identifier (IRI).
-#[allow(unused_qualifications)]
 pub mod internationalized_resource_identifier;
 
 
@@ -125,5 +171,3 @@ include!("NTriples.rs");
 include!("Objects.rs");
 include!("PathDepth.rs");
 include!("Subject.rs");
-
-include!("char.constants.rs");

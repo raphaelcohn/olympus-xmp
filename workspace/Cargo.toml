@@ -6,6 +6,7 @@
 members = [
 	"ietf-bcp-47-language-tag",
 	"ietf-bcp-47-language-tag-database",
+	"internationalized-resource-identifier",
 	"iso-3166-1-country",
 	"n-triples",
 	"olympus-xmp",

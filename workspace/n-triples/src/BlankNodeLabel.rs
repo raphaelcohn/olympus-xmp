@@ -91,6 +91,7 @@ impl<'a> BlankNodeLabel<'a>
 			// `PN_CHARS_U ::= PN_CHARS_BASE | '_' | ':'`.
 			// `PN_CHARS_BASE ::= [A-Z] | [a-z] | [#x00C0-#x00D6] | [#x00D8-#x00F6] | [#x00F8-#x02FF] |[#x0370-#x037D] | [#x037F-#x1FFF] | [#x200C-#x200D] | [#x2070-#x218F] | [#x2C00-#x2FEF] | [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] | [#x10000-#xEFFFF]`.
 			let Utf8SequenceAndCharacter(utf8_sequence, character) = remaining_bytes.decode_next_utf8()?.ok_or(DidNotExpectEndParsingFirstCharacterOfLabel)?;
+			
 			match character
 			{
 				_0Char ..= _9Char => string.push_ascii_character(character)?,
@@ -119,6 +120,7 @@ impl<'a> BlankNodeLabel<'a>
 			// `PN_CHARS_U ::= PN_CHARS_BASE | '_' | ':'`.
 			// `PN_CHARS_BASE ::= [A-Z] | [a-z] | [#x00C0-#x00D6] | [#x00D8-#x00F6] | [#x00F8-#x02FF] |[#x0370-#x037D] | [#x037F-#x1FFF] | [#x200C-#x200D] | [#x2070-#x218F] | [#x2C00-#x2FEF] | [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] | [#x10000-#xEFFFF]`.
 			let Utf8SequenceAndCharacter(utf8_sequence, character) = remaining_bytes.decode_next_utf8()?.ok_or(DidNotExpectEndParsingSubsequentCharacterOfLabel)?;
+			
 			match character
 			{
 				// Whitespace terminates a blank node label.

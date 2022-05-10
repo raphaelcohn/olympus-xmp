@@ -3,14 +3,14 @@
 
 
 [package]
-name = "n-triples"
-description = "N-Triples parser and domain model"
-keywords = ["N-Triples", "RDF", "parser"]
+name = "internationalized-resource-identifier"
+description = "Internationalized Resource Identifier (IRI) and URI parser; highly efficient with mimimal memory allocation from heap"
+keywords = ["IRI", "URI", "parser"]
 categories = []
 license = "MIT"
 authors = ["Raphael Cohn <raphael.cohn@stormmq.com>"]
-homepage = "https://github.com/lemonrock/olympus-xmp"
-repository = "https://github.com/lemonrock/olympus-xmp.git"
+homepage = "https://github.com/raphaelcohn/internationalized-resource-identifier"
+repository = "https://github.com/raphaelcohn/olympus-xmp.git"
 exclude = ["*"]
 include = ["README.md", "LICENSE", "COPYRIGHT", "src/**/*.rs", "Cargo.toml", "rustfmt.toml", "clippy.toml"]
 readme = "README.md"
@@ -19,6 +19,4 @@ edition = '2021'
 version = "0.0.0"
 
 [dependencies]
-chrono = "0.4.19"
-internationalized-resource-identifier = { version = "^0.0.0", path = "../internationalized-resource-identifier" }
 swiss-army-knife = { version = "^0.0.38", path = "/Users/raph/Documents/repositories/lemonrock/linux-support/workspace/swiss-army-knife" }
